@@ -26,7 +26,7 @@ const BUTTON_ICONS: Record<string, React.ReactNode> = {
 export default function Home() {
   return (
     <CaseStudyProvider>
-      <main className="mx-auto max-w-[820px] px-6 pb-28 pt-20 md:pt-28">
+      <main className="mx-auto max-w-[820px] px-6 pb-28 pt-20 pr-20 md:pr-6 md:pt-28">
         {/* Intro */}
         <h1 className="text-2xl font-bold">{site.name}</h1>
         <p className="mt-1 text-lg font-medium text-foreground">{site.role}</p>
@@ -60,20 +60,28 @@ export default function Home() {
 
         <div className="mt-12 space-y-16">
           {entries.map((entry) => (
+            // The icon gutter is only reserved when there is an icon to put
+            // in it. Reserving it unconditionally indented every entry by
+            // 76px, which read as off-centre on narrow screens where the
+            // section heading above it stayed flush left.
             <div
               key={entry.title}
-              className="grid grid-cols-[3.5rem_1fr] gap-x-5 md:ml-2"
+              className={
+                entry.icon
+                  ? "grid grid-cols-[3.5rem_1fr] gap-x-5 md:ml-2"
+                  : "md:ml-2"
+              }
             >
-              <div>
-                {entry.icon && (
-                  // eslint-disable-next-line @next/next/no-img-element
+              {entry.icon && (
+                <div>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={entry.icon}
                     alt=""
                     className="h-14 w-14 rounded-xl object-cover"
                   />
-                )}
-              </div>
+                </div>
+              )}
               <div>
                 <h3 className="text-lg font-bold">
                   {entry.titleHref ? (

@@ -2,6 +2,78 @@
 
 import { useLayoutEffect } from "react";
 
+// Must match the theme-wave animation duration in globals.css.
+const WAVE_MS = 310;
+
+// iOS Safari tints the strips outside the page — the status bar at the top and
+// the toolbar at the bottom — from <meta name="theme-color">. Those strips sit
+// outside the view transition's snapshot, so they are not covered by the wave
+// and a plain theme swap makes them jump instantly while the wave is still
+// sweeping. Easing theme-color across the wave's duration keeps them in step.
+//
+// A CSS transition on the root background cannot do this job: once theme-color
+// is present Safari stops sampling the page and follows the meta tag alone.
+
+function themeColorMeta(): HTMLMetaElement {
+  let meta = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
+  if (!meta) {
+    meta = document.createElement("meta");
+    meta.name = "theme-color";
+    document.head.appendChild(meta);
+  }
+  return meta;
+}
+
+/** Current --background, resolved to [r, g, b]. */
+function backgroundRgb(): [number, number, number] | null {
+  const value = getComputedStyle(document.documentElement)
+    .getPropertyValue("--background")
+    .trim();
+  const hex = value.replace("#", "");
+  const full =
+    hex.length === 3
+      ? hex
+          .split("")
+          .map((c) => c + c)
+          .join("")
+      : hex;
+  if (full.length !== 6 || !/^[0-9a-f]{6}$/i.test(full)) return null;
+  return [
+    parseInt(full.slice(0, 2), 16),
+    parseInt(full.slice(2, 4), 16),
+    parseInt(full.slice(4, 6), 16),
+  ];
+}
+
+function toHex([r, g, b]: [number, number, number]): string {
+  return "#" + [r, g, b].map((v) => v.toString(16).padStart(2, "0")).join("");
+}
+
+function animateThemeColor(
+  from: [number, number, number] | null,
+  to: [number, number, number] | null,
+) {
+  const meta = themeColorMeta();
+  if (!to) return;
+  if (!from || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    meta.setAttribute("content", toHex(to));
+    return;
+  }
+  const start = performance.now();
+  const step = (now: number) => {
+    const t = Math.min(1, (now - start) / WAVE_MS);
+    const eased = t * t; // ease-in, matching the wave
+    const mix = from.map((v, i) => Math.round(v + (to[i] - v) * eased)) as [
+      number,
+      number,
+      number,
+    ];
+    meta.setAttribute("content", toHex(mix));
+    if (t < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+
 export function ThemeToggle() {
   // Re-apply after React clears the attribute on the dev Strict Mode remount.
   // This is a no-op in production.
@@ -11,10 +83,12 @@ export function ThemeToggle() {
     // Arm the root background transition only now, so the theme applied by the
     // inline script before first paint lands instantly instead of fading in.
     document.documentElement.classList.add("theme-ready");
+    animateThemeColor(null, backgroundRgb());
   }, []);
 
   function toggle(e: React.MouseEvent<HTMLButtonElement>) {
     const button = e.currentTarget;
+    const from = backgroundRgb();
 
     const applyTheme = () => {
       const current =
@@ -22,6 +96,9 @@ export function ThemeToggle() {
       const next = current === "dark" ? "light" : "dark";
       document.documentElement.setAttribute("data-theme", next);
       localStorage.setItem("theme", next);
+      // Reading the computed value here forces the recalc, so this picks up
+      // the theme just applied rather than the one being replaced.
+      animateThemeColor(from, backgroundRgb());
     };
 
     // Replay the icon animation on every click
