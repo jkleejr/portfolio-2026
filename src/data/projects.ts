@@ -52,6 +52,11 @@ export const entries: Entry[] = [
         alt: "A Korean headline translated to English in the Dynamic Island, over a live news feed",
         crop: "50% 2%",
       },
+      {
+        src: "/projects/screen-translator-3.png",
+        alt: "Settings for choosing the translation region and showing captions in the Dynamic Island",
+        crop: "50% 22%",
+      },
     ],
   },
   {
