@@ -16,7 +16,7 @@ export type Entry = {
 
 export const entries: Entry[] = [
   {
-    title: "Loot Check (mobile)",
+    title: "Loot Check",
     slug: "loot-check",
     description:
       "Take a picture of any item to identify it and find its resale value.",
@@ -27,7 +27,7 @@ export const entries: Entry[] = [
     ],
   },
   {
-    title: "Paper Reader (mobile)",
+    title: "Paper Reader",
     slug: "paper-reader",
     description:
     "Upload a PDF to hear the text in a natural voice without the formatting and citations.",
@@ -37,7 +37,7 @@ export const entries: Entry[] = [
     ],
   },
   {
-    title: "Screen Translator (mobile)",
+    title: "Screen Translator",
     slug: "screen-translator",
     description:
     "Translate Korean to English text live on your screen.",
@@ -60,7 +60,7 @@ export const entries: Entry[] = [
     ],
   },
   {
-    title: "SleepTalk (mobile)",
+    title: "SleepTalk",
     slug: "sleeptalk",
     description: "Record your audio overnight and track your sleep talking.",
     images: [

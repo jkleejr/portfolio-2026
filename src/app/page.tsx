@@ -56,7 +56,7 @@ export default function Home() {
         </div>
 
         {/* Currently working on */}
-        <h2 className="mt-24 text-lg font-bold">{site.sectionHeading}</h2>
+        <h2 className="mt-16 text-lg font-bold">{site.sectionHeading}</h2>
 
         <div className="mt-12 space-y-16">
           {entries.map((entry) => (

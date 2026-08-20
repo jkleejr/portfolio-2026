@@ -63,7 +63,11 @@ export const caseStudies: Record<string, CaseStudy> = {
       { type: "heading", text: "The problem" },
       {
         type: "text",
-        text: "TODO — who is this for, and what was painful before it existed?",
+        text: "TODO — who is this for, and what was painful before it existed?"
+      },
+      {
+        type: "text",
+        text: "Discovery, Define, Ideate, Design, Develop, Test",
       },
 
       { type: "heading", text: "What I explored" },

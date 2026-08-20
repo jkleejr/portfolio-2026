@@ -19,6 +19,7 @@ import {
   useRef,
   useState,
 } from "react";
+import Image from "next/image";
 import { caseStudies, type CaseStudy, type CaseStudyBlock } from "@/data/case-studies";
 import type { EntryImage } from "@/data/projects";
 
@@ -169,16 +170,23 @@ export function ProjectThumbnail({
   const open = useContext(CaseStudyContext);
   const study = caseStudies[slug];
 
-  const box = "h-[120px] w-[120px] rounded-lg border border-foreground/10";
+  const box = "h-[180px] w-[180px] rounded-lg border border-foreground/10";
 
+  // The screenshots are ~1200px wide, so letting the browser squeeze one into a
+  // 180px box is a ~7x downscale that its cheap filter turns to mush. next/image
+  // resamples them properly and ships a 2x variant for retina screens instead.
   const inner = image.src ? (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img
-      src={image.src}
-      alt={image.alt}
-      className={`${box} object-cover`}
-      style={image.crop ? { objectPosition: image.crop } : undefined}
-    />
+    <div className={`${box} relative overflow-hidden`}>
+      <Image
+        src={image.src}
+        alt={image.alt}
+        fill
+        sizes="180px"
+        quality={90}
+        className="object-cover"
+        style={image.crop ? { objectPosition: image.crop } : undefined}
+      />
+    </div>
   ) : (
     // A project with no screenshot yet still needs a way into its study.
     <div className={`${box} bg-foreground/[0.02]`} aria-label={image.alt} />
