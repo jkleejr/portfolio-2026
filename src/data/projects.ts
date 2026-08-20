@@ -21,7 +21,7 @@ export const entries: Entry[] = [
     description:
       "Take a picture of any item to identify it and find its resale value from similar items sold online.",
     images: [
-      { src: "/projects/loot-check-1.png", alt: "Loot Check home screen", crop: "top" },
+      { src: "/projects/loot-check-1.png", alt: "Loot Check home screen", crop: "50% 15%" },
       { src: "/projects/loot-check-2.png", alt: "Item photo capture" },
       { src: "/projects/loot-check-3.png", alt: "Resale value estimate", crop: "50% 58%" },
     ],
@@ -40,8 +40,19 @@ export const entries: Entry[] = [
     title: "Screen Translator (mobile)",
     slug: "screen-translator",
     description:
-    "Translate Korean text to English live on your screen. In the background, the app identifies text in a specific section of the screen, and displays the translation using the dynamic island on iPhone.",
-    images: [{ alt: "Screenshot" }],
+    "Translate Korean to English text live on your screen. The app runs in the background and identifies text in a specific section of the screen, displaying the translation using the dynamic island on iPhone.",
+    images: [
+      {
+        src: "/projects/screen-translator-1.png",
+        alt: "Screen Translator recording, with live Korean-to-English captions",
+        crop: "50% 22%",
+      },
+      {
+        src: "/projects/screen-translator-2.png",
+        alt: "A Korean headline translated to English in the Dynamic Island, over a live news feed",
+        crop: "50% 2%",
+      },
+    ],
   },
   {
     title: "SleepTalk (mobile)",
@@ -51,7 +62,7 @@ export const entries: Entry[] = [
       {
         src: "/projects/sleeptalk-1.png",
         alt: "SleepTalk record screen waiting to start listening",
-        crop: "50% 33%",
+        crop: "50% 41%",
       },
     ],
   },
@@ -73,7 +84,7 @@ export const entries: Entry[] = [
     description:
       "A personal investing website with daily stock market updates. The daily briefings report on the catalysts impacting the market and the stocks I'm watching.",
     images: [
-      { src: "/projects/buy-side-briefings-1.png", alt: "Night briefing front page", crop: "18% 50%" },
+      { src: "/projects/buy-side-briefings-1.png", alt: "Night briefing front page", crop: "24% 50%" },
       { src: "/projects/buy-side-briefings-2.png", alt: "S&P 500 candlestick chart" },
       { src: "/projects/buy-side-briefings-3.png", alt: "Full briefing read view" },
     ],

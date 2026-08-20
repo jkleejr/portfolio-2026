@@ -19,6 +19,27 @@
   --font-sans: var(--font-quicksand);
 }
 
+/* The browser paints the strips outside the page — on iOS the status bar at
+   the top and the Safari toolbar at the bottom — from the ROOT background.
+   Those strips fall outside the view transition's snapshot, so they show the
+   live value and would flip the instant `data-theme` changes, while the wave
+   is still sweeping across the content. Giving :root its own background and
+   easing it over the wave's duration keeps the strips in step.
+
+   `body` keeps its own background too: with :root painting the canvas, body no
+   longer propagates, and the content area needs an opaque layer for the
+   transition to snapshot. That one changes instantly, which is fine — it is
+   hidden behind the wave the whole time. */
+:root {
+  background-color: var(--background);
+}
+
+/* .theme-ready is added after hydration so the stored theme that the inline
+   script applies before first paint does not animate on load. */
+html.theme-ready {
+  transition: background-color 0.31s ease-in;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
@@ -184,6 +205,9 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html.theme-ready {
+    transition-duration: 0.01ms;
+  }
   .cs-backdrop,
   .cs-panel,
   .cs-closing .cs-backdrop,

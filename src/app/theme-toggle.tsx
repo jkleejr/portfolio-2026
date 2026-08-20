@@ -8,6 +8,9 @@ export function ThemeToggle() {
   useLayoutEffect(() => {
     const theme = localStorage.getItem("theme");
     if (theme) document.documentElement.setAttribute("data-theme", theme);
+    // Arm the root background transition only now, so the theme applied by the
+    // inline script before first paint lands instantly instead of fading in.
+    document.documentElement.classList.add("theme-ready");
   }, []);
 
   function toggle(e: React.MouseEvent<HTMLButtonElement>) {
