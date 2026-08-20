@@ -70,7 +70,7 @@ export const entries: Entry[] = [
     title: "Time with Tree",
     slug: "time-with-tree",
     titleHref: "https://timewithtree.co.kr/",
-    description: "A website for a tree farm in Sejong, South Korea. Customers can learn about the tree farm, look through the catalog, and place an order. Business owners can manage their inventory, customer orders, and email communications through a dashboard only accesible to them.",
+    description: "A website for a tree farm in Sejong, South Korea. Customers can learn about the tree farm, look through the catalog, and place an order. Business owners can manage their inventory, customer orders, and email communications.",
     images: [
       { src: "/projects/time-with-tree.png", alt: "Time with Tree homepage" },
       { src: "/projects/time-with-tree-2.jpg", alt: "Tree catalog and shop page" },
@@ -87,18 +87,6 @@ export const entries: Entry[] = [
       { src: "/projects/buy-side-briefings-1.png", alt: "Night briefing front page", crop: "24% 50%" },
       { src: "/projects/buy-side-briefings-2.png", alt: "S&P 500 candlestick chart" },
       { src: "/projects/buy-side-briefings-3.png", alt: "Full briefing read view" },
-    ],
-
-  },
-  {
-    title: "AI Capital Flow",
-    slug: "ai-capital-flow",
-    titleHref: "https://ai-capital-flow.vercel.app/",
-
-    description:
-      "A visualization of where capital is moving between AI companies. Companies are represented as nodes on an interactive graph and are connected to show the investments between them. Users can navigate the nodes to see more information.",
-    images: [
-      { src: "/projects/ai-capital-flow-1.png", alt: "AI capital flow graph" },
     ],
 
   },

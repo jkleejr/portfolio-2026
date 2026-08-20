@@ -26,12 +26,12 @@ const BUTTON_ICONS: Record<string, React.ReactNode> = {
 export default function Home() {
   return (
     <CaseStudyProvider>
-      <main className="mx-auto max-w-[820px] px-6 pb-28 pt-20 pr-20 md:pr-6 md:pt-28">
+      <main className="mx-auto max-w-[760px] px-6 pb-28 pt-20 pr-20 md:pr-6 md:pt-28">
         {/* Intro */}
         <h1 className="text-2xl font-bold">{site.name}</h1>
         <p className="mt-1 text-lg font-medium text-foreground">{site.role}</p>
 
-        <p className="mt-8 max-w-[68ch] text-lg leading-relaxed text-foreground">
+        <p className="mt-8 text-lg leading-relaxed text-foreground">
           {site.bio}
         </p>
 
@@ -97,7 +97,7 @@ export default function Home() {
                     entry.title
                   )}
                 </h3>
-                <p className="mt-2 max-w-[62ch] text-lg leading-relaxed text-foreground">
+                <p className="mt-2 text-lg leading-relaxed text-foreground">
                   {entry.description}
                   {entry.link && (
                     <>
