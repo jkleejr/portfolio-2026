@@ -19,7 +19,7 @@ export const entries: Entry[] = [
     title: "Loot Check (mobile)",
     slug: "loot-check",
     description:
-      "Take a picture of any item to identify it and find its resale value from similar items sold online.",
+      "Take a picture of any item to identify it and find its resale value.",
     images: [
       { src: "/projects/loot-check-1.png", alt: "Loot Check home screen", crop: "50% 15%" },
       { src: "/projects/loot-check-2.png", alt: "Item photo capture" },
@@ -40,7 +40,7 @@ export const entries: Entry[] = [
     title: "Screen Translator (mobile)",
     slug: "screen-translator",
     description:
-    "Translate Korean to English text live on your screen. The app runs in the background and identifies text in a specific section of the screen, displaying the translation on the dynamic island for iPhone.",
+    "Translate Korean to English text live on your screen.",
     images: [
       {
         src: "/projects/screen-translator-1.png",
@@ -62,7 +62,7 @@ export const entries: Entry[] = [
   {
     title: "SleepTalk (mobile)",
     slug: "sleeptalk",
-    description: "Record your audio overnight and learn about your sleep talking patterns over time.",
+    description: "Record your audio overnight and track your sleep talking.",
     images: [
       {
         src: "/projects/sleeptalk-1.png",
@@ -75,7 +75,7 @@ export const entries: Entry[] = [
     title: "Time with Tree",
     slug: "time-with-tree",
     titleHref: "https://timewithtree.co.kr/",
-    description: "A website for a tree farm in Sejong, South Korea. Customers can learn about the tree farm, look through the catalog, and place an order. Business owners can manage their inventory, customer orders, and email communications.",
+    description: "An ecommerce website for a tree farm in South Korea.",
     images: [
       { src: "/projects/time-with-tree.png", alt: "Time with Tree homepage" },
       { src: "/projects/time-with-tree-2.jpg", alt: "Tree catalog and shop page" },
@@ -87,7 +87,7 @@ export const entries: Entry[] = [
     titleHref: "https://buy-side-briefings.vercel.app/",
 
     description:
-      "A personal investing website with daily stock market updates. The daily briefings report on the catalysts impacting the market and the stocks I'm watching.",
+      "Daily stock market reports and updates.",
     images: [
       { src: "/projects/buy-side-briefings-1.png", alt: "Night briefing front page", crop: "24% 50%" },
       { src: "/projects/buy-side-briefings-2.png", alt: "S&P 500 candlestick chart" },

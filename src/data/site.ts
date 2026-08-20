@@ -1,7 +1,7 @@
 export const site = {
   name: "John Lee",
   role: "Product Designer",
-  bio: "I design and build apps end-to-end, from first sketch to deployed product. I aim to make intuitive interfaces with a clean design. Looking for a role in product or UI/UX design.", // EDIT
+  bio: "I design and build apps end-to-end, from first sketch to deployed product. I aim to create intuitive, functional, and helpful interfaces that makes using AI feel easy. Currently looking for a role in product or UI/UX design.", // EDIT
   // Pill buttons under the bio
   buttons: [
     { label: "LinkedIn", href: "https://www.linkedin.com/in/john-lee-779329401/", icon: "linkedin" },
