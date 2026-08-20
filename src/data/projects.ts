@@ -30,7 +30,7 @@ export const entries: Entry[] = [
     title: "Paper Reader (mobile)",
     slug: "paper-reader",
     description:
-    "Upload a PDF to hear the text in a natural voice without unnecessary formatting and citations.",
+    "Upload a PDF to hear the text in a natural voice without the formatting and citations.",
     images: [
       { src: "/projects/paper-reader-1.png", alt: "Paper library with playback progress", crop: "50% 12%" },
       { src: "/projects/paper-reader-2.png", alt: "Reader view with the sentence being read aloud highlighted", crop: "50% 34%" },
@@ -40,7 +40,7 @@ export const entries: Entry[] = [
     title: "Screen Translator (mobile)",
     slug: "screen-translator",
     description:
-    "Translate Korean to English text live on your screen. The app runs in the background and identifies text in a specific section of the screen, displaying the translation using the dynamic island on iPhone.",
+    "Translate Korean to English text live on your screen. The app runs in the background and identifies text in a specific section of the screen, displaying the translation on the dynamic island for iPhone.",
     images: [
       {
         src: "/projects/screen-translator-1.png",
@@ -51,11 +51,6 @@ export const entries: Entry[] = [
         src: "/projects/screen-translator-2.png",
         alt: "A Korean headline translated to English in the Dynamic Island, over a live news feed",
         crop: "50% 2%",
-      },
-      {
-        src: "/projects/screen-translator-3.png",
-        alt: "Settings for choosing the translation region and showing captions in the Dynamic Island",
-        crop: "50% 22%",
       },
     ],
   },
