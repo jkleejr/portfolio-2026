@@ -1,0 +1,107 @@
+@import "tailwindcss";
+
+:root {
+  --background: #000000;
+  --foreground: #ffffff;
+  --muted: #a3a3a3;
+}
+
+[data-theme="light"] {
+  --background: #ffffff;
+  --foreground: #171717;
+  --muted: #525252;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --font-sans: var(--font-quicksand);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-quicksand), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--foreground);
+  color: var(--background);
+}
+
+/* Theme toggle shows the current mode: purple moon (iOS Do Not
+   Disturb style) in dark mode, orange sun in light mode */
+.theme-icon-moon {
+  color: #7d7aff;
+}
+.theme-icon-sun {
+  display: none;
+  color: #f59e0b;
+}
+[data-theme="light"] .theme-icon-sun {
+  display: block;
+}
+[data-theme="light"] .theme-icon-moon {
+  display: none;
+}
+
+/* Theme switch wave: the new theme sweeps out as a growing circle
+   centered on the toggle button (--wave-x/--wave-y set on click) */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-old(root) {
+  z-index: 1;
+}
+::view-transition-new(root) {
+  z-index: 2;
+  animation: theme-wave 0.31s ease-in forwards;
+}
+@keyframes theme-wave {
+  from {
+    clip-path: circle(0% at var(--wave-x, 100%) var(--wave-y, 0%));
+  }
+  to {
+    clip-path: circle(150% at var(--wave-x, 100%) var(--wave-y, 0%));
+  }
+}
+
+/* Click feedback: .theme-toggled is (re-)added on each click */
+.theme-toggled .theme-icon-moon {
+  animation: moon-shake 0.5s ease;
+}
+.theme-toggled .theme-icon-sun {
+  animation: sun-flash 0.5s ease;
+}
+
+@keyframes moon-shake {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-18deg);
+  }
+  50% {
+    transform: rotate(14deg);
+  }
+  75% {
+    transform: rotate(-7deg);
+  }
+}
+
+@keyframes sun-flash {
+  0% {
+    transform: scale(0.5) rotate(-90deg);
+  }
+  55% {
+    transform: scale(1.2) rotate(8deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+}
