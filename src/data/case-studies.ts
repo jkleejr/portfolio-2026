@@ -68,7 +68,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       { type: "heading", text: "Context" },
       {
         type: "text",
-        text: "When I was moving out of my apartment, I needed to clear out a lot of stuff quickly. I wasn't sure whether something was worth selling, so I looked for a way to quickly identify items and find their resale value without having to manually search. However, I couldn't find an app that was easy to use, fast, accurate, and cheap.",
+        text: "When I was moving out of my apartment, I needed to clear out a lot of stuff quickly. I wasn't sure whether something was worth selling, so I looked for a way to quickly identify items and find their resale value without having to manually search. However, I couldn't find an app that was well designed, easy to use, fast, accurate, and cheap.",
       },
       {
         type: "text",
@@ -308,11 +308,23 @@ export const caseStudies: Record<string, CaseStudy> = {
         text: "TODO — who is this for, and what was painful before it existed?",
       },
 
-      { type: "heading", text: "Solution" },
+      // following expectations from client, so less ideation 
+      // looked at other true farm websites in Korea 
+       { type: "heading", text: "Ideation" },
       {
         type: "text",
         text: "TODO — the approaches you tried, including the ones you threw away.",
       },
+
+            //iteration, choices, tradeoffs
+      // used lovable, easy to build a basic website, but hard to make changes using Lovable UI
+
+      { type: "heading", text: "Designing the website" },
+      {
+        type: "text",
+        text: "TODO — the approaches you tried, including the ones you threw away.",
+      },
+
       {
         type: "images",
         items: [
@@ -321,26 +333,9 @@ export const caseStudies: Record<string, CaseStudy> = {
             alt: "Tree catalog and shop page",
           },
         ],
-        caption: "TODO — caption these screens.",
       },
 
-      { type: "heading", text: "Ideation" },
-      {
-        type: "text",
-        text: "TODO — the approaches you tried, including the ones you threw away.",
-      },
-
-      //iteration, choices, tradeoffs
-      { type: "heading", text: "Designing the website" },
-      {
-        type: "list",
-        items: [
-          "TODO — a specific decision and the tradeoff behind it.",
-          "TODO — another one. Specifics beat adjectives here.",
-          "TODO — something you got wrong first, and what changed your mind.",
-        ],
-      },
-
+      
       { type: "divider" },
 
       { type: "heading", text: "Outcome" },
@@ -363,7 +358,8 @@ export const caseStudies: Record<string, CaseStudy> = {
         text: "TODO — who is this for, and what was painful before it existed?",
       },
 
-      { type: "heading", text: "Solution" },
+      // briefings initially had a buy, sell, hold recommendation after every briefing
+      { type: "heading", text: "Ideation" },
       {
         type: "text",
         text: "TODO — the approaches you tried, including the ones you threw away.",
@@ -381,6 +377,7 @@ export const caseStudies: Record<string, CaseStudy> = {
           },
         ],
       },
+      // claude code, figma ai, generating ai redesigns at first to get more ideas
 
       { type: "heading", text: "Designing the website" },
       {
@@ -392,6 +389,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         ],
       },
 
+      // claude code
       { type: "heading", text: "Development" },
       {
         type: "list",
@@ -401,6 +399,7 @@ export const caseStudies: Record<string, CaseStudy> = {
           "TODO — something you got wrong first, and what changed your mind.",
         ],
       },
+
 
       { type: "divider" },
 
