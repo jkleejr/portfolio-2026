@@ -318,11 +318,12 @@ html.gravity-on {
 }
 
 /* The gravity button's icon. A mask rather than an <img> so it is painted in
-   currentColor and inverts along with the button, in either theme. */
+   currentColor and inverts along with the button, in either theme — one asset
+   covers light mode, dark mode, and the inverted "on" state. */
 .gravity-icon {
-  width: 22px;
-  height: 22px;
+  width: 23px;
+  height: 23px;
   background-color: currentColor;
-  -webkit-mask: url("/gravity.png") center / contain no-repeat;
-  mask: url("/gravity.png") center / contain no-repeat;
+  -webkit-mask: url("/gravity.svg") center / contain no-repeat;
+  mask: url("/gravity.svg") center / contain no-repeat;
 }

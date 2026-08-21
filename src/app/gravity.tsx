@@ -418,8 +418,8 @@ export function Gravity() {
           : "border-foreground/15 bg-background text-foreground"
       }`}
     >
-      {/* A figure mid-fall. Drawn as a mask filled with currentColor, so it
-          inverts with the button instead of needing a second asset. */}
+      {/* Drawn as a mask filled with currentColor, so it inverts with the
+          button instead of needing a second asset. */}
       <span className="gravity-icon" aria-hidden />
     </button>
   );
