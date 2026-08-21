@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Quicksand, Bricolage_Grotesque, Instrument_Sans } from "next/font/google";
+import { Quicksand } from "next/font/google";
 import { site } from "@/data/site";
 import { ThemeToggle } from "./theme-toggle";
 import { DesignToggle } from "./design-toggle";
@@ -7,19 +7,6 @@ import "./globals.css";
 
 const quicksand = Quicksand({
   variable: "--font-quicksand",
-  subsets: ["latin"],
-});
-
-// Design two only. Bricolage is the display voice — a grotesque with enough
-// character to carry a name at 56px; Instrument Sans is the quieter face
-// everything else is set in.
-const bricolage = Bricolage_Grotesque({
-  variable: "--font-bricolage",
-  subsets: ["latin"],
-});
-
-const instrument = Instrument_Sans({
-  variable: "--font-instrument",
   subsets: ["latin"],
 });
 
@@ -45,9 +32,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body
-        className={`${quicksand.variable} ${bricolage.variable} ${instrument.variable} antialiased`}
-      >
+      <body className={`${quicksand.variable} antialiased`}>
         <DesignToggle />
         <ThemeToggle />
         {children}
