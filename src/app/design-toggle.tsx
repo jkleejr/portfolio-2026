@@ -5,8 +5,9 @@
 // flash of the wrong layout — the inline script in layout.tsx applies the
 // stored value before first paint.
 //
-// The two labels are both rendered and CSS shows the right one, for the same
-// reason the theme toggle renders both a sun and a moon: the button reads
+// The label names the design you are currently on, not the one you would
+// switch to. Both labels are rendered and CSS shows the right one, for the
+// same reason the theme toggle renders both a sun and a moon: the button reads
 // correctly before hydration.
 
 export function DesignToggle() {

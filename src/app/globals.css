@@ -228,9 +228,9 @@ body {
   display: none;
 }
 
-/* The button names the design you would switch TO. */
-[data-design="one"] .design-label-one,
-[data-design="two"] .design-label-two {
+/* The button names the design you are ON. */
+[data-design="one"] .design-label-two,
+[data-design="two"] .design-label-one {
   display: none;
 }
 
