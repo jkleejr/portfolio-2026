@@ -244,20 +244,14 @@ html.gravity-on {
   overflow: hidden;
 }
 
-/* Only plain text is replaced by copies, so only plain text is hidden — and by
-   going transparent rather than away, so the images and buttons around it keep
-   their places until they fall. */
-html.gravity-on [data-design-panel],
-html.gravity-on [data-design-panel] * {
-  color: transparent;
-}
-
-/* Icons are drawn, not written, so they stay. The children need naming too:
-   a path with fill="currentColor" resolves against its own colour, which the
-   rule above would otherwise have made transparent. */
-html.gravity-on .gravity-atom,
-html.gravity-on .gravity-atom * {
-  color: var(--foreground);
+/* The page itself goes invisible; what you see is the pieces. Hiding it rather
+   than recolouring its text is what keeps the collapse quiet: pinning the atoms
+   takes them out of flow, so the page gets shorter and everything below the
+   fold slides up — and an image dragged into view that way is in full colour
+   no matter what the text is set to. Hidden, none of it can show.
+   `visibility` is inherited, so the pinned pieces claim it back below. */
+html.gravity-on [data-design-panel] {
+  visibility: hidden;
 }
 
 /* Text is being thrown around, so stop the browser from selecting it or
@@ -284,15 +278,14 @@ html.gravity-on {
   white-space: nowrap;
   pointer-events: auto;
   cursor: grab;
-  will-change: transform;
 }
 
 /* A real element, pinned to the viewport and driven by the engine. It keeps
    its own handlers, so it still works wherever it lands. */
 .gravity-atom {
+  visibility: visible;
   z-index: 30;
   cursor: grab;
-  will-change: transform;
   -webkit-user-drag: none;
   /* The engine writes a new transform every frame. A CSS transition on top of
      that draws the element behind where the physics actually put it, so clicks
@@ -317,13 +310,35 @@ html.gravity-on {
   cursor: grabbing;
 }
 
-/* The gravity button's icon. A mask rather than an <img> so it is painted in
-   currentColor and inverts along with the button, in either theme — one asset
-   covers light mode, dark mode, and the inverted "on" state. */
-.gravity-icon {
-  width: 23px;
-  height: 23px;
-  background-color: currentColor;
-  -webkit-mask: url("/gravity.svg") center / contain no-repeat;
-  mask: url("/gravity.svg") center / contain no-repeat;
+/* The gravity button's arrow falls out of the bottom on each press and drops
+   back in from the top. The button clips it, so the arrow simply leaves and
+   arrives rather than flying around outside. Per-keyframe easing does the
+   work: it accelerates on the way out and settles on the way back, which is
+   what falling looks like. */
+.gravity-dropping {
+  animation: gravity-drop 0.4s both;
+}
+
+@keyframes gravity-drop {
+  0% {
+    transform: translateY(0);
+    animation-timing-function: cubic-bezier(0.55, 0, 1, 0.45);
+  }
+  49.9% {
+    transform: translateY(220%);
+  }
+  /* The wrap happens out of sight, past the clipped edge. */
+  50% {
+    transform: translateY(-220%);
+    animation-timing-function: cubic-bezier(0, 0.55, 0.45, 1);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gravity-dropping {
+    animation: none;
+  }
 }

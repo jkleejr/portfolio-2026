@@ -41,6 +41,9 @@ type WordStyle = {
   letterSpacing: string;
   color: string;
   textTransform: string;
+  // Without this a copy gets line-height: normal, its line box is shorter than
+  // the one the word came out of, and every word sits a couple of pixels high.
+  lineHeight: string;
 };
 
 type Snapshot = { text: string; left: number; top: number; css: WordStyle };
@@ -140,6 +143,7 @@ function snapshotWords(root: HTMLElement, atoms: HTMLElement[]): Snapshot[] {
           letterSpacing: cs.letterSpacing,
           color,
           textTransform: cs.textTransform,
+          lineHeight: cs.lineHeight,
         };
         styles.set(parent, css);
       }
@@ -170,6 +174,17 @@ function run(Matter: typeof MatterType, exit: () => void): () => void {
   );
   if (!panel) return () => {};
 
+  const root = document.documentElement;
+  const scrolled = window.scrollY;
+
+  // Freeze and hide the page BEFORE measuring anything. Measuring first would
+  // read a layout that is about to change twice over: locking the scroll can
+  // remove the scrollbar and widen the viewport, and pinning the atoms takes
+  // them out of flow, which collapses the page and drags whatever was below
+  // the fold up into view. Hiding first means every measurement is of the
+  // final layout, and the collapse happens where nobody can see it.
+  root.classList.add("gravity-on");
+
   // The floating toggles are outside the page content but still on screen, so
   // they fall too. The gravity button itself stays anchored — it is the way
   // out, and chasing it across the floor to switch the effect off is a joke
@@ -180,15 +195,16 @@ function run(Matter: typeof MatterType, exit: () => void): () => void {
 
   const atoms = collectAtoms([panel, ...floating]);
   const words = snapshotWords(panel, atoms);
-  if (!atoms.length && !words.length) return () => {};
+  if (!atoms.length && !words.length) {
+    root.classList.remove("gravity-on");
+    return () => {};
+  }
 
-  // Measured before anything moves: pinning the atoms reflows the page.
   const atomRects = atoms.map((el) => el.getBoundingClientRect());
 
   const overlay = document.createElement("div");
   overlay.className = "gravity-overlay";
   document.body.appendChild(overlay);
-  document.documentElement.classList.add("gravity-on");
 
   const engine = Matter.Engine.create();
   const world = engine.world;
@@ -280,7 +296,15 @@ function run(Matter: typeof MatterType, exit: () => void): () => void {
 
   const listeners: Array<() => void> = [];
   for (const piece of pieces) {
-    const wake = () => drop(piece.body);
+    // will-change is set here rather than in the stylesheet: it promotes the
+    // element to its own compositor layer, which costs subpixel text
+    // rendering, and until a piece is touched it is not going anywhere. Hinting
+    // everything up front made the whole page visibly change texture the
+    // moment the button was pressed.
+    const wake = () => {
+      piece.el.style.willChange = "transform";
+      drop(piece.body);
+    };
     piece.el.addEventListener("mouseenter", wake);
     piece.el.addEventListener("mousedown", wake);
     piece.el.addEventListener("touchstart", wake, { passive: true });
@@ -382,13 +406,30 @@ function run(Matter: typeof MatterType, exit: () => void): () => void {
     Matter.Runner.stop(runner);
     Matter.Engine.clear(engine);
     overlay.remove();
-    document.documentElement.classList.remove("gravity-on");
+    root.classList.remove("gravity-on");
+    // Collapsing the page while the atoms were out of flow can clamp the
+    // scroll position, so put it back where it was.
+    window.scrollTo(0, scrolled);
   };
 }
 
 export function Gravity() {
   const [on, setOn] = useState(false);
   const teardown = useRef<(() => void) | null>(null);
+  const icon = useRef<SVGSVGElement>(null);
+
+  function toggle() {
+    // Replay the drop on every press. Removing the class and forcing a reflow
+    // before re-adding it restarts the animation; without the reflow the
+    // browser coalesces both changes and nothing happens on the second click.
+    const el = icon.current;
+    if (el) {
+      el.classList.remove("gravity-dropping");
+      void el.getBoundingClientRect();
+      el.classList.add("gravity-dropping");
+    }
+    setOn((v) => !v);
+  }
 
   useEffect(() => {
     if (!on) return;
@@ -408,19 +449,31 @@ export function Gravity() {
 
   return (
     <button
-      onClick={() => setOn((v) => !v)}
+      onClick={toggle}
       aria-pressed={on}
       aria-label="Turn gravity on and off"
-      title={on ? "Turn gravity off" : "Turn gravity on — then hover anything"}
-      className={`fixed right-6 top-[4.5rem] z-40 flex h-10 w-10 items-center justify-center rounded-full border transition duration-200 ease-out hover:scale-110 hover:opacity-80 ${
+      className={`fixed right-6 top-[4.5rem] z-40 flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border transition duration-200 ease-out hover:scale-110 hover:opacity-80 ${
         on
           ? "border-transparent bg-foreground text-background"
           : "border-foreground/15 bg-background text-foreground"
       }`}
     >
-      {/* Drawn as a mask filled with currentColor, so it inverts with the
-          button instead of needing a second asset. */}
-      <span className="gravity-icon" aria-hidden />
+      {/* Down. Inline rather than an asset — it is two strokes, and this way
+          it takes currentColor and inverts with the button for free. */}
+      <svg
+        ref={icon}
+        width="19"
+        height="19"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2.2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        aria-hidden
+      >
+        <path d="M12 4.5v14M5.5 12.5 12 19l6.5-6.5" />
+      </svg>
     </button>
   );
 }
