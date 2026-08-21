@@ -25,7 +25,7 @@ import type { EntryImage } from "@/data/projects";
 
 const EXIT_MS = 200; // must match .cs-closing animation duration in globals.css
 
-const CaseStudyContext = createContext<(slug: string) => void>(() => {});
+export const CaseStudyContext = createContext<(slug: string) => void>(() => {});
 
 export function CaseStudyProvider({ children }: { children: React.ReactNode }) {
   const [slug, setSlug] = useState<string | null>(null);

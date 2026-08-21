@@ -300,12 +300,12 @@ export const caseStudies: Record<string, CaseStudy> = {
   "time-with-tree": {
     title: "Time with Tree",
     tagline:
-      "A storefront and inventory dashboard for a tree farm in Sejong, South Korea.",
+      "An e-commerce website for a tree farm in Sejong, South Korea.",
     blocks: [
       { type: "heading", text: "Context" },
       {
         type: "text",
-        text: "TODO — who is this for, and what was painful before it existed?",
+        text: "Time with Tree is a Birch tree farm in Sejong, South Korea. The client wanted to sell their trees online, but they didn't have a website or an online store.",
       },
 
       // following expectations from client, so less ideation 
@@ -321,6 +321,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       { type: "heading", text: "Designing the website" },
       {
+        // dns setup, seo strategy, 
         type: "text",
         text: "TODO — the approaches you tried, including the ones you threw away.",
       },
@@ -340,6 +341,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       { type: "heading", text: "Outcome" },
       {
+        // naver seo, google seo, coupang
         type: "text",
         text: "TODO — what shipped, how it performs, what is next.",
       },

@@ -7,6 +7,8 @@ export type EntryImage = {
 export type Entry = {
   title: string;
   slug: string; // links this entry to its case study in case-studies.ts
+  platform?: "mobile" | "web"; // design two only: labels the entry and sets
+  // the aspect ratio its screenshots are shown at
   titleHref?: string; // makes the title a link, opened in a new tab
   description: string;
   link?: { label: string; href: string };
@@ -18,6 +20,7 @@ export const entries: Entry[] = [
   {
     title: "Loot Check",
     slug: "loot-check",
+    platform: "mobile",
     description:
       "Take a picture of any item to identify it and find its resale value.",
     images: [
@@ -29,6 +32,7 @@ export const entries: Entry[] = [
   {
     title: "Paper Reader",
     slug: "paper-reader",
+    platform: "mobile",
     description:
     "Upload a PDF to hear the text in a natural voice without the formatting and citations.",
     images: [
@@ -39,6 +43,7 @@ export const entries: Entry[] = [
   {
     title: "Screen Translator",
     slug: "screen-translator",
+    platform: "mobile",
     description:
     "Translate Korean to English text live on your screen.",
     images: [
@@ -62,6 +67,7 @@ export const entries: Entry[] = [
   {
     title: "SleepTalk",
     slug: "sleeptalk",
+    platform: "mobile",
     description: "Record your audio overnight and track your sleep talking.",
     images: [
       {
@@ -74,8 +80,9 @@ export const entries: Entry[] = [
   {
     title: "Time with Tree",
     slug: "time-with-tree",
+    platform: "web",
     titleHref: "https://timewithtree.co.kr/",
-    description: "An ecommerce website for a tree farm in South Korea.",
+    description: "An e-commerce website for a tree farm in South Korea.",
     images: [
       { src: "/projects/time-with-tree.png", alt: "Time with Tree homepage" },
       { src: "/projects/time-with-tree-2.jpg", alt: "Tree catalog and shop page" },
@@ -84,6 +91,7 @@ export const entries: Entry[] = [
   {
     title: "Buy Side Briefings",
     slug: "buy-side-briefings",
+    platform: "web",
     titleHref: "https://buy-side-briefings.vercel.app/",
 
     description:
