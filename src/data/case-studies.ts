@@ -56,6 +56,15 @@ export type CaseStudy = {
 
 // Discovery, Define, Ideate, Design, Develop, Test
 
+// overview
+// background
+// redesign / design
+// final thoughts
+
+// problem solving, tradeoffs, development choices
+// assume 20 second scan, 1 minute read... need to have an interesting visual design, cant be basic 
+
+
 
 export const caseStudies: Record<string, CaseStudy> = {
   "loot-check": {
@@ -68,18 +77,17 @@ export const caseStudies: Record<string, CaseStudy> = {
       { type: "heading", text: "Context" },
       {
         type: "text",
-        text: "When I was moving out of my apartment, I needed to clear out a lot of stuff quickly. I wasn't sure whether something was worth selling, so I looked for a way to quickly identify items and find their resale value without having to manually search. However, I couldn't find an app that was well designed, easy to use, fast, accurate, and cheap.",
+        text: "Moving out of my apartment, I wanted a quick way to tell whether things were worth selling — and couldn't find an app that was fast, accurate, and actually well designed.",
       },
       {
         type: "text",
-        text: "There were many mobile apps that could identify items from a photo, but the interfaces looked cluttered and outdated. Existing apps often required the user to pay a subscription immediately, only allowing a few free scans.",
-      },
+        text: "Many apps could identify items from a photo, but they buried the feature under cluttered, dated interfaces and required a subscription after a few free scans.",      },
 // the opportunity, or the solution?
       { type: "heading", text: "Solution" },
       {
         type: "text",
-        text: "A simple app where users can take a photo of any item to get its name, estimated resale value, and the best marketplaces to sell it. Users can quickly get the information they want, in 2 steps.",
-      },
+// Keeps your sentence structure, tightened
+        text: "A simple app that allows users to photograph any item and get its name, resale value, and where to sell it.",      },
 
       {
         type: "images",
@@ -135,13 +143,12 @@ export const caseStudies: Record<string, CaseStudy> = {
       { type: "heading", text: "Context" },
       {
         type: "text",
-        text: "TODO — who is this for, and what was painful before it existed?",
-      },
+        text: "A friend wanted to listen to a research paper on a walk, but her phone's voice reader stumbled through every citation and page number in a robotic voice.",      },
 // the opportunity, the solution
       { type: "heading", text: "Solution" },
       {
         type: "text",
-        text: "TODO — the approaches you tried, including the ones you threw away.",
+        text: "An app that allows users to upload a PDF and hear the text in a natural voice without the formatting and citations.",     
       },
       {
         type: "images",
