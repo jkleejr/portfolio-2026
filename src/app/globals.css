@@ -317,7 +317,12 @@ html.gravity-on {
   cursor: grabbing;
 }
 
-/* The button that started it stays put — it is the way out. */
-.gravity-button {
-  cursor: pointer;
+/* The gravity button's icon. A mask rather than an <img> so it is painted in
+   currentColor and inverts along with the button, in either theme. */
+.gravity-icon {
+  width: 22px;
+  height: 22px;
+  background-color: currentColor;
+  -webkit-mask: url("/gravity.png") center / contain no-repeat;
+  mask: url("/gravity.png") center / contain no-repeat;
 }

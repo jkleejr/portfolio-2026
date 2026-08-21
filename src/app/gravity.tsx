@@ -24,7 +24,6 @@
 // ---------------------------------------------------------------------------
 
 import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
 import type MatterType from "matter-js";
 
 // Walls sit this far outside the viewport so fast-moving bodies cannot tunnel
@@ -413,19 +412,15 @@ export function Gravity() {
       aria-pressed={on}
       aria-label="Turn gravity on and off"
       title={on ? "Turn gravity off" : "Turn gravity on — then hover anything"}
-      className={`gravity-button fixed right-6 top-[4.5rem] z-40 h-10 w-10 overflow-hidden rounded-full border transition duration-200 ease-out hover:scale-110 ${
-        on ? "border-foreground/60" : "border-foreground/15 opacity-70 hover:opacity-100"
+      className={`fixed right-6 top-[4.5rem] z-40 flex h-10 w-10 items-center justify-center rounded-full border transition duration-200 ease-out hover:scale-110 hover:opacity-80 ${
+        on
+          ? "border-transparent bg-foreground text-background"
+          : "border-foreground/15 bg-background text-foreground"
       }`}
     >
-      {/* Mass curving spacetime — the picture of what the button does. */}
-      <Image
-        src="/gravity.png"
-        alt=""
-        width={40}
-        height={40}
-        quality={90}
-        className="h-full w-full object-cover"
-      />
+      {/* A figure mid-fall. Drawn as a mask filled with currentColor, so it
+          inverts with the button instead of needing a second asset. */}
+      <span className="gravity-icon" aria-hidden />
     </button>
   );
 }
