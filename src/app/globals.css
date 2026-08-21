@@ -233,3 +233,91 @@ body {
 [data-design="two"] .design-label-one {
   display: none;
 }
+
+/* ---------------------------------------------------------------------------
+   Google Gravity
+   Scrolling is locked while it runs: the falling pieces are position: fixed,
+   so a scroll would slide them out from under the layout they came from.
+   --------------------------------------------------------------------------- */
+
+html.gravity-on {
+  overflow: hidden;
+}
+
+/* Only plain text is replaced by copies, so only plain text is hidden — and by
+   going transparent rather than away, so the images and buttons around it keep
+   their places until they fall. */
+html.gravity-on [data-design-panel],
+html.gravity-on [data-design-panel] * {
+  color: transparent;
+}
+
+/* Icons are drawn, not written, so they stay. The children need naming too:
+   a path with fill="currentColor" resolves against its own colour, which the
+   rule above would otherwise have made transparent. */
+html.gravity-on .gravity-atom,
+html.gravity-on .gravity-atom * {
+  color: var(--foreground);
+}
+
+/* Text is being thrown around, so stop the browser from selecting it or
+   starting a native image drag mid-throw. */
+html.gravity-on {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.gravity-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  overflow: hidden;
+  /* The real elements sit above this and stay clickable; only the word copies
+     inside it take the pointer. */
+  pointer-events: none;
+}
+
+.gravity-word {
+  position: absolute;
+  top: 0;
+  left: 0;
+  white-space: nowrap;
+  pointer-events: auto;
+  cursor: grab;
+  will-change: transform;
+}
+
+/* A real element, pinned to the viewport and driven by the engine. It keeps
+   its own handlers, so it still works wherever it lands. */
+.gravity-atom {
+  z-index: 30;
+  cursor: grab;
+  will-change: transform;
+  -webkit-user-drag: none;
+  /* The engine writes a new transform every frame. A CSS transition on top of
+     that draws the element behind where the physics actually put it, so clicks
+     land on empty space next to it. */
+  transition: none;
+}
+
+/* Hover scaling fights the same transform, and a button that grows under the
+   cursor while it is being thrown is not helping anyone. */
+.gravity-atom,
+.gravity-atom:hover {
+  scale: none;
+}
+
+.gravity-atom img {
+  -webkit-user-drag: none;
+  pointer-events: none;
+}
+
+.gravity-word:active,
+.gravity-atom:active {
+  cursor: grabbing;
+}
+
+/* The button that started it stays put — it is the way out. */
+.gravity-button {
+  cursor: pointer;
+}

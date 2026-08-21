@@ -22,6 +22,7 @@ export function DesignToggle() {
   return (
     <button
       onClick={toggle}
+      data-gravity="atom"
       aria-label="Switch between the two portfolio designs"
       className="fixed left-6 top-6 z-20 flex h-10 items-center gap-2 rounded-full border border-foreground/15 bg-background px-4 text-sm font-semibold text-foreground transition duration-200 ease-out hover:scale-105 hover:opacity-80"
     >

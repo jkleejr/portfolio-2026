@@ -61,6 +61,7 @@ export type CaseStudy = {
 // redesign / design
 // final thoughts
 
+
 // problem solving, tradeoffs, development choices
 // assume 20 second scan, 1 minute read... need to have an interesting visual design, cant be basic 
 
@@ -143,9 +144,12 @@ export const caseStudies: Record<string, CaseStudy> = {
       { type: "heading", text: "Context" },
       {
         type: "text",
-        text: "A friend wanted to listen to a research paper on a walk, but her phone's voice reader stumbled through every citation and page number in a robotic voice.",      },
-// the opportunity, the solution
+        text: "A friend tried listening to a paper while walking and got '[1] et al., pp. 234–256' read aloud in a robot voice. She wanted an app that fixed both the formatting and the voice.",
+      },
+
+      // the opportunity, the solution
       { type: "heading", text: "Solution" },
+      
       {
         type: "text",
         text: "An app that allows users to upload a PDF and hear the text in a natural voice without the formatting and citations.",     
