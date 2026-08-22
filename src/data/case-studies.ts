@@ -54,6 +54,7 @@ export type CaseStudy = {
   blocks: CaseStudyBlock[];
 };
 
+// traditional design process: empathize, define, ideate, prototype, test, implement
 // Discovery, Define, Ideate, Design, Develop, Test
 
 // overview
@@ -66,30 +67,31 @@ export type CaseStudy = {
 // assume 20 second scan, 1 minute read... need to have an interesting visual design, cant be basic 
 
 
+// Note on the design process: roles are changing, don't have to follow the design process exactly. 
+// the design process is a rigid order, you can't create great work repeatably this way
+// what rly matters is the ability to choose and curate what to make
+// sometimes you have to jump around, iterate, make decisions that are not linear
+// the user doesn't care about the process artifacts or the user journey
+// they care about the end experience they are feeling/seeing
+
+
 
 export const caseStudies: Record<string, CaseStudy> = {
   "loot-check": {
     title: "Loot Check",
-    tagline:
-      "Take a picture of any item to identify it and find its resale value.",
     blocks: [
-
+      {
+        type: "text",
+        text: "Loot check is a mobile app that allows users to photograph any item to find its name, resale value, and marketplaces to sell it.",
+      },
       //empathize & define, context
+      // i chose to use claude sonnet 4.6 because its cheap enough to run per scan and still accurate.
+      // costs me about $0.013 per scan.
       { type: "heading", text: "Context" },
       {
         type: "text",
-        text: "Moving out of my apartment, I wanted a quick way to tell whether things were worth selling — and couldn't find an app that was fast, accurate, and actually well designed.",
+        text: "I wanted a quick way to tell whether things were worth selling but I couldn't find an app that was fast, accurate, and well designed. Many apps could identify items from a photo, but their interfaces were cluttered and required a subscription after a few free scans.",
       },
-      {
-        type: "text",
-        text: "Many apps could identify items from a photo, but they buried the feature under cluttered, dated interfaces and required a subscription after a few free scans.",      },
-// the opportunity, or the solution?
-      { type: "heading", text: "Solution" },
-      {
-        type: "text",
-// Keeps your sentence structure, tightened
-        text: "A simple app that allows users to photograph any item and get its name, resale value, and where to sell it.",      },
-
       {
         type: "images",
         items: [
@@ -107,9 +109,8 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "list",
         items: [
-          "TODO — a specific decision and the tradeoff behind it.",
-          "TODO — another one. Specifics beat adjectives here.",
-          "TODO — something you got wrong first, and what changed your mind.",
+          "A key design decision.",
+          "Another key design decision",
         ],
       },
 
@@ -125,9 +126,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
 
       //Implementation, launch, results, whats next
-      { type: "divider" },
-
-      { type: "heading", text: "Outcome" },
+      { type: "heading", text: "Final Thoughts" },
       {
         type: "text",
         text: "TODO — what shipped, how it performs, what is next.",
@@ -137,10 +136,12 @@ export const caseStudies: Record<string, CaseStudy> = {
 
   "paper-reader": {
     title: "Paper Reader",
-    tagline:
-      "Upload a PDF to hear the text in a natural voice without unnecessary formatting and citations.",
     blocks: [
       // context, problem, pain point
+      {
+        type: "text",
+        text: "Paper Reader is a mobile app that allows users to upload a PDF and hear the text in a natural voice without unnecessary formatting and citations.",
+      },
       { type: "heading", text: "Context" },
       {
         type: "text",
@@ -148,12 +149,8 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
 
       // the opportunity, the solution
-      { type: "heading", text: "Solution" },
-      
-      {
-        type: "text",
-        text: "An app that allows users to upload a PDF and hear the text in a natural voice without the formatting and citations.",     
-      },
+      // Gemini 3.1 flash, 3.1 flash tts. 
+      // costs about $0.03 per minute of audio, about $1-3 per paper.
       {
         type: "images",
         items: [
@@ -163,7 +160,6 @@ export const caseStudies: Record<string, CaseStudy> = {
             crop: "50% 34%",
           },
         ],
-        caption: "TODO — caption these screens.",
       },
 //shaping the product, ideate, prototype
       
@@ -186,10 +182,7 @@ export const caseStudies: Record<string, CaseStudy> = {
           "TODO — something you got wrong first, and what changed your mind.",
         ],
       },
-
-      { type: "divider" },
-
-      { type: "heading", text: "Outcome" },
+      { type: "heading", text: "Final Thoughts" },
       {
         type: "text",
         text: "TODO — what shipped, how it performs, what is next.",
@@ -199,29 +192,15 @@ export const caseStudies: Record<string, CaseStudy> = {
 
   "screen-translator": {
     title: "Screen Translator",
-    tagline:
-      "Translate Korean text to English live on your screen, shown through the Dynamic Island on iPhone.",
     blocks: [
+      {
+        type: "text",
+        text: "Screen Translator is a mobile app that translates Korean language instantly on screen. It runs in the background, identifying the text in a certain section of the screen, and displays the translation on the dynamic island for iPhone.",
+      },
       { type: "heading", text: "Context" },
       {
         type: "text",
-        text: "TODO — who is this for, and what was painful before it existed?",
-      },
-
-      { type: "heading", text: "Opportunity" },
-      {
-        type: "text",
-        text: "TODO — the approaches you tried, including the ones you threw away.",
-      },
-
-      { type: "heading", text: "Ideation" },
-      {
-        type: "list",
-        items: [
-          "TODO — a specific decision and the tradeoff behind it.",
-          "TODO — another one. Specifics beat adjectives here.",
-          "TODO — something you got wrong first, and what changed your mind.",
-        ],
+        text: "I wanted a way to translate Korean to English without constantly switching to a translator app.",
       },
       { type: "heading", text: "Designing the experience" },
       {
@@ -242,10 +221,7 @@ export const caseStudies: Record<string, CaseStudy> = {
           "TODO — something you got wrong first, and what changed your mind.",
         ],
       },
-
-      { type: "divider" },
-
-      { type: "heading", text: "Outcome" },
+      { type: "heading", text: "Final Thoughts" },
       {
         type: "text",
         text: "TODO — what shipped, how it performs, what is next.",
@@ -255,29 +231,15 @@ export const caseStudies: Record<string, CaseStudy> = {
 
   sleeptalk: {
     title: "SleepTalk",
-    tagline:
-      "Record your audio overnight and learn about your sleep talking patterns over time.",
     blocks: [
+      {
+        type: "text",
+        text: "SleepTalk is a mobile app that tracks your sleep talking patterns and provides insight over time.",
+      },
       { type: "heading", text: "Context" },
       {
         type: "text",
         text: "TODO — who is this for, and what was painful before it existed?",
-      },
-
-      { type: "heading", text: "Opportunity" },
-      {
-        type: "text",
-        text: "TODO — the approaches you tried, including the ones you threw away.",
-      },
-
-      { type: "heading", text: "Ideation" },
-      {
-        type: "list",
-        items: [
-          "TODO — a specific decision and the tradeoff behind it.",
-          "TODO — another one. Specifics beat adjectives here.",
-          "TODO — something you got wrong first, and what changed your mind.",
-        ],
       },
       { type: "heading", text: "Designing the experience" },
       {
@@ -288,19 +250,7 @@ export const caseStudies: Record<string, CaseStudy> = {
           "TODO — something you got wrong first, and what changed your mind.",
         ],
       },
-      { type: "heading", text: "Development" },
-      {
-        type: "list",
-        items: [
-          "TODO — a specific decision and the tradeoff behind it.",
-          "TODO — another one. Specifics beat adjectives here.",
-          "TODO — something you got wrong first, and what changed your mind.",
-        ],
-      },
-
-      { type: "divider" },
-
-      { type: "heading", text: "Outcome" },
+      { type: "heading", text: "Final Thoughts" },
       {
         type: "text",
         text: "TODO — what shipped, how it performs, what is next.",
@@ -310,29 +260,26 @@ export const caseStudies: Record<string, CaseStudy> = {
 
   "time-with-tree": {
     title: "Time with Tree",
-    tagline:
-      "An e-commerce website for a tree farm in Sejong, South Korea.",
     blocks: [
+      {
+        type: "text",
+        text: "Built a website and store for Time with Tree, a birch tree farm in Sejong, South Korea. ",
+      },
       { type: "heading", text: "Context" },
       {
         type: "text",
-        text: "Time with Tree is a Birch tree farm in Sejong, South Korea. The client wanted to sell their trees online, but they didn't have a website or an online store.",
+        text: "The client needed to start selling their trees online, but they didn't have a website or an online store.",
       },
 
       // following expectations from client, so less ideation 
       // looked at other true farm websites in Korea 
-       { type: "heading", text: "Ideation" },
-      {
-        type: "text",
-        text: "TODO — the approaches you tried, including the ones you threw away.",
-      },
-
             //iteration, choices, tradeoffs
       // used lovable, easy to build a basic website, but hard to make changes using Lovable UI
 
       { type: "heading", text: "Designing the website" },
       {
-        // dns setup, seo strategy, 
+        // dns setup, seo strategy
+        // used lovable, but hard to make changes using lovable ui
         type: "text",
         text: "TODO — the approaches you tried, including the ones you threw away.",
       },
@@ -346,11 +293,7 @@ export const caseStudies: Record<string, CaseStudy> = {
           },
         ],
       },
-
-      
-      { type: "divider" },
-
-      { type: "heading", text: "Outcome" },
+      { type: "heading", text: "Final Thoughts" },
       {
         // naver seo, google seo, coupang
         type: "text",
@@ -362,9 +305,11 @@ export const caseStudies: Record<string, CaseStudy> = {
 
   "buy-side-briefings": {
     title: "Buy Side Briefings",
-    tagline:
-      "Daily morning and night stock market reports on the catalysts moving the market.",
     blocks: [
+      {
+        type: "text",
+        text: "Buy Side Briefings is a personal website that updates me daily on important catalysts impacting the market and the stocks im interested in. The goal for this project is to create a trustworthy source of information, keeping me informed and helps me make better investments.",
+      },
       { type: "heading", text: "Context" },
       {
         type: "text",
@@ -372,11 +317,6 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
 
       // briefings initially had a buy, sell, hold recommendation after every briefing
-      { type: "heading", text: "Ideation" },
-      {
-        type: "text",
-        text: "TODO — the approaches you tried, including the ones you threw away.",
-      },
       {
         type: "images",
         items: [
@@ -402,21 +342,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         ],
       },
 
-      // claude code
-      { type: "heading", text: "Development" },
-      {
-        type: "list",
-        items: [
-          "TODO — a specific decision and the tradeoff behind it.",
-          "TODO — another one. Specifics beat adjectives here.",
-          "TODO — something you got wrong first, and what changed your mind.",
-        ],
-      },
-
-
-      { type: "divider" },
-
-      { type: "heading", text: "Outcome" },
+      { type: "heading", text: "Final Thoughts" },
       {
         type: "text",
         text: "TODO — what shipped, how it performs, what is next.",
