@@ -12,6 +12,10 @@
 //     caller passing an inline array tears the whole trail down and rebuilds
 //     it on every render. The images are read from the DOM after React has
 //     rendered them, so the class only needs rebuilding when `variant` does.
+//   * the pointer listeners moved from the container to the window, the same
+//     change Ribbons needed: the trail is mounted in a pointer-events:none
+//     overlay so it can draw over the page without swallowing clicks, and an
+//     element that takes no pointer events sees no mousemove either.
 //   * Styles live in globals.css under "Photo gallery trail" rather than the
 //     component's own ImageTrail.css, to keep this app on one stylesheet. The
 //     class names are prefixed `image-trail__` there and here — upstream's
@@ -109,18 +113,20 @@ abstract class ImageTrailBase {
     this.handlePointerMove = (e) => {
       this.mousePos = getLocalPointerPos(e, container.getBoundingClientRect());
     };
+    // The loop only starts once the pointer has been somewhere, so the first
+    // image appears at the cursor rather than flying in from the corner.
     this.initRender = (e) => {
       this.mousePos = getLocalPointerPos(e, container.getBoundingClientRect());
       this.cacheMousePos = { ...this.mousePos };
       this.rafId = requestAnimationFrame(() => this.render());
-      container.removeEventListener("mousemove", this.initRender);
-      container.removeEventListener("touchmove", this.initRender);
+      window.removeEventListener("mousemove", this.initRender);
+      window.removeEventListener("touchmove", this.initRender);
     };
 
-    container.addEventListener("mousemove", this.handlePointerMove);
-    container.addEventListener("touchmove", this.handlePointerMove);
-    container.addEventListener("mousemove", this.initRender);
-    container.addEventListener("touchmove", this.initRender);
+    window.addEventListener("mousemove", this.handlePointerMove);
+    window.addEventListener("touchmove", this.handlePointerMove);
+    window.addEventListener("mousemove", this.initRender);
+    window.addEventListener("touchmove", this.initRender);
   }
 
   render() {
@@ -164,10 +170,10 @@ abstract class ImageTrailBase {
       cancelAnimationFrame(this.rafId);
       this.rafId = null;
     }
-    this.container.removeEventListener("mousemove", this.handlePointerMove);
-    this.container.removeEventListener("touchmove", this.handlePointerMove);
-    this.container.removeEventListener("mousemove", this.initRender);
-    this.container.removeEventListener("touchmove", this.initRender);
+    window.removeEventListener("mousemove", this.handlePointerMove);
+    window.removeEventListener("touchmove", this.handlePointerMove);
+    window.removeEventListener("mousemove", this.initRender);
+    window.removeEventListener("touchmove", this.initRender);
     this.images.forEach((img) => {
       gsap.killTweensOf(img.DOM.el);
       img.destroy();

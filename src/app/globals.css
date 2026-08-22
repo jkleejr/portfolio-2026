@@ -355,11 +355,12 @@ body {
 }
 
 /* The gallery's own framing: the screenshots are phone screens, so a portrait
-   frame shows them whole rather than cropping to a near-square. */
+   frame shows them whole rather than cropping to a near-square. The fade is
+   only on the way out — switching the trail on has nothing to fade in yet,
+   since no photo shows until the pointer moves. */
 .pg-surface {
   --trail-width: 150px;
   --trail-ratio: 0.62;
-  animation: cs-fade-in 0.2s ease-out both;
 }
 .pg-closing .pg-surface {
   animation: cs-fade-out 0.2s ease-in both;

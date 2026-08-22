@@ -1,16 +1,18 @@
 "use client";
 
 // ---------------------------------------------------------------------------
-// Photo gallery — the last button in the top-right stack, and what it opens.
+// Photo gallery — the last button in the top-right stack, and what it turns on.
 //
-// The button toggles a full-page surface where moving the pointer drags a
-// trail of photos across it (ImageTrail, from React Bits). There is nothing to
-// click inside: the gallery IS the movement, so the whole surface is left
-// clear and the only controls are the close button, Escape, and pressing the
-// gallery button again.
+// The button is a switch, not a door: it leaves you on the homepage and starts
+// a trail of photos following the pointer across it (ImageTrail, from React
+// Bits). Pressing it again turns the trail off, as does Escape.
 //
-// It sits above the cursor ribbons (z-30) so the ribbons do not draw over the
-// photos, and below the case study panel (z-50), which is a modal proper.
+// The overlay is click-through, and sits above everything the homepage draws —
+// the covers, the corner buttons, the name and role — so the photos pass over
+// all of it while every one of those stays clickable underneath. It is above
+// the cursor ribbons (z-30) so the ribbons do not draw over the photos, and
+// below the case study panel (z-50), which is a modal and should cover the
+// page.
 // ---------------------------------------------------------------------------
 
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -46,31 +48,29 @@ function GalleryIcon() {
 }
 
 export function PhotoGallery() {
-  const [open, setOpen] = useState(false);
+  const [on, setOn] = useState(false);
   const [closing, setClosing] = useState(false);
   const exitTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const buttonRef = useRef<HTMLButtonElement>(null);
 
-  const close = useCallback(() => setClosing(true), []);
+  const off = useCallback(() => setClosing(true), []);
 
   const toggle = useCallback(() => {
-    if (open) {
-      close();
+    if (on) {
+      off();
       return;
     }
     if (exitTimer.current) clearTimeout(exitTimer.current);
     setClosing(false);
-    setOpen(true);
-  }, [open, close]);
+    setOn(true);
+  }, [on, off]);
 
-  // Unmount only once the exit animation has played out, and hand focus back
-  // to the button that opened it.
+  // Unmount only once the fade-out has played, so the photos on screen when
+  // you switch it off go with it rather than vanishing mid-flight.
   useEffect(() => {
     if (!closing) return;
     exitTimer.current = setTimeout(() => {
-      setOpen(false);
+      setOn(false);
       setClosing(false);
-      buttonRef.current?.focus();
     }, EXIT_MS);
     return () => {
       if (exitTimer.current) clearTimeout(exitTimer.current);
@@ -78,29 +78,13 @@ export function PhotoGallery() {
   }, [closing]);
 
   useEffect(() => {
-    if (!open) return;
+    if (!on) return;
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") close();
+      if (e.key === "Escape") off();
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [open, close]);
-
-  // Freeze the page underneath, padding out the width the scrollbar gives up
-  // so nothing jumps. Same approach as the case study overlay.
-  useEffect(() => {
-    if (!open) return;
-    const { body } = document;
-    const gutter = window.innerWidth - document.documentElement.clientWidth;
-    const prevOverflow = body.style.overflow;
-    const prevPadding = body.style.paddingRight;
-    body.style.overflow = "hidden";
-    if (gutter > 0) body.style.paddingRight = `${gutter}px`;
-    return () => {
-      body.style.overflow = prevOverflow;
-      body.style.paddingRight = prevPadding;
-    };
-  }, [open]);
+  }, [on, off]);
 
   useEffect(
     () => () => {
@@ -112,56 +96,29 @@ export function PhotoGallery() {
   return (
     <>
       <button
-        ref={buttonRef}
         type="button"
         onClick={toggle}
         aria-label="Photo gallery"
-        aria-expanded={open}
+        aria-pressed={on && !closing}
         // Carries on down the corner stack from the site links above it, at
         // the same 3rem pitch (a 2.5rem button plus the 0.5rem gap), so
         // adding another link up there pushes this one down with it.
         style={{ top: `calc(7.5rem + ${site.buttons.length} * 3rem)` }}
-        className="design-one-only absolute right-6 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-foreground/15 bg-background text-foreground transition duration-200 ease-out hover:scale-110 hover:opacity-80"
+        // While it is on, the button fills in — the trail is the other half of
+        // the feedback, but it only shows once you actually move.
+        className="design-one-only absolute right-6 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-foreground/15 bg-background text-foreground transition duration-200 ease-out hover:scale-110 hover:opacity-80 aria-pressed:bg-foreground aria-pressed:text-background"
       >
         <GalleryIcon />
       </button>
 
-      {open && (
+      {on && (
         <div
-          className={`fixed inset-0 z-40 ${closing ? "pg-closing" : ""}`}
-          role="dialog"
-          aria-modal="true"
-          aria-label="Photo gallery"
+          className={`pointer-events-none fixed inset-0 z-40 ${closing ? "pg-closing" : ""}`}
+          aria-hidden
         >
-          <div className="pg-surface absolute inset-0 bg-background">
+          <div className="pg-surface h-full w-full">
             <ImageTrail items={photos} variant={2} />
           </div>
-
-          {/* Above the trail, and click-through, so the pointer never loses
-              the surface while crossing the words. */}
-          <p className="pointer-events-none absolute inset-x-0 top-1/2 z-10 -translate-y-1/2 text-center text-sm text-muted">
-            Move your cursor
-          </p>
-
-          <button
-            type="button"
-            onClick={close}
-            aria-label="Close photo gallery"
-            className="absolute right-6 top-6 z-20 flex h-10 w-10 items-center justify-center rounded-full border border-foreground/15 bg-background text-foreground transition duration-200 ease-out hover:scale-110 hover:opacity-80"
-          >
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              aria-hidden
-            >
-              <path d="M6 6 18 18M18 6 6 18" />
-            </svg>
-          </button>
         </div>
       )}
     </>
