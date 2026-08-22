@@ -253,13 +253,16 @@ function ImageBody({ image }: { image: EntryImage }) {
       </header>
 
       {image.src && (
-        // Narrower than the text column: these are phone screenshots, and at
-        // the column's full width a portrait shot runs taller than the panel.
+        // Bounded by height rather than width. These are portrait phone
+        // screenshots: capping the width still left them taller than the panel,
+        // and a wide shot would need the opposite cap anyway. With both maxima
+        // and auto sizing, the browser fits the shot inside the box and keeps
+        // its aspect ratio, whichever way round it is.
         // eslint-disable-next-line @next/next/no-img-element
         <img
           src={image.src}
           alt={image.alt}
-          className="mt-8 w-full max-w-[320px] rounded-xl border border-foreground/10"
+          className="mt-8 h-auto max-h-[68vh] w-auto max-w-full rounded-xl border border-foreground/10"
         />
       )}
     </article>

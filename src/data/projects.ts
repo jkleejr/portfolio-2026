@@ -49,7 +49,7 @@ export const entries: Entry[] = [
     images: [
       {
         src: "/projects/loot-check-1.png",
-        cover: "/projects/loot-check-logo-4.png",
+        cover: "/projects/loot-check-logo-5.png",
         alt: "Loot Check home screen",
         crop: "50% 15%",
         title: "Loot Check",
@@ -118,7 +118,11 @@ export const entries: Entry[] = [
     platform: "web",
     srcHref: "https://timewithtree.co.kr/",
     images: [
-      { src: "/projects/time-with-tree.png", alt: "Time with Tree homepage" },
+      {
+        src: "/projects/time-with-tree.png",
+        cover: "/projects/time-with-tree-logo-3.png",
+        alt: "Time with Tree homepage",
+      },
     ],
   },
   {
