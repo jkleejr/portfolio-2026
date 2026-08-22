@@ -16,7 +16,7 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-muted: var(--muted);
-  --font-sans: var(--font-quicksand);
+  --font-sans: var(--font-satoshi);
 }
 
 /* The browser paints the strips outside the page — on iOS the status bar at
@@ -43,7 +43,9 @@ html.theme-ready {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-quicksand), system-ui, sans-serif;
+  /* Swap --font-satoshi for --font-outfit or --font-quicksand here (and in
+     @theme above) to try the other two — all three are loaded. */
+  font-family: var(--font-satoshi), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -227,5 +229,12 @@ body {
 /* The button names the design you are ON. */
 [data-design="one"] .design-label-two,
 [data-design="two"] .design-label-one {
+  display: none;
+}
+
+/* The theme toggle and the corner links belong to design one. Design two is a
+   clean page, so the switcher is the only chrome that survives on it — hidden
+   here rather than in React for the same no-flash reason as the panels. */
+[data-design="two"] .design-one-only {
   display: none;
 }

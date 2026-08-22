@@ -133,7 +133,7 @@ export function ThemeToggle() {
     <button
       onClick={toggle}
       aria-label="Switch between dark and light mode"
-      className="fixed right-6 top-6 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-foreground/15 bg-background text-foreground transition duration-200 ease-out hover:scale-110 hover:opacity-80"
+      className="design-one-only absolute right-6 top-[4.5rem] z-10 flex h-10 w-10 items-center justify-center rounded-full border border-foreground/15 bg-background text-foreground transition duration-200 ease-out hover:scale-110 hover:opacity-80"
     >
       {/* Sun — shown in light mode */}
       <svg

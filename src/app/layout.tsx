@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Quicksand } from "next/font/google";
+import localFont from "next/font/local";
 import { site } from "@/data/site";
 import { ThemeToggle } from "./theme-toggle";
 import { DesignToggle } from "./design-toggle";
@@ -11,9 +12,40 @@ const quicksand = Quicksand({
   subsets: ["latin"],
 });
 
+// Both are the variable cuts, so one file covers every weight in the range.
+// Licences sit next to the files in src/app/fonts/.
+const satoshi = localFont({
+  variable: "--font-satoshi",
+  display: "swap",
+  src: [
+    {
+      path: "./fonts/Satoshi-Variable.woff2",
+      weight: "300 900",
+      style: "normal",
+    },
+    {
+      path: "./fonts/Satoshi-VariableItalic.woff2",
+      weight: "300 900",
+      style: "italic",
+    },
+  ],
+});
+
+const outfit = localFont({
+  variable: "--font-outfit",
+  display: "swap",
+  src: [
+    {
+      path: "./fonts/Outfit-Variable.woff2",
+      weight: "100 900",
+      style: "normal",
+    },
+  ],
+});
+
 export const metadata: Metadata = {
   title: `${site.name} — ${site.role}`,
-  description: site.bio,
+  description: `${site.name} — ${site.role}`,
 };
 
 export default function RootLayout({
@@ -33,7 +65,9 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={`${quicksand.variable} antialiased`}>
+      <body
+        className={`${quicksand.variable} ${satoshi.variable} ${outfit.variable} antialiased`}
+      >
         <DesignToggle />
         <ThemeToggle />
         <SocialLinks />

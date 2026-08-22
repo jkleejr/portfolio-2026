@@ -1,7 +1,7 @@
 // ---------------------------------------------------------------------------
-// The links from site.buttons, stacked in the top right corner under the
-// theme toggle. Fixed like the two toggles, so they sit in the same corner
-// cluster on every design rather than inside one design's layout.
+// The links from site.buttons, at the bottom of the top-right corner stack:
+// design switcher, theme toggle, then these. Positioned like the two toggles,
+// so they sit in the same cluster rather than inside one design's layout.
 // ---------------------------------------------------------------------------
 
 import { site } from "@/data/site";
@@ -29,9 +29,9 @@ const ICONS: Record<string, React.ReactNode> = {
 
 export function SocialLinks() {
   return (
-    // top-[4.5rem] clears the 40px toggle sitting at top-6, leaving the same
-    // 8px between the two that the icons have between themselves.
-    <div className="fixed right-6 top-[4.5rem] z-10 flex flex-col gap-2">
+    // top-[7.5rem] clears the two 40px buttons above, keeping the same 8px
+    // between them that the icons have between themselves.
+    <div className="design-one-only absolute right-6 top-[7.5rem] z-10 flex flex-col gap-2">
       {site.buttons.map((button) => {
         const icon = "icon" in button ? ICONS[button.icon] : null;
         return (

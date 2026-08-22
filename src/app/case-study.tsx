@@ -191,11 +191,13 @@ function ImageBody({ image }: { image: EntryImage }) {
       </header>
 
       {image.src && (
+        // Narrower than the text column: these are phone screenshots, and at
+        // the column's full width a portrait shot runs taller than the panel.
         // eslint-disable-next-line @next/next/no-img-element
         <img
           src={image.src}
           alt={image.alt}
-          className="mt-8 w-full max-w-[68ch] rounded-xl border border-foreground/10"
+          className="mt-8 w-full max-w-[320px] rounded-xl border border-foreground/10"
         />
       )}
     </article>

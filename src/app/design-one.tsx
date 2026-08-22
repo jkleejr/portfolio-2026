@@ -12,23 +12,20 @@ import { ProjectThumbnail } from "./case-study";
 
 export function DesignOne() {
   return (
-    <main className="mx-auto max-w-[760px] px-6 pb-28 pt-20 pr-20 md:pr-6 md:pt-28">
-      {/* Intro */}
-      <h1 className="text-2xl font-bold">{site.name}</h1>
-      <p className="mt-1 text-lg font-medium text-foreground">{site.role}</p>
-
-      <p className="mt-8 text-lg leading-relaxed text-foreground">
-        {site.bio}
-      </p>
-
-      {/* Currently working on */}
-      <h2 className="mt-16 text-lg font-bold">{site.sectionHeading}</h2>
+    <main className="pb-28 pt-6">
+      {/* Name and role hold the top-left corner of the page. In flow rather
+          than absolute, so the gallery below always clears them. The right
+          margin keeps the text off the button stack in the opposite corner. */}
+      <header className="ml-6 mr-20 max-w-[42ch]">
+        <h1 className="text-2xl font-bold">{site.name}</h1>
+        <p className="mt-1 text-lg font-medium text-foreground">{site.role}</p>
+      </header>
 
       {/* One gallery, not a block per project: every screenshot flows in the
           same row and wraps to the next line when the width runs out. Each
           one still carries its own project, so it opens that case study (or
           the live site, for entries with a srcHref). */}
-      <div className="mt-12 flex flex-wrap gap-2">
+      <div className="mx-auto mt-16 flex max-w-[760px] flex-wrap gap-2 px-6 pr-20 lg:pr-6">
         {entries.flatMap((entry) =>
           (entry.images ?? []).map((image, i) => (
             <ProjectThumbnail
