@@ -17,6 +17,10 @@ export type Post = {
 
 export const posts: Post[] = [
   {
+    title: "Analysis of the AI bubble",
+    body: [],
+  },
+  {
     title: "Why the design process is outdated",
     body: [],
   },
