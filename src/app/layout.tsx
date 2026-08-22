@@ -7,6 +7,7 @@ import { DesignToggle } from "./design-toggle";
 import { SocialLinks } from "./social-links";
 import { PhotoGalleryButton, PhotoGalleryProvider } from "./photo-gallery";
 import { GlobeButton } from "./globe-button";
+import { NoteButton } from "./note-button";
 import { CursorRibbons } from "./cursor-ribbons";
 import "./globals.css";
 
@@ -85,6 +86,7 @@ export default function RootLayout({
             <SocialLinks />
             <PhotoGalleryButton />
             <GlobeButton />
+            <NoteButton />
           </div>
           <CursorRibbons />
           {children}
