@@ -83,7 +83,7 @@ export const entries: Entry[] = [
     slug: "time-with-tree",
     platform: "web",
     titleHref: "https://timewithtree.co.kr/",
-    description: "An e-commerce website for a tree farm in South Korea.",
+    description: "A website for a birch tree farm in South Korea.",
     images: [
       { src: "/projects/time-with-tree.png", alt: "Time with Tree homepage" },
       { src: "/projects/time-with-tree-2.jpg", alt: "Tree catalog and shop page" },

@@ -90,7 +90,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       { type: "heading", text: "Context" },
       {
         type: "text",
-        text: "I wanted a quick way to tell whether things were worth selling but I couldn't find an app that was fast, accurate, and well designed. Many apps could identify items from a photo, but their interfaces were cluttered and required a subscription after a few free scans.",
+        text: "I wanted a quick way to tell whether things were worth selling but I couldn't find an app that was fast, accurate, and well designed. Many apps can identify items from a photo, but their interfaces are cluttered and require a subscription after a few free scans. I tried to improve upon existing apps by making a simple app that was free to use.",
       },
       {
         type: "images",
@@ -105,6 +105,8 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
 //ideate, prototype
 //shaping the product
+      //testing, development, iteration
+
       { type: "heading", text: "Designing the experience" },
       {
         type: "list",
@@ -113,18 +115,6 @@ export const caseStudies: Record<string, CaseStudy> = {
           "Another key design decision",
         ],
       },
-
-      //testing, development, iteration
-      { type: "heading", text: "Development" },
-      {
-        type: "list",
-        items: [
-          "TODO — a specific decision and the tradeoff behind it.",
-          "TODO — another one. Specifics beat adjectives here.",
-          "TODO — something you got wrong first, and what changed your mind.",
-        ],
-      },
-
       //Implementation, launch, results, whats next
       { type: "heading", text: "Final Thoughts" },
       {
@@ -140,7 +130,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       // context, problem, pain point
       {
         type: "text",
-        text: "Paper Reader is a mobile app that allows users to upload a PDF and hear the text in a natural voice without unnecessary formatting and citations.",
+        text: "Paper Reader is a mobile app that allows users to upload a PDF and hear the text in a natural voice without the formatting and citations.",
       },
       { type: "heading", text: "Context" },
       {
@@ -162,18 +152,9 @@ export const caseStudies: Record<string, CaseStudy> = {
         ],
       },
 //shaping the product, ideate, prototype
-      
+            //testing, development, iteration, choices, tradeoffs
+
       { type: "heading", text: "Designing the experience" },
-      {
-        type: "list",
-        items: [
-          "TODO — a specific decision and the tradeoff behind it.",
-          "TODO — another one. Specifics beat adjectives here.",
-          "TODO — something you got wrong first, and what changed your mind.",
-        ],
-      },
-      //testing, development, iteration, choices, tradeoffs
-      { type: "heading", text: "Development" },
       {
         type: "list",
         items: [
@@ -200,19 +181,9 @@ export const caseStudies: Record<string, CaseStudy> = {
       { type: "heading", text: "Context" },
       {
         type: "text",
-        text: "I wanted a way to translate Korean to English without constantly switching to a translator app.",
+        text: "Constantly switching between apps while learning a language is frustrating and time consuming. Chrome's translation plugin doesn't always work when surfing the web, and Naver doesn't provide a solution for their mobile app. I wanted to learn by seeing the Korean text alongside the English translation while I was using my phone.",
       },
       { type: "heading", text: "Designing the experience" },
-      {
-        type: "list",
-        items: [
-          "TODO — a specific decision and the tradeoff behind it.",
-          "TODO — another one. Specifics beat adjectives here.",
-          "TODO — something you got wrong first, and what changed your mind.",
-        ],
-      },
-
-      { type: "heading", text: "Development" },
       {
         type: "list",
         items: [
@@ -234,12 +205,12 @@ export const caseStudies: Record<string, CaseStudy> = {
     blocks: [
       {
         type: "text",
-        text: "SleepTalk is a mobile app that tracks your sleep talking patterns and provides insight over time.",
+        text: "SleepTalk is a mobile app that tracks your sleep talking patterns over time.",
       },
       { type: "heading", text: "Context" },
       {
         type: "text",
-        text: "TODO — who is this for, and what was painful before it existed?",
+        text: "I've been told I talk in my sleep, but I had no idea what I was saying or how often it happens. I wanted to hear it for myself and see if there was a pattern.",
       },
       { type: "heading", text: "Designing the experience" },
       {
@@ -263,12 +234,12 @@ export const caseStudies: Record<string, CaseStudy> = {
     blocks: [
       {
         type: "text",
-        text: "Built a website and store for Time with Tree, a birch tree farm in Sejong, South Korea. ",
+        text: "Website for a birch tree farm in South Korea.",
       },
       { type: "heading", text: "Context" },
       {
         type: "text",
-        text: "The client needed to start selling their trees online, but they didn't have a website or an online store.",
+        text: "The client needed a website for customers to learn about the farm, manage communications, and sell their trees.",
       },
 
       // following expectations from client, so less ideation 
@@ -278,10 +249,9 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       { type: "heading", text: "Designing the website" },
       {
-        // dns setup, seo strategy
         // used lovable, but hard to make changes using lovable ui
         type: "text",
-        text: "TODO — the approaches you tried, including the ones you threw away.",
+        text: "asdf",
       },
 
       {
@@ -295,7 +265,8 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       { type: "heading", text: "Final Thoughts" },
       {
-        // naver seo, google seo, coupang
+                // dns setup, seo strategy
+        // naver, google, coupang
         type: "text",
         text: "TODO — what shipped, how it performs, what is next.",
       },
@@ -308,12 +279,12 @@ export const caseStudies: Record<string, CaseStudy> = {
     blocks: [
       {
         type: "text",
-        text: "Buy Side Briefings is a personal website that updates me daily on important catalysts impacting the market and the stocks im interested in. The goal for this project is to create a trustworthy source of information, keeping me informed and helps me make better investments.",
+        text: "Buy Side Briefings is a personal website with automated daily reports on the stock market. The goal is to create a trustworthy source of information that keeps investors updated and helps them make better investment decisions.",
       },
       { type: "heading", text: "Context" },
       {
         type: "text",
-        text: "TODO — who is this for, and what was painful before it existed?",
+        text: "The stock market is fast paced and narratives can change quickly based on the news. Traders and investors should be informed on the latest events and current state of the stock market.",
       },
 
       // briefings initially had a buy, sell, hold recommendation after every briefing
