@@ -5,6 +5,9 @@
 // rather than one blob, so the spacing between them belongs to the page and
 // not to the writing; a post with an empty body shows its title and nothing
 // else, which is what a post looks like before it is written.
+//
+// Empty for now, so the page it feeds is blank. Adding an entry here is the
+// whole of putting one back.
 // ---------------------------------------------------------------------------
 
 export type Post = {
@@ -15,9 +18,4 @@ export type Post = {
   body: string[];
 };
 
-export const posts: Post[] = [
-  {
-    title: "Why the design process is outdated",
-    body: [],
-  },
-];
+export const posts: Post[] = [];
