@@ -105,7 +105,7 @@ export const entries: Entry[] = [
     images: [
       {
         src: "/projects/sleeptalk-1.png",
-        cover: "/projects/sleeptalk-logo-3.png",
+        cover: "/projects/sleeptalk-logo-4.png",
         alt: "SleepTalk record screen waiting to start listening",
         crop: "50% 41%",
         title: "SleepTalk",
