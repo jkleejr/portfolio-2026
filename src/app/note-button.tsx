@@ -22,31 +22,42 @@ export function NoteButton() {
         width="18"
         height="18"
         viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.7"
-        strokeLinecap="round"
-        strokeLinejoin="round"
+        fill="currentColor"
         aria-hidden
       >
-        {/* The sheet, with its top-left corner turned down, then the two inner
-            edges of the turned-down flap. */}
-        <path d="M8 2.75 3 7.75v11.5a2 2 0 0 0 2 2h10.5a2 2 0 0 0 2-2V4.75a2 2 0 0 0-2-2Z" />
-        <path d="M8 2.75v5H3" />
-        {/* Writing on it, shortening down the page. */}
-        <path d="M6.5 11.6h7M6.5 14.85h4.5M6.5 18.1h3.5" />
-        {/* The pencil lies over the sheet, so it is drawn twice: once in the
-            page colour and thick enough to open a gap in whatever it crosses,
-            then again in the ink colour. That gap is what the reference draws
-            as a white outline, and without it the sheet's edge and the lines
-            underneath run straight through the pencil at this size. */}
-        <path
-          d="M18.6 7.35a1.1 1.1 0 0 1 1.55 1.55l-7.3 7.3-2.4.85.85-2.4Z"
-          stroke="var(--background)"
-          strokeWidth="3.6"
-        />
-        <path d="M18.6 7.35a1.1 1.1 0 0 1 1.55 1.55l-7.3 7.3-2.4.85.85-2.4Z" />
-        <path d="M17.4 8.55l1.55 1.55" />
+        {/* The pencil is laid out along its own axis — a -42 degree diagonal,
+            3.5 wide — so the barrel, the eraser and the sharpened cone all
+            line up by construction. The outer transform then scales that
+            drawing up to fill the box and centres it, which is why the
+            numbers below are the shape's own and not the box's. */}
+        <g transform="translate(-3.45 -1.96) scale(1.29)">
+          {/* Barrel. Its far end stops short of the eraser, and the gap left
+              between them is the band the reference leaves unpainted. */}
+          <rect
+            x="5.54"
+            y="9.7"
+            width="11.75"
+            height="3.5"
+            transform="rotate(-42.1 11.41 11.45)"
+          />
+          {/* Eraser, rounded off at the end. */}
+          <rect
+            x="15.74"
+            y="4.53"
+            width="2.8"
+            height="3.5"
+            rx="0.55"
+            transform="rotate(-42.1 17.14 6.28)"
+          />
+          {/* The sharpened cone, and the bare wood cut back out of it — that
+              cut is what leaves a rim down both edges and the graphite at the
+              point, rather than one solid wedge. */}
+          <path d="M5.88 14.09 8.22 16.69 4.6 17.6Z" />
+          <path
+            d="M6.48 14.09 7.78 15.54 5.71 16.6Z"
+            fill="var(--background)"
+          />
+        </g>
       </svg>
     </button>
   );
