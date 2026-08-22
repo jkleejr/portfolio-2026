@@ -372,3 +372,19 @@ body {
     animation-duration: 0.01ms;
   }
 }
+
+/* ---------------------------------------------------------------------------
+   Header clearance under the corner stack
+   Design one's gallery runs the full width on a phone rather than sitting in
+   the column beside the buttons, so it has to start below them. The header
+   above it reserves the height to push it there: the stack's own bottom
+   (--stack-bottom, set from corner-stack.ts) less the 1.5rem the header starts
+   at and the 4rem of margin the gallery already adds, and half a rem of air.
+   From sm up the two sit side by side and none of this applies.
+   --------------------------------------------------------------------------- */
+
+@media (width < 40rem) {
+  .home-header {
+    min-height: calc(var(--stack-bottom) - 5rem);
+  }
+}

@@ -9,6 +9,7 @@
 import { site } from "@/data/site";
 import { entries } from "@/data/projects";
 import { ProjectThumbnail } from "./case-study";
+import { stackBottom } from "./corner-stack";
 
 export function DesignOne() {
   return (
@@ -19,11 +20,14 @@ export function DesignOne() {
 
           On a phone the gallery runs the full width rather than squeezing
           into the column beside the buttons, so it has to start below them.
-          The stack ends 13rem down; this header starts at 1.5rem and the
-          gallery adds another 4rem of margin, so 8rem here drops the first
-          row just past it. Wide enough for the two to sit side by side and
-          the reserved height goes away. */}
-      <header className="ml-6 mr-20 min-h-32 max-w-[42ch] sm:min-h-0">
+          Reserving height here is what pushes it down — the sum is in
+          globals.css, off the stack's own measurement rather than a number
+          that would go stale the next time a button joins it. Wide enough for
+          the two to sit side by side and the reserve goes away. */}
+      <header
+        className="home-header ml-6 mr-20 max-w-[42ch]"
+        style={{ "--stack-bottom": stackBottom } as React.CSSProperties}
+      >
         <h1 className="text-2xl font-bold">{site.name}</h1>
         <p className="mt-1 text-lg font-medium text-foreground">{site.role}</p>
       </header>

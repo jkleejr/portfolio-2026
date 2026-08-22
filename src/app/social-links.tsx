@@ -5,6 +5,7 @@
 // ---------------------------------------------------------------------------
 
 import { site } from "@/data/site";
+import { SLOT_INDEX, slotTop } from "./corner-stack";
 
 const ICONS: Record<string, React.ReactNode> = {
   // LinkedIn "in" mark in brand blue
@@ -29,24 +30,25 @@ const ICONS: Record<string, React.ReactNode> = {
 
 export function SocialLinks() {
   return (
-    // top-[7.5rem] clears the two 40px buttons above, keeping the same 8px
-    // between them that the icons have between themselves.
-    <div className="design-one-only absolute right-6 top-[7.5rem] z-10 flex flex-col gap-2">
-      {site.buttons.map((button) => {
+    // Each link takes a slot of its own in the corner stack, so the buttons
+    // below it know how far the run of them reaches.
+    <>
+      {site.buttons.map((button, i) => {
         const icon = "icon" in button ? ICONS[button.icon] : null;
         return (
           <a
             key={button.label}
+            style={{ top: slotTop(SLOT_INDEX.links + i) }}
             href={button.href}
             target="_blank"
             rel="noreferrer"
             aria-label={button.label}
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-foreground/15 bg-background text-sm font-semibold text-foreground transition duration-200 ease-out hover:scale-110 hover:opacity-80"
+            className="design-one-only absolute right-6 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-foreground/15 bg-background text-sm font-semibold text-foreground transition duration-200 ease-out hover:scale-110 hover:opacity-80"
           >
             {icon ?? button.label}
           </a>
         );
       })}
-    </div>
+    </>
   );
 }

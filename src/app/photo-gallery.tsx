@@ -28,8 +28,8 @@ import {
   useRef,
   useState,
 } from "react";
-import { site } from "@/data/site";
 import { photos } from "@/data/photos";
+import { SLOT_INDEX, slotTop } from "./corner-stack";
 import ImageTrail from "./image-trail";
 
 const EXIT_MS = 200; // must match .pg-closing animation duration in globals.css
@@ -151,10 +151,7 @@ export function PhotoGalleryButton() {
       onClick={toggle}
       aria-label="Photo gallery"
       aria-pressed={active}
-      // Carries on down the corner stack from the site links above it, at the
-      // same 3rem pitch (a 2.5rem button plus the 0.5rem gap), so adding
-      // another link up there pushes this one down with it.
-      style={{ top: `calc(7.5rem + ${site.buttons.length} * 3rem)` }}
+      style={{ top: slotTop(SLOT_INDEX.photoGallery) }}
       // While it is on, the button fills in — the trail is the other half of
       // the feedback, but it only shows once you actually move.
       className="design-one-only absolute right-6 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-foreground/15 bg-background text-foreground transition duration-200 ease-out hover:scale-110 hover:opacity-80 aria-pressed:bg-foreground aria-pressed:text-background"
