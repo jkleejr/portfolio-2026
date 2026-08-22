@@ -22,7 +22,7 @@ export const entries: Entry[] = [
     slug: "loot-check",
     platform: "mobile",
     description:
-      "Take a picture of any item to identify it and find its resale value.",
+      "Take a picture of an item to identify it and its resale value.",
     images: [
       { src: "/projects/loot-check-1.png", alt: "Loot Check home screen", crop: "50% 15%" },
       { src: "/projects/loot-check-2.png", alt: "Item photo capture" },
@@ -34,7 +34,7 @@ export const entries: Entry[] = [
     slug: "paper-reader",
     platform: "mobile",
     description:
-    "Upload a PDF to hear the text in a natural voice without the formatting and citations.",
+    "Upload a PDF to hear the text.",
     images: [
       { src: "/projects/paper-reader-1.png", alt: "Paper library with playback progress", crop: "50% 12%" },
       { src: "/projects/paper-reader-2.png", alt: "Reader view with the sentence being read aloud highlighted", crop: "50% 34%" },
@@ -45,7 +45,7 @@ export const entries: Entry[] = [
     slug: "screen-translator",
     platform: "mobile",
     description:
-    "Translate Korean to English text live on your screen.",
+    "Translate text live on your screen.",
     images: [
       {
         src: "/projects/screen-translator-1.png",
@@ -68,7 +68,7 @@ export const entries: Entry[] = [
     title: "SleepTalk",
     slug: "sleeptalk",
     platform: "mobile",
-    description: "Record your audio overnight and track your sleep talking.",
+    description: "Track your sleep talking.",
     images: [
       {
         src: "/projects/sleeptalk-1.png",

@@ -66,16 +66,7 @@ export type CaseStudy = {
 // problem solving, tradeoffs, development choices
 // assume 20 second scan, 1 minute read... need to have an interesting visual design, cant be basic 
 
-
-// Note on the design process: roles are changing, don't have to follow the design process exactly. 
-// design process is too strict
-// what rly matters is the ability to choose and curate what to make
-// bc anyone can vibe code
-// sometimes you have to jump around, iterate, make decisions that are not linear
-// bc of ai
-// the user doesn't care about the process artifacts or the user journey
-// they care about the end experience they are feeling/seeing
-
+// dont need to follow design process fk it
 
 
 export const caseStudies: Record<string, CaseStudy> = {
@@ -84,7 +75,7 @@ export const caseStudies: Record<string, CaseStudy> = {
     blocks: [
       {
         type: "text",
-        text: "Loot check is a mobile app that allows users to photograph any item to find its name, resale value, and marketplaces to sell it.",
+        text: "Photograph any item to find its name, resale value, and marketplaces to sell it.",
       },
       //empathize & define, context
       // i chose to use claude sonnet 4.6 because its cheap enough to run per scan and still accurate.
@@ -93,35 +84,6 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "text",
         text: "I wanted a quick way to tell whether things were worth selling but I couldn't find an app that was fast, accurate, and well designed. Many apps can identify items from a photo, but their interfaces are cluttered and require a subscription after a few free scans. I tried to improve upon existing apps by making a simple app that was free to use.",
-      },
-      {
-        type: "images",
-        items: [
-          { src: "/projects/loot-check-2.png", alt: "Item photo capture" },
-          {
-            src: "/projects/loot-check-3.png",
-            alt: "Resale value estimate",
-            crop: "50% 58%",
-          },
-        ],
-      },
-//ideate, prototype
-//shaping the product
-      //testing, development, iteration
-
-      { type: "heading", text: "Designing the experience" },
-      {
-        type: "list",
-        items: [
-          "A key design decision.",
-          "Another key design decision",
-        ],
-      },
-      //Implementation, launch, results, whats next
-      { type: "heading", text: "Final Thoughts" },
-      {
-        type: "text",
-        text: "TODO — what shipped, how it performs, what is next.",
       },
     ],
   },
@@ -132,7 +94,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       // context, problem, pain point
       {
         type: "text",
-        text: "Paper Reader is a mobile app that allows users to upload a PDF and hear the text in a natural voice without the formatting and citations.",
+        text: "Upload a PDF and hear the text in a natural voice without the formatting and citations.",
       },
       { type: "heading", text: "Context" },
       {
@@ -143,33 +105,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       // the opportunity, the solution
       // Gemini 3.1 flash, 3.1 flash tts. 
       // costs about $0.03 per minute of audio, about $1-3 per paper.
-      {
-        type: "images",
-        items: [
-          {
-            src: "/projects/paper-reader-2.png",
-            alt: "Reader view with the sentence being read aloud highlighted",
-            crop: "50% 34%",
-          },
-        ],
-      },
-//shaping the product, ideate, prototype
-            //testing, development, iteration, choices, tradeoffs
-
-      { type: "heading", text: "Designing the experience" },
-      {
-        type: "list",
-        items: [
-          "TODO — a specific decision and the tradeoff behind it.",
-          "TODO — another one. Specifics beat adjectives here.",
-          "TODO — something you got wrong first, and what changed your mind.",
-        ],
-      },
-      { type: "heading", text: "Final Thoughts" },
-      {
-        type: "text",
-        text: "TODO — what shipped, how it performs, what is next.",
-      },
+            //iteration, choices, tradeoffs
     ],
   },
 
@@ -178,26 +114,12 @@ export const caseStudies: Record<string, CaseStudy> = {
     blocks: [
       {
         type: "text",
-        text: "Screen Translator is a mobile app that translates Korean language instantly on screen. It runs in the background, identifying the text in a certain section of the screen, and displays the translation on the dynamic island for iPhone.",
+        text: "Translate text live using the dynamic island for iPhone. It runs in the background, identifying the text in a certain section of the screen, and displays the translation live.",
       },
       { type: "heading", text: "Context" },
       {
         type: "text",
         text: "Constantly switching between apps while learning a language is frustrating and time consuming. Chrome's translation plugin doesn't always work when surfing the web, and Naver doesn't provide a solution for their mobile app. I wanted to learn by seeing the Korean text alongside the English translation while I was using my phone.",
-      },
-      { type: "heading", text: "Designing the experience" },
-      {
-        type: "list",
-        items: [
-          "TODO — a specific decision and the tradeoff behind it.",
-          "TODO — another one. Specifics beat adjectives here.",
-          "TODO — something you got wrong first, and what changed your mind.",
-        ],
-      },
-      { type: "heading", text: "Final Thoughts" },
-      {
-        type: "text",
-        text: "TODO — what shipped, how it performs, what is next.",
       },
     ],
   },
@@ -208,25 +130,6 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "text",
         text: "SleepTalk is a mobile app that tracks your sleep talking patterns over time.",
-      },
-      { type: "heading", text: "Context" },
-      {
-        type: "text",
-        text: "I've been told I talk in my sleep, but I had no idea what I was saying or how often it happens. I wanted to hear it for myself and see if there was a pattern.",
-      },
-      { type: "heading", text: "Designing the experience" },
-      {
-        type: "list",
-        items: [
-          "TODO — a specific decision and the tradeoff behind it.",
-          "TODO — another one. Specifics beat adjectives here.",
-          "TODO — something you got wrong first, and what changed your mind.",
-        ],
-      },
-      { type: "heading", text: "Final Thoughts" },
-      {
-        type: "text",
-        text: "TODO — what shipped, how it performs, what is next.",
       },
     ],
   },
@@ -248,30 +151,6 @@ export const caseStudies: Record<string, CaseStudy> = {
       // looked at other true farm websites in Korea 
             //iteration, choices, tradeoffs
       // used lovable, easy to build a basic website, but hard to make changes using Lovable UI
-
-      { type: "heading", text: "Designing the website" },
-      {
-        // used lovable, but hard to make changes using lovable ui
-        type: "text",
-        text: "asdf",
-      },
-
-      {
-        type: "images",
-        items: [
-          {
-            src: "/projects/time-with-tree-2.jpg",
-            alt: "Tree catalog and shop page",
-          },
-        ],
-      },
-      { type: "heading", text: "Final Thoughts" },
-      {
-                // dns setup, seo strategy
-        // naver, google, coupang
-        type: "text",
-        text: "TODO — what shipped, how it performs, what is next.",
-      },
     ],
   },
 
@@ -287,38 +166,6 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "text",
         text: "The stock market is fast paced and narratives can change quickly based on the news. Traders and investors should be informed on the latest events and current state of the stock market.",
-      },
-
-      // briefings initially had a buy, sell, hold recommendation after every briefing
-      {
-        type: "images",
-        items: [
-          {
-            src: "/projects/buy-side-briefings-2.png",
-            alt: "S&P 500 candlestick chart",
-          },
-          {
-            src: "/projects/buy-side-briefings-3.png",
-            alt: "Full briefing read view",
-          },
-        ],
-      },
-      // claude code, figma ai, generating ai redesigns at first to get more ideas
-
-      { type: "heading", text: "Designing the website" },
-      {
-        type: "list",
-        items: [
-          "TODO — a specific decision and the tradeoff behind it.",
-          "TODO — another one. Specifics beat adjectives here.",
-          "TODO — something you got wrong first, and what changed your mind.",
-        ],
-      },
-
-      { type: "heading", text: "Final Thoughts" },
-      {
-        type: "text",
-        text: "TODO — what shipped, how it performs, what is next.",
       },
     ],
   },

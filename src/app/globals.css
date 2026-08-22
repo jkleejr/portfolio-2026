@@ -52,14 +52,10 @@ body {
   color: var(--background);
 }
 
-/* Theme toggle shows the current mode: purple moon (iOS Do Not
-   Disturb style) in dark mode, orange sun in light mode */
-.theme-icon-moon {
-  color: #7d7aff;
-}
+/* Theme toggle shows the current mode: moon in dark mode, sun in
+   light mode. Both inherit the button's foreground colour. */
 .theme-icon-sun {
   display: none;
-  color: #f59e0b;
 }
 [data-theme="light"] .theme-icon-sun {
   display: block;
