@@ -5,6 +5,7 @@ import { site } from "@/data/site";
 import { ThemeToggle } from "./theme-toggle";
 import { DesignToggle } from "./design-toggle";
 import { SocialLinks } from "./social-links";
+import { CursorRibbons } from "./cursor-ribbons";
 import "./globals.css";
 
 const quicksand = Quicksand({
@@ -71,6 +72,7 @@ export default function RootLayout({
         <DesignToggle />
         <ThemeToggle />
         <SocialLinks />
+        <CursorRibbons />
         {children}
       </body>
     </html>
