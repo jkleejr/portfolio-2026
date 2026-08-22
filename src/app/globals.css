@@ -435,36 +435,34 @@ body {
    rather than to a fixed one. Same reasoning as the design switcher — doing it
    in CSS means the stored view the inline script applies lands before first
    paint, with no flash of the page you were not on.
-
-   The page is left bare on purpose. Only the pencil survives in the corner,
-   since it is the way back; the second rule keeps it even on design two, where
-   .design-one-only would otherwise take it away and leave nothing to press.
    --------------------------------------------------------------------------- */
 
 [data-view="home"] [data-view-panel="blog"],
-[data-view="blog"] [data-design-panel],
-[data-view="blog"] .corner-stack > *:not(.note-button) {
+[data-view="blog"] [data-design-panel] {
   display: none;
 }
 
-[data-view="blog"] .note-button {
+/* The page is left bare on purpose, and only the pencil survives in the
+   corner, since it is the way back. The buttons it leaves behind are hidden
+   rather than removed: they keep their slots, so the pencil stays exactly
+   where it was on the page you pressed it from instead of sliding up the
+   stack. Hidden this way they are out of the tab order and off the
+   accessibility tree too, so nothing invisible can still be reached.
+
+   `display` is set alongside it because on design two .design-one-only would
+   otherwise remove those buttons outright — the slots would collapse and take
+   the pencil with them. */
+[data-view="blog"] .corner-stack > * {
   display: flex;
+  visibility: hidden;
+}
+
+[data-view="blog"] .note-button {
+  visibility: visible;
 }
 
 /* The button says what pressing it will do, and that changes with the view. */
 [data-view="home"] .note-label-close,
 [data-view="blog"] .note-label-open {
   display: none;
-}
-
-/* On a phone the stack is a row under design one's header text. The blog has
-   no header for it to sit under, so there — as on design two — it goes back to
-   the corner. */
-@media (width < 40rem) {
-  [data-view="blog"] .corner-stack {
-    top: 1.5rem;
-    right: 1.5rem;
-    left: auto;
-    flex-direction: column;
-  }
 }
