@@ -37,33 +37,38 @@ export function NoteButton() {
     <button
       type="button"
       onClick={toggle}
-      onAnimationEnd={(e) =>
-        e.currentTarget.classList.remove("note-scribbling")
-      }
+      // The dots each animate on their own delay and finish before the
+      // pencil does. Removing the class on the first animation to end would
+      // cut the rest of them off, so only the pencil's ends the press.
+      onAnimationEnd={(e) => {
+        if (e.animationName === "note-scribble-pencil") {
+          e.currentTarget.classList.remove("note-scribbling");
+        }
+      }}
       className="note-button design-one-only flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-foreground/15 bg-background text-foreground transition duration-200 ease-out hover:scale-110 hover:opacity-80"
     >
       <span className="note-label-open sr-only">Open the blog</span>
       <span className="note-label-close sr-only">Back to the portfolio</span>
       <svg
+        className="note-icon"
         width="18"
         height="18"
         viewBox="0 0 24 24"
         fill="currentColor"
         aria-hidden
       >
-        {/* The mark the tip leaves on a press. It sits outside the pencil's
-            group so the pencil can move across it while it stays put, and it
-            is invisible until the animation runs. */}
-        <path
-          className="note-scribble"
-          d="M2 22.2 3.6 20.9 5.2 22.2 6.8 20.9 8.4 22.2"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          pathLength="1"
-        />
+        {/* The trail the tip leaves on a press: a dot per step of the way
+            across, each one appearing as the pencil reaches it. They sit
+            outside the pencil's group so they stay put while it travels, and
+            they are invisible until the animation runs. */}
+        <g className="note-dots">
+          <circle className="note-dot" cx="2.9" cy="21.5" r="0.5" />
+          <circle className="note-dot" cx="4.2" cy="21.5" r="0.5" />
+          <circle className="note-dot" cx="5.5" cy="21.5" r="0.5" />
+          <circle className="note-dot" cx="6.8" cy="21.5" r="0.5" />
+          <circle className="note-dot" cx="8.1" cy="21.5" r="0.5" />
+          <circle className="note-dot" cx="9.4" cy="21.5" r="0.5" />
+        </g>
         {/* Two groups rather than one: the inner transform is the drawing's
             own and has to stay a presentation attribute, while the outer one
             is left free for the animation. A CSS transform on the inner group

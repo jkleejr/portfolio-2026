@@ -59,6 +59,28 @@ body {
 .theme-icon-sun {
   display: none;
 }
+
+/* Except that the sun warms up under the pointer. It is only ever on screen in
+   light mode, so the orange is picked to hold against a white page — and to
+   still hold once the button's own hover takes it to 80% opacity over that
+   white. Setting `color` is enough: the icon strokes itself in currentColor.
+
+   The transition is on the icon rather than the button, since the button's own
+   is a Tailwind utility that does not reach a child, and it runs both ways so
+   the colour eases back out when the pointer leaves. */
+.theme-icon-sun {
+  transition: color 0.2s ease-out;
+}
+
+.theme-toggle:hover .theme-icon-sun {
+  color: #ea580c;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-icon-sun {
+    transition-duration: 0.01ms;
+  }
+}
 [data-theme="light"] .theme-icon-sun {
   display: block;
 }
@@ -464,23 +486,28 @@ body {
 
 /* ---------------------------------------------------------------------------
    Pencil scribble
-   A press sets the pencil working: it jitters along its own axis while a mark
-   draws underneath it, then the mark lifts and the pencil settles back. Under
-   half a second, because it plays every time the button is pressed and has to
-   be over before it starts being something to sit through.
+   A press sets the pencil writing: it travels left to right, wobbling as it
+   goes, laying down a dot at each step. At the end it lifts off the line and
+   comes back to where it started, and the trail clears behind it. 0.6s — it
+   plays on every press, so it has to be over before it becomes something to
+   sit through.
 
    .note-scribbling is added on each press and taken off when it finishes, so
    the pencil is still on load and only moves once the button has been used —
    the same arrangement as .theme-toggled and .design-rolling above.
 
    The lengths are user units in the icon's own 24-wide box, not pixels: at the
-   18px the button draws it at, one of them is about three quarters of a pixel,
-   which is why the numbers look larger than the movement they produce. The
-   travel is bounded by the box — the eraser is already close to the right
-   edge, and an SVG clips at its viewBox.
+   18px the button draws it at, one of them is about three quarters of a pixel.
+   The travel takes the pencil past the edge of that box, which is why the icon
+   is allowed to overflow it — there is room to spare inside the 40px button,
+   and clipping at the viewBox would cut the eraser off mid-stroke.
    --------------------------------------------------------------------------- */
 
-.note-scribble {
+.note-icon {
+  overflow: visible;
+}
+
+.note-dot {
   opacity: 0;
 }
 
@@ -490,61 +517,98 @@ body {
 }
 
 .note-scribbling .note-pencil {
-  animation: note-scribble-pencil 0.44s ease-in-out;
+  animation: note-scribble-pencil 0.6s cubic-bezier(0.4, 0, 0.3, 1);
 }
 
-/* pathLength="1" on the path puts the dash lengths on a 0-to-1 scale, so the
-   mark draws itself regardless of how long the zigzag actually is. */
-.note-scribbling .note-scribble {
-  stroke-dasharray: 1;
-  animation: note-scribble-mark 0.44s ease-out;
+/* Each dot lands as the pencil reaches it. `both` holds it once it has, so the
+   trail builds up rather than blinking one dot at a time; the group's own
+   animation is what clears the lot at the end. */
+.note-scribbling .note-dot {
+  animation: note-dot-in 0.2s ease-out both;
+}
+.note-scribbling .note-dot:nth-child(1) {
+  animation-delay: 0.05s;
+}
+.note-scribbling .note-dot:nth-child(2) {
+  animation-delay: 0.1s;
+}
+.note-scribbling .note-dot:nth-child(3) {
+  animation-delay: 0.15s;
+}
+.note-scribbling .note-dot:nth-child(4) {
+  animation-delay: 0.2s;
+}
+.note-scribbling .note-dot:nth-child(5) {
+  animation-delay: 0.25s;
+}
+.note-scribbling .note-dot:nth-child(6) {
+  animation-delay: 0.3s;
 }
 
+.note-scribbling .note-dots {
+  animation: note-dots-clear 0.6s linear;
+}
+
+/* Rightward the whole way, never back on itself — the wobble is in the
+   vertical and the tilt, which is what keeps it reading as writing rather than
+   as shaking on the spot. The last two steps lift it off the line and carry it
+   home. */
 @keyframes note-scribble-pencil {
   0% {
     transform: translate(0, 0) rotate(0deg);
   }
-  14% {
-    transform: translate(1.7px, 0.5px) rotate(5deg);
+  10% {
+    transform: translate(0.6px, 0.5px) rotate(3deg);
   }
-  30% {
-    transform: translate(-0.9px, -0.3px) rotate(-4deg);
+  22% {
+    transform: translate(1.9px, -0.3px) rotate(-2deg);
+  }
+  34% {
+    transform: translate(3.2px, 0.6px) rotate(3deg);
   }
   46% {
-    transform: translate(1.9px, 0.6px) rotate(6deg);
+    transform: translate(4.5px, -0.3px) rotate(-2deg);
   }
-  62% {
-    transform: translate(-0.7px, -0.2px) rotate(-3deg);
+  58% {
+    transform: translate(5.8px, 0.6px) rotate(3deg);
   }
-  78% {
-    transform: translate(1.1px, 0.4px) rotate(3deg);
+  70% {
+    transform: translate(7px, -0.2px) rotate(-2deg);
+  }
+  80% {
+    transform: translate(7.4px, 0.2px) rotate(1deg);
+  }
+  88% {
+    transform: translate(6.8px, -1.8px) rotate(-9deg);
   }
   100% {
     transform: translate(0, 0) rotate(0deg);
   }
 }
 
-@keyframes note-scribble-mark {
-  0% {
-    stroke-dashoffset: 1;
+@keyframes note-dot-in {
+  from {
     opacity: 0;
   }
-  20% {
+  to {
     opacity: 1;
   }
-  62% {
-    stroke-dashoffset: 0;
+}
+
+@keyframes note-dots-clear {
+  0%,
+  76% {
     opacity: 1;
   }
   100% {
-    stroke-dashoffset: 0;
     opacity: 0;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .note-scribbling .note-pencil,
-  .note-scribbling .note-scribble {
+  .note-scribbling .note-dot,
+  .note-scribbling .note-dots {
     animation: none;
   }
 }

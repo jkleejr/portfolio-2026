@@ -15,7 +15,11 @@ export function GlobeButton() {
         // Nothing yet — this is where the globe's behaviour will go.
       }}
       aria-label="Globe"
-      className="design-one-only flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-foreground/15 bg-background text-foreground transition duration-200 ease-out hover:scale-110 hover:opacity-80"
+      // No hover growth on this one. The globe is the densest mark in the
+      // stack — a full grid of hairline strokes — and scaling it up resamples
+      // that grid onto a slightly different pixel lattice, which drops whole
+      // lines out of it. The other icons are open enough not to show it.
+      className="design-one-only flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-foreground/15 bg-background text-foreground"
     >
       {/* Drawn rather than filled so it holds up at 18px: the outline, the
           equator and the meridian straight through the middle, then a curved
