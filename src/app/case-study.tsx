@@ -256,7 +256,7 @@ function StudyBody({ study }: { study: CaseStudy }) {
         <img
           src={study.cover.src}
           alt={study.cover.alt}
-          className="mt-10 h-[320px] w-full rounded-xl border border-foreground/10 object-cover"
+          className="mt-10 h-[220px] w-full max-w-[68ch] rounded-xl border border-foreground/10 object-cover"
           style={study.cover.crop ? { objectPosition: study.cover.crop } : undefined}
         />
       )}
@@ -315,7 +315,7 @@ function Block({ block }: { block: CaseStudyBlock }) {
           <img
             src={block.src}
             alt={block.alt}
-            className="w-full rounded-xl border border-foreground/10"
+            className="w-full max-w-[68ch] rounded-xl border border-foreground/10"
             style={block.crop ? { objectPosition: block.crop } : undefined}
           />
           <Caption text={block.caption} />
@@ -325,14 +325,14 @@ function Block({ block }: { block: CaseStudyBlock }) {
     case "images":
       return (
         <figure>
-          <div className="flex flex-wrap gap-4">
+          <div className="flex max-w-[68ch] flex-wrap gap-4">
             {block.items.map((item, i) => (
               // eslint-disable-next-line @next/next/no-img-element
               <img
                 key={i}
                 src={item.src}
                 alt={item.alt}
-                className="min-w-[180px] flex-1 rounded-xl border border-foreground/10 object-cover"
+                className="min-w-[140px] flex-1 rounded-xl border border-foreground/10 object-cover"
                 style={item.crop ? { objectPosition: item.crop } : undefined}
               />
             ))}
