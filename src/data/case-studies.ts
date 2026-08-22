@@ -80,10 +80,12 @@ export const caseStudies: Record<string, CaseStudy> = {
       //empathize & define, context
       // i chose to use claude sonnet 4.6 because its cheap enough to run per scan and still accurate.
       // costs me about $0.013 per scan.
+      // thought about the users and making a subscription too but decided i would make it free to use since the cost is low
+      // 
       { type: "heading", text: "Context" },
       {
         type: "text",
-        text: "I wanted a quick way to tell whether things were worth selling but I couldn't find an app that was fast, accurate, and well designed. Many apps can identify items from a photo, but their interfaces are cluttered and require a subscription after a few free scans. I tried to improve upon existing apps by making a simple app that was free to use.",
+        text: "I wanted a quick way to tell whether things were worth selling but I couldn't find an app that was fast and designed well. Most apps can already identify items from a photo, but they require a subscription after a few free scans. I tried to improve upon the photo scan existing apps by making something simple and free to use.",
       },
     ],
   },
@@ -106,6 +108,8 @@ export const caseStudies: Record<string, CaseStudy> = {
       // Gemini 3.1 flash, 3.1 flash tts. 
       // costs about $0.03 per minute of audio, about $1-3 per paper.
             //iteration, choices, tradeoffs
+          // decided not to cover the cost for this app and make audio listens free for all users 
+          // 
     ],
   },
 
