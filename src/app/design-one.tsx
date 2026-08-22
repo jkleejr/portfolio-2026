@@ -15,8 +15,15 @@ export function DesignOne() {
     <main className="pb-28 pt-6">
       {/* Name and role hold the top-left corner of the page. In flow rather
           than absolute, so the gallery below always clears them. The right
-          margin keeps the text off the button stack in the opposite corner. */}
-      <header className="ml-6 mr-20 max-w-[42ch]">
+          margin keeps the text off the button stack in the opposite corner.
+
+          On a phone the gallery runs the full width rather than squeezing
+          into the column beside the buttons, so it has to start below them.
+          The stack ends 13rem down; this header starts at 1.5rem and the
+          gallery adds another 4rem of margin, so 8rem here drops the first
+          row just past it. Wide enough for the two to sit side by side and
+          the reserved height goes away. */}
+      <header className="ml-6 mr-20 min-h-32 max-w-[42ch] sm:min-h-0">
         <h1 className="text-2xl font-bold">{site.name}</h1>
         <p className="mt-1 text-lg font-medium text-foreground">{site.role}</p>
       </header>
@@ -24,8 +31,15 @@ export function DesignOne() {
       {/* One gallery, not a block per project: every screenshot flows in the
           same row and wraps to the next line when the width runs out. Each
           one still carries its own project, so it opens that case study (or
-          the live site, for entries with a srcHref). */}
-      <div className="mx-auto mt-16 flex max-w-[760px] flex-wrap gap-2 px-6 pr-20 lg:pr-6">
+          the live site, for entries with a srcHref).
+
+          A phone is too narrow for the thumbnails to keep their fixed size
+          and still fit two across, so there it becomes a two-column grid and
+          they take whatever half the width comes to. From sm up there is room
+          for the fixed size, and the flow that wraps them goes back to being
+          the one that decides how many fit — along with the right padding
+          that keeps that first row clear of the buttons. */}
+      <div className="mx-auto mt-16 grid max-w-[760px] grid-cols-2 gap-2 px-6 sm:flex sm:flex-wrap sm:pr-20 lg:pr-6">
         {entries.flatMap((entry) =>
           (entry.images ?? []).map((image, i) => (
             <ProjectThumbnail

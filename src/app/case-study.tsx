@@ -291,9 +291,12 @@ export function ProjectThumbnail({
 
   // A cover brings its own background, so the hairline that frames a
   // screenshot just reads as an outline around it — drop it for covers.
+  // Square either way. On a phone it fills its half of the two-column grid;
+  // from sm up it takes the fixed size the wrapping flow is built around.
+  const size = "aspect-square w-full sm:aspect-auto sm:h-[220px] sm:w-[220px]";
   const box = image.cover
-    ? "h-[220px] w-[220px] rounded-lg"
-    : "h-[220px] w-[220px] rounded-lg border border-foreground/10";
+    ? `${size} rounded-lg`
+    : `${size} rounded-lg border border-foreground/10`;
 
   // A cover stands in for the screenshot here only — the page this opens still
   // shows image.src. `crop` belongs to the screenshot, so a cover ignores it.
@@ -302,13 +305,15 @@ export function ProjectThumbnail({
   // The screenshots are ~1200px wide, so letting the browser squeeze one into a
   // 220px box is a ~5x downscale that its cheap filter turns to mush. next/image
   // resamples them properly and ships a 2x variant for retina screens instead.
+  // `sizes` has to describe both layouts, or the phone downloads the desktop
+  // thumbnail: half the viewport there, the fixed 220px from sm up.
   const inner = shown ? (
     <div className={`${box} relative overflow-hidden`}>
       <Image
         src={shown}
         alt={image.alt}
         fill
-        sizes="220px"
+        sizes="(min-width: 640px) 220px, 50vw"
         quality={90}
         className="object-cover"
         style={
