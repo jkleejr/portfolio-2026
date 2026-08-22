@@ -7,8 +7,6 @@
 // the click handler is the seam where its behaviour will go.
 // ---------------------------------------------------------------------------
 
-import { SLOT_INDEX, slotTop } from "./corner-stack";
-
 export function GlobeButton() {
   return (
     <button
@@ -17,8 +15,7 @@ export function GlobeButton() {
         // Nothing yet — this is where the globe's behaviour will go.
       }}
       aria-label="Globe"
-      style={{ top: slotTop(SLOT_INDEX.globe) }}
-      className="design-one-only absolute right-6 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-foreground/15 bg-background text-foreground transition duration-200 ease-out hover:scale-110 hover:opacity-80"
+      className="design-one-only flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-foreground/15 bg-background text-foreground transition duration-200 ease-out hover:scale-110 hover:opacity-80"
     >
       {/* Drawn rather than filled so it holds up at 18px: the outline, the
           equator and the meridian straight through the middle, then a curved

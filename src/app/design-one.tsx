@@ -9,25 +9,23 @@
 import { site } from "@/data/site";
 import { entries } from "@/data/projects";
 import { ProjectThumbnail } from "./case-study";
-import { stackBottom } from "./corner-stack";
 
 export function DesignOne() {
+  // The bottom padding is trimmed on a phone so the page fits the screen. That
+  // is not only spacing: a page that overflows by even a few dozen pixels hands
+  // every upward swipe to the browser as a scroll, and the ribbons lose the
+  // gesture — see "Touch behaviour" in globals.css.
   return (
-    <main className="pb-28 pt-6">
+    <main className="pb-8 pt-6 sm:pb-28">
       {/* Name and role hold the top-left corner of the page. In flow rather
           than absolute, so the gallery below always clears them. The right
           margin keeps the text off the button stack in the opposite corner.
 
-          On a phone the gallery runs the full width rather than squeezing
-          into the column beside the buttons, so it has to start below them.
-          Reserving height here is what pushes it down — the sum is in
-          globals.css, off the stack's own measurement rather than a number
-          that would go stale the next time a button joins it. Wide enough for
-          the two to sit side by side and the reserve goes away. */}
-      <header
-        className="home-header ml-6 mr-20 max-w-[42ch]"
-        style={{ "--stack-bottom": stackBottom } as React.CSSProperties}
-      >
+          On a phone the buttons are a row under this text rather than a
+          column beside it, so the right margin that keeps the two apart is
+          only wanted from sm up. The reserved height is what the row sits in
+          — see .home-header in globals.css. */}
+      <header className="home-header ml-6 max-w-[42ch] sm:mr-20">
         <h1 className="text-2xl font-bold">{site.name}</h1>
         <p className="mt-1 text-lg font-medium text-foreground">{site.role}</p>
       </header>

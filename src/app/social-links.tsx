@@ -5,7 +5,6 @@
 // ---------------------------------------------------------------------------
 
 import { site } from "@/data/site";
-import { SLOT_INDEX, slotTop } from "./corner-stack";
 
 const ICONS: Record<string, React.ReactNode> = {
   // LinkedIn "in" mark in brand blue
@@ -30,20 +29,20 @@ const ICONS: Record<string, React.ReactNode> = {
 
 export function SocialLinks() {
   return (
-    // Each link takes a slot of its own in the corner stack, so the buttons
-    // below it know how far the run of them reaches.
+    // Loose in the corner stack rather than wrapped: the container lays the
+    // whole run of buttons out, and a wrapper here would make these behave as
+    // one item in it.
     <>
-      {site.buttons.map((button, i) => {
+      {site.buttons.map((button) => {
         const icon = "icon" in button ? ICONS[button.icon] : null;
         return (
           <a
             key={button.label}
-            style={{ top: slotTop(SLOT_INDEX.links + i) }}
             href={button.href}
             target="_blank"
             rel="noreferrer"
             aria-label={button.label}
-            className="design-one-only absolute right-6 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-foreground/15 bg-background text-sm font-semibold text-foreground transition duration-200 ease-out hover:scale-110 hover:opacity-80"
+            className="design-one-only flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-foreground/15 bg-background text-sm font-semibold text-foreground transition duration-200 ease-out hover:scale-110 hover:opacity-80"
           >
             {icon ?? button.label}
           </a>

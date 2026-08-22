@@ -374,17 +374,56 @@ body {
 }
 
 /* ---------------------------------------------------------------------------
-   Header clearance under the corner stack
-   Design one's gallery runs the full width on a phone rather than sitting in
-   the column beside the buttons, so it has to start below them. The header
-   above it reserves the height to push it there: the stack's own bottom
-   (--stack-bottom, set from corner-stack.ts) less the 1.5rem the header starts
-   at and the 4rem of margin the gallery already adds, and half a rem of air.
-   From sm up the two sit side by side and none of this applies.
+   Where the corner stack sits on a phone
+   Design one turns the stack into a row under the header text so the gallery
+   below can run the full width. The header reserves the height that puts its
+   own bottom edge exactly at the row's top (6.5rem, less the 1.5rem the page
+   starts at) — so the row reads as part of the header block, and the 4rem of
+   margin the gallery already carries clears the row's 2.5rem with room over.
+
+   Design two has no header for a row to sit under, so there the column stays
+   in the corner at every width.
    --------------------------------------------------------------------------- */
 
 @media (width < 40rem) {
   .home-header {
-    min-height: calc(var(--stack-bottom) - 5rem);
+    min-height: calc(6.5rem - 1.5rem);
   }
+
+  [data-design="two"] .corner-stack {
+    top: 1.5rem;
+    right: 1.5rem;
+    left: auto;
+    flex-direction: column;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Touch behaviour
+   The ribbons follow a finger exactly the way they follow a cursor — the same
+   handler takes touchstart and touchmove. What they lose on a phone is the
+   gesture itself: a swipe is also the browser's scroll gesture, the browser
+   wins it, and while the page scrolls the animation frames the ribbons are
+   drawn on are paused. The trail stutters and stops.
+
+   The largest part of the fix is in the layout: design one trims its bottom
+   padding so the page fits the screen, because a page that overflows even
+   slightly still hands over every swipe. What is left here backs that up.
+
+   pan-y leaves vertical scrolling to the browser and takes horizontal panning
+   off it, so a sideways swipe is never claimed as a scroll and draws a clean
+   ribbon with the page held still — the one gesture that always works, at any
+   page length. pinch-zoom is kept so the page can still be zoomed in on.
+
+   overscroll-behavior stops the rubber-band at the ends of the page. Without
+   it a swipe on a page with nothing to scroll still drags the whole view, and
+   the fixed canvas the ribbons live on goes with it.
+   --------------------------------------------------------------------------- */
+
+html {
+  overscroll-behavior-y: none;
+}
+
+body {
+  touch-action: pan-y pinch-zoom;
 }

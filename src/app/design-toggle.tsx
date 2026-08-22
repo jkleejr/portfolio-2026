@@ -12,8 +12,6 @@
 // animation for free — see .design-roll in globals.css, where flipping
 // data-design is what makes the numbers roll past each other.
 
-import { SLOT_INDEX, slotTop } from "./corner-stack";
-
 export function DesignToggle() {
   function toggle(e: React.MouseEvent<HTMLButtonElement>) {
     // The roll is scoped to this class so the number sits still on load and
@@ -31,8 +29,7 @@ export function DesignToggle() {
     <button
       onClick={toggle}
       aria-label="Switch between the two portfolio designs"
-      style={{ top: slotTop(SLOT_INDEX.designToggle) }}
-      className="absolute right-6 z-20 flex h-10 w-10 items-center justify-center rounded-full border border-foreground/15 bg-background text-sm font-bold text-foreground transition duration-200 ease-out hover:scale-110 hover:opacity-80"
+      className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-foreground/15 bg-background text-sm font-bold text-foreground transition duration-200 ease-out hover:scale-110 hover:opacity-80"
     >
       <span className="design-roll">
         <span className="design-label-two">2</span>

@@ -1,7 +1,6 @@
 "use client";
 
 import { useLayoutEffect } from "react";
-import { SLOT_INDEX, slotTop } from "./corner-stack";
 
 // Must match the theme-wave animation duration in globals.css.
 const WAVE_MS = 310;
@@ -138,8 +137,7 @@ export function ThemeToggle() {
       onClick={toggle}
       onAnimationEnd={(e) => e.currentTarget.classList.remove("theme-toggled")}
       aria-label="Switch between dark and light mode"
-      style={{ top: slotTop(SLOT_INDEX.themeToggle) }}
-      className="design-one-only absolute right-6 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-foreground/15 bg-background text-foreground transition duration-200 ease-out hover:scale-110 hover:opacity-80"
+      className="design-one-only flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-foreground/15 bg-background text-foreground transition duration-200 ease-out hover:scale-110 hover:opacity-80"
     >
       {/* Sun — shown in light mode */}
       <svg
