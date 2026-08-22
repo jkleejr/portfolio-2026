@@ -5,7 +5,7 @@ import { site } from "@/data/site";
 import { ThemeToggle } from "./theme-toggle";
 import { DesignToggle } from "./design-toggle";
 import { SocialLinks } from "./social-links";
-import { PhotoGallery } from "./photo-gallery";
+import { PhotoGalleryButton, PhotoGalleryProvider } from "./photo-gallery";
 import { CursorRibbons } from "./cursor-ribbons";
 import "./globals.css";
 
@@ -70,12 +70,17 @@ export default function RootLayout({
       <body
         className={`${quicksand.variable} ${satoshi.variable} ${outfit.variable} antialiased`}
       >
-        <DesignToggle />
-        <ThemeToggle />
-        <SocialLinks />
-        <PhotoGallery />
-        <CursorRibbons />
-        {children}
+        {/* Wraps the lot because the gallery switch reaches past its own
+            button: it decides whether the ribbons or the photos are the thing
+            following the cursor. */}
+        <PhotoGalleryProvider>
+          <DesignToggle />
+          <ThemeToggle />
+          <SocialLinks />
+          <PhotoGalleryButton />
+          <CursorRibbons />
+          {children}
+        </PhotoGalleryProvider>
       </body>
     </html>
   );

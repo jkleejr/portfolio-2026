@@ -9,18 +9,46 @@
 //
 // The overlay is click-through, and sits above everything the homepage draws —
 // the covers, the corner buttons, the name and role — so the photos pass over
-// all of it while every one of those stays clickable underneath. It is above
-// the cursor ribbons (z-30) so the ribbons do not draw over the photos, and
+// all of it while every one of those stays clickable underneath. It stays
 // below the case study panel (z-50), which is a modal and should cover the
 // page.
+//
+// Split three ways because the switch has a second job: only one thing trails
+// the cursor at a time, so turning the photos on puts the ribbons away and
+// turning them off brings the ribbons back. The provider owns that one piece
+// of state, the button flips it, and CursorRibbons reads it — see
+// usePhotoGallery.
 // ---------------------------------------------------------------------------
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { site } from "@/data/site";
 import { photos } from "@/data/photos";
 import ImageTrail from "./image-trail";
 
 const EXIT_MS = 200; // must match .pg-closing animation duration in globals.css
+
+type Gallery = {
+  /** True from the press that starts the trail to the press that ends it. */
+  active: boolean;
+  toggle: () => void;
+};
+
+const PhotoGalleryContext = createContext<Gallery>({
+  active: false,
+  toggle: () => {},
+});
+
+/** What the switch is currently set to. Read by the button and the ribbons. */
+export function usePhotoGallery(): Gallery {
+  return useContext(PhotoGalleryContext);
+}
 
 /** Two photo frames, the front one holding a sun over hills. */
 function GalleryIcon() {
@@ -47,7 +75,11 @@ function GalleryIcon() {
   );
 }
 
-export function PhotoGallery() {
+export function PhotoGalleryProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const [on, setOn] = useState(false);
   const [closing, setClosing] = useState(false);
   const exitTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -94,23 +126,8 @@ export function PhotoGallery() {
   );
 
   return (
-    <>
-      <button
-        type="button"
-        onClick={toggle}
-        aria-label="Photo gallery"
-        aria-pressed={on && !closing}
-        // Carries on down the corner stack from the site links above it, at
-        // the same 3rem pitch (a 2.5rem button plus the 0.5rem gap), so
-        // adding another link up there pushes this one down with it.
-        style={{ top: `calc(7.5rem + ${site.buttons.length} * 3rem)` }}
-        // While it is on, the button fills in — the trail is the other half of
-        // the feedback, but it only shows once you actually move.
-        className="design-one-only absolute right-6 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-foreground/15 bg-background text-foreground transition duration-200 ease-out hover:scale-110 hover:opacity-80 aria-pressed:bg-foreground aria-pressed:text-background"
-      >
-        <GalleryIcon />
-      </button>
-
+    <PhotoGalleryContext.Provider value={{ active: on && !closing, toggle }}>
+      {children}
       {on && (
         <div
           className={`pointer-events-none fixed inset-0 z-40 ${closing ? "pg-closing" : ""}`}
@@ -121,6 +138,28 @@ export function PhotoGallery() {
           </div>
         </div>
       )}
-    </>
+    </PhotoGalleryContext.Provider>
+  );
+}
+
+export function PhotoGalleryButton() {
+  const { active, toggle } = usePhotoGallery();
+
+  return (
+    <button
+      type="button"
+      onClick={toggle}
+      aria-label="Photo gallery"
+      aria-pressed={active}
+      // Carries on down the corner stack from the site links above it, at the
+      // same 3rem pitch (a 2.5rem button plus the 0.5rem gap), so adding
+      // another link up there pushes this one down with it.
+      style={{ top: `calc(7.5rem + ${site.buttons.length} * 3rem)` }}
+      // While it is on, the button fills in — the trail is the other half of
+      // the feedback, but it only shows once you actually move.
+      className="design-one-only absolute right-6 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-foreground/15 bg-background text-foreground transition duration-200 ease-out hover:scale-110 hover:opacity-80 aria-pressed:bg-foreground aria-pressed:text-background"
+    >
+      <GalleryIcon />
+    </button>
   );
 }
