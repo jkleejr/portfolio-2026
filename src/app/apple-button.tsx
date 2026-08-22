@@ -13,13 +13,18 @@
 // in currentColor and read as one silhouette.
 // ---------------------------------------------------------------------------
 
+import { useRef } from "react";
 import { useGravity } from "./gravity";
 
 export function AppleButton() {
-  const { on, toggle } = useGravity();
+  // Handed to the simulation so it can drop this button on the press, rather
+  // than leaving it hanging under the cursor that just pressed it.
+  const button = useRef<HTMLButtonElement>(null);
+  const { on, toggle } = useGravity(button);
 
   return (
     <button
+      ref={button}
       type="button"
       onClick={toggle}
       aria-pressed={on}

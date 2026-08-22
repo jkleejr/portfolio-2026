@@ -28,7 +28,7 @@
 // is still the way out.
 // ---------------------------------------------------------------------------
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type RefObject } from "react";
 import type MatterType from "matter-js";
 
 // Walls sit this far outside the viewport so fast-moving bodies cannot tunnel
@@ -171,8 +171,18 @@ function snapshotWords(root: HTMLElement, atoms: HTMLElement[]): Snapshot[] {
   return out;
 }
 
-/** Builds the whole simulation. The returned function tears it back down. */
-function run(Matter: typeof MatterType, exit: () => void): () => void {
+/**
+ * Builds the whole simulation. The returned function tears it back down.
+ *
+ * `trigger` is the button that switched gravity on. It is the one piece the
+ * pointer has certainly just been on, so it does not wait to be hovered — it
+ * lets go under the press that started everything.
+ */
+function run(
+  Matter: typeof MatterType,
+  exit: () => void,
+  trigger: HTMLElement | null,
+): () => void {
   const design = document.documentElement.getAttribute("data-design") ?? "one";
   const panel = document.querySelector<HTMLElement>(
     `[data-design-panel="${design}"]`,
@@ -296,6 +306,15 @@ function run(Matter: typeof MatterType, exit: () => void): () => void {
     if (!body.isStatic) return;
     Matter.Body.setStatic(body, false);
     Matter.Body.setAngularVelocity(body, (Math.random() - 0.5) * 0.15);
+  }
+
+  // The press is the trigger's own hover, so it falls immediately rather than
+  // sitting still under the cursor that just pressed it and waiting to be
+  // entered again.
+  const pressed = trigger ? pieces.find((piece) => piece.el === trigger) : null;
+  if (pressed) {
+    pressed.el.style.willChange = "transform";
+    drop(pressed.body);
   }
 
   const listeners: Array<() => void> = [];
@@ -422,8 +441,14 @@ function run(Matter: typeof MatterType, exit: () => void): () => void {
  * Runs the simulation for as long as it is switched on, and loads the engine
  * the first time it is. `exit` fires when something out of our hands ends it —
  * a design or view change — so the button that owns the state can follow.
+ *
+ * `trigger` points at that button, so the simulation can drop it on the press
+ * rather than making you go back and hover the thing you just clicked.
  */
-export function useGravity(): { on: boolean; toggle: () => void } {
+export function useGravity(trigger: RefObject<HTMLElement | null>): {
+  on: boolean;
+  toggle: () => void;
+} {
   const [on, setOn] = useState(false);
   const teardown = useRef<(() => void) | null>(null);
 
@@ -433,7 +458,7 @@ export function useGravity(): { on: boolean; toggle: () => void } {
 
     import("matter-js").then((mod) => {
       if (cancelled) return;
-      teardown.current = run(mod.default, () => setOn(false));
+      teardown.current = run(mod.default, () => setOn(false), trigger.current);
     });
 
     return () => {
@@ -441,7 +466,9 @@ export function useGravity(): { on: boolean; toggle: () => void } {
       teardown.current?.();
       teardown.current = null;
     };
-  }, [on]);
+    // `trigger` is a ref object, which React keeps stable, so listing it
+    // satisfies the rule without ever re-running the effect.
+  }, [on, trigger]);
 
   return { on, toggle: () => setOn((v) => !v) };
 }
