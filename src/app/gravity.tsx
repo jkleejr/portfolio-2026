@@ -3,10 +3,10 @@
 // ---------------------------------------------------------------------------
 // Google Gravity.
 //
-// Everything on screen gets weight. The press lets go of the lot, and you can
-// grab anything and throw it afterwards — a piece still works where it lands,
-// so the theme toggle lying on the floor is the same button it was and
-// clicking it still switches the theme.
+// Everything on screen gets weight. Hovering something drops it; you can grab
+// anything and throw it, and it still works where it lands — the theme toggle
+// lying on the floor is the same button it was, so clicking it still switches
+// the theme.
 //
 // Two kinds of thing fall, for one reason:
 //
@@ -290,29 +290,34 @@ function run(Matter: typeof MatterType, exit: () => void): () => void {
   });
   Matter.Composite.add(world, [ground, left, right]);
 
+  // Something only starts falling once it is touched, so the page comes apart
+  // under the cursor rather than all at once.
   function drop(body: MatterType.Body) {
     if (!body.isStatic) return;
     Matter.Body.setStatic(body, false);
     Matter.Body.setAngularVelocity(body, (Math.random() - 0.5) * 0.15);
   }
 
-  // Everything lets go on the press, but not on the same tick: a short random
-  // delay per piece turns one falling slab into a cascade, and it is the
-  // difference between the page dropping and the page coming apart.
-  //
-  // will-change is set as each piece is released rather than in the
-  // stylesheet, because it promotes the element to its own compositor layer at
-  // the cost of subpixel text rendering. Hinting everything up front made the
-  // whole page visibly change texture the moment the button was pressed.
-  const timers = pieces.map((piece) =>
-    setTimeout(
-      () => {
-        piece.el.style.willChange = "transform";
-        drop(piece.body);
-      },
-      Math.random() * 260,
-    ),
-  );
+  const listeners: Array<() => void> = [];
+  for (const piece of pieces) {
+    // will-change is set here rather than in the stylesheet: it promotes the
+    // element to its own compositor layer, which costs subpixel text
+    // rendering, and until a piece is touched it is not going anywhere. Hinting
+    // everything up front made the whole page visibly change texture the
+    // moment the button was pressed.
+    const wake = () => {
+      piece.el.style.willChange = "transform";
+      drop(piece.body);
+    };
+    piece.el.addEventListener("mouseenter", wake);
+    piece.el.addEventListener("mousedown", wake);
+    piece.el.addEventListener("touchstart", wake, { passive: true });
+    listeners.push(() => {
+      piece.el.removeEventListener("mouseenter", wake);
+      piece.el.removeEventListener("mousedown", wake);
+      piece.el.removeEventListener("touchstart", wake);
+    });
+  }
 
   const mouse = Matter.Mouse.create(overlay) as MouseWithHandlers;
 
@@ -401,7 +406,7 @@ function run(Matter: typeof MatterType, exit: () => void): () => void {
     window.removeEventListener("touchstart", onTouch, true);
     window.removeEventListener("touchmove", onTouch, true);
     window.removeEventListener("touchend", onTouch, true);
-    for (const timer of timers) clearTimeout(timer);
+    for (const off of listeners) off();
     for (const restore of restores) restore();
     Matter.Runner.stop(runner);
     Matter.Engine.clear(engine);
