@@ -5,6 +5,7 @@ import { site } from "@/data/site";
 import { ThemeToggle } from "./theme-toggle";
 import { DesignToggle } from "./design-toggle";
 import { SocialLinks } from "./social-links";
+import { PhotoGallery } from "./photo-gallery";
 import { CursorRibbons } from "./cursor-ribbons";
 import "./globals.css";
 
@@ -72,6 +73,7 @@ export default function RootLayout({
         <DesignToggle />
         <ThemeToggle />
         <SocialLinks />
+        <PhotoGallery />
         <CursorRibbons />
         {children}
       </body>
