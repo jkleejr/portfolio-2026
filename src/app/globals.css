@@ -461,3 +461,90 @@ body {
 [data-view="blog"] .note-label-open {
   display: none;
 }
+
+/* ---------------------------------------------------------------------------
+   Pencil scribble
+   A press sets the pencil working: it jitters along its own axis while a mark
+   draws underneath it, then the mark lifts and the pencil settles back. Under
+   half a second, because it plays every time the button is pressed and has to
+   be over before it starts being something to sit through.
+
+   .note-scribbling is added on each press and taken off when it finishes, so
+   the pencil is still on load and only moves once the button has been used —
+   the same arrangement as .theme-toggled and .design-rolling above.
+
+   The lengths are user units in the icon's own 24-wide box, not pixels: at the
+   18px the button draws it at, one of them is about three quarters of a pixel,
+   which is why the numbers look larger than the movement they produce. The
+   travel is bounded by the box — the eraser is already close to the right
+   edge, and an SVG clips at its viewBox.
+   --------------------------------------------------------------------------- */
+
+.note-scribble {
+  opacity: 0;
+}
+
+.note-pencil {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.note-scribbling .note-pencil {
+  animation: note-scribble-pencil 0.44s ease-in-out;
+}
+
+/* pathLength="1" on the path puts the dash lengths on a 0-to-1 scale, so the
+   mark draws itself regardless of how long the zigzag actually is. */
+.note-scribbling .note-scribble {
+  stroke-dasharray: 1;
+  animation: note-scribble-mark 0.44s ease-out;
+}
+
+@keyframes note-scribble-pencil {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  14% {
+    transform: translate(1.7px, 0.5px) rotate(5deg);
+  }
+  30% {
+    transform: translate(-0.9px, -0.3px) rotate(-4deg);
+  }
+  46% {
+    transform: translate(1.9px, 0.6px) rotate(6deg);
+  }
+  62% {
+    transform: translate(-0.7px, -0.2px) rotate(-3deg);
+  }
+  78% {
+    transform: translate(1.1px, 0.4px) rotate(3deg);
+  }
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+}
+
+@keyframes note-scribble-mark {
+  0% {
+    stroke-dashoffset: 1;
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  62% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .note-scribbling .note-pencil,
+  .note-scribbling .note-scribble {
+    animation: none;
+  }
+}
