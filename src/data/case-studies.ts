@@ -68,9 +68,11 @@ export type CaseStudy = {
 
 
 // Note on the design process: roles are changing, don't have to follow the design process exactly. 
-// the design process is a rigid order, you can't create great work repeatably this way
+// design process is too strict
 // what rly matters is the ability to choose and curate what to make
+// bc anyone can vibe code
 // sometimes you have to jump around, iterate, make decisions that are not linear
+// bc of ai
 // the user doesn't care about the process artifacts or the user journey
 // they care about the end experience they are feeling/seeing
 

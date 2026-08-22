@@ -19,7 +19,6 @@ export type Entry = {
 export const entries: Entry[] = [
   {
     title: "Loot Check",
-    titleHref: "https://apps.apple.com/us/app/loot-check/id6785767104",
     slug: "loot-check",
     platform: "mobile",
     description:
