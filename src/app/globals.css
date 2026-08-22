@@ -309,9 +309,14 @@ body {
 
 /* The theme toggle and the corner links belong to design one. Design two is a
    clean page, so the switcher is the only chrome that survives on it — hidden
-   here rather than in React for the same no-flash reason as the panels. */
+   here rather than in React for the same no-flash reason as the panels.
+
+   Hidden, not removed: the slots stay, so the switcher sits in the same place
+   on both designs instead of the stack collapsing around it. Hidden this way
+   they are out of the tab order and off the accessibility tree too, so nothing
+   invisible is still reachable. */
 [data-design="two"] .design-one-only {
-  display: none;
+  visibility: hidden;
 }
 
 /* ---------------------------------------------------------------------------
@@ -381,20 +386,15 @@ body {
    starts at) — so the row reads as part of the header block, and the 4rem of
    margin the gallery already carries clears the row's 2.5rem with room over.
 
-   Design two has no header for a row to sit under, so there the column stays
-   in the corner at every width.
+   The row stays put on design two and on the blog, which have no header of
+   their own. Neither page moves the stack: whichever button each of them
+   leaves showing has to be in the same place as on design one, so that
+   pressing it and pressing it again do not move it under your cursor.
    --------------------------------------------------------------------------- */
 
 @media (width < 40rem) {
   .home-header {
     min-height: calc(6.5rem - 1.5rem);
-  }
-
-  [data-design="two"] .corner-stack {
-    top: 1.5rem;
-    right: 1.5rem;
-    left: auto;
-    flex-direction: column;
   }
 }
 
@@ -443,20 +443,15 @@ body {
 }
 
 /* The page is left bare on purpose, and only the pencil survives in the
-   corner, since it is the way back. The buttons it leaves behind are hidden
-   rather than removed: they keep their slots, so the pencil stays exactly
-   where it was on the page you pressed it from instead of sliding up the
-   stack. Hidden this way they are out of the tab order and off the
-   accessibility tree too, so nothing invisible can still be reached.
-
-   `display` is set alongside it because on design two .design-one-only would
-   otherwise remove those buttons outright — the slots would collapse and take
-   the pencil with them. */
+   corner, since it is the way back. Same as design two: the rest keep their
+   slots so the pencil stays exactly where it was on the page you pressed it
+   from, and this rule has to name every child rather than .design-one-only,
+   because the design switcher goes too. */
 [data-view="blog"] .corner-stack > * {
-  display: flex;
   visibility: hidden;
 }
 
+/* Last word, so the pencil survives both this rule and design two's. */
 [data-view="blog"] .note-button {
   visibility: visible;
 }
