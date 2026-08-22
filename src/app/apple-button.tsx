@@ -3,23 +3,27 @@
 // ---------------------------------------------------------------------------
 // The apple, at the foot of the top-right stack.
 //
-// A real button with nothing wired to it yet: it takes focus, it presses, and
-// the click handler is the seam where its behaviour will go.
+// It turns gravity on and off. Newton's apple: press it and the weight of the
+// page arrives — see gravity.tsx.
 //
 // Monochrome at rest like the rest of the stack, and it ripens under the
-// pointer — see .apple-button in globals.css. The three parts are separate
-// paths so each can take its own colour there; at rest they all draw in
-// currentColor and read as one silhouette.
+// pointer — see .apple-button in globals.css. It stays ripe for as long as
+// gravity is running, which is what says the switch is on. The three parts are
+// separate paths so each can take its own colour there; at rest they all draw
+// in currentColor and read as one silhouette.
 // ---------------------------------------------------------------------------
 
+import { useGravity } from "./gravity";
+
 export function AppleButton() {
+  const { on, toggle } = useGravity();
+
   return (
     <button
       type="button"
-      onClick={() => {
-        // Nothing yet — this is where the apple's behaviour will go.
-      }}
-      aria-label="Apple"
+      onClick={toggle}
+      aria-pressed={on}
+      aria-label="Turn gravity on and off"
       className="apple-button design-one-only flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-foreground/15 bg-background text-foreground"
     >
       <svg

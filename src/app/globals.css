@@ -634,17 +634,20 @@ body {
 }
 
 .apple-button:hover .apple-body,
-.apple-button:active .apple-body {
+.apple-button:active .apple-body,
+.apple-button[aria-pressed="true"] .apple-body {
   fill: #dd2025;
 }
 
 .apple-button:hover .apple-leaf,
-.apple-button:active .apple-leaf {
+.apple-button:active .apple-leaf,
+.apple-button[aria-pressed="true"] .apple-leaf {
   fill: #5ea338;
 }
 
 .apple-button:hover .apple-stem,
-.apple-button:active .apple-stem {
+.apple-button:active .apple-stem,
+.apple-button[aria-pressed="true"] .apple-stem {
   stroke: #8b5a2b;
 }
 
@@ -654,4 +657,78 @@ body {
   .apple-stem {
     transition-duration: 0.01ms;
   }
+}
+
+/* ---------------------------------------------------------------------------
+   Google Gravity
+   Scrolling is locked while it runs: the falling pieces are position: fixed,
+   so a scroll would slide them out from under the layout they came from.
+   --------------------------------------------------------------------------- */
+
+html.gravity-on {
+  overflow: hidden;
+  /* Text is being thrown around, so stop the browser selecting it or starting
+     a native image drag mid-throw. */
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* The page itself goes invisible; what you see is the pieces. Hiding it rather
+   than recolouring its text is what keeps the collapse quiet: pinning the atoms
+   takes them out of flow, so the page gets shorter and everything below the
+   fold slides up — and an image dragged into view that way is in full colour
+   no matter what the text is set to. Hidden, none of it can show.
+   `visibility` is inherited, so the pinned pieces claim it back below. */
+html.gravity-on [data-design-panel] {
+  visibility: hidden;
+}
+
+.gravity-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  overflow: hidden;
+  /* The real elements sit above this and stay clickable; only the word copies
+     inside it take the pointer. */
+  pointer-events: none;
+}
+
+.gravity-word {
+  position: absolute;
+  top: 0;
+  left: 0;
+  white-space: nowrap;
+  pointer-events: auto;
+  cursor: grab;
+}
+
+/* A real element, pinned to the viewport and driven by the engine. It keeps
+   its own handlers, so it still works wherever it lands — which is what lets
+   the apple switch gravity back off from the floor. */
+.gravity-atom {
+  visibility: visible;
+  z-index: 30;
+  cursor: grab;
+  -webkit-user-drag: none;
+  /* The engine writes a new transform every frame. A CSS transition on top of
+     that draws the element behind where the physics actually put it, so clicks
+     land on empty space next to it. */
+  transition: none;
+}
+
+/* Hover scaling fights the same transform, and a button that grows under the
+   cursor while it is being thrown is not helping anyone. */
+.gravity-atom,
+.gravity-atom:hover {
+  scale: none;
+}
+
+.gravity-atom img {
+  -webkit-user-drag: none;
+  pointer-events: none;
+}
+
+.gravity-word:active,
+.gravity-atom:active {
+  cursor: grabbing;
 }

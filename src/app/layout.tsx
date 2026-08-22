@@ -86,7 +86,10 @@ export default function RootLayout({
               rather than a sum each of them has to know. A column in the
               top-right corner on a laptop; on a phone a row under the header
               text, left to right, with the gallery starting below it. */}
-          <div className="corner-stack absolute left-6 top-[6.5rem] z-20 flex flex-row gap-2 sm:left-auto sm:right-6 sm:top-6 sm:flex-col">
+          <div
+            data-gravity="atom"
+            className="corner-stack absolute left-6 top-[6.5rem] z-20 flex flex-row gap-2 sm:left-auto sm:right-6 sm:top-6 sm:flex-col"
+          >
             <DesignToggle />
             <ThemeToggle />
             <SocialLinks />
