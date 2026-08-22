@@ -101,7 +101,10 @@ export function ThemeToggle() {
       animateThemeColor(from, backgroundRgb());
     };
 
-    // Replay the icon animation on every click
+    // Replay the icon animation on every click. The class comes off again in
+    // onAnimationEnd below — left on, it would re-fire the shake every time
+    // the design switcher hides and re-shows this button, since an element
+    // re-entering the display tree restarts its animations.
     button.classList.remove("theme-toggled");
     void button.offsetWidth;
     button.classList.add("theme-toggled");
@@ -132,6 +135,7 @@ export function ThemeToggle() {
   return (
     <button
       onClick={toggle}
+      onAnimationEnd={(e) => e.currentTarget.classList.remove("theme-toggled")}
       aria-label="Switch between dark and light mode"
       className="design-one-only absolute right-6 top-[4.5rem] z-10 flex h-10 w-10 items-center justify-center rounded-full border border-foreground/15 bg-background text-foreground transition duration-200 ease-out hover:scale-110 hover:opacity-80"
     >

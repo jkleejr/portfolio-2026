@@ -2,6 +2,10 @@ export type EntryImage = {
   src?: string;
   alt: string;
   crop?: string; // CSS object-position, e.g. "top" or "50% 20%" (default center)
+  // Shown on the homepage in place of `src` — for a project whose thumbnail
+  // reads better as a logo than as one of its screens. The page the thumbnail
+  // opens still shows `src`, and a cover is used as-is, without `crop`.
+  cover?: string;
   // A screenshot with a title of its own gets its own page in the overlay —
   // the shot, its title, and its description — instead of opening the whole
   // case study for the project it belongs to.
@@ -32,6 +36,7 @@ export const entries: Entry[] = [
     images: [
       {
         src: "/projects/loot-check-1.png",
+        cover: "/projects/loot-check-logo-4.png",
         alt: "Loot Check home screen",
         crop: "50% 15%",
         title: "Loot Check",
@@ -46,6 +51,7 @@ export const entries: Entry[] = [
     images: [
       {
         src: "/projects/paper-reader-2.png",
+        cover: "/projects/paper-reader-logo-4.png",
         alt: "Reader view with the sentence being read aloud highlighted",
         crop: "50% 34%",
         title: "Paper Reader",
@@ -60,6 +66,7 @@ export const entries: Entry[] = [
     images: [
       {
         src: "/projects/screen-translator-2.png",
+        cover: "/projects/screen-translator-logo-3.png",
         alt: "A Korean headline translated to English in the Dynamic Island, over a live news feed",
         crop: "50% 2%",
         title: "Screen Translator",

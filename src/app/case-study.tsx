@@ -226,19 +226,25 @@ export function ProjectThumbnail({
 
   const box = "h-[220px] w-[220px] rounded-lg border border-foreground/10";
 
+  // A cover stands in for the screenshot here only — the page this opens still
+  // shows image.src. `crop` belongs to the screenshot, so a cover ignores it.
+  const shown = image.cover ?? image.src;
+
   // The screenshots are ~1200px wide, so letting the browser squeeze one into a
   // 220px box is a ~5x downscale that its cheap filter turns to mush. next/image
   // resamples them properly and ships a 2x variant for retina screens instead.
-  const inner = image.src ? (
+  const inner = shown ? (
     <div className={`${box} relative overflow-hidden`}>
       <Image
-        src={image.src}
+        src={shown}
         alt={image.alt}
         fill
         sizes="220px"
         quality={90}
         className="object-cover"
-        style={image.crop ? { objectPosition: image.crop } : undefined}
+        style={
+          !image.cover && image.crop ? { objectPosition: image.crop } : undefined
+        }
       />
     </div>
   ) : (

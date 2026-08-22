@@ -5,11 +5,12 @@
 // + CSS variant. Vendored rather than installed: it is a copy-paste component,
 // not a package.
 //
-// Two changes from upstream:
+// Three changes from upstream:
 //   * "use client" — upstream builds against Vite, and this touches the DOM.
 //   * the pointer listeners moved from the container to the window, so the
 //     ribbons can trail across a pointer-events:none overlay and still follow
 //     the cursor while the page underneath stays clickable.
+//   * the WebGL context is released on teardown — see the note in the cleanup.
 //
 // Styles live in globals.css under "Cursor ribbons" rather than the
 // component's own Ribbons.css, to keep this app on one stylesheet.
@@ -260,6 +261,12 @@ const Ribbons: React.FC<RibbonsProps> = ({
       if (gl.canvas && gl.canvas.parentNode === container) {
         container.removeChild(gl.canvas);
       }
+      // Dropping the canvas does not release its WebGL context, and a browser
+      // only allows a page a handful of live ones (Chrome caps around 16).
+      // Without this, every re-run of the effect — a hot reload, a Strict Mode
+      // remount — leaks one, and past the cap the next Renderer silently gets
+      // no context at all.
+      gl.getExtension('WEBGL_lose_context')?.loseContext();
     };
   }, [
     colors,
