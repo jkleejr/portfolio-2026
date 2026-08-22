@@ -66,7 +66,7 @@ export const entries: Entry[] = [
     images: [
       {
         src: "/projects/screen-translator-2.png",
-        cover: "/projects/screen-translator-logo-3.png",
+        cover: "/projects/screen-translator-logo-4.png",
         alt: "A Korean headline translated to English in the Dynamic Island, over a live news feed",
         crop: "50% 2%",
         title: "Screen Translator",

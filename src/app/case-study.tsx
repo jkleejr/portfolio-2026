@@ -224,7 +224,11 @@ export function ProjectThumbnail({
   const study = caseStudies[slug];
   const label = image.title ?? study?.title;
 
-  const box = "h-[220px] w-[220px] rounded-lg border border-foreground/10";
+  // A cover brings its own background, so the hairline that frames a
+  // screenshot just reads as an outline around it — drop it for covers.
+  const box = image.cover
+    ? "h-[220px] w-[220px] rounded-lg"
+    : "h-[220px] w-[220px] rounded-lg border border-foreground/10";
 
   // A cover stands in for the screenshot here only — the page this opens still
   // shows image.src. `crop` belongs to the screenshot, so a cover ignores it.
