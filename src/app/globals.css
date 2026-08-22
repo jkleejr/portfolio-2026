@@ -612,3 +612,46 @@ body {
     animation: none;
   }
 }
+
+/* ---------------------------------------------------------------------------
+   The apple
+   Black and white at rest, like every other icon in the stack, and it takes on
+   its own colours under the pointer and while it is held down. The three parts
+   are separate paths so each can be coloured on its own; at rest they all draw
+   in currentColor and read as one silhouette.
+
+   The colours are set on the paths rather than the button, so what changes is
+   the fruit and not the circle around it. They ease both ways, so the apple
+   ripens on the way in and drains on the way out rather than snapping.
+   --------------------------------------------------------------------------- */
+
+.apple-body,
+.apple-leaf,
+.apple-stem {
+  transition:
+    fill 0.2s ease-out,
+    stroke 0.2s ease-out;
+}
+
+.apple-button:hover .apple-body,
+.apple-button:active .apple-body {
+  fill: #dd2025;
+}
+
+.apple-button:hover .apple-leaf,
+.apple-button:active .apple-leaf {
+  fill: #5ea338;
+}
+
+.apple-button:hover .apple-stem,
+.apple-button:active .apple-stem {
+  stroke: #8b5a2b;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .apple-body,
+  .apple-leaf,
+  .apple-stem {
+    transition-duration: 0.01ms;
+  }
+}
