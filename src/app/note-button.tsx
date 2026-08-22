@@ -1,23 +1,34 @@
 "use client";
 
 // ---------------------------------------------------------------------------
-// The note, at the foot of the top-right stack.
+// The pencil, at the foot of the top-right stack. It opens the blog, and on
+// the blog it is the way back.
 //
-// A real button with nothing wired to it yet, same as the globe: it takes
-// focus, it presses, and the click handler is the seam where its behaviour
-// will go.
+// Built the same way as the design toggle, and for the same reason: the switch
+// is a `data-view` attribute on <html> rather than React state, so the stored
+// choice that the inline script in layout.tsx applies lands before first paint
+// with no flash of the page you were not on. Both labels are rendered and CSS
+// picks one, so the button reads correctly to a screen reader before hydration
+// too — the same trick the theme toggle uses for its sun and moon.
 // ---------------------------------------------------------------------------
 
 export function NoteButton() {
+  function toggle() {
+    const root = document.documentElement;
+    const next = root.getAttribute("data-view") === "blog" ? "home" : "blog";
+    root.setAttribute("data-view", next);
+    localStorage.setItem("view", next);
+    window.scrollTo({ top: 0 });
+  }
+
   return (
     <button
       type="button"
-      onClick={() => {
-        // Nothing yet — this is where the note's behaviour will go.
-      }}
-      aria-label="Notes"
-      className="design-one-only flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-foreground/15 bg-background text-foreground transition duration-200 ease-out hover:scale-110 hover:opacity-80"
+      onClick={toggle}
+      className="note-button design-one-only flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-foreground/15 bg-background text-foreground transition duration-200 ease-out hover:scale-110 hover:opacity-80"
     >
+      <span className="note-label-open sr-only">Open the blog</span>
+      <span className="note-label-close sr-only">Back to the portfolio</span>
       <svg
         width="18"
         height="18"

@@ -427,3 +427,44 @@ html {
 body {
   touch-action: pan-y pinch-zoom;
 }
+
+/* ---------------------------------------------------------------------------
+   The blog
+   A view rather than a third design: `data-view` on <html> swaps it in for
+   whichever design is showing, and going back returns you to that design
+   rather than to a fixed one. Same reasoning as the design switcher — doing it
+   in CSS means the stored view the inline script applies lands before first
+   paint, with no flash of the page you were not on.
+
+   The page is left bare on purpose. Only the pencil survives in the corner,
+   since it is the way back; the second rule keeps it even on design two, where
+   .design-one-only would otherwise take it away and leave nothing to press.
+   --------------------------------------------------------------------------- */
+
+[data-view="home"] [data-view-panel="blog"],
+[data-view="blog"] [data-design-panel],
+[data-view="blog"] .corner-stack > *:not(.note-button) {
+  display: none;
+}
+
+[data-view="blog"] .note-button {
+  display: flex;
+}
+
+/* The button says what pressing it will do, and that changes with the view. */
+[data-view="home"] .note-label-close,
+[data-view="blog"] .note-label-open {
+  display: none;
+}
+
+/* On a phone the stack is a row under design one's header text. The blog has
+   no header for it to sit under, so there — as on design two — it goes back to
+   the corner. */
+@media (width < 40rem) {
+  [data-view="blog"] .corner-stack {
+    top: 1.5rem;
+    right: 1.5rem;
+    left: auto;
+    flex-direction: column;
+  }
+}
