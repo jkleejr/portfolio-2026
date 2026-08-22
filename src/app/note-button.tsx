@@ -51,8 +51,8 @@ export function NoteButton() {
       <span className="note-label-close sr-only">Back to the portfolio</span>
       <svg
         className="note-icon"
-        width="18"
-        height="18"
+        width="20"
+        height="20"
         viewBox="0 0 24 24"
         fill="currentColor"
         aria-hidden

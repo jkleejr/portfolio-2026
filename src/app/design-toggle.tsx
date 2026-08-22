@@ -29,7 +29,7 @@ export function DesignToggle() {
     <button
       onClick={toggle}
       aria-label="Switch between the two portfolio designs"
-      className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-foreground/15 bg-background text-sm font-bold text-foreground transition duration-200 ease-out hover:scale-110 hover:opacity-80"
+      className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-foreground/15 bg-background text-base font-bold text-foreground transition duration-200 ease-out hover:scale-110 hover:opacity-80"
     >
       <span className="design-roll">
         <span className="design-label-two">2</span>
