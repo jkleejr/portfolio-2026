@@ -6,6 +6,19 @@ export type EntryImage = {
   // reads better as a logo than as one of its screens. The page the thumbnail
   // opens still shows `src`, and a cover is used as-is, without `crop`.
   cover?: string;
+  // A dot painted over the cover that drifts toward the pointer. The cover
+  // image has to have it erased — see screen-translator-logo-4-base.png. All
+  // lengths are percentages of the thumbnail, so they hold at any size.
+  coverDot?: {
+    x: number; // centre, % from the left
+    y: number; // centre, % from the top
+    size: number; // diameter, % of the thumbnail's width
+    color: string;
+    // How far it drifts, as a share of the thumbnail's width. For a dot inside
+    // a ring, the largest value that keeps it enclosed is the ring's inner
+    // radius minus the dot's radius.
+    travel: number;
+  };
   // A screenshot with a title of its own gets its own page in the overlay —
   // the shot, its title, and its description — instead of opening the whole
   // case study for the project it belongs to.
@@ -66,7 +79,18 @@ export const entries: Entry[] = [
     images: [
       {
         src: "/projects/screen-translator-2.png",
-        cover: "/projects/screen-translator-logo-4.png",
+        cover: "/projects/screen-translator-logo-4-base.png",
+        // Measured off the artwork the dot was erased from.
+        coverDot: {
+          x: 56.93,
+          y: 56.45,
+          size: 26.66,
+          color: "#ff3b30",
+          // 263px inner radius - 136.5px dot radius = 126.5px, which is 12.35%
+          // of the 1024px artwork and has the dot flush against the ring. A
+          // hair under that, so it stops just before contact.
+          travel: 12.1,
+        },
         alt: "A Korean headline translated to English in the Dynamic Island, over a live news feed",
         crop: "50% 2%",
         title: "Screen Translator",

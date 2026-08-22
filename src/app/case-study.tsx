@@ -172,6 +172,68 @@ export function CaseStudyProvider({ children }: { children: React.ReactNode }) {
 }
 
 // ---------------------------------------------------------------------------
+// A dot painted over a cover that drifts toward the pointer, so the mark looks
+// like it is watching the cursor. It leans in the pointer's direction and stops
+// at `travel`, rather than tracking it one-to-one — the movement should read as
+// a glance, not a drag.
+// ---------------------------------------------------------------------------
+
+function CoverDot({ dot }: { dot: NonNullable<EntryImage["coverDot"]> }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const [lean, setLean] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    // Coalesce to one update a frame: mousemove fires far more often than the
+    // screen refreshes, and each update costs a layout read.
+    let frame = 0;
+    const onMove = (e: MouseEvent) => {
+      if (frame) return;
+      frame = requestAnimationFrame(() => {
+        frame = 0;
+        const el = ref.current;
+        if (!el) return;
+        const box = el.getBoundingClientRect();
+        const dx = e.clientX - (box.left + box.width / 2);
+        const dy = e.clientY - (box.top + box.height / 2);
+        const distance = Math.hypot(dx, dy);
+        if (distance < 1) return setLean({ x: 0, y: 0 });
+        setLean({ x: dx / distance, y: dy / distance });
+      });
+    };
+
+    window.addEventListener("mousemove", onMove);
+    return () => {
+      window.removeEventListener("mousemove", onMove);
+      if (frame) cancelAnimationFrame(frame);
+    };
+  }, []);
+
+  return (
+    <span
+      ref={ref}
+      aria-hidden
+      className="pointer-events-none absolute rounded-full transition-transform duration-300 ease-out"
+      style={{
+        left: `${dot.x}%`,
+        top: `${dot.y}%`,
+        width: `${dot.size}%`,
+        aspectRatio: "1",
+        background: dot.color,
+        // -50% centres it on (x, y); the lean rides on top of that. `travel`
+        // is a share of the thumbnail, but a percentage translate is a share
+        // of the element being moved, so it is rescaled against the dot's own
+        // width here.
+        transform: `translate(-50%, -50%) translate(${
+          (lean.x * dot.travel * 100) / dot.size
+        }%, ${(lean.y * dot.travel * 100) / dot.size}%)`,
+      }}
+    />
+  );
+}
+
+// ---------------------------------------------------------------------------
 // A single screenshot's page: the shot, its title, its description. Laid out
 // like StudyBody's header so the two read as the same kind of page.
 // ---------------------------------------------------------------------------
@@ -250,6 +312,7 @@ export function ProjectThumbnail({
           !image.cover && image.crop ? { objectPosition: image.crop } : undefined
         }
       />
+      {image.coverDot && <CoverDot dot={image.coverDot} />}
     </div>
   ) : (
     // A project with no screenshot yet still needs a way into its study.
