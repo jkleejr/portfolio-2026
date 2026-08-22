@@ -90,8 +90,8 @@ export default function RootLayout({
             <DesignToggle />
             <ThemeToggle />
             <SocialLinks />
-            <PhotoGalleryButton />
             <NoteButton />
+            <PhotoGalleryButton />
             <AppleButton />
           </div>
           <CursorRibbons />
