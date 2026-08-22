@@ -1,11 +1,13 @@
 "use client";
 
 // ---------------------------------------------------------------------------
-// The case study overlay.
+// The overlay.
 //
-// Thumbnails on the homepage open the matching case study as a panel floating
-// over the page. The homepage stays visible down both sides — clicking there
-// (or pressing Escape) closes the panel and returns you to it.
+// Thumbnails on the homepage open a panel floating over the page. A screenshot
+// with a title of its own gets a page of its own — the shot, its title, its
+// description — and anything else falls back to the whole case study for the
+// project it belongs to. The homepage stays visible down both sides — clicking
+// there (or pressing Escape) closes the panel and returns you to it.
 //
 // Nothing here changes the URL: opening a study is not a navigation, so the
 // homepage never unmounts and never loses its scroll position.
@@ -25,10 +27,20 @@ import type { EntryImage } from "@/data/projects";
 
 const EXIT_MS = 200; // must match .cs-closing animation duration in globals.css
 
-export const CaseStudyContext = createContext<(slug: string) => void>(() => {});
+type Opened = { slug: string; image?: EntryImage };
+
+/** A screenshot that carries its own writing, rather than the project's. */
+function hasOwnPage(image?: EntryImage): boolean {
+  return Boolean(image?.title || image?.description);
+}
+
+export const CaseStudyContext = createContext<
+  (slug: string, image?: EntryImage) => void
+>(() => {});
 
 export function CaseStudyProvider({ children }: { children: React.ReactNode }) {
-  const [slug, setSlug] = useState<string | null>(null);
+  const [opened, setOpened] = useState<Opened | null>(null);
+  const slug = opened?.slug ?? null;
   const [closing, setClosing] = useState(false);
   const panelRef = useRef<HTMLDivElement>(null);
   const scrollerRef = useRef<HTMLDivElement>(null);
@@ -36,12 +48,14 @@ export function CaseStudyProvider({ children }: { children: React.ReactNode }) {
   // The thumbnail that opened the panel, so focus can go back to it on close.
   const triggerRef = useRef<HTMLElement | null>(null);
 
-  const open = useCallback((next: string) => {
-    if (!caseStudies[next]) return;
+  const open = useCallback((next: string, image?: EntryImage) => {
+    // Nothing to show if the screenshot has no writing and the project has no
+    // study either.
+    if (!hasOwnPage(image) && !caseStudies[next]) return;
     if (exitTimer.current) clearTimeout(exitTimer.current);
     triggerRef.current = document.activeElement as HTMLElement | null;
     setClosing(false);
-    setSlug(next);
+    setOpened({ slug: next, image });
   }, []);
 
   const close = useCallback(() => setClosing(true), []);
@@ -50,7 +64,7 @@ export function CaseStudyProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (!closing) return;
     exitTimer.current = setTimeout(() => {
-      setSlug(null);
+      setOpened(null);
       setClosing(false);
       triggerRef.current?.focus?.();
     }, EXIT_MS);
@@ -96,12 +110,15 @@ export function CaseStudyProvider({ children }: { children: React.ReactNode }) {
     if (exitTimer.current) clearTimeout(exitTimer.current);
   }, []);
 
-  const study = slug ? caseStudies[slug] : null;
+  // A screenshot's own page wins over the project's study when it has one.
+  const page = hasOwnPage(opened?.image) ? opened!.image! : null;
+  const study = !page && slug ? caseStudies[slug] : null;
+  const title = page?.title ?? study?.title ?? "";
 
   return (
     <CaseStudyContext.Provider value={open}>
       {children}
-      {study && (
+      {(page || study) && (
         <div
           className={`fixed inset-0 z-50 flex items-center justify-center ${
             closing ? "cs-closing" : ""
@@ -111,7 +128,7 @@ export function CaseStudyProvider({ children }: { children: React.ReactNode }) {
               homepage stays legible underneath. */}
           <button
             type="button"
-            aria-label="Close case study and return to the homepage"
+            aria-label="Close and return to the homepage"
             onClick={close}
             className="cs-backdrop absolute inset-0 cursor-default bg-background/70 backdrop-blur-[2px]"
           />
@@ -119,14 +136,14 @@ export function CaseStudyProvider({ children }: { children: React.ReactNode }) {
             ref={panelRef}
             role="dialog"
             aria-modal="true"
-            aria-label={`${study.title} case study`}
+            aria-label={page ? title : `${title} case study`}
             tabIndex={-1}
             className="cs-panel relative flex h-[92vh] w-[calc(100%-1.5rem)] max-w-[900px] flex-col overflow-hidden rounded-2xl border border-foreground/15 bg-background shadow-2xl outline-none"
           >
             <button
               type="button"
               onClick={close}
-              aria-label="Close case study"
+              aria-label="Close"
               className="absolute right-4 top-4 z-10 flex h-9 w-9 items-center justify-center rounded-full border border-foreground/15 bg-background/80 text-foreground backdrop-blur transition duration-200 ease-out hover:scale-110 hover:opacity-80"
             >
               <svg
@@ -145,7 +162,7 @@ export function CaseStudyProvider({ children }: { children: React.ReactNode }) {
               ref={scrollerRef}
               className="cs-scroll flex-1 overflow-y-auto overscroll-contain"
             >
-              <StudyBody study={study} />
+              {page ? <ImageBody image={page} /> : study && <StudyBody study={study} />}
             </div>
           </div>
         </div>
@@ -155,25 +172,60 @@ export function CaseStudyProvider({ children }: { children: React.ReactNode }) {
 }
 
 // ---------------------------------------------------------------------------
-// Homepage thumbnail. Every image of a project opens that project's case
-// study — images never link off-site. The live product is linked from the
-// project title and from inside the study itself.
+// A single screenshot's page: the shot, its title, its description. Laid out
+// like StudyBody's header so the two read as the same kind of page.
+// ---------------------------------------------------------------------------
+
+function ImageBody({ image }: { image: EntryImage }) {
+  return (
+    <article className="px-6 pb-20 pt-14 md:px-14">
+      <header className="max-w-[68ch]">
+        {image.title && (
+          <h2 className="text-3xl font-bold leading-tight">{image.title}</h2>
+        )}
+        {image.description && (
+          <p className="mt-3 text-lg leading-relaxed text-muted">
+            {image.description}
+          </p>
+        )}
+      </header>
+
+      {image.src && (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={image.src}
+          alt={image.alt}
+          className="mt-8 w-full max-w-[68ch] rounded-xl border border-foreground/10"
+        />
+      )}
+    </article>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Homepage thumbnail. Clicking one opens its own page in the overlay, falling
+// back to the project's case study when the screenshot has no writing of its
+// own — unless the entry sets `srcHref`, which sends it to the live site
+// instead, for projects where seeing the real thing beats reading about it.
 // ---------------------------------------------------------------------------
 
 export function ProjectThumbnail({
   image,
   slug,
+  href,
 }: {
   image: EntryImage;
   slug: string;
+  href?: string;
 }) {
   const open = useContext(CaseStudyContext);
   const study = caseStudies[slug];
+  const label = image.title ?? study?.title;
 
-  const box = "h-[180px] w-[180px] rounded-lg border border-foreground/10";
+  const box = "h-[220px] w-[220px] rounded-lg border border-foreground/10";
 
   // The screenshots are ~1200px wide, so letting the browser squeeze one into a
-  // 180px box is a ~7x downscale that its cheap filter turns to mush. next/image
+  // 220px box is a ~5x downscale that its cheap filter turns to mush. next/image
   // resamples them properly and ships a 2x variant for retina screens instead.
   const inner = image.src ? (
     <div className={`${box} relative overflow-hidden`}>
@@ -181,7 +233,7 @@ export function ProjectThumbnail({
         src={image.src}
         alt={image.alt}
         fill
-        sizes="180px"
+        sizes="220px"
         quality={90}
         className="object-cover"
         style={image.crop ? { objectPosition: image.crop } : undefined}
@@ -192,16 +244,35 @@ export function ProjectThumbnail({
     <div className={`${box} bg-foreground/[0.02]`} aria-label={image.alt} />
   );
 
-  // Only reachable if a slug has no study — kept so a missing entry degrades
-  // to a plain image rather than a button that does nothing.
-  if (!study) return inner;
+  const lift =
+    "block cursor-pointer rounded-lg transition-transform duration-200 ease-out hover:scale-105";
+
+  if (href) {
+    return (
+      <a
+        href={href}
+        target="_blank"
+        rel="noreferrer"
+        aria-label={`Visit ${label ?? image.alt}`}
+        className={lift}
+      >
+        {inner}
+      </a>
+    );
+  }
+
+  // Kept so a screenshot with neither writing of its own nor a study behind it
+  // degrades to a plain image rather than a button that does nothing.
+  if (!hasOwnPage(image) && !study) return inner;
 
   return (
     <button
       type="button"
-      onClick={() => open(slug)}
-      aria-label={`Read the ${study.title} case study`}
-      className="block cursor-pointer rounded-lg transition-transform duration-200 ease-out hover:scale-105"
+      onClick={() => open(slug, image)}
+      aria-label={
+        image.title ? image.title : `Read the ${study!.title} case study`
+      }
+      className={lift}
     >
       {inner}
     </button>

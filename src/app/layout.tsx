@@ -3,6 +3,7 @@ import { Quicksand } from "next/font/google";
 import { site } from "@/data/site";
 import { ThemeToggle } from "./theme-toggle";
 import { DesignToggle } from "./design-toggle";
+import { SocialLinks } from "./social-links";
 import "./globals.css";
 
 const quicksand = Quicksand({
@@ -35,6 +36,7 @@ export default function RootLayout({
       <body className={`${quicksand.variable} antialiased`}>
         <DesignToggle />
         <ThemeToggle />
+        <SocialLinks />
         {children}
       </body>
     </html>
