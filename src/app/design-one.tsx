@@ -30,18 +30,17 @@ export function DesignOne() {
         <p className="mt-1 text-lg font-medium text-foreground">{site.role}</p>
       </header>
 
-      {/* One gallery, not a block per project: every screenshot flows in the
-          same row and wraps to the next line when the width runs out. Each
-          one still carries its own project, so it opens that case study (or
-          the live site, for entries with a srcHref).
+      {/* One gallery, not a block per project: a single column, one cover to a
+          row, at the same size on every screen. Each one carries its own
+          project, so it opens that case study (or the live site, for entries
+          with a srcHref).
 
-          A phone is too narrow for the thumbnails to keep their fixed size
-          and still fit two across, so there it becomes a two-column grid and
-          they take whatever half the width comes to. From sm up there is room
-          for the fixed size, and the flow that wraps them goes back to being
-          the one that decides how many fit — along with the right padding
-          that keeps that first row clear of the buttons. */}
-      <div className="mx-auto mt-16 grid max-w-[760px] grid-cols-2 gap-2 px-6 sm:flex sm:flex-wrap sm:pr-20 lg:pr-6">
+          items-start is what keeps a row from being the whole width: without
+          it the flex column stretches each link to the container, and the
+          press target would run right across the page beside a cover sitting
+          at the left of it. Nothing here has to clear the corner stack any
+          more — one column never reaches it. */}
+      <div className="mx-auto mt-16 flex max-w-[760px] flex-col items-start gap-2 px-6">
         {entries.flatMap((entry) =>
           (entry.images ?? []).map((image, i) => (
             <ProjectThumbnail
