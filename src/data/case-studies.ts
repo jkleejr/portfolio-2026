@@ -15,7 +15,7 @@ export type CaseStudyBlock =
 export type CaseStudy = {
   title: string;
   tagline?: string; // one line under the title
-  // --- all optional, all currently unused; add to a study to switch on ---
+  // --- all optional; add to a study to switch one on ---
   cover?: { src: string; alt: string; crop?: string }; // wide image up top
   facts?: { label: string; value: string }[]; // Role / Timeline / Tools strip
   links?: { label: string; href: string }[]; // buttons, e.g. "Live site"
@@ -43,6 +43,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       // costs me about $0.013 per scan.
       // thought about the users and making a subscription too but decided i would make it free to use since the cost is low
       // 
+      // 
     ],
   },
 
@@ -69,6 +70,10 @@ export const caseStudies: Record<string, CaseStudy> = {
         type: "text",
         text: "Translate text live using the dynamic island for iPhone. It runs in the background, identifying the text in a certain section of the screen, and displays the translation live.",
       },
+      // had to use the dynamic island iOS does not allow you to render anything over an existing app
+      // had 2 choices, use the dynamic island or a floating window
+      // both are included, but focusing on dynamic island and floating window to test
+      // 
     ],
   },
 
@@ -84,6 +89,9 @@ export const caseStudies: Record<string, CaseStudy> = {
 
   "time-with-tree": {
     title: "Time with Tree",
+    // The thumbnail opens this study rather than the site, so the study is
+    // where the way through to the live one lives now.
+    links: [{ label: "Live site", href: "https://timewithtree.co.kr/" }],
     blocks: [
       {
         type: "text",
@@ -99,6 +107,9 @@ export const caseStudies: Record<string, CaseStudy> = {
 
   "buy-side-briefings": {
     title: "Buy Side Briefings",
+    links: [
+      { label: "Live site", href: "https://buy-side-briefings.vercel.app/" },
+    ],
     blocks: [
       {
         type: "text",

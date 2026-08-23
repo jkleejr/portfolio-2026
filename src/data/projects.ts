@@ -115,7 +115,6 @@ export const entries: Entry[] = [
     title: "",
     slug: "time-with-tree",
     platform: "web",
-    srcHref: "https://timewithtree.co.kr/",
     images: [
       {
         src: "/projects/time-with-tree.png",
@@ -128,14 +127,12 @@ export const entries: Entry[] = [
     title: "",
     slug: "buy-side-briefings",
     platform: "web",
-    srcHref: "https://buy-side-briefings.vercel.app/",
     images: [
       {
         src: "/projects/buy-side-briefings-1.png",
         cover: "/projects/buy-side-briefings-logo-3.png",
         alt: "Night briefing front page",
         crop: "24% 50%",
-        title: "Buy Side Briefings",
       },
     ],
 
