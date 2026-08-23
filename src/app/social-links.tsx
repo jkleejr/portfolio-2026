@@ -42,7 +42,7 @@ export function SocialLinks() {
             target="_blank"
             rel="noreferrer"
             aria-label={button.label}
-            className="design-one-only flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-foreground/15 bg-background text-sm font-semibold text-foreground transition duration-200 ease-out hover:scale-110 hover:opacity-80"
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-foreground/15 bg-background text-sm font-semibold text-foreground transition duration-200 ease-out hover:scale-110 hover:opacity-80"
           >
             {icon ?? button.label}
           </a>

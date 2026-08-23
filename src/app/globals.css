@@ -237,18 +237,6 @@ body {
 }
 
 /* ---------------------------------------------------------------------------
-   Design switcher
-   Both designs are in the DOM; `data-design` on <html> shows one. Doing this
-   in CSS rather than React state means the stored choice applied by the inline
-   script lands before first paint, with no flash of the other layout.
-   --------------------------------------------------------------------------- */
-
-[data-design="one"] [data-design-panel="two"],
-[data-design="two"] [data-design-panel="one"] {
-  display: none;
-}
-
-/* ---------------------------------------------------------------------------
    Cursor ribbons
    The stylesheet that ships with React Bits' Ribbons, kept verbatim — the
    component sets this class on the element it renders the canvas into. It is
@@ -262,85 +250,6 @@ body {
   position: relative;
 }
 
-/* The button names the design you are ON, and the number rolls when you press
-   it: whichever way you switch, the number leaving drops out of the bottom
-   while the one arriving drops in from the top. Both labels are always in the
-   DOM — the one not showing waits above the button, clipped by the roll. */
-.design-roll {
-  display: grid;
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
-  border-radius: inherit;
-}
-
-.design-roll > span {
-  grid-area: 1 / 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-[data-design="one"] .design-label-two,
-[data-design="two"] .design-label-one {
-  transform: translateY(-100%);
-}
-
-/* .design-rolling is added on the first press, so the number sits still on
-   load and only rolls once the button has actually been used. Each press
-   swaps which label carries which animation, and that swap is what replays
-   them — no class juggling needed. */
-[data-design="one"] .design-rolling .design-label-one,
-[data-design="two"] .design-rolling .design-label-two {
-  animation: design-number-in 0.32s cubic-bezier(0.33, 1, 0.68, 1);
-}
-
-/* `forwards` parks the number that left at the bottom, out of the roll. Its
-   own turn to arrive starts from the top again, since design-number-in sets
-   the position it starts from. */
-[data-design="one"] .design-rolling .design-label-two,
-[data-design="two"] .design-rolling .design-label-one {
-  animation: design-number-out 0.32s cubic-bezier(0.33, 1, 0.68, 1) forwards;
-}
-
-@keyframes design-number-in {
-  from {
-    transform: translateY(-100%);
-  }
-  to {
-    transform: translateY(0);
-  }
-}
-
-@keyframes design-number-out {
-  from {
-    transform: translateY(0);
-  }
-  to {
-    transform: translateY(100%);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  /* Same specificity as the rules above, and later, so it wins. */
-  [data-design] .design-rolling .design-label-one,
-  [data-design] .design-rolling .design-label-two {
-    animation: none;
-  }
-}
-
-/* The theme toggle and the corner links belong to design one. Design two is a
-   clean page, so the switcher is the only chrome that survives on it — hidden
-   here rather than in React for the same no-flash reason as the panels.
-
-   Hidden, not removed: the slots stay, so the switcher sits in the same place
-   on both designs instead of the stack collapsing around it. Hidden this way
-   they are out of the tab order and off the accessibility tree too, so nothing
-   invisible is still reachable. */
-[data-design="two"] .design-one-only {
-  visibility: hidden;
-}
-
 /* ---------------------------------------------------------------------------
    Where the corner stack sits on a phone
    Design one turns the stack into a row under the header text so the gallery
@@ -349,10 +258,6 @@ body {
    starts at) — so the row reads as part of the header block, and the 4rem of
    margin the gallery already carries clears the row's 2.5rem with room over.
 
-   The row stays put on design two and on the blog, which have no header of
-   their own. Neither page moves the stack: whichever button each of them
-   leaves showing has to be in the same place as on design one, so that
-   pressing it and pressing it again do not move it under your cursor.
    --------------------------------------------------------------------------- */
 
 @media (width < 40rem) {
@@ -389,169 +294,6 @@ html {
 
 body {
   touch-action: pan-y pinch-zoom;
-}
-
-/* ---------------------------------------------------------------------------
-   The blog
-   A view rather than a third design: `data-view` on <html> swaps it in for
-   whichever design is showing, and going back returns you to that design
-   rather than to a fixed one. Same reasoning as the design switcher — doing it
-   in CSS means the stored view the inline script applies lands before first
-   paint, with no flash of the page you were not on.
-   --------------------------------------------------------------------------- */
-
-[data-view="home"] [data-view-panel="blog"],
-[data-view="blog"] [data-design-panel] {
-  display: none;
-}
-
-/* The page is left bare on purpose, and only the pencil survives in the
-   corner, since it is the way back. Same as design two: the rest keep their
-   slots so the pencil stays exactly where it was on the page you pressed it
-   from, and this rule has to name every child rather than .design-one-only,
-   because the design switcher goes too. */
-[data-view="blog"] .corner-stack > * {
-  visibility: hidden;
-}
-
-/* Last word, so the pencil survives both this rule and design two's. */
-[data-view="blog"] .note-button {
-  visibility: visible;
-}
-
-/* The button says what pressing it will do, and that changes with the view. */
-[data-view="home"] .note-label-close,
-[data-view="blog"] .note-label-open {
-  display: none;
-}
-
-/* ---------------------------------------------------------------------------
-   Pencil scribble
-   A press sets the pencil writing: it travels left to right, wobbling as it
-   goes, laying down a dot at each step. At the end it lifts off the line and
-   comes back to where it started, and the trail clears behind it. 0.6s — it
-   plays on every press, so it has to be over before it becomes something to
-   sit through.
-
-   .note-scribbling is added on each press and taken off when it finishes, so
-   the pencil is still on load and only moves once the button has been used —
-   the same arrangement as .theme-toggled and .design-rolling above.
-
-   The lengths are user units in the icon's own 24-wide box, not pixels: at the
-   18px the button draws it at, one of them is about three quarters of a pixel.
-   The travel takes the pencil past the edge of that box, which is why the icon
-   is allowed to overflow it — there is room to spare inside the 40px button,
-   and clipping at the viewBox would cut the eraser off mid-stroke.
-   --------------------------------------------------------------------------- */
-
-.note-icon {
-  overflow: visible;
-}
-
-.note-dot {
-  opacity: 0;
-}
-
-.note-pencil {
-  transform-box: fill-box;
-  transform-origin: center;
-}
-
-.note-scribbling .note-pencil {
-  animation: note-scribble-pencil 0.6s cubic-bezier(0.4, 0, 0.3, 1);
-}
-
-/* Each dot lands as the pencil reaches it. `both` holds it once it has, so the
-   trail builds up rather than blinking one dot at a time; the group's own
-   animation is what clears the lot at the end. */
-.note-scribbling .note-dot {
-  animation: note-dot-in 0.2s ease-out both;
-}
-.note-scribbling .note-dot:nth-child(1) {
-  animation-delay: 0.05s;
-}
-.note-scribbling .note-dot:nth-child(2) {
-  animation-delay: 0.1s;
-}
-.note-scribbling .note-dot:nth-child(3) {
-  animation-delay: 0.15s;
-}
-.note-scribbling .note-dot:nth-child(4) {
-  animation-delay: 0.2s;
-}
-.note-scribbling .note-dot:nth-child(5) {
-  animation-delay: 0.25s;
-}
-.note-scribbling .note-dot:nth-child(6) {
-  animation-delay: 0.3s;
-}
-
-.note-scribbling .note-dots {
-  animation: note-dots-clear 0.6s linear;
-}
-
-/* Rightward the whole way, never back on itself — the wobble is in the
-   vertical and the tilt, which is what keeps it reading as writing rather than
-   as shaking on the spot. The last two steps lift it off the line and carry it
-   home. */
-@keyframes note-scribble-pencil {
-  0% {
-    transform: translate(0, 0) rotate(0deg);
-  }
-  10% {
-    transform: translate(0.6px, 0.5px) rotate(3deg);
-  }
-  22% {
-    transform: translate(1.9px, -0.3px) rotate(-2deg);
-  }
-  34% {
-    transform: translate(3.2px, 0.6px) rotate(3deg);
-  }
-  46% {
-    transform: translate(4.5px, -0.3px) rotate(-2deg);
-  }
-  58% {
-    transform: translate(5.8px, 0.6px) rotate(3deg);
-  }
-  70% {
-    transform: translate(7px, -0.2px) rotate(-2deg);
-  }
-  80% {
-    transform: translate(7.4px, 0.2px) rotate(1deg);
-  }
-  88% {
-    transform: translate(6.8px, -1.8px) rotate(-9deg);
-  }
-  100% {
-    transform: translate(0, 0) rotate(0deg);
-  }
-}
-
-@keyframes note-dot-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes note-dots-clear {
-  0%,
-  76% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .note-scribbling .note-pencil,
-  .note-scribbling .note-dot,
-  .note-scribbling .note-dots {
-    animation: none;
-  }
 }
 
 /* ---------------------------------------------------------------------------
@@ -620,7 +362,7 @@ html.gravity-on {
    fold slides up — and an image dragged into view that way is in full colour
    no matter what the text is set to. Hidden, none of it can show.
    `visibility` is inherited, so the pinned pieces claim it back below. */
-html.gravity-on [data-design-panel] {
+html.gravity-on main {
   visibility: hidden;
 }
 

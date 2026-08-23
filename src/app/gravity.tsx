@@ -180,13 +180,9 @@ function snapshotWords(root: HTMLElement, atoms: HTMLElement[]): Snapshot[] {
  */
 function run(
   Matter: typeof MatterType,
-  exit: () => void,
   trigger: HTMLElement | null,
 ): () => void {
-  const design = document.documentElement.getAttribute("data-design") ?? "one";
-  const panel = document.querySelector<HTMLElement>(
-    `[data-design-panel="${design}"]`,
-  );
+  const panel = document.querySelector<HTMLElement>("main");
   if (!panel) return () => {};
 
   const root = document.documentElement;
@@ -406,18 +402,8 @@ function run(
   };
   window.addEventListener("resize", resize);
 
-  // Switching design, or leaving for the blog, swaps the page out from under
-  // the simulation, so gravity stands down rather than animating elements that
-  // are no longer shown.
-  const watcher = new MutationObserver(exit);
-  watcher.observe(document.documentElement, {
-    attributes: true,
-    attributeFilter: ["data-design", "data-view"],
-  });
-
   return () => {
     cancelAnimationFrame(frame);
-    watcher.disconnect();
     window.removeEventListener("resize", resize);
     window.removeEventListener("mousemove", onMove, true);
     window.removeEventListener("mousedown", onDown, true);
@@ -439,11 +425,11 @@ function run(
 
 /**
  * Runs the simulation for as long as it is switched on, and loads the engine
- * the first time it is. `exit` fires when something out of our hands ends it —
- * a design or view change — so the button that owns the state can follow.
+ * the first time it is.
  *
- * `trigger` points at that button, so the simulation can drop it on the press
- * rather than making you go back and hover the thing you just clicked.
+ * `trigger` points at the button that switched it on, so the simulation can
+ * drop that button on the press rather than making you go back and hover the
+ * thing you just clicked.
  */
 export function useGravity(trigger: RefObject<HTMLElement | null>): {
   on: boolean;
@@ -458,7 +444,7 @@ export function useGravity(trigger: RefObject<HTMLElement | null>): {
 
     import("matter-js").then((mod) => {
       if (cancelled) return;
-      teardown.current = run(mod.default, () => setOn(false), trigger.current);
+      teardown.current = run(mod.default, trigger.current);
     });
 
     return () => {
