@@ -27,7 +27,10 @@ export type EntryImage = {
 };
 
 export type Entry = {
-  title: string;
+  title: string; // shown beside the cover on the homepage
+  // The one line under that title. Brief on purpose: it is what someone reads
+  // while deciding whether to open the study, not a summary of it.
+  blurb?: string;
   slug: string; // links this entry to its case study in case-studies.ts
   platform?: "mobile" | "web"; // design two only: labels the entry and sets
   // the aspect ratio its screenshots are shown at
@@ -43,7 +46,9 @@ export type Entry = {
 
 export const entries: Entry[] = [
   {
-    title: "",
+    title: "Loot Check",
+    blurb:
+      "Photograph any item to find its name, its resale value, and where to sell it.",
     slug: "loot-check",
     platform: "mobile",
     images: [
@@ -57,7 +62,9 @@ export const entries: Entry[] = [
     ],
   },
   {
-    title: "",
+    title: "Paper Reader",
+    blurb:
+      "Upload a PDF and hear it read aloud in a natural voice, citations and formatting stripped out.",
     slug: "paper-reader",
     platform: "mobile",
     images: [
@@ -72,7 +79,9 @@ export const entries: Entry[] = [
     ],
   },
   {
-    title: "",
+    title: "Screen Translator",
+    blurb:
+      "Live translation of whatever is on screen, running in the background from the Dynamic Island.",
     slug: "screen-translator",
     platform: "mobile",
     images: [
@@ -98,7 +107,9 @@ export const entries: Entry[] = [
     ],
   },
   {
-    title: "",
+    title: "SleepTalk",
+    blurb:
+      "Records what you say in your sleep and tracks the patterns night to night.",
     slug: "sleeptalk",
     platform: "mobile",
     images: [
@@ -112,7 +123,9 @@ export const entries: Entry[] = [
     ],
   },
   {
-    title: "",
+    title: "Time with Tree",
+    blurb:
+      "Website for a birch tree farm in South Korea.",
     slug: "time-with-tree",
     platform: "web",
     images: [
@@ -124,7 +137,9 @@ export const entries: Entry[] = [
     ],
   },
   {
-    title: "",
+    title: "Buy Side Briefings",
+    blurb:
+      "Automated daily briefings on the state of the stock market, published every morning.",
     slug: "buy-side-briefings",
     platform: "web",
     images: [

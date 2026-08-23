@@ -30,27 +30,42 @@ export function DesignOne() {
         <p className="mt-1 text-lg font-medium text-foreground">{site.role}</p>
       </header>
 
-      {/* One gallery, not a block per project: a single column, one cover to a
-          row, at the same size on every screen. Each one carries its own
-          project, so it opens that case study (or the live site, for entries
-          with a srcHref).
+      {/* One row per project: its cover, and beside that the name and the one
+          line that says what the thing is. The cover is still the only press
+          target — the text is there to be read while deciding whether to open
+          the study.
 
-          items-start is what keeps a row from being the whole width: without
-          it the flex column stretches each link to the container, and the
-          press target would run right across the page beside a cover sitting
-          at the left of it. Nothing here has to clear the corner stack any
-          more — one column never reaches it. */}
-      <div className="mx-auto mt-16 flex max-w-[760px] flex-col items-start gap-2 px-6">
-        {entries.flatMap((entry) =>
-          (entry.images ?? []).map((image, i) => (
-            <ProjectThumbnail
-              key={`${entry.slug}-${i}`}
-              image={image}
-              slug={entry.slug}
-              href={entry.srcHref}
-            />
-          )),
-        )}
+          Beside from sm up, stacked under on a phone: a 220px cover leaves
+          about 80px of a narrow screen, which is no width to set a sentence
+          in. items-start keeps a row from stretching to the container, so the
+          press target ends at the cover rather than running across the page
+          beside it. */}
+      <div className="mx-auto mt-16 flex max-w-[760px] flex-col items-start gap-12 px-6">
+        {entries.map((entry) => (
+          <article
+            key={entry.slug}
+            className="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-7"
+          >
+            {(entry.images ?? []).map((image, i) => (
+              <ProjectThumbnail
+                key={`${entry.slug}-${i}`}
+                image={image}
+                slug={entry.slug}
+                href={entry.srcHref}
+              />
+            ))}
+            <div className="max-w-[42ch]">
+              <h2 className="text-xl font-semibold leading-snug">
+                {entry.title}
+              </h2>
+              {entry.blurb && (
+                <p className="mt-2 text-base leading-relaxed text-muted">
+                  {entry.blurb}
+                </p>
+              )}
+            </div>
+          </article>
+        ))}
       </div>
     </main>
   );
