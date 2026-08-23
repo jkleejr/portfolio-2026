@@ -49,7 +49,6 @@ export const entries: Entry[] = [
     images: [
       {
         src: "/projects/loot-check-1.png",
-        cover: "/projects/loot-check-logo-5.png",
         alt: "Loot Check home screen",
         crop: "50% 15%",
         title: "Loot Check",
