@@ -16,7 +16,6 @@
 import {
   createContext,
   useCallback,
-  useContext,
   useEffect,
   useRef,
   useState,
@@ -274,10 +273,11 @@ function ImageBody({ image }: { image: EntryImage }) {
 }
 
 // ---------------------------------------------------------------------------
-// Homepage thumbnail. Clicking one opens its own page in the overlay, falling
-// back to the project's case study when the screenshot has no writing of its
-// own — unless the entry sets `srcHref`, which sends it to the live site
-// instead, for projects where seeing the real thing beats reading about it.
+// Homepage cover. A picture and nothing more: the writing for a project is
+// going on the homepage beside it, so there is no longer anywhere for a press
+// to go and the cover does not offer one. The exception is an entry with a
+// `srcHref`, which still opens the live site — seeing the real thing is not
+// something the page beside it can stand in for.
 // ---------------------------------------------------------------------------
 
 export function ProjectThumbnail({
@@ -289,9 +289,7 @@ export function ProjectThumbnail({
   slug: string;
   href?: string;
 }) {
-  const open = useContext(CaseStudyContext);
-  const study = caseStudies[slug];
-  const label = image.title ?? study?.title;
+  const label = image.title ?? caseStudies[slug]?.title;
 
   // A cover brings its own background, so the hairline that frames a
   // screenshot just reads as an outline around it — drop it for covers.
@@ -303,15 +301,18 @@ export function ProjectThumbnail({
     ? `${size} rounded-lg`
     : `${size} rounded-lg border border-foreground/10`;
 
-  // A cover stands in for the screenshot here only — the page this opens still
-  // shows image.src. `crop` belongs to the screenshot, so a cover ignores it.
+  // A cover stands in for the screenshot on the homepage only — image.src is
+  // still the shot itself. `crop` frames that shot, so a cover ignores it.
   const shown = image.cover ?? image.src;
 
   // The screenshots are ~1200px wide, so letting the browser squeeze one into a
   // 220px box is a ~5x downscale that its cheap filter turns to mush. next/image
   // resamples them properly and ships a 2x variant for retina screens instead.
   const inner = shown ? (
-    <div className={`${box} relative overflow-hidden`}>
+    // Marked for gravity: with no button around it any more, the box is the
+    // outermost thing here, and without the marker the image inside would fall
+    // out of its own frame and leave the dot painted on it behind.
+    <div data-gravity="piece" className={`${box} relative overflow-hidden`}>
       <Image
         src={shown}
         alt={image.alt}
@@ -326,7 +327,7 @@ export function ProjectThumbnail({
       {image.coverDot && <CoverDot dot={image.coverDot} />}
     </div>
   ) : (
-    // A project with no screenshot yet still needs a way into its study.
+    // A project whose cover has not been taken yet still holds its row.
     <div className={`${box} bg-foreground/[0.02]`} aria-label={image.alt} />
   );
 
@@ -335,10 +336,10 @@ export function ProjectThumbnail({
 
   // A throw is not a click. With gravity on a cover can be grabbed and flung,
   // and the release still lands on the cover the hand was carrying — which the
-  // browser reports as a click, and which would drop the study over the page
-  // that was being played with. So measure the press: anything that travels
-  // further than a slip is a drag and opens nothing. A press that stays put
-  // still opens the study, gravity or not.
+  // browser reports as a click, and which would leave the page for the live
+  // site mid-game. So measure the press: anything that travels further than a
+  // slip is a drag and goes nowhere. A press that stays put follows the link,
+  // gravity or not.
   //
   // Keyboard activation comes through with no pointerdown before it and so is
   // never a drag.
@@ -370,25 +371,7 @@ export function ProjectThumbnail({
     );
   }
 
-  // Kept so a screenshot with neither writing of its own nor a study behind it
-  // degrades to a plain image rather than a button that does nothing.
-  if (!hasOwnPage(image) && !study) return inner;
-
-  return (
-    <button
-      type="button"
-      onPointerDown={onPointerDown}
-      onClick={(e) => {
-        if (!dragged(e)) open(slug, image);
-      }}
-      aria-label={
-        image.title ? image.title : `Read the ${study!.title} case study`
-      }
-      className={lift}
-    >
-      {inner}
-    </button>
-  );
+  return inner;
 }
 
 // ---------------------------------------------------------------------------

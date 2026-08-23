@@ -148,8 +148,9 @@ body {
    Design one turns the stack into a row under the header text so the gallery
    below can run the full width. The header reserves the height that puts its
    own bottom edge exactly at the row's top (6.5rem, less the 1.5rem the page
-   starts at) — so the row reads as part of the header block, and the 4rem of
-   margin the gallery already carries clears the row's 2.5rem with room over.
+   starts at) — so the row reads as part of the header block. What clears the
+   row's 2.5rem is the intro paragraph inside the header, which carries 6rem of
+   top margin on a phone for exactly that; the gallery below starts lower still.
 
    --------------------------------------------------------------------------- */
 

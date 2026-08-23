@@ -36,7 +36,11 @@ import type MatterType from "matter-js";
 const WALL = 400;
 
 // Anything interactive or drawn falls as one piece rather than word by word.
-const ATOMS = "a, button, img";
+// The marker is for a box that is neither — a frame with an image and its
+// paintwork inside — which should still come away whole rather than shedding
+// what it holds. Distinct from the `atom` value, which marks a root to sweep
+// (see below) and not a piece itself.
+const ATOMS = 'a, button, img, [data-gravity="piece"]';
 
 type WordStyle = {
   fontFamily: string;

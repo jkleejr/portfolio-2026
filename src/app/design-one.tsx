@@ -28,19 +28,43 @@ export function DesignOne() {
       <header className="home-header ml-6 max-w-[42ch] sm:mr-20">
         <h1 className="text-2xl font-bold">{site.name}</h1>
         <p className="mt-1 text-lg font-medium text-foreground">{site.role}</p>
+        {/* Who that is. A paragraph per line of site.intro, so a sentence that
+            should start fresh does, rather than being wrapped into the one
+            above it. Set at body size, so the name and the role above it lead
+            on weight and size rather than on colour.
+
+            A measure of its own, narrower than the header's: the gallery below
+            is centred, so a line that ran the full 42ch would reach past the
+            left edge of the covers on a wide screen. 30ch keeps the paragraph
+            a block in the left margin, wrapping well before it gets there.
+
+            The top margin is also the phone case: the apple is a row under
+            the header there rather than a corner stack, pinned at 6.5rem and
+            out of flow, so text that simply followed the role would run under
+            it. 6rem clears the row with a gap to spare; from sm up the stack
+            is off in the corner and only the gap is wanted. */}
+        {site.intro.length > 0 && (
+          <div className="mt-24 max-w-[30ch] space-y-3 sm:mt-12">
+            {site.intro.map((line) => (
+              <p key={line} className="text-base leading-relaxed">
+                {line}
+              </p>
+            ))}
+          </div>
+        )}
       </header>
 
       {/* One row per project: its cover, and beside that the name and the one
-          line that says what the thing is. The cover is still the only press
-          target — the text is there to be read while deciding whether to open
-          the study.
+          line that says what the thing is. Nothing here is a press target any
+          more — the writing for a project is going on the page beside it
+          rather than behind it.
 
           Beside from sm up, stacked under on a phone: a 220px cover leaves
           about 80px of a narrow screen, which is no width to set a sentence
           in. items-start keeps a row from stretching to the container, so the
           press target ends at the cover rather than running across the page
           beside it. */}
-      <div className="mx-auto mt-16 flex max-w-[760px] flex-col items-start gap-12 px-6">
+      <div className="mx-auto mt-2 flex max-w-[760px] flex-col items-start gap-12 px-6">
         {entries.map((entry) => (
           <article
             key={entry.slug}
@@ -59,9 +83,7 @@ export function DesignOne() {
                 {entry.title}
               </h2>
               {entry.blurb && (
-                <p className="mt-2 text-base leading-relaxed text-muted">
-                  {entry.blurb}
-                </p>
+                <p className="mt-2 text-base leading-relaxed">{entry.blurb}</p>
               )}
             </div>
           </article>
