@@ -27,6 +27,10 @@ import type { EntryImage } from "@/data/projects";
 
 const EXIT_MS = 200; // must match .cs-closing animation duration in globals.css
 
+// How far a press may travel and still count as a click, in px. Below a hand's
+// natural slip; above it the pointer was going somewhere.
+const DRAG_SLOP = 5;
+
 type Opened = { slug: string; image?: EntryImage };
 
 /** A screenshot that carries its own writing, rather than the project's. */
@@ -329,6 +333,25 @@ export function ProjectThumbnail({
   const lift =
     "block cursor-pointer rounded-lg transition-transform duration-200 ease-out hover:scale-105";
 
+  // A throw is not a click. With gravity on a cover can be grabbed and flung,
+  // and the release still lands on the cover the hand was carrying — which the
+  // browser reports as a click, and which would drop the study over the page
+  // that was being played with. So measure the press: anything that travels
+  // further than a slip is a drag and opens nothing. A press that stays put
+  // still opens the study, gravity or not.
+  //
+  // Keyboard activation comes through with no pointerdown before it and so is
+  // never a drag.
+  const pressedAt = useRef<{ x: number; y: number } | null>(null);
+  const onPointerDown = (e: React.PointerEvent) => {
+    pressedAt.current = { x: e.clientX, y: e.clientY };
+  };
+  const dragged = (e: React.MouseEvent) => {
+    const from = pressedAt.current;
+    pressedAt.current = null;
+    return Boolean(from) && Math.hypot(e.clientX - from!.x, e.clientY - from!.y) > DRAG_SLOP;
+  };
+
   if (href) {
     return (
       <a
@@ -337,6 +360,10 @@ export function ProjectThumbnail({
         rel="noreferrer"
         aria-label={`Visit ${label ?? image.alt}`}
         className={lift}
+        onPointerDown={onPointerDown}
+        onClick={(e) => {
+          if (dragged(e)) e.preventDefault();
+        }}
       >
         {inner}
       </a>
@@ -350,7 +377,10 @@ export function ProjectThumbnail({
   return (
     <button
       type="button"
-      onClick={() => open(slug, image)}
+      onPointerDown={onPointerDown}
+      onClick={(e) => {
+        if (!dragged(e)) open(slug, image);
+      }}
       aria-label={
         image.title ? image.title : `Read the ${study!.title} case study`
       }
