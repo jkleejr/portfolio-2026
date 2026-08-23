@@ -5,7 +5,6 @@ import { site } from "@/data/site";
 import { ThemeToggle } from "./theme-toggle";
 import { DesignToggle } from "./design-toggle";
 import { SocialLinks } from "./social-links";
-import { PhotoGalleryButton, PhotoGalleryProvider } from "./photo-gallery";
 import { AppleButton } from "./apple-button";
 import { NoteButton } from "./note-button";
 import { CursorRibbons } from "./cursor-ribbons";
@@ -78,28 +77,22 @@ export default function RootLayout({
       <body
         className={`${quicksand.variable} ${satoshi.variable} ${outfit.variable} antialiased`}
       >
-        {/* Wraps the lot because the gallery switch reaches past its own
-            button: it decides whether the ribbons or the photos are the thing
-            following the cursor. */}
-        <PhotoGalleryProvider>
-          {/* One container places every button, so their spacing is a gap
-              rather than a sum each of them has to know. A column in the
-              top-right corner on a laptop; on a phone a row under the header
-              text, left to right, with the gallery starting below it. */}
-          <div
-            data-gravity="atom"
-            className="corner-stack absolute left-6 top-[6.5rem] z-20 flex flex-row gap-2 sm:left-auto sm:right-6 sm:top-6 sm:flex-col"
-          >
-            <DesignToggle />
-            <ThemeToggle />
-            <SocialLinks />
-            <NoteButton />
-            <PhotoGalleryButton />
-            <AppleButton />
-          </div>
-          <CursorRibbons />
-          {children}
-        </PhotoGalleryProvider>
+        {/* One container places every button, so their spacing is a gap
+            rather than a sum each of them has to know. A column in the
+            top-right corner on a laptop; on a phone a row under the header
+            text, left to right, with the covers starting below it. */}
+        <div
+          data-gravity="atom"
+          className="corner-stack absolute left-6 top-[6.5rem] z-20 flex flex-row gap-2 sm:left-auto sm:right-6 sm:top-6 sm:flex-col"
+        >
+          <DesignToggle />
+          <ThemeToggle />
+          <SocialLinks />
+          <NoteButton />
+          <AppleButton />
+        </div>
+        <CursorRibbons />
+        {children}
       </body>
     </html>
   );
