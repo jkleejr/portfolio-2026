@@ -238,23 +238,24 @@ body {
 
 /* ---------------------------------------------------------------------------
    Google Gravity
-   Scrolling is locked while it runs: the falling pieces are position: fixed,
-   so a scroll would slide them out from under the layout they came from.
+   The page still scrolls while it runs. Pieces that have not been let go of
+   are carried along with it from gravity.tsx, so the layout reads as itself;
+   pieces that have fallen stay in the window, where the floor is. The page is
+   held at its full height there too, so the scroll range never changes under
+   the reader.
    --------------------------------------------------------------------------- */
 
 html.gravity-on {
-  overflow: hidden;
   /* Text is being thrown around, so stop the browser selecting it or starting
      a native image drag mid-throw. */
   user-select: none;
   -webkit-user-select: none;
 }
 
-/* The page itself goes invisible; what you see is the pieces. Hiding it rather
-   than recolouring its text is what keeps the collapse quiet: pinning the atoms
-   takes them out of flow, so the page gets shorter and everything below the
-   fold slides up — and an image dragged into view that way is in full colour
-   no matter what the text is set to. Hidden, none of it can show.
+/* The page itself goes invisible; what you see is the pieces standing in for
+   it. Hiding rather than recolouring is what keeps the real content from
+   showing through: an image cannot be talked out of being in full colour the
+   way text can be recoloured, and both would sit under their own stand-ins.
    `visibility` is inherited, so the pinned pieces claim it back below. */
 html.gravity-on main {
   visibility: hidden;
@@ -268,6 +269,13 @@ html.gravity-on main {
   /* The real elements sit above this and stay clickable; only the word copies
      inside it take the pointer. */
   pointer-events: none;
+}
+
+/* The layer for pieces that have been knocked loose. Above .gravity-overlay
+   and above the atoms still standing in the page, so the pile builds up in
+   front of the layout rather than inside it. */
+.gravity-overlay-loose {
+  z-index: 40;
 }
 
 .gravity-word {
@@ -291,6 +299,12 @@ html.gravity-on main {
      that draws the element behind where the physics actually put it, so clicks
      land on empty space next to it. */
   transition: none;
+}
+
+/* Once it has come loose it is drawn over everything still standing, matching
+   the word layer above. */
+.gravity-atom.gravity-loose {
+  z-index: 50;
 }
 
 /* Hover scaling fights the same transform, and a button that grows under the

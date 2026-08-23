@@ -50,8 +50,9 @@ type WordStyle = {
   letterSpacing: string;
   color: string;
   textTransform: string;
-  // Without this a copy gets line-height: normal, its line box is shorter than
-  // the one the word came out of, and every word sits a couple of pixels high.
+  // The box the copy falls as, so it matches the line the word came out of.
+  // Where the glyphs sit inside that box is measured and corrected for when
+  // the copy is placed — see the placement pass in run().
   lineHeight: string;
 };
 
@@ -66,22 +67,31 @@ type MouseWithHandlers = MatterType.Mouse & {
   mousewheel: EventListener;
 };
 
+// matter-js 0.20 takes a third argument on Body.setPosition: move the body
+// with a velocity to match instead of teleporting it there. It is in the
+// library but not in its type definitions.
+type SetPosition = (
+  body: MatterType.Body,
+  position: MatterType.Vector,
+  updateVelocity?: boolean,
+) => void;
+
 type Piece = {
   el: HTMLElement;
   body: MatterType.Body;
   w: number;
   h: number;
+  // Where it sits on the PAGE, not in the window. A piece that has not been
+  // let go of yet is held at this spot as the page scrolls under it, so it
+  // travels with the layout it is standing in for. Once it falls it belongs to
+  // the window instead, and this is not read again.
+  pageX: number;
+  pageY: number;
 };
 
-function onScreen(r: DOMRect): boolean {
-  return !(
-    r.bottom < 0 ||
-    r.top > window.innerHeight ||
-    r.right < 0 ||
-    r.left > window.innerWidth ||
-    !r.width ||
-    !r.height
-  );
+/** Something that occupies space, and so has somewhere to fall from. */
+function drawn(r: DOMRect): boolean {
+  return Boolean(r.width && r.height);
 }
 
 /**
@@ -111,15 +121,16 @@ function collectAtoms(roots: HTMLElement[]): HTMLElement[] {
   }
   return found.filter(
     (el) =>
-      onScreen(el.getBoundingClientRect()) &&
+      drawn(el.getBoundingClientRect()) &&
       !found.some((other) => other !== el && other.contains(el)),
   );
 }
 
 /**
  * Every word of visible text in `root` that is not already inside an atom,
- * with the position it currently occupies. Words off screen are skipped:
- * scrolling is locked while gravity runs, so they could never be reached.
+ * with the position it currently occupies. The whole page is taken, not just
+ * the part in view: the page still scrolls while gravity runs, so a word below
+ * the fold is one scroll away from being reached.
  */
 function snapshotWords(root: HTMLElement, atoms: HTMLElement[]): Snapshot[] {
   const out: Snapshot[] = [];
@@ -164,7 +175,7 @@ function snapshotWords(root: HTMLElement, atoms: HTMLElement[]): Snapshot[] {
         range.setStart(node, at);
         range.setEnd(node, at + match[0].length);
         const r = range.getBoundingClientRect();
-        if (!onScreen(r)) continue;
+        if (!drawn(r)) continue;
         out.push({ text: match[0], left: r.left, top: r.top, css });
       }
     }
@@ -190,14 +201,17 @@ function run(
   if (!panel) return () => {};
 
   const root = document.documentElement;
-  const scrolled = window.scrollY;
 
-  // Freeze and hide the page BEFORE measuring anything. Measuring first would
-  // read a layout that is about to change twice over: locking the scroll can
-  // remove the scrollbar and widen the viewport, and pinning the atoms takes
-  // them out of flow, which collapses the page and drags whatever was below
-  // the fold up into view. Hiding first means every measurement is of the
-  // final layout, and the collapse happens where nobody can see it.
+  // Hold the page's height open. Pinning the atoms takes them out of flow, and
+  // without this the page would collapse to a fraction of itself: the scroll
+  // range would go with it, the scrollbar would disappear, and the widening
+  // that followed would slide the layout sideways in the instant before it was
+  // measured. Held first, so nothing below has ever seen a different page.
+  const heldHeight = panel.style.height;
+  panel.style.height = `${panel.offsetHeight}px`;
+
+  // Hide the page BEFORE measuring anything, so the swap from real content to
+  // pieces happens where nobody can see it.
   root.classList.add("gravity-on");
 
   // The corner stack is outside the page content but still on screen, so it
@@ -211,6 +225,7 @@ function run(
   const words = snapshotWords(panel, atoms);
   if (!atoms.length && !words.length) {
     root.classList.remove("gravity-on");
+    panel.style.height = heldHeight;
     return () => {};
   }
 
@@ -219,6 +234,14 @@ function run(
   const overlay = document.createElement("div");
   overlay.className = "gravity-overlay";
   document.body.appendChild(overlay);
+
+  // Where a word goes once it has been knocked loose. A second layer rather
+  // than a z-index on the word itself: the overlay is fixed, which makes a
+  // stacking context of it, and nothing inside can be lifted over anything
+  // outside. Loose things belong over the page they came out of.
+  const loose = document.createElement("div");
+  loose.className = "gravity-overlay gravity-overlay-loose";
+  document.body.appendChild(loose);
 
   const engine = Matter.Engine.create();
   const world = engine.world;
@@ -257,6 +280,8 @@ function run(
       body: makeBody(rect.left, rect.top, rect.width, rect.height),
       w: rect.width,
       h: rect.height,
+      pageX: rect.left + window.scrollX,
+      pageY: rect.top + window.scrollY,
     });
     return () => {
       el.classList.remove("gravity-atom");
@@ -266,16 +291,48 @@ function run(
   });
 
   // Words: copies, since text cannot be moved without rewriting the document.
-  for (const word of words) {
+  // Every copy is added first and only then measured, so the whole set costs
+  // one layout rather than one apiece.
+  const copies = words.map((word) => {
     const el = document.createElement("span");
     el.className = "gravity-word";
     el.textContent = word.text;
     Object.assign(el.style, word.css);
     overlay.appendChild(el);
-    const w = el.offsetWidth;
-    const h = el.offsetHeight;
-    el.style.transform = `translate3d(${word.left}px, ${word.top}px, 0)`;
-    pieces.push({ el, body: makeBody(word.left, word.top, w, h), w, h });
+    return { word, el };
+  });
+
+  // Line each copy up with the word it stands for, by the glyphs rather than
+  // by the box around them. A span's box is its line box, and the text sits
+  // inside it under half the leading — so placing the box where the glyphs
+  // were drops every word by that much, and the page appears to sag the
+  // moment gravity comes on. A copy left at the overlay's origin measures its
+  // own glyphs against its own box, which is the offset to take back out,
+  // whatever the font and the line height work out to.
+  const glyphs = document.createRange();
+  const placed = copies.map(({ word, el }) => {
+    const text = el.firstChild;
+    let left = word.left;
+    let top = word.top;
+    if (text) {
+      glyphs.selectNodeContents(text);
+      const inset = glyphs.getBoundingClientRect();
+      left -= inset.left;
+      top -= inset.top;
+    }
+    return { el, left, top, w: el.offsetWidth, h: el.offsetHeight };
+  });
+
+  for (const { el, left, top, w, h } of placed) {
+    el.style.transform = `translate3d(${left}px, ${top}px, 0)`;
+    pieces.push({
+      el,
+      body: makeBody(left, top, w, h),
+      w,
+      h,
+      pageX: left + window.scrollX,
+      pageY: top + window.scrollY,
+    });
   }
 
   Matter.Composite.add(
@@ -302,10 +359,16 @@ function run(
 
   // Something only starts falling once it is touched, so the page comes apart
   // under the cursor rather than all at once.
-  function drop(body: MatterType.Body) {
+  function drop(piece: Piece) {
+    const { body, el } = piece;
     if (!body.isStatic) return;
     Matter.Body.setStatic(body, false);
     Matter.Body.setAngularVelocity(body, (Math.random() - 0.5) * 0.15);
+    // Lift it over everything still standing, so a piece that comes to rest on
+    // top of the page is drawn on top of it too — the pile builds up in front
+    // of the layout rather than getting lost inside it.
+    if (el.parentElement === overlay) loose.appendChild(el);
+    else el.classList.add("gravity-loose");
   }
 
   // The press is the trigger's own hover, so it falls immediately rather than
@@ -314,7 +377,7 @@ function run(
   const pressed = trigger ? pieces.find((piece) => piece.el === trigger) : null;
   if (pressed) {
     pressed.el.style.willChange = "transform";
-    drop(pressed.body);
+    drop(pressed);
   }
 
   const listeners: Array<() => void> = [];
@@ -326,7 +389,7 @@ function run(
     // moment the button was pressed.
     const wake = () => {
       piece.el.style.willChange = "transform";
-      drop(piece.body);
+      drop(piece);
     };
     piece.el.addEventListener("mouseenter", wake);
     piece.el.addEventListener("mousedown", wake);
@@ -387,8 +450,45 @@ function run(
   const runner = Matter.Runner.create();
   Matter.Runner.run(runner, engine);
 
+  // The page still scrolls while this runs, and the pieces answer to it in two
+  // different ways. One that has not been let go of is standing in for content
+  // that is still part of the layout, so it travels with the page: its body is
+  // moved to wherever its place on the page now sits in the window. One that
+  // has fallen has come loose of the page and belongs to the window, where the
+  // floor it landed on is the bottom of the screen — it is left where it lies.
+  //
+  // The carrying happens here rather than on a scroll event so that it lands
+  // in the same frame as the drawing that follows it; a frame apart and the
+  // page would visibly drag behind the scroll. Read first, write after: the
+  // whole loop is one read of the scroll position and then transforms, which
+  // do not disturb layout.
+  const carry = Matter.Body.setPosition as SetPosition;
+  let scrolledX = window.scrollX;
+  let scrolledY = window.scrollY;
   let frame = requestAnimationFrame(function paint() {
-    for (const { el, body, w, h } of pieces) {
+    const x = window.scrollX;
+    const y = window.scrollY;
+    const moved = x !== scrolledX || y !== scrolledY;
+    scrolledX = x;
+    scrolledY = y;
+
+    for (const piece of pieces) {
+      const { el, body, w, h } = piece;
+      if (moved && body.isStatic) {
+        // Moved WITH its velocity, not teleported. A carried piece is solid
+        // the whole way — nothing loose may pass through the page — and the
+        // velocity is what lets it push what it meets aside and carry what is
+        // resting on it, instead of the two overlapping and the engine firing
+        // them apart.
+        carry(
+          body,
+          {
+            x: piece.pageX - x + w / 2,
+            y: piece.pageY - y + h / 2,
+          },
+          true,
+        );
+      }
       el.style.transform =
         `translate3d(${body.position.x - w / 2}px, ${body.position.y - h / 2}px, 0)` +
         ` rotate(${body.angle}rad)`;
@@ -420,10 +520,12 @@ function run(
     Matter.Runner.stop(runner);
     Matter.Engine.clear(engine);
     overlay.remove();
+    loose.remove();
     root.classList.remove("gravity-on");
-    // Collapsing the page while the atoms were out of flow can clamp the
-    // scroll position, so put it back where it was.
-    window.scrollTo(0, scrolled);
+    // Last, and only once the atoms are back in flow to hold the page up on
+    // their own: releasing the height first would collapse the page under
+    // whatever scroll position the page is now at.
+    panel.style.height = heldHeight;
   };
 }
 
