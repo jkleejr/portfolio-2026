@@ -133,6 +133,7 @@ export const entries: Entry[] = [
     images: [
       {
         src: "/projects/buy-side-briefings-1.png",
+        cover: "/projects/buy-side-briefings-logo-3.png",
         alt: "Night briefing front page",
         crop: "24% 50%",
         title: "Buy Side Briefings",
