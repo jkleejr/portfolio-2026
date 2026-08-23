@@ -2,8 +2,6 @@ import type { Metadata } from "next";
 import { Quicksand } from "next/font/google";
 import localFont from "next/font/local";
 import { site } from "@/data/site";
-import { ThemeToggle } from "./theme-toggle";
-import { SocialLinks } from "./social-links";
 import { AppleButton } from "./apple-button";
 import { CursorRibbons } from "./cursor-ribbons";
 import "./globals.css";
@@ -57,14 +55,11 @@ export default function RootLayout({
   return (
     <html lang="en" data-theme="dark" suppressHydrationWarning>
       <head>
-        <script
-          dangerouslySetInnerHTML={{
-            // Applies the stored theme before first paint, and seeds
-            // theme-color so the iOS status bar / toolbar strips start on the
-            // right colour. Hex values mirror --background in globals.css.
-            __html: `(function(){try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t);var m=document.querySelector('meta[name="theme-color"]');if(!m){m=document.createElement("meta");m.name="theme-color";document.head.appendChild(m)}m.setAttribute("content",t==="light"?"#ffffff":"#000000")}catch(e){}})()`,
-          }}
-        />
+        {/* iOS tints the strips outside the page — the status bar at the top
+            and the Safari toolbar at the bottom — from this rather than from
+            what the page paints. Fixed, now that the theme is. Mirrors
+            --background in globals.css. */}
+        <meta name="theme-color" content="#000000" />
       </head>
       <body
         className={`${quicksand.variable} ${satoshi.variable} ${outfit.variable} antialiased`}
@@ -77,8 +72,6 @@ export default function RootLayout({
           data-gravity="atom"
           className="corner-stack absolute left-6 top-[6.5rem] z-20 flex flex-row gap-2 sm:left-auto sm:right-6 sm:top-6 sm:flex-col"
         >
-          <ThemeToggle />
-          <SocialLinks />
           <AppleButton />
         </div>
         <CursorRibbons />
