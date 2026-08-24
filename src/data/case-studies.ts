@@ -41,23 +41,75 @@ export const caseStudies: Record<string, CaseStudy> = {
     blocks: [
       {
         type: "text",
-        text: "Photograph any item to find its name, resale value, and marketplaces to sell it.",
-      },
-       {
-        type: "heading",
-        text: "Background",
+        text: "Loot Check is an app where you take a photo of any item to find its name, resale value, and marketplaces to list it. When I was moving places, I wanted a quick way to find the used value of an item to decide what to keep or sell. First I tried using existing apps, but found they were poorly designed and required a subscription after a few scans. I decided to build a fast, accurate, and free identifying app for all users.",
       },
       {
-        type: "text",
-        text: "asdf.",
-      },
-       {
         type: "heading",
         text: "Design",
       },
+
+      
       {
         type: "text",
         text: "asdf."
+      },
+      {
+        type: "images",
+        items: [
+          {
+            src: "/projects/loot-check-home.png",
+            alt: "The home screen: take a photo, or choose one from the library",
+          },
+          {
+            src: "/projects/loot-check-photo.png",
+            alt: "A photo of a MIDI keyboard added, with an optional detail field before identifying it",
+          },
+          {
+            src: "/projects/loot-check-result.png",
+            alt: "The result: an Akai MPK Mini MK3 identified, with an estimated resale value of $68",
+          },
+          {
+            src: "/projects/loot-check-marketplaces.png",
+            alt: "Where to sell, with eBay marked as the best bet and what each marketplace pays after fees",
+          },
+          {
+            src: "/projects/loot-check-listing.png",
+            alt: "A ready-to-post listing with a title and description to copy",
+          },
+          {
+            src: "/projects/loot-check-detail.png",
+            alt: "A photo of an OP-1 in its case, with \"Op1 synth\" typed into the detail field before identifying it",
+          },
+          {
+            src: "/projects/loot-check-op1-result.png",
+            alt: "The OP-1 identified from the photo, with an estimated resale value of $825",
+          },
+          {
+            src: "/projects/loot-check-op1-marketplaces.png",
+            alt: "Where to sell the OP-1, with eBay marked as the best bet at $717 after fees",
+          },
+          {
+            src: "/projects/loot-check-op1-listing.png",
+            alt: "A ready-to-post listing for the OP-1, with its title and description to copy",
+          },
+        ],
+      },
+      {
+        type: "images",
+        items: [
+          {
+            src: "/projects/loot-check-logo-scan.png",
+            alt: "An early icon: a price tag inside the corner brackets of a camera's scan frame",
+          },
+          {
+            src: "/projects/loot-check-logo-sneaker-dark.png",
+            alt: "The same tag on dark, the shoe now a sneaker with stripes",
+          },
+          {
+            src: "/projects/loot-check-logo-sneaker.png",
+            alt: "The icon it settled on, on light",
+          },
+        ],
       },
       {
         type: "heading",
@@ -81,15 +133,7 @@ export const caseStudies: Record<string, CaseStudy> = {
     blocks: [
       {
         type: "text",
-        text: "Upload a PDF and hear the text in a natural voice without the formatting and citations.",
-      },
-       {
-        type: "heading",
-        text: "Background",
-      },
-      {
-        type: "text",
-        text: "asdf.",
+        text: "A friend was listening to a graduate research paper for class while walking and got '[1] et al., pp. 234-256' read aloud in a robot voice. That gave me the idea to create a PDF reader that skipped unecessary information like the formatting and citations, and spoke in a natural sounding voice.",
       },
        {
         type: "heading",
@@ -98,6 +142,40 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "text",
         text: "asdf."
+      },
+      {
+        type: "images",
+        items: [
+          {
+            src: "/projects/paper-reader-library.png",
+            alt: "My Papers: the papers added so far, each with how much of it has been listened to, and a player docked at the bottom",
+          },
+          {
+            src: "/projects/paper-reader-follow-along.png",
+            alt: "A paper being read aloud with the current sentence highlighted, the sentence count, and playback controls",
+          },
+          {
+            src: "/projects/paper-reader-settings.png",
+            alt: "Settings: the Gemini API key, the text and voice models, and the narration voice",
+          },
+          {
+            src: "/projects/paper-reader-error.png",
+            alt: "The failure screen: a paper that could not be processed, with the error it came back with and a way to try again",
+          },
+        ],
+      },
+      {
+        type: "images",
+        items: [
+          {
+            src: "/projects/paper-reader-logo-light.png",
+            alt: "The app icon on light: lines of text with one highlighted in yellow and a play triangle at its end",
+          },
+          {
+            src: "/projects/paper-reader-logo-dark.png",
+            alt: "The same icon on dark",
+          },
+        ],
       },
       {
         type: "heading",
@@ -172,6 +250,23 @@ export const caseStudies: Record<string, CaseStudy> = {
         text: "asdf."
       },
       {
+        type: "images",
+        items: [
+          {
+            src: "/projects/sleeptalk-logo-icon.svg",
+            alt: "The app icon: a crescent moon with a speech wave coming out of it, on a purple gradient",
+          },
+          {
+            src: "/projects/sleeptalk-logo-handdrawn.png",
+            alt: "A hand-drawn take: blue Zs trailing off inside a rough black square",
+          },
+          {
+            src: "/projects/sleeptalk-logo-blue.png",
+            alt: "The Zs in white, filling a solid blue tile",
+          },
+        ],
+      },
+      {
         type: "heading",
         text: "Final Thoughts",
       },
@@ -198,6 +293,27 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "text",
         text: "asdf."
+      },
+      {
+        type: "images",
+        items: [
+          {
+            src: "/projects/time-with-tree-logo-v1.png",
+            alt: "A birch tree drawn in outline, its branches carrying leaves in two greens",
+          },
+          {
+            src: "/projects/time-with-tree-logo-v2.png",
+            alt: "The tree set beside the farm's name in Korean, 나무와 걷는 시간",
+          },
+          {
+            src: "/projects/time-with-tree-logo-v3.png",
+            alt: "A later lockup: leaves rising out of a field, beside the same name set in a heavier face",
+          },
+          {
+            src: "/projects/time-with-tree-logo-v4.png",
+            alt: "The mark on its own, three leaves over two bands of field",
+          },
+        ],
       },
       {
         type: "heading",
@@ -238,6 +354,37 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "text",
         text: "asdf."
+      },
+      // One to a row rather than a grid: these are pages seen on a desktop,
+      // and three across the column would leave them too small to read.
+      {
+        type: "image",
+        src: "/projects/buy-side-figma-brief.png",
+        alt: "The redesign in Figma: a morning brief with a market sentiment scale, key points, and a live markets rail down the left",
+      },
+      {
+        type: "image",
+        src: "/projects/buy-side-figma-signals.png",
+        alt: "Further down the redesign: the key signal of the day, tickers to watch, the previous evening's brief, and sector performance",
+      },
+      {
+        type: "image",
+        src: "/projects/buy-side-site-today.png",
+        alt: "The site as built: the night briefing headline and summary, the week's schedule, and charts",
+      },
+      {
+        type: "image",
+        src: "/projects/buy-side-site-catalysts.png",
+        alt: "What matters today beside catalysts in detail, each item sourced and dated",
+      },
+      {
+        type: "images",
+        items: [
+          {
+            src: "/projects/buy-side-logo.png",
+            alt: "The mark: five candlesticks stepping from red down to green up",
+          },
+        ],
       },
       {
         type: "heading",

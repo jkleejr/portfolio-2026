@@ -1,0 +1,38 @@
+<!--
+  SleepTalk app icon. A crescent opening right, with five bars at irregular
+  heights so the wave reads as speech rather than a level meter. Both are the
+  same white, so the moon and the wave read as one mark.
+
+  Deliberately square with no rounded corners: iOS masks the icon itself, and
+  baking the radius in here would leave transparent corners, which the asset
+  catalog rejects.
+
+  Run Design/export-icon.sh to regenerate the PNG in the asset catalog.
+  Keep XML comments free of double hyphens, which make this file unparseable.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#3D3080"/>
+      <stop offset="1" stop-color="#120E30"/>
+    </linearGradient>
+    <!-- Crescent: a disc with a second disc bitten out of its right side. -->
+    <mask id="moon">
+      <rect width="512" height="512" fill="black"/>
+      <circle cx="190" cy="256" r="118" fill="white"/>
+      <circle cx="248" cy="256" r="104" fill="black"/>
+    </mask>
+  </defs>
+
+  <rect width="512" height="512" fill="url(#bg)"/>
+  <rect width="512" height="512" fill="#EDE8FF" mask="url(#moon)"/>
+
+  <!-- Tallest bar matches the crescent's tips, so the wave leaves its mouth. -->
+  <g fill="#EDE8FF">
+    <rect x="278" y="198" width="24" height="116" rx="12"/>
+    <rect x="314" y="159" width="24" height="194" rx="12"/>
+    <rect x="350" y="186" width="24" height="140" rx="12"/>
+    <rect x="386" y="208" width="24" height="96" rx="12"/>
+    <rect x="422" y="224" width="24" height="64" rx="12"/>
+  </g>
+</svg>
