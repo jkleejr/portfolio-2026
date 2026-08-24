@@ -411,10 +411,29 @@ function run(
   // The press is the trigger's own hover, so it falls immediately rather than
   // sitting still under the cursor that just pressed it and waiting to be
   // entered again.
+  //
+  // And it is tipped as it goes, not pushed. It still drops straight down the
+  // line it was sitting on; what varies is which way it is leaning and how it
+  // is turning while it does. That is what the floor answers: a body turning
+  // on impact drags against the floor it lands on, and the friction between
+  // them turns the spin into a push — left if it leans left, right if it
+  // leans right. Dropped square and still, the apple has nothing sideways to
+  // give and the floor has nothing sideways to return, which is why it came
+  // straight back up its own path every press. The bounce is loosened a
+  // little too, so no two presses give back quite the same height.
   const pressed = trigger ? pieces.find((piece) => piece.el === trigger) : null;
   if (pressed) {
     pressed.el.style.willChange = "transform";
     drop(pressed);
+    // Which way it leans is a coin toss; how far is anywhere from a slight
+    // lean to a good one. The floor of the range is what keeps it from ever
+    // coming down square — a spread that reaches zero would give a dead drop
+    // as often as a lively one, and a dead drop is the thing this is for.
+    const way = Math.random() < 0.5 ? -1 : 1;
+    const tilt = way * (0.05 + Math.random() * 0.14); // 3 to 11 degrees
+    Matter.Body.setAngle(pressed.body, tilt);
+    Matter.Body.setAngularVelocity(pressed.body, tilt * 0.6);
+    pressed.body.restitution = 0.35 + Math.random() * 0.2;
   }
 
   const listeners: Array<() => void> = [];
