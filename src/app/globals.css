@@ -17,9 +17,9 @@
      writing widens that block, and a centred block grows both ways — the
      covers move out to the left as the last word of a line moves out to the
      right. */
-  --cover: 220px;
+  --cover: 168px;
   --cover-gap: 3rem;
-  --text-width: 46ch;
+  --text-width: 49ch;
   --text-start: calc(var(--cover) + var(--cover-gap));
   --column: calc(var(--text-start) + var(--text-width));
 }

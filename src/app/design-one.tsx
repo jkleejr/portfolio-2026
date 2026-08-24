@@ -50,10 +50,10 @@ export function DesignOne() {
               The top margin is also the phone case: the apple is a row under
               the header there rather than a corner stack, pinned at 6.5rem and
               out of flow, so text that simply followed the role would run under
-              it. 6rem clears the row with a gap to spare; from sm up the stack
+              it. 5rem clears the row with a gap to spare; from sm up the stack
               is off in the corner and only the gap is wanted. */}
           {site.intro.length > 0 && (
-            <div className="mt-24 space-y-3 sm:mt-12">
+            <div className="mt-20 space-y-3 sm:mt-8">
               {site.intro.map((line) => (
                 <p key={line} className="text-base leading-relaxed">
                   {line}
@@ -72,18 +72,24 @@ export function DesignOne() {
             it, on the same two lines the header above them keeps.
 
             The first row needs the room between projects above it: any less and
-            it reads as more of the intro rather than the start of the work.
+            it reads as more of the intro rather than the start of the work. A
+            hair under it, in fact — this gap starts at the bottom of a line of
+            text, which carries a few pixels of leading below the letters,
+            where the gaps between projects start at the hard bottom edge of a
+            cover. Equal numbers would not look equal.
 
             Beside from sm up, stacked on a phone: a cover and the writing do
-            not fit side by side on a narrow screen. items-start does two jobs
-            — it starts the cover level with the project's name rather than
-            centring it against the block, and it keeps a row from stretching to
-            the width of the container. */}
-        <div className="mt-20 flex flex-col items-start gap-20">
+            not fit side by side on a narrow screen. The writing sits on the
+            middle of its cover rather than at the top of it — a title and a
+            line under it are shorter than the picture beside them, and hung
+            from the top edge they leave the row bottom-heavy. On a phone
+            items-start is what keeps a row from stretching to the width of
+            the container. */}
+        <div className="mt-17 flex flex-col items-start gap-18">
           {entries.map((entry) => (
             <article
               key={entry.slug}
-              className="flex flex-col items-start gap-4 sm:flex-row sm:gap-[var(--cover-gap)]"
+              className="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-[var(--cover-gap)]"
             >
               {(entry.images ?? []).map((image, i) => (
                 <ProjectThumbnail
@@ -100,6 +106,16 @@ export function DesignOne() {
                 {entry.blurb && (
                   <p className="mt-3 text-base leading-relaxed">
                     {entry.blurb}
+                  </p>
+                )}
+                {entry.date && (
+                  <p className="mt-2 text-base leading-relaxed">
+                    Date: {entry.date}
+                  </p>
+                )}
+                {entry.tools && (
+                  <p className="mt-1 text-base leading-relaxed">
+                    Tools: {entry.tools}
                   </p>
                 )}
               </div>
