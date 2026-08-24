@@ -54,23 +54,20 @@ export function DesignOne() {
         )}
       </header>
 
-      {/* One row per project: the name and the one line that says what the
-          thing is, and the cover to the right of them. Nothing here is a press
-          target any more — the writing for a project is on the page beside it
-          rather than behind it.
+      {/* One row per project: its cover, and beside that the name and the one
+          line that says what the thing is. Nothing here is a press target any
+          more — the writing for a project is on the page beside it rather than
+          behind it.
 
-          The text column is the intro's measure, and the gallery starts at the
-          same left margin as the header, so every line on the page begins and
-          breaks at the same two points however far down it sits. Which is also
-          why the first row needs room above it: in one column with the intro,
-          a small gap reads as the next paragraph of it rather than the start
-          of the work. The same room as between one project and the next, so
-          the column keeps one rhythm the whole way down. A width
-          rather than a maximum: the covers line up in a column of their own
-          only if the text beside them always takes the same room, whatever it
-          says.
+          The covers hold the page's left margin, the same one the header text
+          starts at, so they line up in a column under the name at the top. The
+          text keeps the intro's measure beside them: the wrap is the width of
+          the intro even though it no longer starts where the intro does.
 
-          Beside from sm up, stacked on a phone: 30ch of text and a 220px cover
+          The first row needs the room between projects above it: any less and
+          it reads as more of the intro rather than the start of the work.
+
+          Beside from sm up, stacked on a phone: a 220px cover and 30ch of text
           do not fit side by side on a narrow screen. items-start does two jobs
           — it starts the cover level with the project's name rather than
           centring it against the block, and it keeps a row from stretching to
@@ -81,14 +78,6 @@ export function DesignOne() {
             key={entry.slug}
             className="flex flex-col items-start gap-4 sm:flex-row sm:gap-12"
           >
-            <div className="w-[30ch] max-w-full shrink-0">
-              <h2 className="text-xl font-semibold leading-snug">
-                {entry.title}
-              </h2>
-              {entry.blurb && (
-                <p className="mt-3 text-base leading-relaxed">{entry.blurb}</p>
-              )}
-            </div>
             {(entry.images ?? []).map((image, i) => (
               <ProjectThumbnail
                 key={`${entry.slug}-${i}`}
@@ -97,6 +86,14 @@ export function DesignOne() {
                 href={entry.srcHref}
               />
             ))}
+            <div className="w-[30ch] max-w-full shrink-0">
+              <h2 className="text-xl font-semibold leading-snug">
+                {entry.title}
+              </h2>
+              {entry.blurb && (
+                <p className="mt-3 text-base leading-relaxed">{entry.blurb}</p>
+              )}
+            </div>
           </article>
         ))}
       </div>
