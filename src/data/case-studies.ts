@@ -14,6 +14,9 @@ export type CaseStudyBlock =
 
 export type CaseStudy = {
   title: string;
+  // Where the project lives, if it is up somewhere. Set it and the title
+  // becomes the link to it, opened in a tab of its own.
+  href?: string;
   tagline?: string; // one line under the title
   // When the project was made, under the title, in whatever words suit it —
   // "2026", "August 2026", "Summer 2026". The page prints it as written.
@@ -33,6 +36,10 @@ export type CaseStudy = {
 // assume 20 second scan, 30 second read... need to have an interesting visual design, cant be basic 
 
 // dont over complicate
+
+// need to make ui designs look more professional
+// logos need some work still
+
 
 export const caseStudies: Record<string, CaseStudy> = {
   "loot-check": {
@@ -102,10 +109,6 @@ export const caseStudies: Record<string, CaseStudy> = {
             alt: "An early icon: a price tag inside the corner brackets of a camera's scan frame",
           },
           {
-            src: "/projects/loot-check-logo-sneaker-dark.png",
-            alt: "The same tag on dark, the shoe now a sneaker with stripes",
-          },
-          {
             src: "/projects/loot-check-logo-sneaker.png",
             alt: "The icon it settled on, on light",
           },
@@ -133,7 +136,7 @@ export const caseStudies: Record<string, CaseStudy> = {
     blocks: [
       {
         type: "text",
-        text: "A friend was listening to a graduate research paper for class while walking and got '[1] et al., pp. 234-256' read aloud in a robot voice. That gave me the idea to create a PDF reader that skipped unecessary information like the formatting and citations, and spoke in a natural sounding voice.",
+        text: "A friend was listening to a research paper while walking and got '[1] et al., pp. 234-256' read aloud in a robot voice. That gave me the idea to create a PDF reader that filtered out unecessary information and spoke in a natural voice.",
       },
        {
         type: "heading",
@@ -171,10 +174,6 @@ export const caseStudies: Record<string, CaseStudy> = {
             src: "/projects/paper-reader-logo-light.png",
             alt: "The app icon on light: lines of text with one highlighted in yellow and a play triangle at its end",
           },
-          {
-            src: "/projects/paper-reader-logo-dark.png",
-            alt: "The same icon on dark",
-          },
         ],
       },
       {
@@ -196,7 +195,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
   "screen-translator": {
     title: "Screen Translator",
-    date: "July 2026",
+    date: "August 2026",
     blocks: [
       {
         type: "text",
@@ -208,19 +207,49 @@ export const caseStudies: Record<string, CaseStudy> = {
       // 
        {
         type: "heading",
-        text: "Background",
-      },
-      {
-        type: "text",
-        text: "asdf.",
-      },
-       {
-        type: "heading",
         text: "Design",
       },
       {
         type: "text",
         text: "asdf."
+      },
+      {
+        type: "images",
+        items: [
+          {
+            src: "/projects/screen-translator-1.png",
+            alt: "The recording screen: a red Recording card over a running list of live captions, each Korean line with its English under it",
+          },
+          {
+            src: "/projects/screen-translator-3.png",
+            alt: "The translation region picker: a phone outline with a blue box dragged over the top third of the screen, and a resize handle at its corner",
+          },
+          {
+            src: "/projects/screen-translator-4.png",
+            alt: "Settings for captions over other apps: Dynamic Island on, floating caption window off",
+          },
+          {
+            src: "/projects/screen-translator-2.png",
+            alt: "The Dynamic Island expanded over a Korean news feed, holding the headline and its English translation",
+          },
+        ],
+      },
+      {
+        type: "images",
+        items: [
+          {
+            src: "/projects/screen-translator-logo-clean.png",
+            alt: "The mark in black on white: a record dot inside a ring, set on a pale grey circle",
+          },
+          {
+            src: "/projects/screen-translator-logo-4.png",
+            alt: "The same mark on black, with the centre dot in recording red",
+          },
+          {
+            src: "/projects/screen-translator-logo-dark.png",
+            alt: "A dark take: white ring and red dot on a charcoal circle",
+          },
+        ],
       },
       {
         type: "heading",
@@ -280,7 +309,7 @@ export const caseStudies: Record<string, CaseStudy> = {
   "time-with-tree": {
     title: "Time with Tree",
     date: "May 2026",
-    links: [{ label: "Live site", href: "https://timewithtree.co.kr/" }],
+    href: "https://timewithtree.co.kr/",
     blocks: [
       {
         type: "text",
@@ -334,9 +363,7 @@ export const caseStudies: Record<string, CaseStudy> = {
   "buy-side-briefings": {
     title: "Buy Side Briefings",
     date: "2026",
-    links: [
-      { label: "Live site", href: "https://buy-side-briefings.vercel.app/" },
-    ],
+    href: "https://buy-side-briefings.vercel.app/",
     blocks: [
       {
         type: "text",
@@ -359,30 +386,40 @@ export const caseStudies: Record<string, CaseStudy> = {
       // and three across the column would leave them too small to read.
       {
         type: "image",
+        src: "/projects/buy-side-site-dashboard.png",
+        alt: "The built dashboard: the evening brief and its headline, index tiles across the top, the key signal and tickers to watch down the right, and the day's archive on the left",
+      },
+      {
+        type: "image",
+        src: "/projects/buy-side-site-markets.png",
+        alt: "The markets page: three-month charts for the S&P, Nasdaq and Russell, metals beside them, and sector rotation across eleven ETFs underneath",
+      },
+      {
+        type: "image",
         src: "/projects/buy-side-figma-brief.png",
         alt: "The redesign in Figma: a morning brief with a market sentiment scale, key points, and a live markets rail down the left",
       },
       {
         type: "image",
-        src: "/projects/buy-side-figma-signals.png",
-        alt: "Further down the redesign: the key signal of the day, tickers to watch, the previous evening's brief, and sector performance",
+        src: "/projects/buy-side-site-night-brief.png",
+        alt: "The Today page: the night briefing's headline set in serif over its standfirst, the ticker tape above it, and the chart panel starting underneath",
       },
       {
         type: "image",
-        src: "/projects/buy-side-site-today.png",
-        alt: "The site as built: the night briefing headline and summary, the week's schedule, and charts",
+        src: "/projects/buy-side-site-chart.png",
+        alt: "The chart expanded to fill the page: monthly S&P bars on a log scale with three EMAs over them and RSI running underneath",
       },
       {
         type: "image",
-        src: "/projects/buy-side-site-catalysts.png",
-        alt: "What matters today beside catalysts in detail, each item sourced and dated",
+        src: "/projects/buy-side-site-briefing.png",
+        alt: "A briefing in full: the headline, three sourced bullets, each point linked back to where it came from, and the long read below",
       },
       {
         type: "images",
         items: [
           {
-            src: "/projects/buy-side-logo.png",
-            alt: "The mark: five candlesticks stepping from red down to green up",
+            src: "/projects/buy-side-logo-transparent.png",
+            alt: "The same mark without its background, on whatever it is set against",
           },
         ],
       },

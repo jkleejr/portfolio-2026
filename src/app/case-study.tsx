@@ -14,6 +14,7 @@
 // ---------------------------------------------------------------------------
 
 import { type CaseStudy, type CaseStudyBlock } from "@/data/case-studies";
+import { SiteLink } from "./site-link";
 export function StudyBody({ study }: { study: CaseStudy }) {
   return (
     // No margins of its own: the page around it puts it in the same column the
@@ -21,7 +22,16 @@ export function StudyBody({ study }: { study: CaseStudy }) {
     // starts at there.
     <article className="pb-20">
       <header>
-        <h1 className="text-2xl font-bold">{study.title}</h1>
+        {/* The title is the way to the live site when there is one — a link
+            mark after it says so. A button under the title said the same
+            thing at more cost. */}
+        <h1 className="text-2xl font-bold">
+          {study.href ? (
+            <SiteLink href={study.href}>{study.title}</SiteLink>
+          ) : (
+            study.title
+          )}
+        </h1>
         {study.tagline && (
           <p className="mt-1 text-lg font-medium">{study.tagline}</p>
         )}

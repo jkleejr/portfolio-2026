@@ -70,7 +70,7 @@ export const entries: Entry[] = [
   {
     title: "Paper Reader",
     blurb:
-      "Upload a PDF and hear it read aloud in a natural voice, citations and formatting stripped out.",
+      "Upload a PDF and hear it read aloud in a natural voice, citations and formatting filtered out.",
     slug: "paper-reader",
     platform: "mobile",
     images: [
@@ -115,7 +115,7 @@ export const entries: Entry[] = [
   {
     title: "SleepTalk",
     blurb:
-      "Records what you say in your sleep and tracks the patterns night to night.",
+      "Records what you say in your sleep and tracks the patterns over time.",
     slug: "sleeptalk",
     platform: "mobile",
     images: [
