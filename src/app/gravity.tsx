@@ -355,7 +355,17 @@ function run(
   const right = Matter.Bodies.rectangle(vw + WALL / 2, vh / 2, WALL, vh * 3, {
     isStatic: true,
   });
-  Matter.Composite.add(world, [ground, left, right]);
+  // A lid as well as a floor. Something thrown hard enough would otherwise
+  // leave over the top of the window and never come back — the walls catch it
+  // sideways and the floor catches it falling, so the top was the one way out.
+  const ceiling = Matter.Bodies.rectangle(
+    vw / 2,
+    -WALL / 2,
+    vw + WALL * 2,
+    WALL,
+    { isStatic: true },
+  );
+  Matter.Composite.add(world, [ground, left, right, ceiling]);
 
   // Something only starts falling once it is touched, so the page comes apart
   // under the cursor rather than all at once.
@@ -503,6 +513,7 @@ function run(
     Matter.Body.setPosition(ground, { x: w / 2, y: h + WALL / 2 });
     Matter.Body.setPosition(left, { x: -WALL / 2, y: h / 2 });
     Matter.Body.setPosition(right, { x: w + WALL / 2, y: h / 2 });
+    Matter.Body.setPosition(ceiling, { x: w / 2, y: -WALL / 2 });
   };
   window.addEventListener("resize", resize);
 
