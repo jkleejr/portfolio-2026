@@ -89,6 +89,24 @@ type Piece = {
   pageY: number;
 };
 
+/**
+ * A disc: square, and rounded until its corners are gone. It falls as a circle
+ * rather than a box, because a box lands on whichever corner is pointing down
+ * and spends the bounce toppling over it instead — which is why the apple came
+ * down dead some presses and bounced on others.
+ */
+function isDisc(el: HTMLElement, w: number, h: number): boolean {
+  if (Math.abs(w - h) > 1) return false;
+  const radius = getComputedStyle(el).borderTopLeftRadius;
+  // Tailwind's rounded-full is an infinite length, which browsers report back
+  // in their own way — as the word, or as a number too large to parse into
+  // anything meaningful. Either way it is as round as a corner gets.
+  if (/inf/i.test(radius)) return true;
+  const value = parseFloat(radius);
+  if (!Number.isFinite(value)) return false;
+  return radius.endsWith("%") ? value >= 50 : value >= w / 2 - 0.5;
+}
+
 /** Something that occupies space, and so has somewhere to fall from. */
 function drawn(r: DOMRect): boolean {
   return Boolean(r.width && r.height);
@@ -246,12 +264,15 @@ function run(
   const engine = Matter.Engine.create();
   const world = engine.world;
 
-  function makeBody(x: number, y: number, w: number, h: number) {
-    const body = Matter.Bodies.rectangle(x + w / 2, y + h / 2, w, h, {
+  function makeBody(x: number, y: number, w: number, h: number, disc = false) {
+    const shape = {
       restitution: 0.4,
       friction: 0.5,
       frictionAir: 0.012,
-    });
+    };
+    const body = disc
+      ? Matter.Bodies.circle(x + w / 2, y + h / 2, w / 2, shape)
+      : Matter.Bodies.rectangle(x + w / 2, y + h / 2, w, h, shape);
     // Pinned only AFTER construction. Body.setStatic snapshots mass and
     // inertia so it can restore them on release, but it skips the snapshot
     // when the body is already static — which passing `isStatic: true` as a
@@ -277,7 +298,13 @@ function run(
     el.style.transform = `translate3d(${rect.left}px, ${rect.top}px, 0)`;
     pieces.push({
       el,
-      body: makeBody(rect.left, rect.top, rect.width, rect.height),
+      body: makeBody(
+        rect.left,
+        rect.top,
+        rect.width,
+        rect.height,
+        isDisc(el, rect.width, rect.height),
+      ),
       w: rect.width,
       h: rect.height,
       pageX: rect.left + window.scrollX,

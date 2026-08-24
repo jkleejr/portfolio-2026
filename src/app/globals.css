@@ -149,7 +149,7 @@ body {
    below can run the full width. The header reserves the height that puts its
    own bottom edge exactly at the row's top (6.5rem, less the 1.5rem the page
    starts at) — so the row reads as part of the header block. What clears the
-   row's 2.5rem is the intro paragraph inside the header, which carries 6rem of
+   row's 2.75rem is the intro paragraph inside the header, which carries 6rem of
    top margin on a phone for exactly that; the gallery below starts lower still.
 
    --------------------------------------------------------------------------- */
