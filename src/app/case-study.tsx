@@ -13,22 +13,17 @@
 // homepage never unmounts and never loses its scroll position.
 // ---------------------------------------------------------------------------
 
-import {
-  createContext,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { createContext, useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { caseStudies, type CaseStudy, type CaseStudyBlock } from "@/data/case-studies";
+import {
+  caseStudies,
+  type CaseStudy,
+  type CaseStudyBlock,
+} from "@/data/case-studies";
+import { usePress } from "./press";
 import type { EntryImage } from "@/data/projects";
 
 const EXIT_MS = 200; // must match .cs-closing animation duration in globals.css
-
-// How far a press may travel and still count as a click, in px. Below a hand's
-// natural slip; above it the pointer was going somewhere.
-const DRAG_SLOP = 5;
 
 type Opened = { slug: string; image?: EntryImage };
 
@@ -109,9 +104,12 @@ export function CaseStudyProvider({ children }: { children: React.ReactNode }) {
     panelRef.current?.focus();
   }, [slug]);
 
-  useEffect(() => () => {
-    if (exitTimer.current) clearTimeout(exitTimer.current);
-  }, []);
+  useEffect(
+    () => () => {
+      if (exitTimer.current) clearTimeout(exitTimer.current);
+    },
+    [],
+  );
 
   // A screenshot's own page wins over the project's study when it has one.
   const page = hasOwnPage(opened?.image) ? opened!.image! : null;
@@ -165,7 +163,11 @@ export function CaseStudyProvider({ children }: { children: React.ReactNode }) {
               ref={scrollerRef}
               className="cs-scroll flex-1 overflow-y-auto overscroll-contain"
             >
-              {page ? <ImageBody image={page} /> : study && <StudyBody study={study} />}
+              {page ? (
+                <ImageBody image={page} />
+              ) : (
+                study && <StudyBody study={study} />
+              )}
             </div>
           </div>
         </div>
@@ -321,7 +323,9 @@ export function ProjectThumbnail({
         quality={90}
         className="object-cover"
         style={
-          !image.cover && image.crop ? { objectPosition: image.crop } : undefined
+          !image.cover && image.crop
+            ? { objectPosition: image.crop }
+            : undefined
         }
       />
       {image.coverDot && <CoverDot dot={image.coverDot} />}
@@ -334,24 +338,8 @@ export function ProjectThumbnail({
   const lift =
     "block cursor-pointer rounded-lg transition-transform duration-200 ease-out hover:scale-105";
 
-  // A throw is not a click. With gravity on a cover can be grabbed and flung,
-  // and the release still lands on the cover the hand was carrying — which the
-  // browser reports as a click, and which would leave the page for the live
-  // site mid-game. So measure the press: anything that travels further than a
-  // slip is a drag and goes nowhere. A press that stays put follows the link,
-  // gravity or not.
-  //
-  // Keyboard activation comes through with no pointerdown before it and so is
-  // never a drag.
-  const pressedAt = useRef<{ x: number; y: number } | null>(null);
-  const onPointerDown = (e: React.PointerEvent) => {
-    pressedAt.current = { x: e.clientX, y: e.clientY };
-  };
-  const dragged = (e: React.MouseEvent) => {
-    const from = pressedAt.current;
-    pressedAt.current = null;
-    return Boolean(from) && Math.hypot(e.clientX - from!.x, e.clientY - from!.y) > DRAG_SLOP;
-  };
+  // A throw of the cover is not a click on it — see press.ts.
+  const { onPointerDown, dragged } = usePress();
 
   if (href) {
     return (
@@ -384,7 +372,9 @@ function StudyBody({ study }: { study: CaseStudy }) {
       <header className="max-w-[68ch]">
         <h2 className="text-3xl font-bold leading-tight">{study.title}</h2>
         {study.tagline && (
-          <p className="mt-3 text-lg leading-relaxed text-muted">{study.tagline}</p>
+          <p className="mt-3 text-lg leading-relaxed text-muted">
+            {study.tagline}
+          </p>
         )}
 
         {study.links && study.links.length > 0 && (
@@ -423,7 +413,9 @@ function StudyBody({ study }: { study: CaseStudy }) {
           src={study.cover.src}
           alt={study.cover.alt}
           className="mt-10 h-[220px] w-full max-w-[68ch] rounded-xl border border-foreground/10 object-cover"
-          style={study.cover.crop ? { objectPosition: study.cover.crop } : undefined}
+          style={
+            study.cover.crop ? { objectPosition: study.cover.crop } : undefined
+          }
         />
       )}
 
@@ -438,7 +430,11 @@ function StudyBody({ study }: { study: CaseStudy }) {
 
 function Caption({ text }: { text?: string }) {
   if (!text) return null;
-  return <figcaption className="mt-3 text-sm leading-relaxed text-muted">{text}</figcaption>;
+  return (
+    <figcaption className="mt-3 text-sm leading-relaxed text-muted">
+      {text}
+    </figcaption>
+  );
 }
 
 function Block({ block }: { block: CaseStudyBlock }) {
@@ -448,14 +444,19 @@ function Block({ block }: { block: CaseStudyBlock }) {
 
     case "text":
       return (
-        <p className="max-w-[68ch] text-lg leading-relaxed text-foreground">{block.text}</p>
+        <p className="max-w-[68ch] text-lg leading-relaxed text-foreground">
+          {block.text}
+        </p>
       );
 
     case "list":
       return (
         <ul className="max-w-[68ch] space-y-3 pl-5">
           {block.items.map((item, i) => (
-            <li key={i} className="list-disc text-lg leading-relaxed marker:text-muted">
+            <li
+              key={i}
+              className="list-disc text-lg leading-relaxed marker:text-muted"
+            >
               {item}
             </li>
           ))}

@@ -15,6 +15,7 @@
 
 import { useRef } from "react";
 import { useGravity } from "./gravity";
+import { usePress } from "./press";
 
 export function AppleButton() {
   // Handed to the simulation so it can drop this button on the press, rather
@@ -22,11 +23,20 @@ export function AppleButton() {
   const button = useRef<HTMLButtonElement>(null);
   const { on, toggle } = useGravity(button);
 
+  // Once gravity is on the apple can be picked up and thrown, and the throw
+  // ends with the pointer released over the apple it was carrying — which the
+  // browser reports as a click, switching off the very thing being played
+  // with. Only a press that stays put is the switch.
+  const { onPointerDown, dragged } = usePress();
+
   return (
     <button
       ref={button}
       type="button"
-      onClick={toggle}
+      onPointerDown={onPointerDown}
+      onClick={(e) => {
+        if (!dragged(e)) toggle();
+      }}
       aria-pressed={on}
       aria-label="Turn gravity on and off"
       className="apple-button flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-foreground/15 bg-background text-foreground"
