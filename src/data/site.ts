@@ -6,6 +6,6 @@ export const site = {
   // into the one before it.
   intro: [
     "Designer working on consumer apps moving fluidly between systems thinking, interactions, and visual craft.",
-    "Most of these projects are small tools that use AI to solve a specific problem.",
+    "Most of these projects are small tools that use AI to solve a problem.",
   ],
 };

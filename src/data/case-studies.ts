@@ -15,6 +15,9 @@ export type CaseStudyBlock =
 export type CaseStudy = {
   title: string;
   tagline?: string; // one line under the title
+  // When the project was made, under the title, in whatever words suit it —
+  // "2026", "August 2026", "Summer 2026". The page prints it as written.
+  date?: string;
   // --- all optional; add to a study to switch one on ---
   cover?: { src: string; alt: string; crop?: string }; // wide image up top
   facts?: { label: string; value: string }[]; // Role / Timeline / Tools strip
@@ -34,10 +37,35 @@ export type CaseStudy = {
 export const caseStudies: Record<string, CaseStudy> = {
   "loot-check": {
     title: "Loot Check",
+    date: "June 2026",
     blocks: [
       {
         type: "text",
         text: "Photograph any item to find its name, resale value, and marketplaces to sell it.",
+      },
+       {
+        type: "heading",
+        text: "Background",
+      },
+      {
+        type: "text",
+        text: "asdf.",
+      },
+       {
+        type: "heading",
+        text: "Design",
+      },
+      {
+        type: "text",
+        text: "asdf."
+      },
+      {
+        type: "heading",
+        text: "Final Thoughts",
+      },
+      {
+        type: "text",
+        text: "asdf",
       },
       // claude sonnet 4.6 because its cheap enough to run per scan and still accurate.
       // costs me about $0.013 per scan.
@@ -49,10 +77,35 @@ export const caseStudies: Record<string, CaseStudy> = {
 
   "paper-reader": {
     title: "Paper Reader",
+    date: "July 2026",
     blocks: [
       {
         type: "text",
         text: "Upload a PDF and hear the text in a natural voice without the formatting and citations.",
+      },
+       {
+        type: "heading",
+        text: "Background",
+      },
+      {
+        type: "text",
+        text: "asdf.",
+      },
+       {
+        type: "heading",
+        text: "Design",
+      },
+      {
+        type: "text",
+        text: "asdf."
+      },
+      {
+        type: "heading",
+        text: "Final Thoughts",
+      },
+      {
+        type: "text",
+        text: "asdf",
       },
     
       // Gemini 3.1 flash
@@ -65,6 +118,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
   "screen-translator": {
     title: "Screen Translator",
+    date: "July 2026",
     blocks: [
       {
         type: "text",
@@ -74,28 +128,84 @@ export const caseStudies: Record<string, CaseStudy> = {
       // had 2 choices, use the dynamic island or a floating window
       // both are included, but focusing on dynamic island and floating window to test
       // 
+       {
+        type: "heading",
+        text: "Background",
+      },
+      {
+        type: "text",
+        text: "asdf.",
+      },
+       {
+        type: "heading",
+        text: "Design",
+      },
+      {
+        type: "text",
+        text: "asdf."
+      },
+      {
+        type: "heading",
+        text: "Final Thoughts",
+      },
+      {
+        type: "text",
+        text: "asdf",
+      },
     ],
   },
 
   sleeptalk: {
     title: "SleepTalk",
+    date: "August 2026",
     blocks: [
       {
         type: "text",
         text: "SleepTalk is a mobile app that tracks your sleep talking patterns over time.",
+      },
+       {
+        type: "heading",
+        text: "Design",
+      },
+      {
+        type: "text",
+        text: "asdf."
+      },
+      {
+        type: "heading",
+        text: "Final Thoughts",
+      },
+      {
+        type: "text",
+        text: "asdf",
       },
     ],
   },
 
   "time-with-tree": {
     title: "Time with Tree",
-    // The thumbnail opens this study rather than the site, so the study is
-    // where the way through to the live one lives now.
+    date: "May 2026",
     links: [{ label: "Live site", href: "https://timewithtree.co.kr/" }],
     blocks: [
       {
         type: "text",
         text: "Website for a birch tree farm in South Korea.",
+      },
+       {
+        type: "heading",
+        text: "Design",
+      },
+      {
+        type: "text",
+        text: "asdf."
+      },
+      {
+        type: "heading",
+        text: "Final Thoughts",
+      },
+      {
+        type: "text",
+        text: "asdf",
       },
 
       // following expectations from client, so less ideation 
@@ -107,6 +217,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
   "buy-side-briefings": {
     title: "Buy Side Briefings",
+    date: "2026",
     links: [
       { label: "Live site", href: "https://buy-side-briefings.vercel.app/" },
     ],
@@ -119,6 +230,22 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "text",
         text: "The stock market is fast paced and narratives can change quickly based on the news. Traders and investors should be informed on the latest events and current state of the stock market.",
+      },
+       {
+        type: "heading",
+        text: "Design",
+      },
+      {
+        type: "text",
+        text: "asdf."
+      },
+      {
+        type: "heading",
+        text: "Final Thoughts",
+      },
+      {
+        type: "text",
+        text: "asdf",
       },
     ],
   },

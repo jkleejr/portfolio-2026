@@ -31,6 +31,12 @@ export type Entry = {
   // The one line under that title. Brief on purpose: it is what someone reads
   // while deciding whether to open the study, not a summary of it.
   blurb?: string;
+  // When it was made, under the blurb. The word "Date" is set by the page, so
+  // this is only what follows it — a year, or as much of one as is worth
+  // saying.
+  date?: string;
+  // What it was built with, under the date, and set the same way.
+  tools?: string;
   slug: string; // links this entry to its case study in case-studies.ts
   platform?: "mobile" | "web"; // design two only: labels the entry and sets
   // the aspect ratio its screenshots are shown at
