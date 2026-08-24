@@ -140,15 +140,19 @@ function Block({ block }: { block: CaseStudyBlock }) {
     case "images":
       return (
         <figure>
-          <div className="flex flex-wrap gap-4">
+          {/* A grid rather than a wrapping row: a row shares its width between
+              whatever is on it, so a last shot left on its own would blow up
+              to the width of the column while the ones above it stayed small.
+              Columns hold their size however many shots there are. Two across
+              on a phone, three from sm up. */}
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
             {block.items.map((item, i) => (
               // eslint-disable-next-line @next/next/no-img-element
               <img
                 key={i}
                 src={item.src}
                 alt={item.alt}
-                className="min-w-[140px] flex-1 rounded-xl border border-foreground/10 object-cover"
-                style={item.crop ? { objectPosition: item.crop } : undefined}
+                className="w-full rounded-xl border border-foreground/10"
               />
             ))}
           </div>
