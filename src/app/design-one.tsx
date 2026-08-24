@@ -8,7 +8,7 @@
 
 import { site } from "@/data/site";
 import { entries } from "@/data/projects";
-import { ProjectThumbnail } from "./case-study";
+import { ProjectThumbnail } from "./project-thumbnail";
 
 export function DesignOne() {
   // The bottom padding is trimmed on a phone so the page fits the screen. That
