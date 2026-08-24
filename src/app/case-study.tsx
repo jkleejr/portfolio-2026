@@ -296,9 +296,10 @@ export function ProjectThumbnail({
   // A cover brings its own background, so the hairline that frames a
   // screenshot just reads as an outline around it — drop it for covers.
   // One size everywhere, now that the gallery is a single column: there is no
-  // width to divide up, and 220px still leaves room beside it on the narrowest
-  // phone.
-  const size = "h-[220px] w-[220px]";
+  // width to divide up, and a cover still leaves room beside it on the
+  // narrowest phone. The size itself is --cover in globals.css, which the
+  // writing beside it is placed off.
+  const size = "h-[var(--cover)] w-[var(--cover)]";
   const box = image.cover
     ? `${size} rounded-lg`
     : `${size} rounded-lg border border-foreground/10`;

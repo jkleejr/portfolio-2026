@@ -15,87 +15,97 @@ export function DesignOne() {
   // is not only spacing: a page that overflows by even a few dozen pixels hands
   // every upward swipe to the browser as a scroll, and the ribbons lose the
   // gesture — see "Touch behaviour" in globals.css.
+  //
+  // The top padding drops the name to where the intro under it used to start —
+  // 1.5rem plus the 112px the name, the role and the gap below them take up —
+  // and the whole page follows it down. Only from sm up: on a phone the apple
+  // is a row pinned at 6.5rem, and the name would land underneath it.
   return (
-    <main className="pb-8 pt-6 sm:pb-28">
-      {/* Name and role hold the top-left corner of the page. In flow rather
-          than absolute, so the gallery below always clears them. The right
-          margin keeps the text off the button stack in the opposite corner.
+    <main className="pb-8 pt-6 sm:pb-28 sm:pt-34">
+      {/* Everything the page says is one column — a cover, and the writing
+          beside it — and the column sits in the middle of the window rather
+          than against its left edge. The maximum is what keeps a margin on a
+          phone, where the column is wider than the screen. */}
+      <div className="mx-auto w-[var(--column)] max-w-[calc(100%-3rem)]">
+        {/* Name and role hold the top of the page, at the left edge of the
+            column — the line the covers below them are stacked on. In flow
+            rather than absolute, so the gallery always clears them.
 
-          On a phone the buttons are a row under this text rather than a
-          column beside it, so the right margin that keeps the two apart is
-          only wanted from sm up. The reserved height is what the row sits in
-          — see .home-header in globals.css. */}
-      <header className="home-header ml-6 max-w-[42ch] sm:mr-20">
-        <h1 className="text-2xl font-bold">{site.name}</h1>
-        <p className="mt-1 text-lg font-medium text-foreground">{site.role}</p>
-        {/* Who that is. A paragraph per line of site.intro, so a sentence that
-            should start fresh does, rather than being wrapped into the one
-            above it. Set at body size, so the name and the role above it lead
-            on weight and size rather than on colour.
+            No measure of its own: the header runs the width of the whole
+            column, so the intro breaks where the last word of a project's
+            line does, out at the right edge of the page's writing.
 
-            A measure of its own, narrower than the header's: the gallery below
-            is centred, so a line that ran the full 42ch would reach past the
-            left edge of the covers on a wide screen. 30ch keeps the paragraph
-            a block in the left margin, wrapping well before it gets there.
+            The reserved height is what the phone's button row sits in — see
+            .home-header in globals.css. */}
+        <header className="home-header">
+          <h1 className="text-2xl font-bold">{site.name}</h1>
+          <p className="mt-1 text-lg font-medium text-foreground">
+            {site.role}
+          </p>
+          {/* Who that is. A paragraph per line of site.intro, so a sentence that
+              should start fresh does, rather than being wrapped into the one
+              above it. Set at body size, so the name and the role above it lead
+              on weight and size rather than on colour.
 
-            The top margin is also the phone case: the apple is a row under
-            the header there rather than a corner stack, pinned at 6.5rem and
-            out of flow, so text that simply followed the role would run under
-            it. 6rem clears the row with a gap to spare; from sm up the stack
-            is off in the corner and only the gap is wanted. */}
-        {site.intro.length > 0 && (
-          <div className="mt-24 max-w-[30ch] space-y-3 sm:mt-12">
-            {site.intro.map((line) => (
-              <p key={line} className="text-base leading-relaxed">
-                {line}
-              </p>
-            ))}
-          </div>
-        )}
-      </header>
-
-      {/* One row per project: its cover, and beside that the name and the one
-          line that says what the thing is. Nothing here is a press target any
-          more — the writing for a project is on the page beside it rather than
-          behind it.
-
-          The covers hold the page's left margin, the same one the header text
-          starts at, so they line up in a column under the name at the top. The
-          text keeps the intro's measure beside them: the wrap is the width of
-          the intro even though it no longer starts where the intro does.
-
-          The first row needs the room between projects above it: any less and
-          it reads as more of the intro rather than the start of the work.
-
-          Beside from sm up, stacked on a phone: a 220px cover and 30ch of text
-          do not fit side by side on a narrow screen. items-start does two jobs
-          — it starts the cover level with the project's name rather than
-          centring it against the block, and it keeps a row from stretching to
-          the width of the container. */}
-      <div className="ml-6 mt-20 flex flex-col items-start gap-20">
-        {entries.map((entry) => (
-          <article
-            key={entry.slug}
-            className="flex flex-col items-start gap-4 sm:flex-row sm:gap-12"
-          >
-            {(entry.images ?? []).map((image, i) => (
-              <ProjectThumbnail
-                key={`${entry.slug}-${i}`}
-                image={image}
-                slug={entry.slug}
-                href={entry.srcHref}
-              />
-            ))}
-            <div className="w-[30ch] max-w-full shrink-0">
-              <h2 className="text-xl font-semibold leading-snug">
-                {entry.title}
-              </h2>
-              {entry.blurb && (
-                <p className="mt-3 text-base leading-relaxed">{entry.blurb}</p>
-              )}
+              The top margin is also the phone case: the apple is a row under
+              the header there rather than a corner stack, pinned at 6.5rem and
+              out of flow, so text that simply followed the role would run under
+              it. 6rem clears the row with a gap to spare; from sm up the stack
+              is off in the corner and only the gap is wanted. */}
+          {site.intro.length > 0 && (
+            <div className="mt-24 space-y-3 sm:mt-12">
+              {site.intro.map((line) => (
+                <p key={line} className="text-base leading-relaxed">
+                  {line}
+                </p>
+              ))}
             </div>
-          </article>
-        ))}
+          )}
+        </header>
+
+        {/* One row per project: its cover, and beside that the name and the one
+            line that says what the thing is. Nothing here is a press target any
+            more — the writing for a project is on the page beside it rather than
+            behind it.
+
+            The covers hold the left of the column and the writing the right of
+            it, on the same two lines the header above them keeps.
+
+            The first row needs the room between projects above it: any less and
+            it reads as more of the intro rather than the start of the work.
+
+            Beside from sm up, stacked on a phone: a cover and the writing do
+            not fit side by side on a narrow screen. items-start does two jobs
+            — it starts the cover level with the project's name rather than
+            centring it against the block, and it keeps a row from stretching to
+            the width of the container. */}
+        <div className="mt-20 flex flex-col items-start gap-20">
+          {entries.map((entry) => (
+            <article
+              key={entry.slug}
+              className="flex flex-col items-start gap-4 sm:flex-row sm:gap-[var(--cover-gap)]"
+            >
+              {(entry.images ?? []).map((image, i) => (
+                <ProjectThumbnail
+                  key={`${entry.slug}-${i}`}
+                  image={image}
+                  slug={entry.slug}
+                  href={entry.srcHref}
+                />
+              ))}
+              <div className="w-[var(--text-width)] max-w-full shrink-0">
+                <h2 className="text-xl font-semibold leading-snug">
+                  {entry.title}
+                </h2>
+                {entry.blurb && (
+                  <p className="mt-3 text-base leading-relaxed">
+                    {entry.blurb}
+                  </p>
+                )}
+              </div>
+            </article>
+          ))}
+        </div>
       </div>
     </main>
   );

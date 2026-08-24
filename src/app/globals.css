@@ -4,6 +4,24 @@
   --background: #000000;
   --foreground: #ffffff;
   --muted: #a3a3a3;
+
+  /* The two columns the page is set in: a cover, and the writing beside it.
+     One place to say how wide a cover is, how far the writing sits off it, and
+     how wide the writing runs. Read by the thumbnail, by the gap in every
+     project row, by the intro, and by the header — which starts where the
+     writing does rather than where the covers do, so the name at the top sits
+     on the same line as the name of every project.
+
+     --column is the two of them together: the width of everything the page
+     has to say, and so the block that is centred in the window. Widening the
+     writing widens that block, and a centred block grows both ways — the
+     covers move out to the left as the last word of a line moves out to the
+     right. */
+  --cover: 220px;
+  --cover-gap: 3rem;
+  --text-width: 46ch;
+  --text-start: calc(var(--cover) + var(--cover-gap));
+  --column: calc(var(--text-start) + var(--text-width));
 }
 
 /* Kept, but nothing sets data-theme any more: the toggle that did is gone and
