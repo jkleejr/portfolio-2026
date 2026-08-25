@@ -73,12 +73,13 @@ export default function RootLayout({
             following the cursor. */}
         <PhotoGalleryProvider>
           {/* One container places every button, so their spacing is a gap
-              rather than a sum each of them has to know. A column in the
-              top-right corner on a laptop; on a phone a row under the header
-              text, left to right, with the covers starting below it. */}
+              rather than a sum each of them has to know. The top-right corner
+              at every width: a column on a laptop, and a row on a phone, where
+              a column would run down the side of the writing. The row clears
+              the name and the role, which are short enough to sit beside it. */}
           <div
             data-gravity="atom"
-            className="corner-stack absolute left-6 top-[6.5rem] z-20 flex flex-row gap-2 sm:left-auto sm:right-6 sm:top-6 sm:flex-col"
+            className="corner-stack absolute right-6 top-6 z-20 flex flex-row gap-2 sm:flex-col"
           >
             <ThemeToggle />
             <PhotoGalleryButton />

@@ -19,8 +19,8 @@ export function DesignOne() {
   //
   // The top padding drops the name to where the intro under it used to start —
   // 1.5rem plus the 112px the name, the role and the gap below them take up —
-  // and the whole page follows it down. Only from sm up: on a phone the apple
-  // is a row pinned at 6.5rem, and the name would land underneath it.
+  // and the whole page follows it down. Only from sm up: on a phone the name
+  // holds the top left, level with the buttons in the opposite corner.
   return (
     <main className="pb-8 pt-6 sm:pb-28 sm:pt-34">
       {/* Everything the page says is one column — a cover, and the writing
@@ -36,9 +36,10 @@ export function DesignOne() {
             column, so the intro breaks where the last word of a project's
             line does, out at the right edge of the page's writing.
 
-            The reserved height is what the phone's button row sits in — see
-            .home-header in globals.css. */}
-        <header className="home-header">
+            The buttons are in the corner opposite at every width now, so the
+            header no longer reserves the height a row of them used to sit in
+            — see "The page on a phone" in globals.css. */}
+        <header>
           <h1 className="text-2xl font-bold">{site.name}</h1>
           <p className="mt-1 text-lg font-medium text-foreground">
             {site.role}
@@ -49,13 +50,10 @@ export function DesignOne() {
               weight, same colour — so the two read as one block under the
               name, and only the name leads.
 
-              The top margin is also the phone case: the apple is a row under
-              the header there rather than a corner stack, pinned at 6.5rem and
-              out of flow, so text that simply followed the role would run under
-              it. 5rem clears the row with a gap to spare; from sm up the stack
-              is off in the corner and only the gap is wanted. */}
+              One margin at every width, now that nothing is pinned between
+              the role and this. */}
           {site.intro.length > 0 && (
-            <div className="mt-20 space-y-3 sm:mt-8">
+            <div className="mt-8 space-y-3">
               {site.intro.map((line) => (
                 <p key={line} className="text-lg font-medium leading-relaxed text-foreground">
                   {line}
@@ -80,18 +78,17 @@ export function DesignOne() {
             where the gaps between projects start at the hard bottom edge of a
             cover. Equal numbers would not look equal.
 
-            Beside from sm up, stacked on a phone: a cover and the writing do
-            not fit side by side on a narrow screen. The writing sits on the
-            middle of its cover rather than at the top of it — a title and a
-            line under it are shorter than the picture beside them, and hung
-            from the top edge they leave the row bottom-heavy. On a phone
-            items-start is what keeps a row from stretching to the width of
-            the container. */}
+            Beside at every width, and centred on the cover rather than hung
+            from its top edge — a title and a line under it are shorter than
+            the picture beside them, and hung from the top they leave the row
+            bottom-heavy. A phone fits the row by shrinking the cover and the
+            gap rather than by stacking the two; see "The page on a phone" in
+            globals.css. */}
         <div className="mt-17 flex flex-col items-start gap-18">
           {entries.map((entry) => (
             <article
               key={entry.slug}
-              className="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-[var(--cover-gap)]"
+              className="flex items-center gap-[var(--cover-gap)]"
             >
               {(entry.images ?? []).map((image, i) => (
                 <ProjectThumbnail
@@ -101,7 +98,12 @@ export function DesignOne() {
                   href={entry.srcHref}
                 />
               ))}
-              <div className="w-[var(--text-width)] max-w-full shrink-0">
+              {/* The writing takes whatever the cover leaves on a phone, and
+                  its own measure from sm up, where there is room for it.
+                  min-w-0 is what lets it be narrower than its longest line —
+                  without it a flex item refuses to shrink past its content and
+                  pushes the row off the side of the screen. */}
+              <div className="min-w-0 flex-1 sm:w-[var(--text-width)] sm:flex-none sm:shrink-0">
                 <h2 className="text-xl font-semibold leading-snug">
                   {entry.title}
                   {entry.appStore !== undefined && (

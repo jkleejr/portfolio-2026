@@ -276,19 +276,22 @@ body {
 }
 
 /* ---------------------------------------------------------------------------
-   Where the corner stack sits on a phone
-   Design one turns the stack into a row under the header text so the gallery
-   below can run the full width. The header reserves the height that puts its
-   own bottom edge exactly at the row's top (6.5rem, less the 1.5rem the page
-   starts at) — so the row reads as part of the header block. What clears the
-   row's 2.75rem is the intro paragraph inside the header, which carries 5rem of
-   top margin on a phone for exactly that; the gallery below starts lower still.
+   The page on a phone
+   A project is a cover with its writing beside it at every width, which on a
+   narrow screen only works if the cover gives way: 104px and a 1rem gap leave
+   the writing something like 220px on the narrowest phone, where the desktop
+   168px and 3rem would leave it 120px and force the row wider than the screen.
 
+   The corner stack sits in the top-right corner here as it does on a laptop,
+   as a row rather than a column — so it clears the name at the top left and
+   the writing under it, and the header no longer has to reserve height for a
+   row of buttons sitting under it.
    --------------------------------------------------------------------------- */
 
 @media (width < 40rem) {
-  .home-header {
-    min-height: calc(6.5rem - 1.5rem);
+  :root {
+    --cover: 104px;
+    --cover-gap: 1rem;
   }
 }
 

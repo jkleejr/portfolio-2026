@@ -109,8 +109,8 @@ export function ProjectThumbnail({
   // The screenshots are ~1200px wide, so letting the browser squeeze one into a
   // box this size is a ~6x downscale that its cheap filter turns to mush.
   // next/image resamples them properly and ships a 2x variant for retina
-  // screens instead. The hint has to be a plain length, so it is the one place
-  // --cover is written out rather than read.
+  // screens instead. The hint has to be plain lengths, so this is the one place
+  // --cover and the phone's smaller value are written out rather than read.
   const inner = shown ? (
     // Marked for gravity: with no button around it any more, the box is the
     // outermost thing here, and without the marker the image inside would fall
@@ -120,7 +120,7 @@ export function ProjectThumbnail({
         src={shown}
         alt={image.alt}
         fill
-        sizes="168px"
+        sizes="(width < 40rem) 104px, 168px"
         quality={90}
         className="object-cover"
         style={
