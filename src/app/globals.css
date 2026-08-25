@@ -24,8 +24,8 @@
   --column: calc(var(--text-start) + var(--text-width));
 }
 
-/* Kept, but nothing sets data-theme any more: the toggle that did is gone and
-   the page is dark. Here so the light palette is not lost if it comes back. */
+/* The light half of the page. data-theme is set on <html> — "dark" in the
+   markup, then whatever the toggle stored, applied before first paint. */
 [data-theme="light"] {
   --background: #ffffff;
   --foreground: #171717;
@@ -40,11 +40,24 @@
 }
 
 /* The browser paints the strips outside the page — on iOS the status bar at
-   the top and the Safari toolbar at the bottom — from the ROOT background, so
-   :root carries one of its own rather than inheriting body's. body keeps its
-   own too: with :root painting the canvas, body no longer propagates. */
+   the top and the Safari toolbar at the bottom — from the ROOT background.
+   Those strips fall outside the view transition's snapshot, so they show the
+   live value and would flip the instant `data-theme` changes, while the wave
+   is still sweeping across the content. Giving :root its own background and
+   easing it over the wave's duration keeps the strips in step.
+
+   `body` keeps its own background too: with :root painting the canvas, body no
+   longer propagates, and the content area needs an opaque layer for the
+   transition to snapshot. That one changes instantly, which is fine — it is
+   hidden behind the wave the whole time. */
 :root {
   background-color: var(--background);
+}
+
+/* .theme-ready is added after hydration so the stored theme that the inline
+   script applies before first paint does not animate on load. */
+html.theme-ready {
+  transition: background-color 0.31s ease-in;
 }
 
 body {
@@ -59,6 +72,111 @@ body {
 ::selection {
   background: var(--foreground);
   color: var(--background);
+}
+
+/* ---------------------------------------------------------------------------
+   Theme toggle
+   The button shows the mode it is in — moon in dark, sun in light — and the
+   switch sweeps the new theme out from under it as a circle.
+   --------------------------------------------------------------------------- */
+
+/* Both icons inherit the button's foreground colour. */
+.theme-icon-sun {
+  display: none;
+}
+
+/* Except that the sun warms up under the pointer. It is only ever on screen in
+   light mode, so the orange is picked to hold against a white page — and to
+   still hold once the button's own hover takes it to 80% opacity over that
+   white. Setting `color` is enough: the icon strokes itself in currentColor.
+
+   The transition is on the icon rather than the button, since the button's own
+   is a Tailwind utility that does not reach a child, and it runs both ways so
+   the colour eases back out when the pointer leaves. */
+.theme-icon-sun {
+  transition: color 0.2s ease-out;
+}
+
+.theme-toggle:hover .theme-icon-sun {
+  color: #ea580c;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-icon-sun {
+    transition-duration: 0.01ms;
+  }
+}
+[data-theme="light"] .theme-icon-sun {
+  display: block;
+}
+[data-theme="light"] .theme-icon-moon {
+  display: none;
+}
+
+/* Theme switch wave: the new theme sweeps out as a growing circle
+   centered on the toggle button (--wave-x/--wave-y set on click) */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-old(root) {
+  z-index: 1;
+}
+::view-transition-new(root) {
+  z-index: 2;
+  animation: theme-wave 0.31s ease-in forwards;
+}
+@keyframes theme-wave {
+  from {
+    clip-path: circle(0% at var(--wave-x, 100%) var(--wave-y, 0%));
+  }
+  to {
+    clip-path: circle(150% at var(--wave-x, 100%) var(--wave-y, 0%));
+  }
+}
+
+/* Click feedback: .theme-toggled is (re-)added on each click */
+.theme-toggled .theme-icon-moon {
+  animation: moon-shake 0.5s ease;
+}
+.theme-toggled .theme-icon-sun {
+  animation: sun-flash 0.5s ease;
+}
+
+@keyframes moon-shake {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-18deg);
+  }
+  50% {
+    transform: rotate(14deg);
+  }
+  75% {
+    transform: rotate(-7deg);
+  }
+}
+
+@keyframes sun-flash {
+  0% {
+    transform: scale(0.5) rotate(-90deg);
+  }
+  55% {
+    transform: scale(1.2) rotate(8deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+/* The page-wide fade the wave rides on stops too, when motion is not wanted. */
+@media (prefers-reduced-motion: reduce) {
+  html.theme-ready {
+    transition-duration: 0.01ms;
+  }
 }
 
 /* ---------------------------------------------------------------------------
