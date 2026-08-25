@@ -9,6 +9,7 @@
 import { site } from "@/data/site";
 import { entries } from "@/data/projects";
 import { ProjectThumbnail } from "./project-thumbnail";
+import { AppStoreBadge, SiteBadge } from "./title-badge";
 
 export function DesignOne() {
   // The bottom padding is trimmed on a phone so the page fits the screen. That
@@ -103,6 +104,12 @@ export function DesignOne() {
               <div className="w-[var(--text-width)] max-w-full shrink-0">
                 <h2 className="text-xl font-semibold leading-snug">
                   {entry.title}
+                  {entry.appStore !== undefined && (
+                    <AppStoreBadge href={entry.appStore} label={entry.title} />
+                  )}
+                  {entry.titleHref && (
+                    <SiteBadge href={entry.titleHref} label={entry.title} />
+                  )}
                 </h2>
                 {entry.blurb && (
                   <p className="mt-3 text-base leading-relaxed">

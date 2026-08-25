@@ -15,6 +15,7 @@
 
 import { type CaseStudy, type CaseStudyBlock } from "@/data/case-studies";
 import { SiteLink } from "./site-link";
+import { AppStoreBadge } from "./title-badge";
 export function StudyBody({ study }: { study: CaseStudy }) {
   return (
     // No margins of its own: the page around it puts it in the same column the
@@ -31,12 +32,22 @@ export function StudyBody({ study }: { study: CaseStudy }) {
           ) : (
             study.title
           )}
+          {/* Outside the title's own link, so the two go to different places
+              without one being nested in the other. */}
+          {study.appStore !== undefined && (
+            <AppStoreBadge href={study.appStore} label={study.title} />
+          )}
         </h1>
         {study.tagline && (
           <p className="mt-1 text-lg font-medium">{study.tagline}</p>
         )}
         {study.date && (
           <p className="mt-2 text-base leading-relaxed">{study.date}</p>
+        )}
+        {/* Where the project stands, on the line under the date it belongs to
+            — so the two read as one small block of facts about the work. */}
+        {study.status && (
+          <p className="mt-1 text-base leading-relaxed">{study.status}</p>
         )}
 
         {study.links && study.links.length > 0 && (

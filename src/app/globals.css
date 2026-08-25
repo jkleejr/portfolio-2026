@@ -228,24 +228,31 @@ body {
   will-change: transform, filter;
 }
 
-/* Oversized and pulled back by half the overflow, so the photo still covers
-   the frame at the moment a variant scales or blurs it. */
+/* Exactly the frame, where upstream oversizes it by 10px on every side so a
+   variant that blurs or scales the photo never shows past its edge. The frame
+   is cut to the photo's own shape here, so an inner larger than it would be a
+   different shape from the photo and crop it — which is the one thing this
+   trail is not supposed to do. Variant 2 only ever scales the inner up, so
+   there is no edge to run past. */
 .image-trail__img-inner {
   background-position: 50% 50%;
   background-size: cover;
-  width: calc(100% + 20px);
-  height: calc(100% + 20px);
+  width: 100%;
+  height: 100%;
   position: absolute;
-  top: -10px;
-  left: -10px;
+  top: 0;
+  left: 0;
 }
 
-/* The gallery's own framing: the picture is a portrait, so a portrait frame
-   shows it whole rather than cropping to a near-square. The fade is only on
-   the way out — switching the trail on has nothing to fade in yet, since no
-   photo shows until the pointer moves. */
+/* The gallery's own framing. Every frame is cut to the shape of the photo in
+   it, so these two are not the shape anything ends up: they are the area each
+   photo is drawn at — a 186 by 300 box, whatever the shape works out to — and
+   the size a photo keeps if it cannot be measured. Raising the width raises
+   every frame with it, since they are all cut to that one area. The fade is only on the way
+   out — switching the trail on has nothing to fade in yet, since no photo
+   shows until the pointer moves. */
 .pg-surface {
-  --trail-width: 150px;
+  --trail-width: 186px;
   --trail-ratio: 0.62;
 }
 .pg-closing .pg-surface {

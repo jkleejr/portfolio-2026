@@ -3,27 +3,19 @@
 //
 // Order is the order they appear in: the trail works down the list and starts
 // over, so a longer list goes further before it repeats. Add to it and nothing
-// else needs to change.
-//
-// The frame is portrait (see --trail-ratio in globals.css) and a photo is
-// drawn to cover it, so a landscape shot is cropped to a column of itself —
-// the middle of it, unless the entry says otherwise. `position` is a CSS
-// background-position: below 50% keeps a column left of centre, above it one
-// to the right.
+// else needs to change — every photo is drawn whole, in a frame cut to its own
+// shape, so a landscape shot and a portrait one both arrive intact.
 // ---------------------------------------------------------------------------
 
-import type { TrailItem } from "@/app/image-trail";
-
-export const photos: TrailItem[] = [
-  "/photos/pic4.jpg",
-  "/photos/pic2.jpg",
+export const photos: string[] = [
   "/photos/pic3.jpg",
-  { src: "/photos/pic5.jpg", position: "32% 50%" },
+  "/photos/pic2.jpg",
+  "/photos/pic4.jpg",
+  "/photos/pic5.jpg",
   "/photos/pic6.jpg",
-  { src: "/photos/pic7.jpg", position: "28% 50%" },
+  "/photos/pic7.jpg",
   "/photos/pic1.jpg",
   "/photos/pic8.jpg",
-  "/photos/pic9.jpg",
   "/photos/pic10.jpg",
   "/photos/pic11.jpg",
 ];

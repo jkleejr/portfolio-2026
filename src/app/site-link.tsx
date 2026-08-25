@@ -14,6 +14,7 @@
 // ---------------------------------------------------------------------------
 
 import { usePress } from "./press";
+import { LinkGlyph } from "./link-glyph";
 
 export function SiteLink({
   href,
@@ -36,22 +37,10 @@ export function SiteLink({
       className="inline-flex items-center gap-2 transition-opacity duration-200 ease-out hover:opacity-70"
     >
       {children}
-      <svg
-        aria-hidden
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        // Sized in em so it follows the title rather than a fixed number of
-        // pixels, and sat on the middle of the title's caps rather than the
-        // middle of its line box.
-        className="h-[0.62em] w-[0.62em] shrink-0 translate-y-[0.09em]"
-      >
-        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
-        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
-      </svg>
+      {/* Sized in em so it follows the title rather than a fixed number of
+          pixels, and sat on the middle of the title's caps rather than the
+          middle of its line box. */}
+      <LinkGlyph className="h-[0.62em] w-[0.62em] shrink-0 translate-y-[0.09em]" />
     </a>
   );
 }

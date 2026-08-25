@@ -38,9 +38,16 @@ export type Entry = {
   // What it was built with, under the date, and set the same way.
   tools?: string;
   slug: string; // links this entry to its case study in case-studies.ts
+  // On the App Store: the mark goes after the title, here and on the study.
+  // The value is the listing it opens; an empty string shows the mark without
+  // a link, for a project that has shipped but whose URL is not written down
+  // yet. Leave the field out entirely for anything not on the store.
+  appStore?: string;
   platform?: "mobile" | "web"; // design two only: labels the entry and sets
   // the aspect ratio its screenshots are shown at
-  titleHref?: string; // makes the title a link, opened in a new tab
+  // The project's own site. A chain mark after the title on the homepage opens
+  // it, in a tab of its own.
+  titleHref?: string;
   srcHref?: string; // clicking a thumbnail opens this URL in a new tab
   // instead of the case study
   link?: { label: string; href: string };
@@ -56,6 +63,7 @@ export const entries: Entry[] = [
     blurb:
       "Photograph any item to find its name, its resale value, and where to sell it.",
     slug: "loot-check",
+    appStore: "https://apps.apple.com/us/app/loot-check/id6785767104",
     platform: "mobile",
     images: [
       {
@@ -133,6 +141,7 @@ export const entries: Entry[] = [
     blurb:
       "Website for a birch tree farm in South Korea.",
     slug: "time-with-tree",
+    titleHref: "https://timewithtree.co.kr/",
     platform: "web",
     images: [
       {
@@ -145,8 +154,9 @@ export const entries: Entry[] = [
   {
     title: "Buy Side Briefings",
     blurb:
-      "Automated daily briefings on the state of the stock market, published every morning.",
+      "Personal website for daily stock market reports.",
     slug: "buy-side-briefings",
+    titleHref: "https://buy-side-briefings.vercel.app/",
     platform: "web",
     images: [
       {

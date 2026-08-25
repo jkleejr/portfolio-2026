@@ -21,6 +21,9 @@
 //     class names are prefixed `image-trail__` there and here — upstream's
 //     bare `.content` is too generic to drop into a shared stylesheet.
 //
+//   * every frame is cut to the shape of the photo in it, rather than every
+//     photo being cropped to one frame — see the sizing pass in ImageTrail.
+//
 // All eight variants are kept, so the gallery can be re-pointed at any of them
 // by changing one prop.
 // ---------------------------------------------------------------------------
@@ -266,8 +269,11 @@ class ImageTrailVariant2 extends ImageTrailBase {
           duration: 0.4,
           ease: "power1",
           scale: 1,
-          x: this.mousePos.x - img.rect!.width / 2,
-          y: this.mousePos.y - img.rect!.height / 2,
+          // Rounded, since this is where the photo comes to rest and stays:
+          // a layer left on a half pixel is resampled, and the picture sits
+          // there softened for as long as the pointer is still.
+          x: Math.round(this.mousePos.x - img.rect!.width / 2),
+          y: Math.round(this.mousePos.y - img.rect!.height / 2),
         },
         0,
       )
@@ -656,12 +662,52 @@ const VARIANTS: Record<number, new (el: HTMLElement) => ImageTrailBase> = {
   8: ImageTrailVariant8,
 };
 
+/** A picture in the trail: the URL it is drawn from. */
+export type TrailItem = string;
+
 /**
- * A picture in the trail. A bare URL is drawn centred; the object form says
- * which part of it to keep when the frame crops it — a CSS background-position,
- * so "40% 50%" holds a window left of centre.
+ * Sizes every frame to the photo it holds, so nothing is cropped: the shape
+ * comes from the file, and only the area is fixed — a wide photo is short and
+ * a tall one narrow, and the two take up the same amount of the screen.
+ *
+ * The area and the fallback shape are the stylesheet's, read off the container
+ * rather than repeated here. Resolves once every photo has been measured, or
+ * has failed to load and kept the shape it was given.
  */
-export type TrailItem = string | { src: string; position?: string };
+async function sizeFrames(container: HTMLElement, items: TrailItem[]) {
+  const frames = [
+    ...container.querySelectorAll<HTMLElement>(".image-trail__img"),
+  ];
+  const style = getComputedStyle(container);
+  const width = parseFloat(style.getPropertyValue("--trail-width")) || 190;
+  const ratio = parseFloat(style.getPropertyValue("--trail-ratio")) || 1.1;
+  const area = (width * width) / ratio;
+
+  await Promise.all(
+    frames.map(
+      (frame, i) =>
+        new Promise<void>((resolve) => {
+          const probe = new window.Image();
+          probe.onload = () => {
+            const shape = probe.naturalWidth / probe.naturalHeight;
+            if (shape > 0) {
+              // Both sides in whole pixels, rather than a width and an
+              // aspect-ratio: a ratio off a photo is a long fraction, and the
+              // height it works out to lands between pixels. A composited box
+              // on a half pixel resamples the photo inside it, which reads as
+              // a picture slightly out of focus.
+              const w = Math.round(Math.sqrt(area * shape));
+              frame.style.width = `${w}px`;
+              frame.style.height = `${Math.round(w / shape)}px`;
+            }
+            resolve();
+          };
+          probe.onerror = () => resolve();
+          probe.src = items[i];
+        }),
+    ),
+  );
+}
 
 export default function ImageTrail({
   items = [],
@@ -679,29 +725,37 @@ export default function ImageTrail({
     // prefers-reduced-motion: the trail is decoration, so skip it entirely
     // rather than run it faster.
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const Variant = VARIANTS[variant] ?? VARIANTS[1];
-    const instance = new Variant(el);
-    return () => instance.destroy();
+
+    // Each ImageItem measures its frame the moment it is built, so the sizing
+    // pass has to have finished first — hence the wait, and hence the guard:
+    // the effect can be torn down while it is still measuring.
+    let cancelled = false;
+    let instance: ImageTrailBase | null = null;
+    sizeFrames(el, items).then(() => {
+      if (cancelled) return;
+      const Variant = VARIANTS[variant] ?? VARIANTS[1];
+      instance = new Variant(el);
+    });
+
+    return () => {
+      cancelled = true;
+      instance?.destroy();
+    };
+    // items is the module-scope photo list; see the note at the top of the
+    // file on why it is not a dependency.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [variant]);
 
   return (
     <div className="image-trail" ref={containerRef}>
-      {items.map((item, i) => {
-        const { src, position } =
-          typeof item === "string" ? { src: item, position: undefined } : item;
-        return (
-          <div className="image-trail__img" key={src + i}>
-            <div
-              className="image-trail__img-inner"
-              style={{
-                backgroundImage: `url(${src})`,
-                // Left to the stylesheet's own 50% 50% when nothing is said.
-                backgroundPosition: position,
-              }}
-            />
-          </div>
-        );
-      })}
+      {items.map((src, i) => (
+        <div className="image-trail__img" key={src + i}>
+          <div
+            className="image-trail__img-inner"
+            style={{ backgroundImage: `url(${src})` }}
+          />
+        </div>
+      ))}
     </div>
   );
 }

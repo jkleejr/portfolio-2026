@@ -21,6 +21,13 @@ export type CaseStudy = {
   // When the project was made, under the title, in whatever words suit it —
   // "2026", "August 2026", "Summer 2026". The page prints it as written.
   date?: string;
+  // A line under the date for where the project stands — "Work in Progress",
+  // "Shipped", "Shelved". Printed as written, and left out when unset.
+  status?: string;
+  // On the App Store: the mark goes after the title. The value is the listing
+  // it opens; an empty string shows the mark without a link. See the same
+  // field on an entry in projects.ts.
+  appStore?: string;
   // --- all optional; add to a study to switch one on ---
   cover?: { src: string; alt: string; crop?: string }; // wide image up top
   facts?: { label: string; value: string }[]; // Role / Timeline / Tools strip
@@ -44,6 +51,7 @@ export type CaseStudy = {
 export const caseStudies: Record<string, CaseStudy> = {
   "loot-check": {
     title: "Loot Check",
+    appStore: "https://apps.apple.com/us/app/loot-check/id6785767104",
     date: "June 2026",
     blocks: [
       {
@@ -231,6 +239,7 @@ export const caseStudies: Record<string, CaseStudy> = {
   sleeptalk: {
     title: "SleepTalk",
     date: "August 2026",
+    status: "Work in Progress",
     blocks: [
       {
         type: "text",
@@ -238,7 +247,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "asdf."
+        text: "",
       },
       {
         type: "images",
@@ -259,7 +268,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "asdf",
+        text: "",
       },
     ],
   },
@@ -322,7 +331,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       { type: "heading", text: "Why build this?" },
       {
         type: "text",
-        text: "The stock market is fast paced and narratives can change quickly based on the news. Traders and investors should be informed on the latest events and current state of the stock market.",
+        text: "The stock market is fast paced and narratives can change quickly based on the news. Traders and investors should be informed on the latest events and current state of the market.",
       },
       {
         type: "text",
