@@ -9,11 +9,13 @@
 // icon like the two above it until it is on, and then it inverts — a filled
 // disc with the icon cut out of it.
 //
-// The overlay is click-through, and sits above everything the homepage draws —
-// the covers, the corner buttons, the name and role — so the photos pass over
-// all of it while every one of those stays clickable underneath. It stays
-// below the case study panel (z-50), which is a modal and should cover the
-// page.
+// The overlay is click-through, and sits above what the homepage draws — the
+// covers, the name and role — so the photos pass over the page while all of it
+// stays clickable underneath. It stays below the corner buttons (z-20), which
+// the photos pass behind: the switch that started the trail should not be the
+// thing the trail hides, and the button that turns it off has to stay in
+// sight. Below the case study panel (z-50) too, which is a modal and should
+// cover the page.
 //
 // Split three ways because the switch has a second job: only one thing trails
 // the cursor at a time, so turning the photos on puts the ribbons away and
@@ -131,7 +133,7 @@ export function PhotoGalleryProvider({
       {children}
       {on && (
         <div
-          className={`pointer-events-none fixed inset-0 z-40 ${closing ? "pg-closing" : ""}`}
+          className={`pointer-events-none fixed inset-0 z-10 ${closing ? "pg-closing" : ""}`}
           aria-hidden
         >
           <div className="pg-surface h-full w-full">
