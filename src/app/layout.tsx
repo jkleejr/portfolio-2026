@@ -3,7 +3,7 @@ import { Quicksand } from "next/font/google";
 import localFont from "next/font/local";
 import { site } from "@/data/site";
 import { AppleButton } from "./apple-button";
-import { CursorRibbons } from "./cursor-ribbons";
+import { SiteCursor } from "./site-cursor";
 import "./globals.css";
 
 const quicksand = Quicksand({
@@ -74,7 +74,10 @@ export default function RootLayout({
         >
           <AppleButton />
         </div>
-        <CursorRibbons />
+        <SiteCursor />
+        {/* Cursor ribbons are switched off for now. The effect is still here —
+            re-enable it by uncommenting this line. */}
+        {/* <CursorRibbons /> */}
         {children}
       </body>
     </html>

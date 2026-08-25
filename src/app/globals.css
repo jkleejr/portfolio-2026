@@ -255,3 +255,19 @@ html.gravity-on main {
 .gravity-atom:active {
   cursor: grabbing;
 }
+
+/* ---------------------------------------------------------------------------
+   Custom cursor
+   The Cursor component hides the native pointer on <body>, but that only
+   covers what inherits: a UA `cursor: pointer` on a link, or a Tailwind
+   cursor utility anywhere inside, wins over it and flashes the system arrow
+   back mid-page. This hides it for the whole subtree instead — only while
+   SiteCursor is mounted, which is the flag it sets on <html>, and only where
+   a pointer exists to hide.
+   --------------------------------------------------------------------------- */
+@media (pointer: fine) {
+  html[data-cursor="custom"],
+  html[data-cursor="custom"] * {
+    cursor: none;
+  }
+}
