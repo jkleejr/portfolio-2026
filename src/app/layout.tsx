@@ -3,6 +3,7 @@ import { Quicksand } from "next/font/google";
 import localFont from "next/font/local";
 import { site } from "@/data/site";
 import { ThemeToggle } from "./theme-toggle";
+import { PhotoGalleryButton, PhotoGalleryProvider } from "./photo-gallery";
 import { AppleButton } from "./apple-button";
 import "./globals.css";
 
@@ -53,38 +54,44 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" data-theme="dark" suppressHydrationWarning>
+    <html lang="en" data-theme="light" suppressHydrationWarning>
       <head>
         <script
           dangerouslySetInnerHTML={{
             // Applies the stored theme before first paint, and seeds
             // theme-color so the iOS status bar / toolbar strips start on the
             // right colour. Hex values mirror --background in globals.css.
-            __html: `(function(){try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t);var m=document.querySelector('meta[name="theme-color"]');if(!m){m=document.createElement("meta");m.name="theme-color";document.head.appendChild(m)}m.setAttribute("content",t==="light"?"#ffffff":"#000000")}catch(e){}})()`,
+            __html: `(function(){try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t);var m=document.querySelector('meta[name="theme-color"]');if(!m){m=document.createElement("meta");m.name="theme-color";document.head.appendChild(m)}m.setAttribute("content",t==="dark"?"#000000":"#ffffff")}catch(e){}})()`,
           }}
         />
       </head>
       <body
         className={`${quicksand.variable} ${satoshi.variable} ${outfit.variable} antialiased`}
       >
-        {/* One container places every button, so their spacing is a gap
-            rather than a sum each of them has to know. A column in the
-            top-right corner on a laptop; on a phone a row under the header
-            text, left to right, with the covers starting below it. */}
-        <div
-          data-gravity="atom"
-          className="corner-stack absolute left-6 top-[6.5rem] z-20 flex flex-row gap-2 sm:left-auto sm:right-6 sm:top-6 sm:flex-col"
-        >
-          <ThemeToggle />
-          <AppleButton />
-        </div>
-        {/* The drawn cursor is switched off for now — uncomment to bring it
-            back. */}
-        {/* <SiteCursor /> */}
-        {/* Cursor ribbons are switched off for now. The effect is still here —
-            re-enable it by uncommenting this line. */}
-        {/* <CursorRibbons /> */}
-        {children}
+        {/* Wraps the lot because the gallery switch reaches past its own
+            button: it decides whether the ribbons or the photos are the thing
+            following the cursor. */}
+        <PhotoGalleryProvider>
+          {/* One container places every button, so their spacing is a gap
+              rather than a sum each of them has to know. A column in the
+              top-right corner on a laptop; on a phone a row under the header
+              text, left to right, with the covers starting below it. */}
+          <div
+            data-gravity="atom"
+            className="corner-stack absolute left-6 top-[6.5rem] z-20 flex flex-row gap-2 sm:left-auto sm:right-6 sm:top-6 sm:flex-col"
+          >
+            <ThemeToggle />
+            <PhotoGalleryButton />
+            <AppleButton />
+          </div>
+          {/* The drawn cursor is switched off for now — uncomment to bring it
+              back. */}
+          {/* <SiteCursor /> */}
+          {/* Cursor ribbons are switched off for now. The effect is still
+              here — re-enable it by uncommenting this line. */}
+          {/* <CursorRibbons /> */}
+          {children}
+        </PhotoGalleryProvider>
       </body>
     </html>
   );

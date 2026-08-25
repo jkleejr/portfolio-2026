@@ -44,8 +44,9 @@ export function DesignOne() {
           </p>
           {/* Who that is. A paragraph per line of site.intro, so a sentence that
               should start fresh does, rather than being wrapped into the one
-              above it. Set at body size, so the name and the role above it lead
-              on weight and size rather than on colour.
+              above it. Set exactly as the role above it — same size, same
+              weight, same colour — so the two read as one block under the
+              name, and only the name leads.
 
               The top margin is also the phone case: the apple is a row under
               the header there rather than a corner stack, pinned at 6.5rem and
@@ -55,7 +56,7 @@ export function DesignOne() {
           {site.intro.length > 0 && (
             <div className="mt-20 space-y-3 sm:mt-8">
               {site.intro.map((line) => (
-                <p key={line} className="text-base leading-relaxed">
+                <p key={line} className="text-lg font-medium leading-relaxed text-foreground">
                   {line}
                 </p>
               ))}
