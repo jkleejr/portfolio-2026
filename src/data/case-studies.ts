@@ -48,14 +48,8 @@ export const caseStudies: Record<string, CaseStudy> = {
     blocks: [
       {
         type: "text",
-        text: "Loot Check is an app where you take a photo of any item to find its name, resale value, and marketplaces to list it. When I was moving places, I wanted a quick way to find the used value of an item to decide what to keep or sell. First I tried using existing apps, but found they were poorly designed and required a subscription after a few scans. I decided to build a fast, accurate, and free identifying app for all users.",
+        text: "Take a photo of any item to find its name, resale value, and marketplaces. Existing apps seemed poorly designed and required a subscription after a few scans. I decided to build a fast, accurate, and free identifying app.",
       },
-      {
-        type: "heading",
-        text: "Design",
-      },
-
-      
       {
         type: "text",
         text: "asdf."
@@ -115,10 +109,6 @@ export const caseStudies: Record<string, CaseStudy> = {
         ],
       },
       {
-        type: "heading",
-        text: "Final Thoughts",
-      },
-      {
         type: "text",
         text: "asdf",
       },
@@ -137,10 +127,6 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "text",
         text: "A friend was listening to a research paper while walking and got '[1] et al., pp. 234-256' read aloud in a robot voice. That gave me the idea to create a PDF reader that filtered out unecessary information and spoke in a natural voice.",
-      },
-       {
-        type: "heading",
-        text: "Design",
       },
       {
         type: "text",
@@ -177,10 +163,6 @@ export const caseStudies: Record<string, CaseStudy> = {
         ],
       },
       {
-        type: "heading",
-        text: "Final Thoughts",
-      },
-      {
         type: "text",
         text: "asdf",
       },
@@ -205,10 +187,6 @@ export const caseStudies: Record<string, CaseStudy> = {
       // had 2 choices, use the dynamic island or a floating window
       // both are included, but focusing on dynamic island and floating window to test
       // 
-       {
-        type: "heading",
-        text: "Design",
-      },
       {
         type: "text",
         text: "asdf."
@@ -252,10 +230,6 @@ export const caseStudies: Record<string, CaseStudy> = {
         ],
       },
       {
-        type: "heading",
-        text: "Final Thoughts",
-      },
-      {
         type: "text",
         text: "asdf",
       },
@@ -269,10 +243,6 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "text",
         text: "SleepTalk is a mobile app that tracks your sleep talking patterns over time.",
-      },
-       {
-        type: "heading",
-        text: "Design",
       },
       {
         type: "text",
@@ -296,10 +266,6 @@ export const caseStudies: Record<string, CaseStudy> = {
         ],
       },
       {
-        type: "heading",
-        text: "Final Thoughts",
-      },
-      {
         type: "text",
         text: "asdf",
       },
@@ -314,10 +280,6 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "text",
         text: "Website for a birch tree farm in South Korea.",
-      },
-       {
-        type: "heading",
-        text: "Design",
       },
       {
         type: "text",
@@ -345,10 +307,6 @@ export const caseStudies: Record<string, CaseStudy> = {
         ],
       },
       {
-        type: "heading",
-        text: "Final Thoughts",
-      },
-      {
         type: "text",
         text: "asdf",
       },
@@ -373,10 +331,6 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "text",
         text: "The stock market is fast paced and narratives can change quickly based on the news. Traders and investors should be informed on the latest events and current state of the stock market.",
-      },
-       {
-        type: "heading",
-        text: "Design",
       },
       {
         type: "text",
@@ -422,10 +376,6 @@ export const caseStudies: Record<string, CaseStudy> = {
             alt: "The same mark without its background, on whatever it is set against",
           },
         ],
-      },
-      {
-        type: "heading",
-        text: "Final Thoughts",
       },
       {
         type: "text",

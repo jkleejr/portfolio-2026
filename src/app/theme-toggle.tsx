@@ -137,7 +137,7 @@ export function ThemeToggle() {
       onClick={toggle}
       onAnimationEnd={(e) => e.currentTarget.classList.remove("theme-toggled")}
       aria-label="Switch between dark and light mode"
-      className="theme-toggle flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-foreground/15 bg-background text-foreground transition duration-200 ease-out hover:scale-110 hover:opacity-80"
+      className="theme-toggle flex h-10 w-10 shrink-0 items-center justify-center text-foreground transition duration-200 ease-out hover:opacity-80"
     >
       {/* Sun — shown in light mode */}
       <svg
