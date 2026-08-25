@@ -48,7 +48,7 @@ export const caseStudies: Record<string, CaseStudy> = {
     blocks: [
       {
         type: "text",
-        text: "Take a photo of any item to find its name, resale value, and marketplaces. Existing apps seemed poorly designed and required a subscription after a few scans. I decided to build a fast, accurate, and free identifying app.",
+        text: "Take a photo of any item to find its name, resale value, and marketplaces. Existing apps seemed poorly designed and required a subscription to use. I decided to build a fast, accurate, and free identifying app for all users.",
       },
       {
         type: "text",
@@ -68,14 +68,6 @@ export const caseStudies: Record<string, CaseStudy> = {
           {
             src: "/projects/loot-check-result.png",
             alt: "The result: an Akai MPK Mini MK3 identified, with an estimated resale value of $68",
-          },
-          {
-            src: "/projects/loot-check-marketplaces.png",
-            alt: "Where to sell, with eBay marked as the best bet and what each marketplace pays after fees",
-          },
-          {
-            src: "/projects/loot-check-listing.png",
-            alt: "A ready-to-post listing with a title and description to copy",
           },
           {
             src: "/projects/loot-check-detail.png",
