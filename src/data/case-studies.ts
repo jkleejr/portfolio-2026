@@ -354,21 +354,25 @@ export const caseStudies: Record<string, CaseStudy> = {
         src: "/projects/buy-side-figma-brief.png",
         alt: "The redesign in Figma: a morning brief with a market sentiment scale, key points, and a live markets rail down the left",
       },
+
       {
         type: "image",
-        src: "/projects/buy-side-site-night-brief.png",
-        alt: "The Today page: the night briefing's headline set in serif over its standfirst, the ticker tape above it, and the chart panel starting underneath",
+        src: "/projects/buy-side-site-today.png",
+        alt: "The Today page: a live ticker strip under the nav, the night briefing's headline and the paragraph that argues it, and the chart panel opening underneath",
       },
+
       {
         type: "image",
         src: "/projects/buy-side-site-chart.png",
         alt: "The chart expanded to fill the page: monthly S&P bars on a log scale with three EMAs over them and RSI running underneath",
       },
+
       {
         type: "image",
         src: "/projects/buy-side-site-briefing.png",
-        alt: "A briefing in full: the headline, three sourced bullets, each point linked back to where it came from, and the long read below",
+        alt: "A single briefing: the night's headline over three key points, each one repeated underneath with the source it came from and a link out to it",
       },
+
       {
         type: "images",
         items: [
