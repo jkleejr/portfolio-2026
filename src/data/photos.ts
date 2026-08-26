@@ -9,8 +9,8 @@
 
 export const photos: string[] = [
   "/photos/pic3.jpg",
-  "/photos/pic4.jpg",
   "/photos/pic6.jpg",
   "/photos/pic8.jpg",
   "/photos/pic11.jpg",
+  "/photos/pic10.jpg",
 ];

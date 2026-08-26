@@ -61,7 +61,7 @@ export const entries: Entry[] = [
   {
     title: "Loot Check",
     blurb:
-      "Photograph any item to find its name, its resale value, and where to sell it.",
+      "Photograph any item to find its name, resale value, and where to sell it.",
     slug: "loot-check",
     appStore: "https://apps.apple.com/us/app/loot-check/id6785767104",
     platform: "mobile",
