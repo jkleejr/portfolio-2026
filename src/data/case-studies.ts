@@ -199,7 +199,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "Since Gemini returns no timings, the app estimates them to highlight the current sentence. Each sentence takes a % of the group's audio in proportion to its character count. But it drifts slightly.",
+        text: "Since Gemini TTS returns no timings, the app estimates them to highlight the current sentence. Each sentence takes a % of the group's audio in proportion to its character count. But it drifts slightly.",
       },
       // display - longer sentences get a longer share of each group's audio. the highlight follows that estimate, and resets to exact at the end of every group.
       // gemini returns no timings so the app estimates them. each sentence takes a share of the group's audio in proportion to its length. that drifts slightly, but a group's end is an exact moment, so the highlight is corrected every 45 seconds and the error never builds up
