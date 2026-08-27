@@ -78,7 +78,7 @@ export const caseStudies: Record<string, CaseStudy> = {
     blocks: [
       {
         type: "text",
-        text: "Take a photo of any item to find its name, resale value, and marketplaces for it."
+        text: "Take a photo of any item to find its name, resale value, and where to sell it."
        },
       {
         type: "video",
@@ -87,11 +87,11 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "Existing apps looked poorly designed and required a subscription to use. I built a fast, accurate, and free identifying app for all users.",
+        text: "Existing apps looked poorly designed and required a subscription to use. My solution was a fast, accurate, and free app.",
       },
       {
         type: "text",
-        text: "I decided on Claude Sonnet 4.6 to identify the item, find the price, and write the listing due to its high accuracy and cheaper costs compared to other models. I considered open source models like Kimi K3, but the costs were similar and I wanted the results to be as trustworthy as possible. I launched the app and made it free to use since it costs ~$0.013 per scan.",
+        text: "I used Claude Sonnet 4.6 to identify the item, find the price, and write the listing due to its high accuracy and low API costs at ~$0.013 per scan. I considered Kimi K3, but the costs were similar and I wanted the results to be as trustworthy as possible.",
       },
       // 2 key decisions....
       // claude sonnet 4.6 because its cheap enough to run per scan and still accurate.
@@ -137,7 +137,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "The next step for this project is to find more users and market the app on social media. Depending on the number of users, I would implement a cheaper AI model or reconsider adding subscriptions to cover API costs.",
+        text: "The next step for this project would be finding users and marketing on social media. Depending on the number of users and the volume of photos, I would add a cheaper AI model or a subscription for the most active users.",
       },
 
     ],
@@ -150,12 +150,13 @@ export const caseStudies: Record<string, CaseStudy> = {
     blocks: [
       {
         type: "text",
-        text: "A friend was listening to a research paper while walking and got '[1] et al., pp. 234-256' read aloud in a robot voice. That gave me the idea to create a PDF reader that filtered out unnecessary information and spoke in a natural voice.",
+        text: "Upload a PDF and hear it read aloud in a natural voice, citations and formatting filtered out."
       },
       {
         type: "text",
-        text: "asdf."
+        text: "A friend was listening to a research paper while walking and got '[1] et al., pp. 234-256' read aloud in a robot voice. That gave me the idea to create a PDF reader that filtered out unnecessary information and spoke in a natural voice.",
       },
+      
       {
         type: "images",
         items: [
@@ -167,7 +168,16 @@ export const caseStudies: Record<string, CaseStudy> = {
             src: "/projects/paper-reader-follow-along.png",
             alt: "A paper being read aloud with the current sentence highlighted, the sentence count, and playback controls",
           },
-          {
+        ],
+      },
+      {
+        type: "text",
+        text: "I decided to use Gemini 3.1 flash....",
+      },
+      {
+        type: "images",
+        items: [
+            {
             src: "/projects/paper-reader-settings.png",
             alt: "Settings: the Gemini API key, the text and voice models, and the narration voice",
           },
@@ -188,7 +198,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "asdf",
+        text: "Next steps.....",
       },
     
       // Gemini 3.1 flash
