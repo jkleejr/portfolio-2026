@@ -194,7 +194,7 @@ export const caseStudies: Record<string, CaseStudy> = {
           "Clean - Text is split into sections, each getting its own Gemini call to filter out citations, captions, etc. while the prose is unchanged.",
           "Segment - Apple NLTokenizer splits the script into sentences, which are grouped as ~750 character chunks, ~45 seconds of speech.",
           "Narrate - Each group is sent to Gemini TTS, comes back as raw audio data, and is wrapped in a WAV and cached on disk. Audio is generated before the user reaches the next group.",
-          "Display - Highlighted sentences are an estimate from audio length and character count, and re-syncs at the end of every group."
+          "Display - Highlighted sentences are estimated from audio length and character count, and re-syncs at the end of every group to decrease errors."
         ],
       },
       {
