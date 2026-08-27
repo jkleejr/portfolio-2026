@@ -194,9 +194,13 @@ export const caseStudies: Record<string, CaseStudy> = {
           "Clean - Text is split into sections, each getting its own Gemini call to filter out citations, captions, etc. while the prose is unchanged.",
           "Segment - Apple NLTokenizer splits the script into sentences, which are grouped as ~750 character chunks, ~45 seconds of speech.",
           "Narrate - Each group is sent to Gemini TTS, comes back as raw audio data, and is wrapped in a WAV and cached on disk. Groups are generated as the user reaches them and are paid for once.",
-          "Display - Highlighted sentences are a guess by audio length and character count, and re-syncs at the end of every group."
+          "Display - Highlighted sentences are an estimate from audio length and character count, and re-syncs at the end of every group."
         ],
       },
+      // display - longer sentences get a longer share of each group's audio. the highlight follows that estimate, and resets to exact at the end of every group.
+      // gemini returns no timings so the app estimates them. each sentence takes a share of the group's audio in proportion to its length. that drifts slightly, but a group's end is an exact moment, so the highlight is corrected every 45 seconds and the error never builds up
+      // group is 5-8 sentences that were sent to gemini and came back as one clip, about 45 seconds long.
+      // the app knows that clip's length precisely, not from a stopwatch but by counting: 
       {
         type: "images",
         items: [
