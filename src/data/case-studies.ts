@@ -139,8 +139,12 @@ export const caseStudies: Record<string, CaseStudy> = {
         type: "images",
         items: [
           {
-            src: "/projects/loot-check-logo-scan.png",
+            src: "/projects/loot-check-logo-scan-blue.png",
             alt: "An early icon: a price tag inside the corner brackets of a camera's scan frame",
+          },
+          {
+            src: "/projects/loot-check-logo-scan-green.png",
+            alt: "The same scan frame icon in green",
           },
           {
             src: "/projects/loot-check-logo-sneaker.png",
