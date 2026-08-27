@@ -1,7 +1,10 @@
 export type CaseStudyBlock =
   | { type: "heading"; text: string }
   | { type: "text"; text: string }
-  | { type: "list"; items: string[] }
+  // A list of lines. Bulleted by default; set ordered for a numbered one,
+  // where the count is part of what the lines say — the steps of a pipeline,
+  // in the order they run.
+  | { type: "list"; items: string[]; ordered?: boolean }
   | { type: "quote"; text: string; attribution?: string }
   | { type: "image"; src: string; alt: string; caption?: string; crop?: string }
   | {
@@ -177,6 +180,18 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "text",
         text: "There were many steps in making the audio generation feel seamless for the user:",
+      },
+      {
+        type: "list",
+        ordered: true,
+        items: [
+          "Extract - PDFKit pulls the text out of the PDF page by page.",
+          "Repair - The spacing is rebuilt using the document’s own vocabulary. No model has been involved yet — both of these steps run on the phone.",
+          "Identify - A Gemini text call names the document and works out what kind of thing it is.",
+          "Clean - The text is split into chunks of under 10,000 characters at paragraph boundaries, and each chunk gets its own Gemini call. A paper loses its citations, captions, and bibliography while the prose stays verbatim; a slide deck has its fragments turned into speakable sentences. Each chunk is saved as it lands, so an app that gets killed resumes instead of spending the tokens again.",
+          "Segment - Apple’s NLTokenizer splits the cleaned script into sentences on device, and ChunkPlanner groups them into chunks of about 750 characters for narration.",
+          "Narrate - Each chunk goes to Gemini TTS with a style prefix and the chosen voice, comes back as 24 kHz mono PCM, and is wrapped in a WAV and cached on disk. The API returns no word timings, so each sentence’s duration is apportioned from the chunk’s real length by character count — accurate enough to highlight a sentence at a time, and it re-syncs at every chunk boundary so the error cannot accumulate.",
+        ],
       },
       // gemini flash latest - title + document, then the per chunk cleanup
       // gemini 3.1 flash tts - narration, 8 curated prebuilt voices

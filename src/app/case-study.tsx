@@ -118,19 +118,26 @@ function Block({ block }: { block: CaseStudyBlock }) {
     case "text":
       return <p className="text-base leading-relaxed">{block.text}</p>;
 
-    case "list":
+    case "list": {
+      // Same list either way — the tag is the only thing that changes, so a
+      // numbered one gets read as an ordered list and not as prose that
+      // happens to start with a digit.
+      const List = block.ordered ? "ol" : "ul";
       return (
-        <ul className="space-y-3 pl-5">
+        <List className="space-y-3 pl-5">
           {block.items.map((item, i) => (
             <li
               key={i}
-              className="list-disc text-base leading-relaxed marker:text-muted"
+              className={`text-base leading-relaxed marker:text-muted ${
+                block.ordered ? "list-decimal" : "list-disc"
+              }`}
             >
               {item}
             </li>
           ))}
-        </ul>
+        </List>
       );
+    }
 
     case "quote":
       return (
