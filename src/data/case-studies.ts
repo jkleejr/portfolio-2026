@@ -91,7 +91,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "I decided to use Claude Sonnet 4.6 to identify the item, find the price, and write the market listing because of its high accuracy and cheap costs compared to other models. I considered open source models but I wanted every result to be as accurate and trustworthy as possible.",
+        text: "I decided on Claude Sonnet 4.6 to identify the item, find the price, and write the listing due to its high accuracy and cheaper costs compared to other models. I considered open source models but I wanted the results to be as trustworthy as possible. I made the app free to use and without ads since it only costs about $0.013 per scan using Sonnet 4.6.",
       },
       // 2 key decisions....
       // claude sonnet 4.6 because its cheap enough to run per scan and still accurate.
@@ -145,7 +145,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "The next step for this project is to find more users by marketing the app on social media. Depending on the number of users, I would reconsider adding a subscription to help me cover API costs or implement a cheaper AI model.",
+        text: "The next step for this project is to find more users and market the app on social media. Depending on the number of users, I would implement a cheaper AI model or reconsider adding subscriptions to cover API costs.",
       },
 
     ],
