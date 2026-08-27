@@ -167,7 +167,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         src: "/projects/paper-reader-add-and-listen.mp4",
         controls: true,
         captionAlign: "high",
-        caption: "Adding a new paper",
+        caption: "Adding a new paper from files",
       },
       
       {
@@ -185,7 +185,7 @@ export const caseStudies: Record<string, CaseStudy> = {
           "Extract - PDFKit pulls text from the PDF and repairs spacing.",
           "Identify - Gemini text call identifies if the document is a paper or slides.",
           "Clean - Text is split into groups and each one gets a Gemini call to filter out citations, captions, headers, etc. while the prose is unchanged.",
-          "Segment - Apple NLTokenizer splits the clean script into sentences and ChunkPlanner moves them into groups of ~750 characters, ~45 seconds of speech.",
+          "Segment - Apple NLTokenizer splits the script into sentences, which are grouped as ~750 character chunks, ~45 seconds of speech.",
           "Narrate - Each group goes to Gemini TTS, returns as a voice, and is cached on disk so it’s a one time cost.",
           "Display - Highlighted sentences are a guess by character length and re-syncs at the end of every group."
         ],
@@ -236,6 +236,10 @@ export const caseStudies: Record<string, CaseStudy> = {
       // takes about 20 seconds to generate audio for the first chunk ~40 seconds of audio
       // chunk 2 loads before chunk 1 finishes playing
       // also fixed a ui design issue where the iphone time and battery were over the text making it hard to see. now the text doesnt reach that top part of the screen
+
+      // for segment - apple nltokenizer is Apple's. it comes from the naturallanguage framework, not swiftui. swiftui is only for building the interface, naturallanguage is text analysis. you hand it a string, it hands back the ranges of each sentence. it knows that "et al." and "Fig. 3" arent sentence endings, which is why i use it instead of splitting on periods.
+      // ChunkPlanner is my own code, not Apple's. it has one function, plan(for:targetChars:), which walks the sentences NLTokenizer produced and groups consecutive ones until adding the next would exceed 750 characters. 
+      // the reason is - small enough that character-proportional sentence timing stays accurate, large enough for natural speech and few API calls.
 
 
       {
