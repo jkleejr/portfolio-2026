@@ -232,8 +232,20 @@ function Block({ block }: { block: CaseStudyBlock }) {
               ends at the video's left edge, the way the first one starts at
               its right. */}
           {block.captionLeft && (
-            <figcaption className="mt-3 text-base italic leading-relaxed sm:col-start-1 sm:row-start-1 sm:mt-0 sm:translate-y-6 sm:pr-5 sm:text-right">
-              {block.captionLeft}
+            <figcaption className="mt-3 space-y-3 text-base italic leading-relaxed sm:col-start-1 sm:row-start-1 sm:mt-0 sm:-translate-y-8 sm:pr-5 sm:text-right">
+              {(Array.isArray(block.captionLeft)
+                ? block.captionLeft
+                : [block.captionLeft]
+              ).map((line, i) => (
+                // The lines are set apart from where they would fall by
+                // translates, which leaves the ones under them where they are.
+                <p
+                  key={line}
+                  className={i === 0 ? "sm:-translate-y-10" : "sm:translate-y-4"}
+                >
+                  {line}
+                </p>
+              ))}
             </figcaption>
           )}
         </figure>

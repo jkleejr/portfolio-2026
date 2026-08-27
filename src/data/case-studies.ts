@@ -15,8 +15,9 @@ export type CaseStudyBlock =
       type: "video";
       src: string;
       caption?: string;
-      // A second caption, in the space on the other side of the video.
-      captionLeft?: string;
+      // A second caption, in the space on the other side of the video. An
+      // array for one that runs to more than a line, each set under the last.
+      captionLeft?: string | string[];
       controls?: boolean;
       // Where the caption sits beside the video. Middle by default; high for
       // one that reads better up nearer the top of the frame.
@@ -170,13 +171,15 @@ export const caseStudies: Record<string, CaseStudy> = {
         controls: true,
         captionAlign: "high",
         caption: "Adding a new paper from files",
-        captionLeft:
-          "Text cleanup and audio generation for a 12 page paper took about 40 seconds",
+        captionLeft: [
+          "Text cleanup and audio generation for a 12 page paper took ~40 seconds",
+          "Audio is generated in the background as the user needs it to reduce costs and initial wait time",
+        ],
       },
       
       {
         type: "text",
-        text: "I designed the app around users paying for their own API usage due to the costs of audio generation at ~$1-3 per paper. To keep it simple for users, one API key had to identify text and generate audio. Gemini 3.1 flash was the best option for both of these tasks since it could clean up the text for reading and included text to speech with 8 prebuilt voices.",
+        text: "I designed the app around users paying for their own API usage due to the costs of audio generation at ~$1-3 per paper. To keep it simple for users, one API key had to identify text and generate audio. Gemini 3.1 flash was the best option for both of these tasks since it could clean up the text and had TTS with 8 prebuilt voices.",
       },
       {
         type: "text",
