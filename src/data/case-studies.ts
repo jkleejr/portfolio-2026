@@ -174,9 +174,22 @@ export const caseStudies: Record<string, CaseStudy> = {
         type: "text",
         text: "I designed the app around users paying for their own API usage due to the costs of audio generation at ~$1-3 per paper. This meant one API key has to identify the document and generate audio. Gemini 3.1 flash was the best option for both of these tasks since it could clean up the text for reading and included text to speech with 8 prebuilt voices.",
       },
+      {
+        type: "text",
+        text: "There were many steps in making the audio generation feel seamless for the user:",
+      },
       // gemini flash latest - title + document, then the per chunk cleanup
       // gemini 3.1 flash tts - narration, 8 curated prebuilt voices
       // cleanup is a few cents while the text to spesech per paper is $1-$3
+
+      // 1. extract - PDFTextExtractor.swift - PDFKit pulls text page by page
+      // 2. repair - TextRepair.swift - rebuilds the spacing using the document's own vocabulary
+      // until this point, no model is involved
+      // 3. identify - Gemini text call identifies the page, and cleans the text. 
+      // 4. clean - the text is split into <10,000 character chunks at paragraph boundaries, and each chunk gets its own Gemini call. a paper gets citations, captions, bibliography, etc taken out while the prose stays verbatim. a slide deck gets its fragments turned into speakable sentences. each chunk's result is persisted as it lands, so a killed app resumes instead of re-spending tokens.
+      // 5. segment - Apple's NLTokenizer splits the cleaned script into sentences on device. ChunkPlanner then groups them into ~750 character TTS chunks.
+      // 6. narrate - each chunk goes to Gemini TTS with a style prefix and the user's chosen voice, comes back as 24 kHz mono PCM, gets wrapped in a WAV and cached on disk. Since the API returns no word timings, each sentence's duration is apportioned from the chunk's exacty length by character count - accurate enough for sentence level highlighting, and it re-syncs at every chunk boundary so error can't accumulate.
+      // playback is AVAudioEngine with a time-pitch unit (speed changes without chipmunking), scheduling one chunk ahead so works smoothly. 
 
       {
         type: "images",
