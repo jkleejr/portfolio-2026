@@ -47,6 +47,28 @@ export type CaseStudy = {
 // need to make ui designs look more professional
 // logos need some work still
 
+// problem, context, process, solution, and results
+// real cocnstraints and what changed over time
+
+// hero - one line description, my role, the outcome (designed and shipped, live on app store)
+  // the best visual i have
+  // showcase the final rpoduct at the top of each case study - never open with process
+// the problem - start with the situation - what was happening and why it mattered
+  // be specific about the pain point i identified. avoid general openings like "the goal was to improve the user experience"
+  // for screen translator - the annoyance of having to switch apps to use translator, having to copy and paste, wasting time
+// key decisions, not full process - pick 2-3 interesting decisions and explain the reasoning and tradeoffs
+  // "i tried X, it failed because Y, so I did Z" 
+// craft details
+  // one section zooming into something small i cared about
+    // maybe the word-sync animation in Paper Reader, a transition, an empty state
+    // small detials may seem insignificant but they are actually indispensable - highlight these and recap why they matter
+// outcome + reflection - i wont have team metrics and thats fine. outcomes should show direction, learning, or real world impact. "shipped to app store", downloads, honestly what i'd do differently. or what i'd do from here.
+
+// note on figma: when good designers show process artifacts, they present them beautifully, cleaned up, on consistent backgrounds, annotated
+// sketches or wireframes are fine, the amateurism isnt in showing process, its in showing raw uncropped screenshots w mismatchced sizes
+// use ai to create some animated video showing the features of the app, for example, for loot check, screen recording of someone using the app to take pictures of things around their house. interesting things, the app can value items too, or help someone remember the name of the item, even if it has no brand name.
+// 
+
 
 export const caseStudies: Record<string, CaseStudy> = {
   "loot-check": {
@@ -55,12 +77,17 @@ export const caseStudies: Record<string, CaseStudy> = {
     date: "June 2026",
     blocks: [
       {
-        type: "text",
-        text: "Take a photo of any item to find its name, resale value, and marketplaces. Existing apps seemed poorly designed and required a subscription to use. I decided to build a fast, accurate, and free identifying app for all users.",
+        type: "video",
+        src: "/projects/loot-check-shark.mp4",
+        caption: "Finding the potential price of my shark painting",
       },
       {
         type: "text",
-        text: "asdf."
+        text: "Take a photo of any item to find its name, resale value, and marketplaces for it."
+       },
+      {
+        type: "text",
+        text: "Existing apps looked poorly designed and required a subscription to use. I built a fast, accurate, and free identifying app for all users.",
       },
       {
         type: "images",
