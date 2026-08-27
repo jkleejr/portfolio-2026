@@ -87,7 +87,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "Existing apps looked poorly designed and required a subscription to use. My solution was a fast, accurate, and free app.",
+        text: "Existing apps looked poorly designed and required a subscription to use. My solution was a fast, accurate, and free identifying app.",
       },
       {
         type: "text",
@@ -137,7 +137,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "The next step for this project would be finding users and marketing on social media. Depending on the number of users and the volume of photos, I would add a cheaper AI model or a subscription for the most active users.",
+        text: "The next step for this project would be finding users and marketing on social media. Depending on the number of users and the volume of photos, I would add a cheaper AI model or reconsider subscriptions for the most active users.",
       },
 
     ],
