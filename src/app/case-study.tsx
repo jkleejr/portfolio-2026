@@ -208,12 +208,23 @@ function Block({ block }: { block: CaseStudyBlock }) {
             muted
             loop
             playsInline
+            controls={block.controls}
+            // Play, scrub and volume are the whole point of the controls; the
+            // rest of what the browser puts there is not.
+            controlsList="nodownload noplaybackrate"
+            disablePictureInPicture
             className="mx-auto w-full max-w-[280px] rounded-xl border border-foreground/10 sm:col-start-2"
           />
           {/* A little above the middle of the video, and under it below sm,
               where there is no room beside it. */}
           {block.caption && (
-            <figcaption className="mt-3 text-base italic leading-relaxed sm:col-start-3 sm:mt-0 sm:-translate-y-14 sm:pl-5">
+            <figcaption
+              className={`mt-3 text-base italic leading-relaxed sm:col-start-3 sm:mt-0 sm:pl-5 ${
+                block.captionAlign === "high"
+                  ? "sm:-translate-y-24"
+                  : "sm:-translate-y-14"
+              }`}
+            >
               {block.caption}
             </figcaption>
           )}

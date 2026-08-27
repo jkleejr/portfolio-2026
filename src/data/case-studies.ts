@@ -9,7 +9,17 @@ export type CaseStudyBlock =
       items: { src: string; alt: string; crop?: string }[];
       caption?: string;
     }
-  | { type: "video"; src: string; caption?: string }
+  // Autoplays muted and looping. Set controls where the sound is part of
+  // what the recording shows — a viewer needs a way to unmute it.
+  | {
+      type: "video";
+      src: string;
+      caption?: string;
+      controls?: boolean;
+      // Where the caption sits beside the video. Middle by default; high for
+      // one that reads better up nearer the top of the frame.
+      captionAlign?: "middle" | "high";
+    }
   | { type: "divider" };
 
 export type CaseStudy = {
@@ -150,26 +160,16 @@ export const caseStudies: Record<string, CaseStudy> = {
     blocks: [
       {
         type: "text",
-        text: "Upload a PDF and hear it read aloud in a natural voice, citations and formatting filtered out."
-      },
-      {
-        type: "text",
         text: "A friend was listening to a research paper while walking and got '[1] et al., pp. 234-256' read aloud in a robot voice. That gave me the idea to create a PDF reader that filtered out unnecessary information and spoke in a natural voice.",
       },
-      
       {
-        type: "images",
-        items: [
-          {
-            src: "/projects/paper-reader-library.png",
-            alt: "My Papers: the papers added so far, each with how much of it has been listened to, and a player docked at the bottom",
-          },
-          {
-            src: "/projects/paper-reader-follow-along.png",
-            alt: "A paper being read aloud with the current sentence highlighted, how much has been listened to, and playback controls",
-          },
-        ],
+        type: "video",
+        src: "/projects/paper-reader-add-and-listen.mp4",
+        controls: true,
+        captionAlign: "high",
+        caption: "Adding a new paper",
       },
+      
       {
         type: "text",
         text: "I designed the app around users paying for their own API usage due to the costs of audio generation at ~$1-3 per paper. To keep it simple for users, one API key had to identify text and generate audio. Gemini 3.1 flash was the best option for both of these tasks since it could clean up the text for reading and included text to speech with 8 prebuilt voices.",
@@ -188,6 +188,19 @@ export const caseStudies: Record<string, CaseStudy> = {
           "Segment - Apple NLTokenizer splits the clean script into sentences and ChunkPlanner moves them into groups of ~750 characters, ~45 seconds of speech.",
           "Narrate - Each group goes to Gemini TTS, returns as a voice, and is cached on disk so it’s a one time cost.",
           "Display - Highlighted sentences are a guess by character length and re-syncs at the end of every group."
+        ],
+      },
+      {
+        type: "images",
+        items: [
+          {
+            src: "/projects/paper-reader-library.png",
+            alt: "My Papers: the papers added so far, each with how much of it has been listened to, and a player docked at the bottom",
+          },
+          {
+            src: "/projects/paper-reader-follow-along.png",
+            alt: "A paper being read aloud with the current sentence highlighted, how much has been listened to, and playback controls",
+          },
         ],
       },
       // gemini flash latest - title + document, then the per chunk cleanup
