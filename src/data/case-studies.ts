@@ -143,12 +143,12 @@ export const caseStudies: Record<string, CaseStudy> = {
             alt: "A shoe icon in a blue tag",
           },
           {
-            src: "/projects/loot-check-logo-blue-on-white.png",
-            alt: "Price tag icon in blue on white inside corner brackets",
-          },
-          {
             src: "/projects/loot-check-logo-white-on-blue.png",
             alt: "Price tag icon in white on blue inside corner brackets",
+          },
+          {
+            src: "/projects/loot-check-logo-blue-on-white.png",
+            alt: "Price tag icon in blue on white inside corner brackets",
           },
         ],
       },
