@@ -196,6 +196,12 @@ export const caseStudies: Record<string, CaseStudy> = {
           "Narrate - Each group is sent to Gemini TTS, comes back as raw audio data, is wrapped in a WAV, and cached on disk.",
           "Display - Highlighted sentences are estimated from audio length and character count, and re-syncs at the end of every group."
         ],
+        // extract
+        // identify
+        // clean
+        // segment
+        // narrate
+        // display
       },
       {
         type: "text",
