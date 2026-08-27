@@ -193,7 +193,7 @@ export const caseStudies: Record<string, CaseStudy> = {
           "Identify - Gemini text call identifies the document as a paper or slides.",
           "Clean - Text is split into sections, each getting its own Gemini call to filter out citations, captions, etc. while the prose is unchanged.",
           "Segment - Apple NLTokenizer splits the script into sentences, which are grouped as ~750 character chunks, ~45 seconds of speech.",
-          "Narrate - Each group is sent to Gemini TTS, comes back as raw audio data, and is wrapped in a WAV and cached on disk. Groups are generated as the user reaches them and are paid for once.",
+          "Narrate - Each group is sent to Gemini TTS, comes back as raw audio data, and is wrapped in a WAV and cached on disk. Groups are generated as the user reaches them.",
           "Display - Highlighted sentences are an estimate from audio length and character count, and re-syncs at the end of every group."
         ],
       },
@@ -209,7 +209,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         // as the clip plays, the app keeps track of how many seconds have gone by and looks up which sentence that lands in. that's the one it highlights.
         // the split is only an estimate, so the highlight can drift slightly, but the moment a clip ends is exact and it re-syncs there
 
-        
+
       // display - longer sentences get a longer share of each group's audio. the highlight follows that estimate, and resets to exact at the end of every group.
       // gemini returns no timings so the app estimates them. each sentence takes a share of the group's audio in proportion to its length. that drifts slightly, but a group's end is an exact moment, so the highlight is corrected every 45 seconds and the error never builds up
       // a "timing" would be the API telling you when something is spoken, a list like: "Hello there.." starts at 3.87s
