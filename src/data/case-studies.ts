@@ -1,9 +1,6 @@
 export type CaseStudyBlock =
   | { type: "heading"; text: string }
   | { type: "text"; text: string }
-  // A list of lines. Bulleted by default; set ordered for a numbered one,
-  // where the count is part of what the lines say — the steps of a pipeline,
-  // in the order they run.
   | { type: "list"; items: string[]; ordered?: boolean }
   | { type: "quote"; text: string; attribution?: string }
   | { type: "image"; src: string; alt: string; caption?: string; crop?: string }
@@ -86,7 +83,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "video",
         src: "/projects/loot-check-shark.mp4",
-        caption: "Finding the potential price of my shark painting",
+        caption: "Finding the price of my shark painting",
       },
       {
         type: "text",
@@ -169,7 +166,7 @@ export const caseStudies: Record<string, CaseStudy> = {
           },
           {
             src: "/projects/paper-reader-follow-along.png",
-            alt: "A paper being read aloud with the current sentence highlighted, the sentence count, and playback controls",
+            alt: "A paper being read aloud with the current sentence highlighted, how much has been listened to, and playback controls",
           },
         ],
       },
@@ -188,7 +185,7 @@ export const caseStudies: Record<string, CaseStudy> = {
           "Extract - PDFKit pulls text from the PDF and repairs spacing.",
           "Identify - Gemini text call identifies if the document is a paper or slides.",
           "Clean - Text is split into groups and each one gets a Gemini call to filter out citations, captions, headers, etc. while the prose is unchanged.",
-          "Segment - Apple NLTokenizer splits the clean script into sentences and ChunkPlanner moves them into groups of ~750 characters, ~50 seconds of speech.",
+          "Segment - Apple NLTokenizer splits the clean script into sentences and ChunkPlanner moves them into groups of ~750 characters, ~45 seconds of speech.",
           "Narrate - Each group goes to Gemini TTS, returns as a voice, and is cached on disk so it’s a one time cost.",
           "Display - Highlighted sentences are a guess by character length and re-syncs at the end of every group."
         ],
@@ -220,6 +217,13 @@ export const caseStudies: Record<string, CaseStudy> = {
       // too long delays the start. nothing plays until the first group exists. at 50 seconds, thats about a 20 second wait. if a group were 3 minutes of audio, i'd wait over a minute before hearing anything. 
       // too long wastes money when you skip. jump to a different part of the paper and whatever was being generated is paid for but never heard
       // about a minute was the best choice
+
+      // in the latest update Aug 27,2026, the narration speed can be set by the user from 0.75x-2x speed. 
+      // also, the first chunk/group of text is generated into audio before the paper is playable
+      // takes about 20 seconds to generate audio for the first chunk ~40 seconds of audio
+      // chunk 2 loads before chunk 1 finishes playing
+      // also fixed a ui design issue where the iphone time and battery were over the text making it hard to see. now the text doesnt reach that top part of the screen
+
 
       {
         type: "images",
