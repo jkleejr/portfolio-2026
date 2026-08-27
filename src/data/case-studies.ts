@@ -77,18 +77,26 @@ export const caseStudies: Record<string, CaseStudy> = {
     date: "June 2026",
     blocks: [
       {
+        type: "text",
+        text: "Take a photo of any item to find its name, resale value, and marketplaces for it."
+       },
+      {
         type: "video",
         src: "/projects/loot-check-shark.mp4",
         caption: "Finding the potential price of my shark painting",
       },
       {
         type: "text",
-        text: "Take a photo of any item to find its name, resale value, and marketplaces for it."
-       },
-      {
-        type: "text",
         text: "Existing apps looked poorly designed and required a subscription to use. I built a fast, accurate, and free identifying app for all users.",
       },
+      {
+        type: "text",
+        text: "I decided to use Claude Sonnet 4.6 to identify the item, find the price, and write the market listing because of its high accuracy and cheap costs compared to other models. I considered open source models but I wanted every result to be as accurate and trustworthy as possible.",
+      },
+      // 2 key decisions....
+      // claude sonnet 4.6 because its cheap enough to run per scan and still accurate.
+      // costs me about $0.013 per scan.
+      // thought about the users and making a subscription too but decided i would make it free to use since the cost is low
       {
         type: "images",
         items: [
@@ -137,15 +145,12 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "asdf",
+        text: "The next step for this project is to find more users by marketing the app on social media. Depending on the number of users, I would reconsider adding a subscription to help me cover API costs or implement a cheaper AI model.",
       },
-      // claude sonnet 4.6 because its cheap enough to run per scan and still accurate.
-      // costs me about $0.013 per scan.
-      // thought about the users and making a subscription too but decided i would make it free to use since the cost is low
-      // 
-      // 
+
     ],
   },
+
 
   "paper-reader": {
     title: "Paper Reader",
