@@ -143,8 +143,20 @@ export const caseStudies: Record<string, CaseStudy> = {
             alt: "An early icon: a price tag inside the corner brackets of a camera's scan frame",
           },
           {
-            src: "/projects/loot-check-logo-scan-green.png",
-            alt: "The same scan frame icon in green",
+            src: "/projects/loot-check-logo-scan-blue-tight.png",
+            alt: "The same icon inverted and tightened: a white tag and scan frame filling a solid blue tile",
+          },
+          {
+            src: "/projects/loot-check-logo-scan-green-tight.png",
+            alt: "The tightened icon on a solid green tile instead of blue",
+          },
+          {
+            src: "/projects/loot-check-logo-scan-blue-3d.png",
+            alt: "The blue tile given depth: a gradient behind the mark and a soft shadow under it",
+          },
+          {
+            src: "/projects/loot-check-logo-scan-green-3d.png",
+            alt: "The same gradient and shadow treatment on green",
           },
           {
             src: "/projects/loot-check-logo-sneaker.png",
@@ -209,7 +221,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "Because Gemini only returns audio, the app estimates timings to highlight the current sentence. Audio arrives as a list of 24,000 numbers per second, so the total seconds in a group can be calculated (total numbers / 24,000 = total seconds). At this point the app knows the total seconds, the number of sentences, but not how long each sentence could take. It splits the time by text (characters in each sentence / group total characters = its % of the text). Then (% of the text x total seconds = how long each sentence could take). As the group plays, the app tracks how many seconds have passed to guess the current sentence. However, it's not always accurate.",
+        text: "Because Gemini only returns audio, the app estimates timings to highlight the current sentence. Audio arrives as a list of 24,000 numbers per second, so the total seconds in a group can be calculated (total numbers / 24,000 = total seconds). At this point the app knows the total seconds, the number of sentences, but not how long each sentence could take. It splits the time by text (characters in each sentence / group total characters = its % of the group text). Then (% of the group text x total seconds = how long each sentence could take). As the group plays, the app tracks how many seconds have passed to guess the current sentence. However, it's not always accurate.",
       },
         // knows the number of sentences from splitting the script into sentences using Apple NLTokenizer, producing a numbered list of sentences through the whole paper
 
