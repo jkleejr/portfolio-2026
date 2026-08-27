@@ -91,7 +91,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "I decided on Claude Sonnet 4.6 to identify the item, find the price, and write the listing due to its high accuracy and cheaper costs compared to other models. I considered open source models like Kimi K3, but the costs were essentially the same and I wanted the results to be as trustworthy as possible. I made the app free to use since it costs ~$0.013 per scan using Sonnet 4.6.",
+        text: "I decided on Claude Sonnet 4.6 to identify the item, find the price, and write the listing due to its high accuracy and cheaper costs compared to other models. I considered open source models like Kimi K3, but the costs were similar and I wanted the results to be as trustworthy as possible. I launched the app and made it free to use since it costs ~$0.013 per scan.",
       },
       // 2 key decisions....
       // claude sonnet 4.6 because its cheap enough to run per scan and still accurate.
@@ -103,14 +103,6 @@ export const caseStudies: Record<string, CaseStudy> = {
           {
             src: "/projects/loot-check-home.png",
             alt: "The home screen: take a photo, or choose one from the library",
-          },
-          {
-            src: "/projects/loot-check-photo.png",
-            alt: "A photo of a MIDI keyboard added, with an optional detail field before identifying it",
-          },
-          {
-            src: "/projects/loot-check-result.png",
-            alt: "The result: an Akai MPK Mini MK3 identified, with an estimated resale value of $68",
           },
           {
             src: "/projects/loot-check-detail.png",
