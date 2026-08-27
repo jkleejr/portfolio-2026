@@ -150,7 +150,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "The next step for this project is marketing and finding users. Depending on the number of users and the volume of photos, I would use a cheaper AI model or consider adding subscriptions for the most active users.",
+        text: "Loot Check is on the app store. The next step for this project is marketing and finding users. Depending on the number of users and the volume of photos, I would use a cheaper AI model or consider adding subscriptions for the most active users.",
       },
 
     ],
@@ -306,6 +306,14 @@ export const caseStudies: Record<string, CaseStudy> = {
           {
             src: "/projects/paper-reader-logo-light.png",
             alt: "The app icon on light: lines of text with one highlighted in yellow and a play triangle at its end",
+          },
+          {
+            src: "/projects/paper-reader-logo-blue.png",
+            alt: "The same icon in blue: gray lines of text, the highlighted one in a pale blue band with a blue play triangle at its end",
+          },
+          {
+            src: "/projects/paper-reader-logo-blue-black-lines.png",
+            alt: "The blue icon with every line of text in black instead of gray",
           },
         ],
       },
