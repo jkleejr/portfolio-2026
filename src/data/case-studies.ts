@@ -175,22 +175,22 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "I designed the app around users paying for their own API usage due to the costs of audio generation at ~$1-3 per paper. This meant one API key has to identify the document and generate audio. Gemini 3.1 flash was the best option for both of these tasks since it could clean up the text for reading and included text to speech with 8 prebuilt voices.",
+        text: "I designed the app around users paying for their own API usage due to the costs of audio generation at ~$1-3 per paper. To keep it simple for users, one API key had to identify text and generate audio. Gemini 3.1 flash was the best option for both of these tasks since it could clean up the text for reading and included text to speech with 8 prebuilt voices.",
       },
       {
         type: "text",
-        text: "There were many steps in making the audio generation feel seamless for the user:",
+        text: "Steps:",
       },
       {
         type: "list",
         ordered: true,
         items: [
-          "Extract - PDFKit pulls the text out of the PDF page by page.",
-          "Repair - The spacing is rebuilt using the document’s own vocabulary. No model has been involved yet — both of these steps run on the phone.",
-          "Identify - A Gemini text call names the document and works out what kind of thing it is.",
-          "Clean - The text is split into chunks of under 10,000 characters at paragraph boundaries, and each chunk gets its own Gemini call. A paper loses its citations, captions, and bibliography while the prose stays verbatim; a slide deck has its fragments turned into speakable sentences. Each chunk is saved as it lands, so an app that gets killed resumes instead of spending the tokens again.",
-          "Segment - Apple’s NLTokenizer splits the cleaned script into sentences on device, and ChunkPlanner groups them into chunks of about 750 characters for narration.",
-          "Narrate - Each chunk goes to Gemini TTS with a style prefix and the chosen voice, comes back as 24 kHz mono PCM, and is wrapped in a WAV and cached on disk. The API returns no word timings, so each sentence’s duration is apportioned from the chunk’s real length by character count — accurate enough to highlight a sentence at a time, and it re-syncs at every chunk boundary so the error cannot accumulate.",
+          "Extract - PDFKit pulls text from the PDF and repairs spacing.",
+          "Identify - Gemini text call identifies if the document is a paper or slides.",
+          "Clean - Text is split into groups and each one gets its own Gemini call to filter out citations, captions, headers, etc. while the prose is unchanged. Each group is saved so tokens are not wasted.",
+          "Segment - Apple NLTokenizer splits the cleaned script into sentences and ChunkPlanner moves them into groups of about 750 characters, ~50 seconds of speech.",
+          "Narrate - Each group goes to Gemini TTS, returns as a voice, and is cached on disk so it’s a one time cost.",
+          "Display - Highlighted sentences are a guess by character length and re-syncs at the end of every group."
         ],
       },
       // gemini flash latest - title + document, then the per chunk cleanup
@@ -205,6 +205,21 @@ export const caseStudies: Record<string, CaseStudy> = {
       // 5. segment - Apple's NLTokenizer splits the cleaned script into sentences on device. ChunkPlanner then groups them into ~750 character TTS chunks.
       // 6. narrate - each chunk goes to Gemini TTS with a style prefix and the user's chosen voice, comes back as 24 kHz mono PCM, gets wrapped in a WAV and cached on disk. Since the API returns no word timings, each sentence's duration is apportioned from the chunk's exacty length by character count - accurate enough for sentence level highlighting, and it re-syncs at every chunk boundary so error can't accumulate.
       // playback is AVAudioEngine with a time-pitch unit (speed changes without chipmunking), scheduling one chunk ahead so works smoothly. 
+
+      // while the user is listening to one chunk, the next one finishes. users can pay as they listen
+
+      // Gemini TTS sends back an audio file for each group of sentences, but the question is how to know which sentence is currently being said to highlight it on the user's screen
+      // the trick: guess by length. if one sentence has 50 letters and the next has 150, the second one probably takes about 3 times as long to say.
+      // the app knows the clip is exactly 46 seconds total, so it slices those 46 seconds up in proportion to how long each sentence is
+      // its only a guess because people don't read at a perfectly steady pace. a sentence with a lot of commas takes longer than a simple one. so highlight might be half a second early or late.
+      // why that never gets bad: each clip is only about 50 seconds long. when it finishes playing, the app knows it finished. so it moves the highlight to the first sentence of the next clip and starts counting from 0 again.
+      // the reset is important. the guessing only happens for 50 seconds before its corrected. 
+      // if the app made one 40 min guess for the whole paper, small errors would pile together and the text highlight would end up nowhere near the voice.
+      // 750 characterse, ~50 seconds of speech. 
+      // why around a minute? - too short is wasteful, each group is a separate round trip to Google. cut them 10 seconds each and a 40 minute paper needs 240 requests instead of 50. 5 times the waiting on network overhead, chances of getting rate-limited, or retries if something fails. 
+      // too long delays the start. nothing plays until the first group exists. at 50 seconds, thats about a 20 second wait. if a group were 3 minutes of audio, i'd wait over a minute before hearing anything. 
+      // too long wastes money when you skip. jump to a different part of the paper and whatever was being generated is paid for but never heard
+      // about a minute was the best choice
 
       {
         type: "images",
