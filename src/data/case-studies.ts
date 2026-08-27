@@ -199,7 +199,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "Since Gemini returns the audio and nothing else, the app estimates timings to highlight the current sentence. Audio arrives as a list of 24,000 numbers per second, so the total seconds in an audio clip can be calculated based on the total numbers in the list. At this point the app knows the total seconds but not how long each sentence takes. Highlight time per sentence is estimated by the character count of each sentence.",
+        text: "Since Gemini returns the audio and nothing else, the app estimates timings to highlight the current sentence. Audio arrives as a list of 24,000 numbers per second, so the total seconds in an audio clip can be calculated based on the total numbers in the list (total numbers / 24,000 = total seconds). At this point the app knows the total seconds but not how long each sentence takes. Highlight time per sentence is estimated by the character count of each sentence.",
       },
       // display - longer sentences get a longer share of each group's audio. the highlight follows that estimate, and resets to exact at the end of every group.
       // gemini returns no timings so the app estimates them. each sentence takes a share of the group's audio in proportion to its length. that drifts slightly, but a group's end is an exact moment, so the highlight is corrected every 45 seconds and the error never builds up
