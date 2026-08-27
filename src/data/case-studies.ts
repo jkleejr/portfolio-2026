@@ -318,12 +318,12 @@ export const caseStudies: Record<string, CaseStudy> = {
             alt: "The app icon on light: lines of text with one highlighted in yellow and a play triangle at its end",
           },
           {
-            src: "/projects/paper-reader-logo-blue.png",
-            alt: "The same icon in blue: gray lines of text, the highlighted one in a pale blue band with a blue play triangle at its end",
+            src: "/projects/paper-reader-logo-blue-solid.png",
+            alt: "The icon with every line of text black, the highlighted one in a pale blue band with a blue play triangle at its end",
           },
           {
-            src: "/projects/paper-reader-logo-blue-black-lines.png",
-            alt: "The blue icon with every line of text in black instead of gray",
+            src: "/projects/paper-reader-logo-blue-soft.png",
+            alt: "The same icon with the unread lines dropped to gray, so the highlighted one carries the only black text",
           },
         ],
       },
