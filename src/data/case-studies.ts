@@ -179,7 +179,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       
       {
         type: "text",
-        text: "I designed the app around users paying for their own API usage due to the costs of audio generation at ~$1-3 per paper. To keep it simple for users, one API key had to identify text and generate audio. Gemini 3.1 flash was the best option for both of these tasks since it could clean up the text and had TTS with 8 prebuilt voices.",
+        text: "I designed the app around users paying for their own API usage due to the costs of audio generation at ~$1-3 per paper. To keep it simple for users, one API key had to identify text and generate audio. Gemini 3.1 flash was the best option for both of these tasks since it could clean up the text and had TTS with 8 voices.",
       },
       {
         type: "text",
