@@ -228,6 +228,14 @@ function Block({ block }: { block: CaseStudyBlock }) {
               {block.caption}
             </figcaption>
           )}
+          {/* The column on the other side of the video. Set flush right so it
+              ends at the video's left edge, the way the first one starts at
+              its right. */}
+          {block.captionLeft && (
+            <figcaption className="mt-3 text-base italic leading-relaxed sm:col-start-1 sm:row-start-1 sm:mt-0 sm:translate-y-6 sm:pr-5 sm:text-right">
+              {block.captionLeft}
+            </figcaption>
+          )}
         </figure>
       );
 

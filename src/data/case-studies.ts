@@ -15,6 +15,8 @@ export type CaseStudyBlock =
       type: "video";
       src: string;
       caption?: string;
+      // A second caption, in the space on the other side of the video.
+      captionLeft?: string;
       controls?: boolean;
       // Where the caption sits beside the video. Middle by default; high for
       // one that reads better up nearer the top of the frame.
@@ -168,6 +170,8 @@ export const caseStudies: Record<string, CaseStudy> = {
         controls: true,
         captionAlign: "high",
         caption: "Adding a new paper from files",
+        captionLeft:
+          "Text cleanup and audio generation for a 12 page paper took about 40 seconds",
       },
       
       {
@@ -240,6 +244,13 @@ export const caseStudies: Record<string, CaseStudy> = {
       // for segment - apple nltokenizer is Apple's. it comes from the naturallanguage framework, not swiftui. swiftui is only for building the interface, naturallanguage is text analysis. you hand it a string, it hands back the ranges of each sentence. it knows that "et al." and "Fig. 3" arent sentence endings, which is why i use it instead of splitting on periods.
       // ChunkPlanner is my own code, not Apple's. it has one function, plan(for:targetChars:), which walks the sentences NLTokenizer produced and groups consecutive ones until adding the next would exceed 750 characters. 
       // the reason is - small enough that character-proportional sentence timing stays accurate, large enough for natural speech and few API calls.
+
+      // why did we decide to show the highlighted sentences/current sentence this way? 
+      // theres a constraint. Gemini TTS returns audio and nothing else - no word timings, no marks. so the app has to work out for itself when each piece of text is being spoken, and the only signal available is length: this sentence is 190 characters of a 623 character chunk, so it gets 190/623 of the chunk's 46 seconds
+      // the estimate is decent but not exact. a comma heavy sentence reads slower than a plain sentence so any estimate is off
+      // word lasts about 0.3 seconds, a sentence lasts 5-15 seconds. so words are better, but word level would have required real timings which is more complicated and probably requires another model to do
+      // the re-sync for the end of every clip/chunk/group, so the app stops guessing and it knows whats the current sentence that needs to be highlighted to match the audio
+      //
 
 
       {
