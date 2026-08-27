@@ -96,7 +96,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "video",
         src: "/projects/loot-check-shark.mp4",
-        caption: "Finding the price of my shark painting",
+        caption: "Finding the potential value of my shark painting",
       },
       {
         type: "text",
