@@ -172,8 +172,12 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "I decided to use Gemini 3.1 flash....",
+        text: "I designed the app around users paying for their own API usage due to the costs of audio generation at ~$1-3 per paper. This meant one API key has to identify the document and generate audio. Gemini 3.1 flash was the best option for both of these tasks since it could clean up the text for reading and included text to speech with 8 prebuilt voices.",
       },
+      // gemini flash latest - title + document, then the per chunk cleanup
+      // gemini 3.1 flash tts - narration, 8 curated prebuilt voices
+      // cleanup is a few cents while the text to spesech per paper is $1-$3
+
       {
         type: "images",
         items: [
