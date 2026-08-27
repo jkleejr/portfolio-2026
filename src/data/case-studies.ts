@@ -137,7 +137,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "The next step for this project would be finding users and marketing on social media. Depending on the number of users and the volume of photos, I would add a cheaper AI model or reconsider subscriptions for the most active users.",
+        text: "The next step for this project is marketing and finding users. Depending on the number of users and the volume of photos, I would use a cheaper AI model or consider adding subscriptions for the most active users.",
       },
 
     ],
