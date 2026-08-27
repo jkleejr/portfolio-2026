@@ -179,7 +179,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "Steps:",
+        text: "How it works:",
       },
       {
         type: "list",
