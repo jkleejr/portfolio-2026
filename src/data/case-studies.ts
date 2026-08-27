@@ -193,7 +193,7 @@ export const caseStudies: Record<string, CaseStudy> = {
           "Identify - Gemini text call identifies the document as a paper or slides.",
           "Clean - Text is split into sections, each getting its own Gemini call to filter out citations, captions, etc. while the prose is unchanged.",
           "Segment - Apple NLTokenizer splits the script into sentences, which are grouped as ~750 character chunks, ~45 seconds of speech.",
-          "Narrate - Each group is sent to Gemini TTS, comes back as raw audio data, and is wrapped in a WAV and cached on disk. Groups are generated as the user reaches them.",
+          "Narrate - Each group is sent to Gemini TTS, comes back as raw audio data, and is wrapped in a WAV and cached on disk. Audio is generated as the user needs it.",
           "Display - Highlighted sentences are an estimate from audio length and character count, and re-syncs at the end of every group."
         ],
       },
