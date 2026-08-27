@@ -199,10 +199,13 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "Since Gemini returns no timings, the app estimates them. Each sentence takes a % of the group's audio in proportion to its length. It still drifts slightly.",
+        text: "Since Gemini returns no timings with the audio data, the app has to estimate them. Each sentence takes a % of the group's audio in proportion to its length. But it still drifts slightly.",
       },
       // display - longer sentences get a longer share of each group's audio. the highlight follows that estimate, and resets to exact at the end of every group.
       // gemini returns no timings so the app estimates them. each sentence takes a share of the group's audio in proportion to its length. that drifts slightly, but a group's end is an exact moment, so the highlight is corrected every 45 seconds and the error never builds up
+      // a "timing" would be the API telling you when something is spoken, a list like: "Hello there.." starts at 3.87s
+      // Gemini's TTS response comes back as the audio, as base64 sound data, and an audio format label
+      // so the app has to derive everything itself: the total length by counting samples, and the position of each sentence inside that length by the character count estimate. thats why the highlight works the way it does, its sentence level rather than word level
       // group is 5-8 sentences that were sent to gemini and came back as one clip, about 45 seconds long.
       // the app knows that clip's length precisely, not from a stopwatch but by counting: the clip is a list of sound samples, 24,000 of them per second, so a million samples means 41.7 seconds.
       // what the app doesn't know is where each sentence sits inside those 45 seconds. Gemini doesn't say.
@@ -214,6 +217,8 @@ export const caseStudies: Record<string, CaseStudy> = {
       // then the clip ends, that moment is not estimated. the audio system finishes playing the last sample and tells the app so. the app then highlights the first sentence of the next group as the next sample/group starts to play.
       // a 40 minute paper is roughly 50 groups. without the reset, every small error would stack onto the last, and by the end of the highlight could end up being minutes from the voice. 
       // with this, each estimate only has to survive about 45 seconds before it starts at the beginning of the next group. 
+      // 
+
       {
         type: "images",
         items: [
