@@ -150,7 +150,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "Loot Check is on the app store. The next step for this project is marketing and finding users. Depending on the number of users and the volume of photos, I would use a cheaper AI model or consider adding subscriptions for the most active users.",
+        text: "Loot Check is on the app store. The next step for this project is marketing and finding users. Depending on the volume of photos, I would use a cheaper AI model or consider adding subscriptions for the most active users.",
       },
 
     ],
