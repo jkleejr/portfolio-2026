@@ -200,9 +200,16 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "text",
         text: "Since Gemini returns the audio and nothing else, the app estimates timings to highlight the current sentence. First, audio arrives as a list of 24,000 numbers per second, so the total seconds in an audio clip can be calculated (total numbers / 24,000 = total seconds). At this point the app knows the total seconds, the number of sentences, but not how long each sentence could take. So it splits the time by text (each sentence characters / group total characters = its % of the text). Then (% of the text x total seconds = how long each sentence could take). Now the app can guess which sentence is currently being played based on the durations for each sentence in a clip. As the clip plays, the app tracks how many seconds have passed to estimate the current sentence.",
+      },
         // knows the number of sentences from splitting the script into sentences using Apple NLTokenizer, producing a numbered list of sentences through the whole paper
 
-      },
+        //Gemini sends back the audio and nothing else — no note saying when each sentence is spoken
+        // The audio is a list of numbers, 24,000 for every second of sound, count them and you have the clip's exact length.
+        // the app also knows which sentences went into that clip, it just doesnt know where each one falls inside it. so it splits the time by text; a sentence with a third of the characters gets a third of the seconds.
+        // as the clip plays, the app keeps track of how many seconds have gone by and looks up which sentence that lands in. that's the one it highlights.
+        // the split is only an estimate, so the highlight can drift slightly, but the moment a clip ends is exact and it re-syncs there
+
+        
       // display - longer sentences get a longer share of each group's audio. the highlight follows that estimate, and resets to exact at the end of every group.
       // gemini returns no timings so the app estimates them. each sentence takes a share of the group's audio in proportion to its length. that drifts slightly, but a group's end is an exact moment, so the highlight is corrected every 45 seconds and the error never builds up
       // a "timing" would be the API telling you when something is spoken, a list like: "Hello there.." starts at 3.87s
