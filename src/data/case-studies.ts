@@ -173,7 +173,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         caption: "Adding a new paper from files",
         captionLeft: [
           "Text cleanup and audio generation for a 12 page paper took ~40 seconds",
-          "Audio is generated as the user needs it to reduce costs and initial wait time",
+          "Audio is generated as the user needs it, reducing costs and initial wait time",
         ],
       },
       
