@@ -139,28 +139,16 @@ export const caseStudies: Record<string, CaseStudy> = {
         type: "images",
         items: [
           {
-            src: "/projects/loot-check-logo-scan-blue.png",
-            alt: "An early icon: a price tag inside the corner brackets of a camera's scan frame",
-          },
-          {
-            src: "/projects/loot-check-logo-scan-blue-tight.png",
-            alt: "The same icon inverted and tightened: a white tag and scan frame filling a solid blue tile",
-          },
-          {
-            src: "/projects/loot-check-logo-scan-green-tight.png",
-            alt: "The tightened icon on a solid green tile instead of blue",
-          },
-          {
-            src: "/projects/loot-check-logo-scan-blue-3d.png",
-            alt: "The blue tile given depth: a gradient behind the mark and a soft shadow under it",
-          },
-          {
-            src: "/projects/loot-check-logo-scan-green-3d.png",
-            alt: "The same gradient and shadow treatment on green",
-          },
-          {
             src: "/projects/loot-check-logo-sneaker.png",
-            alt: "The icon it settled on, on light",
+            alt: "A shoe icon in a blue tag",
+          },
+          {
+            src: "/projects/loot-check-logo-blue-on-white.png",
+            alt: "Price tag icon in blue on white inside corner brackets",
+          },
+          {
+            src: "/projects/loot-check-logo-white-on-blue.png",
+            alt: "Price tag icon in white on blue inside corner brackets",
           },
         ],
       },
