@@ -199,7 +199,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "Since Gemini returns the audio and nothing else, the app estimates timings to highlight the current sentence. First, audio arrives as a list of 24,000 numbers per second, so the total seconds in an audio clip can be calculated based on the total numbers in the list (total numbers / 24,000 = total seconds). At this point the app knows the total seconds, the number of sentences, but not how long each sentence takes. The % of each sentence is calculated (each sentence's characters / the total number of characters in the clip = % of the text). Then (% of the text x total seconds = how long each sentence takes).",
+        text: "Since Gemini returns the audio and nothing else, the app estimates timings to highlight the current sentence. First, audio arrives as a list of 24,000 numbers per second, so the total seconds in an audio clip can be calculated based on the total numbers in the list (total numbers / 24,000 = total seconds). At this point the app knows the total seconds, the number of sentences, but not how long each sentence takes. The % of each sentence is calculated (each sentence's characters / the total number of characters in the clip = % of the text). Then (% of the text x total seconds = how long each sentence takes). Now the app can guess which sentence is currently being played based on the durations for each sentence in a group.",
         // knows the number of sentences from splitting the script into sentences using Apple NLTokenizer, producing a numbered list of sentences through the whole paper
 
       },
