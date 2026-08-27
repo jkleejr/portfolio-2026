@@ -187,8 +187,8 @@ export const caseStudies: Record<string, CaseStudy> = {
         items: [
           "Extract - PDFKit pulls text from the PDF and repairs spacing.",
           "Identify - Gemini text call identifies if the document is a paper or slides.",
-          "Clean - Text is split into groups and each one gets its own Gemini call to filter out citations, captions, headers, etc. while the prose is unchanged. Each group is saved so tokens are not wasted.",
-          "Segment - Apple NLTokenizer splits the cleaned script into sentences and ChunkPlanner moves them into groups of about 750 characters, ~50 seconds of speech.",
+          "Clean - Text is split into groups and each one gets a Gemini call to filter out citations, captions, headers, etc. while the prose is unchanged.",
+          "Segment - Apple NLTokenizer splits the clean script into sentences and ChunkPlanner moves them into groups of ~750 characters, ~50 seconds of speech.",
           "Narrate - Each group goes to Gemini TTS, returns as a voice, and is cached on disk so it’s a one time cost.",
           "Display - Highlighted sentences are a guess by character length and re-syncs at the end of every group."
         ],
