@@ -311,7 +311,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "If I continued this project, I would try to minimize costs and integrate an API key into the app so users don't need their own, charging per paper generated. Adding a cheaper TTS model sacrifices the natural voice but can reduce the cost for audio.",
+        text: "If I continued this project, I would try to minimize costs and integrate an API key into the app so users don't need their own, charging per paper. Adding a cheaper TTS model sacrifices the natural voice but can reduce the cost for audio.",
       },
     
       // Gemini 3.1 flash
