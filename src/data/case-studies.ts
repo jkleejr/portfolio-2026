@@ -488,7 +488,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "Initially I was using AI to analyze market sentiment and indicate whether to buy or sell, but that changed to an informational website. The first design was inspired by Bloomberg Terminal and evolved as I learned more about the market.",
+        text: "Initially I was using AI to analyze market sentiment and indicate if it preferred to buy or sell, but that changed to an informational website. The first design was inspired by Bloomberg Terminal and evolved as I learned more about the market and added things I found helpful.",
       },
       { type: "heading", text: "Redesigns:" },
       {
