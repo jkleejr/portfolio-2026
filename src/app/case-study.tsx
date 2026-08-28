@@ -241,7 +241,7 @@ function Block({ block }: { block: CaseStudyBlock }) {
                 // translates, which leaves the ones under them where they are.
                 <p
                   key={line}
-                  className={i === 0 ? "sm:-translate-y-10" : "sm:translate-y-4"}
+                  className={i === 0 ? "sm:-translate-y-10" : "sm:translate-y-6"}
                 >
                   {line}
                 </p>
