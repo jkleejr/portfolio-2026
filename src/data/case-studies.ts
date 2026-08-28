@@ -490,7 +490,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         type: "text",
         text: "Initially I was using AI to analyze market sentiment and indicate if it preferred to buy or sell, but that changed to an informational website. The first design was inspired by Bloomberg Terminal and evolved as I learned more about the market and added things that were helpful.",
       },
-      { type: "heading", text: "Redesigns:" },
+      { type: "heading", text: "Previous designs:" },
       {
         type: "image",
         src: "/projects/buy-side-site-evening-brief.png",
@@ -507,11 +507,6 @@ export const caseStudies: Record<string, CaseStudy> = {
         type: "image",
         src: "/projects/buy-side-site-dashboard.png",
         alt: "The built dashboard: the evening brief and its headline, index tiles across the top, the key signal and tickers to watch down the right, and the day's archive on the left",
-      },
-      {
-        type: "image",
-        src: "/projects/buy-side-site-markets.png",
-        alt: "The markets page: three-month charts for the S&P, Nasdaq and Russell, metals beside them, and sector rotation across eleven ETFs underneath",
       },
       {
         type: "image",
