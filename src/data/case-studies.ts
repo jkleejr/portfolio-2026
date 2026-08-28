@@ -486,10 +486,9 @@ export const caseStudies: Record<string, CaseStudy> = {
         type: "text",
         text: "Buy Side Briefings is a personal website with daily reports on the stock market. The goal is to create a trustworthy source of information that informs me on the latest events.",
       },
-      { type: "heading", text: "Old design" },
       {
         type: "text",
-        text: "My first design was inspired by Bloomberg Terminal.",
+        text: "The first design was inspired by Bloomberg Terminal.",
       },
       {
         type: "image",
@@ -503,11 +502,6 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       // One to a row rather than a grid: these are pages seen on a desktop,
       // and three across the column would leave them too small to read.
-      {
-        type: "image",
-        src: "/projects/buy-side-figma-brief.png",
-        alt: "The redesign in Figma: a morning brief with a market sentiment scale, key points, and a live markets rail down the left",
-      },
 
       // current design
       { type: "heading", text: "Current design" },
