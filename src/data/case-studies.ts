@@ -208,8 +208,18 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "Because Gemini only returns audio, the app estimates timings to highlight the current sentence. Audio arrives as a list of 24,000 numbers per second, so the total seconds in a group can be calculated (total numbers / 24,000 = total seconds). At this point the app knows the total seconds, the number of sentences, but not how long each sentence could take. It splits the time by text (characters in each sentence / group total characters = % of group text). Then (% of group text x total seconds = how long each sentence could take). As the group plays, the app tracks how many seconds have passed to guess the current sentence. However, it's not always accurate.",
+        text: "Because Gemini only returns audio and no timestamps, the app has to estimate when each sentence is being spoken. Audio clips arrive as 24,000 samples per second, so the total seconds in a group can be calculated (total samples / 24,000 = total seconds). At this point the app knows the total seconds, the number of sentences, but not how long each sentence could take. It splits the group proportionally by text, so a sentence with 30% of the group's characters is assumed to take 30% of the audio. (characters in each sentence / group total characters = % of group text) then (% of group text x total seconds). As the audio plays, the app tracks the time and estimates which sentence to highlight. However, it's not always accurate.",
       },
+      // (total samples / 24,000 = total seconds)
+      // (characters in each sentence / group total characters = % of group text)
+      // (% of group text x total seconds = how long each sentence could take)
+      // as the audio for that group plays, the app tracks how many seconds have passed to estimate the current sentence. but its not always accurate because some sentences take longer than others due to punctuation
+
+      // splits proportionally by text, so a sentence with 30% of the group's characters is assumed to take 30% of the audio.
+      // as playback runs, the app tracks elapsed time against these estimates to decide which sentence to highlight.
+
+
+      // 24000 samples per second is the same as 24000 numbers for every second of sound
         // knows the number of sentences from splitting the script into sentences using Apple NLTokenizer, producing a numbered list of sentences through the whole paper
 
         //Gemini sends back the audio and nothing else — no note saying when each sentence is spoken
