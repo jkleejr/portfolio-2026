@@ -323,10 +323,6 @@ export const caseStudies: Record<string, CaseStudy> = {
         type: "images",
         items: [
           {
-            src: "/projects/paper-reader-logo-light.png",
-            alt: "The app icon on light: lines of text with one highlighted in yellow and a play triangle at its end",
-          },
-          {
             src: "/projects/paper-reader-logo-blue-soft.png",
             alt: "The same icon with the unread lines dropped to gray, so the highlighted one carries the only black text",
           },
