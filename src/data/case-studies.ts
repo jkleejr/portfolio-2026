@@ -359,7 +359,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       // 
       {
         type: "text",
-        text: "asdf."
+        text: "My first idea was to generate text over the current app on screen to display translations, but iOS does not allow an app to draw over another app. To get around this, I used a ReplayKit broadcast extension to receive another app's pixels and audio, and show the result live using the Dynamic Island."
       },
       {
         type: "images",
