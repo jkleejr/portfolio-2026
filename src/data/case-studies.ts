@@ -484,13 +484,13 @@ export const caseStudies: Record<string, CaseStudy> = {
     blocks: [
       {
         type: "text",
-        text: "Buy Side Briefings is a personal website with automated reports on the stock market. The goal is to create a trustworthy source of information that informs the reader on the latest events.",
+        text: "Buy Side Briefings is a personal website with daily reports on the stock market. The goal is to create a trustworthy source of information that informs the reader on the latest events.",
       },
       {
         type: "text",
-        text: "Initially I was using AI to analyze market sentiment and indicate if it preferred to buy or sell, but that changed to an informational website. The first design was inspired by Bloomberg Terminal and evolved as I learned more about the market and added things that were helpful.",
+        text: "This project started as Discord notifications but grew to an informational website. The first design was inspired by Bloomberg Terminal and changed as I learned more about the market and added things that were helpful.",
       },
-      { type: "heading", text: "Old design" },
+      { type: "heading", text: "Old designs" },
       {
         type: "image",
         src: "/projects/buy-side-site-evening-brief.png",
@@ -503,11 +503,6 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       // One to a row rather than a grid: these are pages seen on a desktop,
       // and three across the column would leave them too small to read.
-      {
-        type: "image",
-        src: "/projects/buy-side-site-dashboard.png",
-        alt: "The built dashboard: the evening brief and its headline, index tiles across the top, the key signal and tickers to watch down the right, and the day's archive on the left",
-      },
       {
         type: "image",
         src: "/projects/buy-side-figma-brief.png",
