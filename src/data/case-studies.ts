@@ -484,7 +484,7 @@ export const caseStudies: Record<string, CaseStudy> = {
     blocks: [
       {
         type: "text",
-        text: "Buy Side Briefings is a personal website with automated daily reports on the stock market. The goal is to create a trustworthy source of information that informs traders and investors on the latest events and current state of the market.",
+        text: "Buy Side Briefings is a personal website with automated daily reports on the stock market. The goal is to create a trustworthy source of information that informs traders and investors on the latest events.",
       },
       {
         type: "text",
@@ -493,6 +493,16 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "text",
         text: "Old designs:",
+      },
+      {
+        type: "image",
+        src: "/projects/buy-side-site-evening-brief.png",
+        alt: "The evening brief: a market sentiment scale over the night's headline and the paragraph that argues it, key points underneath, and a rail of index levels and market hours down the left",
+      },
+      {
+        type: "image",
+        src: "/projects/buy-side-site-terminal.png",
+        alt: "The terminal dashboard: a live quote strip over index tiles, a row of running stats, and today's playbook of long and short calls with their stops and targets beside an open risk panel",
       },
       // One to a row rather than a grid: these are pages seen on a desktop,
       // and three across the column would leave them too small to read.
