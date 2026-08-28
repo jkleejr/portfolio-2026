@@ -359,7 +359,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       // 
       {
         type: "text",
-        text: "My first idea was to generate text over the current display, but iOS does not allow an app to draw over another app. To get around this, I used a ReplayKit broadcast extension to receive pixels of what's on screen, and showed the result live using the Dynamic Island and floating window."
+        text: "My first idea was to generate text over the current display, but iOS does not allow an app to draw over another app. To get around this, I used a ReplayKit broadcast extension to receive pixels of what's on screen, and showed the result using the dynamic island and floating window."
       },
       {
         type: "text",
@@ -421,10 +421,6 @@ export const caseStudies: Record<string, CaseStudy> = {
             alt: "A dark take: white ring and red dot on a charcoal circle",
           },
         ],
-      },
-      {
-        type: "text",
-        text: "asdf",
       },
     ],
   },
