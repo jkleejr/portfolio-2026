@@ -488,7 +488,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "Initially I tried using AI to analyze market sentiment, find opportunities, and indicate whether to buy or sell, but that changed to an informational website with personalized reports. The first design was inspired by Bloomberg Terminal and evolved as I learned more about the market.",
+        text: "Initially I was using AI to analyze market sentiment, find opportunities, and indicate whether to buy or sell, but that changed to an informational website with personalized reports. The first design was inspired by Bloomberg Terminal and evolved as I learned more about the market.",
       },
       { type: "heading", text: "Redesigns:" },
       {
@@ -531,31 +531,10 @@ export const caseStudies: Record<string, CaseStudy> = {
         src: "/projects/buy-side-site-today.png",
         alt: "The Today page: a live ticker strip under the nav, the night briefing's headline and the paragraph that argues it, and the chart panel opening underneath",
       },
-
-      {
-        type: "image",
-        src: "/projects/buy-side-site-chart.png",
-        alt: "The chart expanded to fill the page: monthly S&P bars on a log scale with three EMAs over them and RSI running underneath",
-      },
-
       {
         type: "image",
         src: "/projects/buy-side-site-briefing.png",
         alt: "A single briefing: the night's headline over three key points, each one repeated underneath with the source it came from and a link out to it",
-      },
-
-      {
-        type: "images",
-        items: [
-          {
-            src: "/projects/buy-side-logo-transparent.png",
-            alt: "The same mark without its background, on whatever it is set against",
-          },
-        ],
-      },
-      {
-        type: "text",
-        text: "asdf",
       },
     ],
   },
