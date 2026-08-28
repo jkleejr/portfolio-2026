@@ -363,7 +363,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "AI models (2 Apple, 1 not):"
+        text: "AI models:"
       },
       // first, focusing this app on live captions translations, and trying to make that process as seamless as i can.
       // audio later
@@ -372,7 +372,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         ordered: true,
         items: [
           "Apple Vision reads the screen",
-          "Apple Speech transcribes the audio track",
+          "Apple Speech transcribes the audio",
           "DeepL for translations",
         ],
       },
