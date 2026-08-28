@@ -327,10 +327,6 @@ export const caseStudies: Record<string, CaseStudy> = {
             alt: "The app icon on light: lines of text with one highlighted in yellow and a play triangle at its end",
           },
           {
-            src: "/projects/paper-reader-logo-blue-solid.png",
-            alt: "The icon with every line of text black, the highlighted one in a pale blue band with a blue play triangle at its end",
-          },
-          {
             src: "/projects/paper-reader-logo-blue-soft.png",
             alt: "The same icon with the unread lines dropped to gray, so the highlighted one carries the only black text",
           },
@@ -457,10 +453,6 @@ export const caseStudies: Record<string, CaseStudy> = {
         text: "Website for a birch tree farm in South Korea.",
       },
       {
-        type: "text",
-        text: "asdf."
-      },
-      {
         type: "images",
         items: [
           {
@@ -468,22 +460,14 @@ export const caseStudies: Record<string, CaseStudy> = {
             alt: "A birch tree drawn in outline, its branches carrying leaves in two greens",
           },
           {
-            src: "/projects/time-with-tree-logo-v2.png",
-            alt: "The tree set beside the farm's name in Korean, 나무와 걷는 시간",
+            src: "/projects/time-with-tree-logo-v4.png",
+            alt: "The mark on its own, three leaves over two bands of field",
           },
           {
             src: "/projects/time-with-tree-logo-v3.png",
             alt: "A later lockup: leaves rising out of a field, beside the same name set in a heavier face",
           },
-          {
-            src: "/projects/time-with-tree-logo-v4.png",
-            alt: "The mark on its own, three leaves over two bands of field",
-          },
         ],
-      },
-      {
-        type: "text",
-        text: "asdf",
       },
 
       // following expectations from client, so less ideation 
@@ -500,16 +484,15 @@ export const caseStudies: Record<string, CaseStudy> = {
     blocks: [
       {
         type: "text",
-        text: "Buy Side Briefings is a personal website with automated daily reports on the stock market. The goal is to create a trustworthy source of information that keeps readers updated.",
-      },
-      { type: "heading", text: "Why build this?" },
-      {
-        type: "text",
-        text: "The stock market is fast paced and narratives can change quickly based on the news. Traders and investors should be informed on the latest events and current state of the market.",
+        text: "Buy Side Briefings is a personal website with automated daily reports on the stock market. The goal is to create a trustworthy source of information that keeps readers updated. The stock market is fast paced and narratives can change quickly based on the news. Traders and investors should be informed on the latest events and current state of the market.",
       },
       {
         type: "text",
-        text: "asdf."
+        text: "I redesigned this website many times and changed the purpose of this website recently. As I added features that are helpful for investing. The first design was inspired by Bloomberg Terminal and I tried to make it as informational as possible by adding charts, ",
+      },
+      {
+        type: "text",
+        text: "Old designs:",
       },
       // One to a row rather than a grid: these are pages seen on a desktop,
       // and three across the column would leave them too small to read.
