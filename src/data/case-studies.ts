@@ -208,7 +208,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "Because Gemini only returns audio and no timestamps, the app has to estimate when each sentence is being spoken. Audio clips arrive as 24,000 samples per second, so the total seconds in a group can be calculated (total samples / 24,000 = total seconds). At this point the app knows the total seconds, the number of sentences, but not how long each sentence could take. It splits the group proportionally by text, so a sentence with 30% of the group's characters is assumed to take 30% of the audio. (characters in each sentence / group total characters = % of group text) then (% of group text x total seconds). As the audio plays, the app tracks the time and estimates which sentence to highlight. However, it's not always accurate.",
+        text: "Because Gemini only returns audio and no timestamps, the app has to estimate when each sentence is being spoken. Audio clips arrive as 24,000 samples per second, so the total seconds in a group can be calculated (total samples / 24,000 = total seconds). At this point the app knows the total seconds, the number of sentences, but not how long each sentence could take. It splits the group proportionally by text, so a sentence with 10% of the group's characters is assumed to take 10% of the audio. (characters in each sentence / group total characters = % of group text) then (% of group text x total seconds). As the audio plays, the app tracks the time and estimates which sentence to highlight. However, it's not always accurate.",
       },
       // (total samples / 24,000 = total seconds)
       // (characters in each sentence / group total characters = % of group text)
