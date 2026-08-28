@@ -524,7 +524,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "The aim of this design was to provide valuable information quickly. The main headline summarizes the report in 1 sentence, and the reader can read more.",
+        text: "The aim of this design was to provide valuable information quickly. The main headline summarizes the report in 1 sentence and users have the option to read the full report.",
       },
       {
         type: "image",
