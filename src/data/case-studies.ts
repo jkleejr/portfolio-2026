@@ -486,11 +486,11 @@ export const caseStudies: Record<string, CaseStudy> = {
         type: "text",
         text: "Buy Side Briefings is a personal website with daily reports on the stock market. The goal is to create a trustworthy source of information that informs me on the latest events, and to become my favorite resource for investing/trading.",
       },
+      { type: "heading", text: "Old designs" },
       {
         type: "text",
-        text: "This project started as notifications from a bot on Discord and is now a useful website. My first design was inspired by Bloomberg Terminal.",
+        text: "My first design was inspired by Bloomberg Terminal.",
       },
-      { type: "heading", text: "Old designs" },
       {
         type: "image",
         src: "/projects/buy-side-site-evening-brief.png",
