@@ -486,9 +486,10 @@ export const caseStudies: Record<string, CaseStudy> = {
         type: "text",
         text: "Buy Side Briefings is a personal website with daily reports on the stock market. The goal is to create a trustworthy source of information that informs me on the latest events.",
       },
+      { type: "heading", text: "Old design" },
       {
         type: "text",
-        text: "The first design was inspired by Bloomberg Terminal.",
+        text: "",
       },
       {
         type: "image",
@@ -508,7 +509,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "The main headline summarizes the report in 1 sentence but I have the option to read the full report.",
+        text: "The main headline summarizes the report.",
       },
       {
         type: "image",
