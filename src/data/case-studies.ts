@@ -363,7 +363,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "Stack (2 Apple, 1 not):"
+        text: "AI models (2 Apple, 1 not):"
       },
       // first, focusing this app on live captions translations, and trying to make that process as seamless as i can.
       // audio later
