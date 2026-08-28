@@ -484,11 +484,11 @@ export const caseStudies: Record<string, CaseStudy> = {
     blocks: [
       {
         type: "text",
-        text: "Buy Side Briefings is a personal website with automated daily reports on the stock market. The goal is to create a trustworthy source of information that informs the reader on the latest events.",
+        text: "Buy Side Briefings is a personal website with automated reports on the stock market. The goal is to create a trustworthy source of information that informs the reader on the latest events.",
       },
       {
         type: "text",
-        text: "Initially I was using AI to analyze market sentiment, find opportunities, and indicate whether to buy or sell, but that changed to an informational website with personalized reports. The first design was inspired by Bloomberg Terminal and evolved as I learned more about the market.",
+        text: "Initially I was using AI to analyze market sentiment and indicate whether to buy or sell, but that changed to an informational website. The first design was inspired by Bloomberg Terminal and evolved as I learned more about the market.",
       },
       { type: "heading", text: "Redesigns:" },
       {
