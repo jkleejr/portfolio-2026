@@ -372,7 +372,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         ordered: true,
         items: [
           "Apple Vision reads the screen",
-          "Apple Speech transcribes the audio",
+          "Apple Speech transcribes audio",
           "DeepL for translations",
         ],
       },
