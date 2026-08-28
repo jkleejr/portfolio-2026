@@ -488,7 +488,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "This project started as notifications from a bot on Discord but grew to an informational website. The first design was inspired by Bloomberg Terminal and changed as I added features that were helpful.",
+        text: "This project started as notifications from a Discord bot but grew to an informational website. The first design was inspired by Bloomberg Terminal and changed as I actually used the website.",
       },
       { type: "heading", text: "Old designs" },
       {
