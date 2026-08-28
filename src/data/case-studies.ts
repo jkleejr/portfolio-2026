@@ -359,7 +359,30 @@ export const caseStudies: Record<string, CaseStudy> = {
       // 
       {
         type: "text",
-        text: "My first idea was to generate text over the current app on screen to display translations, but iOS does not allow an app to draw over another app. To get around this, I used a ReplayKit broadcast extension to receive another app's pixels and audio, and show the result live using the Dynamic Island."
+        text: "My first idea was to generate text over the current display, but iOS does not allow an app to draw over another app. To get around this, I used a ReplayKit broadcast extension to receive the pixels of what's on screen, and showed the result live using the Dynamic Island."
+      },
+      {
+        type: "text",
+        text: "Stack:"
+      },
+      // first, focusing this app on live captions translations, and trying to make that process as seamless as i can.
+      // audio later
+      {
+        type: "list",
+        ordered: true,
+        items: [
+          "Apple Vision reads the screen",
+          "Apple Speech transcribes the audio track",
+          "DeepL for translations",
+        ],
+      },
+      {
+        type: "text",
+        text: "Architecture"
+      },
+      {
+        type: "text",
+        text: ""
       },
       {
         type: "images",
