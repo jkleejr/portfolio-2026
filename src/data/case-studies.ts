@@ -359,7 +359,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       // 
       {
         type: "text",
-        text: "My first idea was to generate text over the current display, but iOS does not allow an app to draw over another app. To get around this, I used a ReplayKit broadcast extension to receive pixels of what's on screen, and showed the result live using the Dynamic Island."
+        text: "My first idea was to generate text over the current display, but iOS does not allow an app to draw over another app. To get around this, I used a ReplayKit broadcast extension to receive pixels of what's on screen, and showed the result live using the Dynamic Island and floating window."
       },
       {
         type: "text",
@@ -373,7 +373,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         items: [
           "Apple Vision reads the screen",
           "Apple Speech transcribes audio",
-          "DeepL for translations",
+          "DeepL for translating text",
         ],
       },
       {
