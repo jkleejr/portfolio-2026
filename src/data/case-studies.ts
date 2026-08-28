@@ -378,7 +378,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "Architecture"
+        text: ""
       },
       {
         type: "text",
