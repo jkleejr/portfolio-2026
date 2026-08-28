@@ -484,7 +484,7 @@ export const caseStudies: Record<string, CaseStudy> = {
     blocks: [
       {
         type: "text",
-        text: "Buy Side Briefings is a personal website with daily reports on the stock market. The goal is to create a trustworthy source of information that informs the reader on the latest events, and to become my go-to resource.",
+        text: "Buy Side Briefings is a personal website with daily reports on the stock market. The goal is to create a trustworthy source of information that informs me on the latest events, and to become my favorite resource for investing/trading.",
       },
       {
         type: "text",
