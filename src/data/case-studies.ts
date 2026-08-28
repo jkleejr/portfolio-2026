@@ -509,7 +509,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "The main headline summarizes the report.",
+        text: "",
       },
       {
         type: "image",
