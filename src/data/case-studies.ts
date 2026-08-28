@@ -142,6 +142,10 @@ export const caseStudies: Record<string, CaseStudy> = {
             src: "/projects/loot-check-logo-blue-on-white.png",
             alt: "Price tag icon in blue on white inside corner brackets",
           },
+          {
+            src: "/projects/loot-check-logo-white-on-blue.png",
+            alt: "The same price tag icon reversed out in white on blue",
+          },
         ],
       },
       {
@@ -314,6 +318,10 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "images",
         items: [
+          {
+            src: "/projects/paper-reader-logo-4.png",
+            alt: "Lines of a page on cream, with the line being read aloud marked in yellow highlighter and a play triangle at its end",
+          },
           {
             src: "/projects/paper-reader-logo-blue-soft.png",
             alt: "The same icon with the unread lines dropped to gray, so the highlighted one carries the only black text",
