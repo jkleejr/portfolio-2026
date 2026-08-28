@@ -193,11 +193,11 @@ export const caseStudies: Record<string, CaseStudy> = {
         type: "list",
         ordered: true,
         items: [
-          "Extract - PDFKit pulls text from the PDF and fixes spacing.",
-          "Clean - Text is split into sections, each getting its own Gemini call to filter out citations, captions, etc. while the prose is unchanged.",
-          "Segment - Apple NLTokenizer splits the script into sentences, which are grouped as ~750 character chunks, ~45 seconds of speech.",
-          "Narrate - Each group is sent to Gemini TTS, comes back as raw audio data, is wrapped in a WAV, and cached on disk.",
-          "Display - Highlighted sentences are estimated from audio length and character count, and re-syncs at the end of every group."
+          "PDFKit pulls text from the PDF and fixes spacing.",
+          "Text is split into sections, each getting its own Gemini call to filter out citations, captions, etc. while the prose is unchanged.",
+          "Apple NLTokenizer splits the script into sentences, which are grouped as ~750 character chunks, ~45 seconds of speech.",
+          "Each group is sent to Gemini TTS, comes back as raw audio data, is wrapped in a WAV, and cached on disk.",
+          "Highlighted sentences are estimated from audio length and character count, and re-syncs at the end of every group."
         ],
         // extract
         // identify
