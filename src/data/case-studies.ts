@@ -490,10 +490,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         type: "text",
         text: "Initially I tried using AI to analyze market sentiment, find opportunities, and indicate whether to buy or sell, but that changed to an informational website with personalized reports. The first design was inspired by Bloomberg Terminal and evolved as I learned more about the market.",
       },
-      {
-        type: "text",
-        text: "Old designs:",
-      },
+      { type: "heading", text: "Redesigns:" },
       {
         type: "image",
         src: "/projects/buy-side-site-evening-brief.png",
@@ -522,6 +519,13 @@ export const caseStudies: Record<string, CaseStudy> = {
         alt: "The redesign in Figma: a morning brief with a market sentiment scale, key points, and a live markets rail down the left",
       },
 
+      // current design
+      { type: "heading", text: "Current design:" },
+
+      {
+        type: "text",
+        text: "The aim of this design was to provide valuable information quickly. The main headline summarizes the report in 1 sentence, and the reader can read more if they want.",
+      },
       {
         type: "image",
         src: "/projects/buy-side-site-today.png",
