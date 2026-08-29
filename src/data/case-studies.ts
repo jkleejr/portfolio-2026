@@ -116,7 +116,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "backend, using a server to store my API key",
+        text: "backend, using a server to store my API key, 1 call is made per scan",
       },
       // 2 key decisions....
       // claude sonnet 4.6 because its cheap enough to run per scan and still accurate.
@@ -133,7 +133,35 @@ export const caseStudies: Record<string, CaseStudy> = {
       // "deploying" for this project just means: uploading your current code files to Vercel, replacing what was there before.
       // the instructions that produce the description are a file on the server - lib/analyze.ts, containing the prompt that tells Claude "write 1-3 factual sentences..."
       // that file is not in the app and never has been in the app.
-      // running "vercel --prod" replaces the old file with the new one on their machines. the very next scan anyone does goes through the new instructionss
+      // running "vercel --prod" replaces the old file with the new one on their machines. the very next scan anyone does goes through the new instructions
+
+      // How is Loot Check valuing items?
+      // right now the model estimates it, there is no lookup.
+      // the price comes from the same API call that identifies the item. Claude looks at the photo and returns a dollar range as one field in the JSON, alongside the title and category. nothing queries eBay, or any pricing database, at any point.
+      // one field in the schema: estimatedValueUSD: {low: 5, high: 9}
+      // one rule in the prompt that governs it: the RESALE value - what this item would realistically sell for SECONDHAND today - is not the original retail/store price, a used item is normally well below retail. Base it on the item type, brand, and apparent condition.
+      // without this rule a vision model quotes roughly what the thing costs new, which is useless to a seller. There's a second rule too: if the photo is blurry or ambiguous, give a wide range - so uncertainty shows up as a wider spread rather than a confidently wrong number.
+      // what happens to the number after that: everything downstream is arithmetic, no AI
+      // 1. the server clamps it - negatives become zero, and if high somehow came back below low, they're equalised. whole dollars only.
+      // 2. your phone computes the midpoint (toPrice() in mobile/pricing.ts):
+      // median = round ((low + high) / 2)
+      // thats the big $110 style number on the price card. the low - high range is the smaller line under it.
+      // 3. the midpoint anchors the marketplace table. each platform's payout is the median minus that platform's published fees:
+      // net = anchor x (1 - feePct) - flatFee
+      // the fee percentages are hardcoded constraints in the app, they're fixed 
+      
+      // ULTIMATELY, the number/estimated resale value is a well informed guess from a model that has seen an enormous amount of resale listings, constrained by a prompt that pushes it toward secondhand pricing and told to widen the range when unsure. It is not derived from what anything actually sold for.
+      // thats why the app says "estimated resale value" and nothing more
+
+      // One API call is being made per scan, not per photo. if i add 4 photos of the same item, they all go into a single request as 4 images attached to 1 message. 1 call.
+      // 1 call returns all 12 fields:
+        // identification - title, category, brand, condition, specificity
+        // price - estimatedValueUSD {low, high}
+        // Routing - recommendedPlatform, recommendationReason, expectedSpeed
+        // Copy - listingDescription, keywords, searchQuery
+      // identify, price, title, description, and which marketplace to sell on and why - all one round trip to Claude
+      // more photos costs more, but not more calls. each image is roughly 1,900 tokens, so a 4 photo scan is pricier than a 1 photo scan. but its 1 request either way. the photos are capped at 4
+
       {
         type: "images",
         items: [
