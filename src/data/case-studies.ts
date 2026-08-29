@@ -108,11 +108,11 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "Vision models aren't 100% accurate so I designed around uncertainty. Users can type in what they know to steer Claude toward the right product and low confidence results are labeled 'best guess'.",
+        text: "Vision models aren't 100% accurate so I designed around uncertainty. You can type in what you know to steer Claude toward the right product and low confidence results are labeled 'best guess'.",
       },
       {
         type: "text",
-        text: "The 'where to sell' table predicts how much you keep after marketplace fees to help you decide where to list. I wanted to automate the listing process, but most marketplaces don't offer a public listing API, so the app writes a title and description for copy and paste.",
+        text: "The 'where to sell' table predicts how much you could keep after marketplace fees to help you decide where to list. I wanted to automate the listing process, but most marketplaces don't offer a public listing API, so the app writes a title and description for copy and paste.",
       },
       // 2 key decisions....
       // claude sonnet 4.6 because its cheap enough to run per scan and still accurate.
