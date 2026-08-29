@@ -398,25 +398,6 @@ export const caseStudies: Record<string, CaseStudy> = {
           },
         ],
       },
-
-      {
-        type: "images",
-        items: [
-          
-          {
-            src: "/projects/screen-translator-logo-clean.png",
-            alt: "The mark in black on white: a record dot inside a ring, set on a pale grey circle",
-          },
-          {
-            src: "/projects/screen-translator-logo-4.png",
-            alt: "The same mark on black, with the centre dot in recording red",
-          },
-          {
-            src: "/projects/screen-translator-logo-dark.png",
-            alt: "A dark take: white ring and red dot on a charcoal circle",
-          },
-        ],
-      },
     ],
   },
 
