@@ -132,7 +132,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "Since most marketplaces don't offer a public listing API, I couldn't automate the listing process.",
+        text: "Since most marketplaces don't offer a public listing API, I couldn't automate the entire listing process.",
       },
 
       // 2 key decisions....
