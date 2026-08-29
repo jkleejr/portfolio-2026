@@ -112,7 +112,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "There are no accounts, login, onboarding, or paywalls to minimize user friction.",
+        text: "There are no accounts, login, onboarding flow, or paywalls to minimize user friction.",
       },
       // 2 key decisions....
       // claude sonnet 4.6 because its cheap enough to run per scan and still accurate.
