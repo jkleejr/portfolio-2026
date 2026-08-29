@@ -108,7 +108,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "Vision models aren't 100% accurate so I designed around uncertainty. Users can type in what you know to steer Claude toward the right product and low confidence results are labeled 'best guess'.",
+        text: "Vision models aren't 100% accurate so I designed for uncertainty. Users can type in what you know to steer Claude toward the right product and low confidence results are labeled 'best guess'.",
       },
       {
         type: "text",
@@ -225,6 +225,19 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "text",
         text: "When processing fails, the paper enters an error state and shows the exact error.",
+      },
+      {
+        type: "images",
+        items: [
+          {
+            src: "/projects/paper-reader-error-state.png",
+            alt: "A paper that could not be processed, with the Gemini error it came back with, a line pointing to the API key in Settings, and a Try Again button",
+          },
+          {
+            src: "/projects/paper-reader-library-error.png",
+            alt: "My Papers with the same failure shown on the paper's row in red, next to a retry button, while the other papers keep their progress",
+          },
+        ],
       },
       
       // (total samples / 24,000 = total seconds)
