@@ -162,7 +162,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "Loot Check is on the app store. The next step for this project is marketing and finding users. Depending on the total cost, I would use a cheaper AI model or consider subscriptions for the most active users.",
+        text: "Loot Check is on the app store. The next step for this project is marketing and finding users. Depending on the cost, I would use a cheaper AI model or consider subscriptions for the most active users.",
       },
 
     ],
