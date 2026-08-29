@@ -226,19 +226,6 @@ export const caseStudies: Record<string, CaseStudy> = {
         type: "text",
         text: "When processing fails, the paper enters an error state and shows the exact error.",
       },
-      {
-        type: "images",
-        items: [
-          {
-            src: "/projects/paper-reader-error-state.png",
-            alt: "A paper that could not be processed, with the Gemini error it came back with, a line pointing to the API key in Settings, and a Try Again button",
-          },
-          {
-            src: "/projects/paper-reader-library-error.png",
-            alt: "My Papers with the same failure shown on the paper's row in red, next to a retry button, while the other papers keep their progress",
-          },
-        ],
-      },
       
       // (total samples / 24,000 = total seconds)
       // (characters in each sentence / group total characters = % of group text)
@@ -287,6 +274,16 @@ export const caseStudies: Record<string, CaseStudy> = {
           {
             src: "/projects/paper-reader-follow-along.png",
             alt: "A paper being read aloud with the current sentence highlighted, how much has been listened to, and playback controls",
+          },
+        ],
+      },
+
+      {
+        type: "images",
+        items: [
+          {
+            src: "/projects/paper-reader-api-key.png",
+            alt: "The Gemini API key screen: why the app asks for a key, a link to get one, what a paper costs to narrate, where the key is kept, what leaves the device, and the field to paste it in",
           },
           {
             src: "/projects/paper-reader-settings.png",
