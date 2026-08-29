@@ -108,11 +108,15 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "Sonnet 4.6 is not 100% accurate so I added an option where users can type in what they know about the item to steer the model toward the right product. If Claude still isn't sure, it labels the result as 'best guess'. I wanted to automate the entire listing process but since most marketplaces don't have a public listing API, the app writes a title and description for copy and paste.",
+        text: "Vision models aren't 100% accurate so I designed around uncertainty. Users can type in what they know about an item to steer Claude toward the right product. If confidence is low, the result is labeled 'best guess'.",
       },
       {
         type: "text",
-        text: "There are no accounts, onboarding, or paywalls. I focused on minimizing user friction from camera to the result.",
+        text: "I wanted to automate the listing process, but most marketplaces don't offer a public listing API, so the app writes a title and description for copy and paste.",
+      },
+      {
+        type: "text",
+        text: "There are no accounts, onboarding screens, or paywalls to eliminate friction.",
       },
       // 2 key decisions....
       // claude sonnet 4.6 because its cheap enough to run per scan and still accurate.
