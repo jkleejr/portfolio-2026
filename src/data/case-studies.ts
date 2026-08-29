@@ -3,11 +3,25 @@ export type CaseStudyBlock =
   | { type: "text"; text: string }
   | { type: "list"; items: string[]; ordered?: boolean }
   | { type: "quote"; text: string; attribution?: string }
-  | { type: "image"; src: string; alt: string; caption?: string; crop?: string }
+  // Runs the width of the column unless width is set, which holds it to that
+  // many pixels and centres it — for a crop taken off a retina screen, where
+  // the file is twice the size the thing was on screen and blowing it up to
+  // the column would show it at twice life size.
+  | {
+      type: "image";
+      src: string;
+      alt: string;
+      caption?: string;
+      crop?: string;
+      width?: number;
+    }
+  // Three across from sm up, or two where the shots are wider than they are
+  // tall and three would leave them too small to read.
   | {
       type: "images";
       items: { src: string; alt: string; crop?: string }[];
       caption?: string;
+      columns?: 2;
     }
   // Autoplays muted and looping. Set controls where the sound is part of
   // what the recording shows — a viewer needs a way to unmute it.
@@ -95,11 +109,15 @@ export const caseStudies: Record<string, CaseStudy> = {
         src: "/projects/loot-check-shark.mp4",
         caption: "Finding the potential value of my shark painting",
       },
+                  { type: "heading", text: "AI" },
+
       {
         type: "text",
         text: "I used Claude Sonnet 4.6 to identify, find the price, and write the listing due to its high accuracy and low API costs at ~$0.013 per scan. I considered Kimi K3, but the costs were similar and I wanted the results to be as trustworthy as possible.",
       },
       // designing for uncertainty
+                  { type: "heading", text: "Designing for uncertainty" },
+
       {
         type: "text",
         text: "Users can type in what they know about the item to guide Claude toward the right product. Low confidence results are labeled 'best guess'.",
@@ -130,7 +148,8 @@ export const caseStudies: Record<string, CaseStudy> = {
       // if i wanted to get sales data online to make the price estimation more accurate....
       // id have to pay $.01 per search online (Anthropic's rate) so it would be 2-3x more expensive per scan
       // decided not to
-    
+                { type: "heading", text: "Shipped" },
+
       {
         type: "text",
         text: "Loot Check is on the app store. The next step for this project is marketing and finding users.",
@@ -154,26 +173,23 @@ export const caseStudies: Record<string, CaseStudy> = {
         captionAlign: "high",
         caption: "add a new paper from files",
         captionLeft: [
-          "12 pages takes ~40 seconds until start",
           "audio is generated as the user needs",
         ],
       },
       
       {
         type: "text",
-        text: "I designed the app around users paying for their own API usage due to the costs of audio generation at ~$1-3 per paper. I used 1 API to identify text and generate audio. Gemini 3.1 flash was the best option since it could clean up the text and had TTS with 8 voices.",
+        text: "I designed the app around users paying for their own API usage due to the costs of audio generation at ~$1-3 per paper. I used 1 API for text and audio. Gemini 3.1 flash was the best option since it could clean up text and had TTS with 8 voices.",
       },
-      { type: "heading", text: "Steps" },
+      { type: "heading", text: "AI" },
 
       {
         type: "list",
         ordered: true,
         items: [
-          "Fix spacing",
           "Gemini splits text into sections, filters out citations, etc. and keeps prose unchanged.",
-          "Group sentences ~750 characters, ~45 seconds of speech.",
+        // Group sentences ~750 characters, ~45 seconds of speech.",
           "TTS returns audio data",
-          "Highlight the current sentence"
         ],
     
       },
@@ -181,29 +197,42 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "Because Gemini only returns audio, the app has to estimate when each sentence is being spoken. Audio clips arrive as 24,000 samples per second, so the total seconds in a group can be calculated (total samples / 24,000 = total seconds). At this point the app knows the total seconds, the number of sentences, but not how long each sentence could take. It splits the group proportionally by text, so a sentence with 5% of the group's characters is assumed to take 5% of the audio. (characters in each sentence / group total characters = % of group text) then (% of group text x total seconds = how long each sentence could take). As the audio plays, the app tracks the time and highlights a sentence based on the estimated duration. However, it's not always accurate.",
+        text: "Because Gemini only returns audio, the app has to estimate when each sentence is being said. It splits a group's audio proportionally by text, so a sentence with 5% of a group's characters is assumed to take 5% of the audio. As the audio plays, the app tracks the time and highlights a sentence based on its estimate. However, this method is not always accurate.",
+      },
+      {
+        type: "image",
+        src: "/projects/paper-reader-highlight-detail.png",
+        width: 353,
+        alt: "A close read of the narration: the sentence being spoken sits in a pale blue block, the lines either side of it in grey",
       },
 
-      {
-        type: "images",
-        items: [
-          {
-            src: "/projects/paper-reader-library-error.png",
-            alt: "My Papers with a paper that failed to process, its error in red beside a retry button, while the other papers keep their progress",
-          },
-          {
-            src: "/projects/paper-reader-error-state.png",
-            alt: "The same failure opened up, with the Gemini error it came back with, a line pointing to the API key in Settings, and a Try Again button",
-          },
-        ],
-      },
       {
         type: "text",
         text: "When processing fails, the paper enters an error state showing the exact error.",
       },
       {
+        type: "images",
+        columns: 2,
+        items: [
+          {
+            src: "/projects/paper-reader-library-error-detail.png",
+            alt: "A close read of the failed row: the paper's name over the Gemini error in red, with a retry button on its right",
+          },
+          {
+            src: "/projects/paper-reader-error-detail.png",
+            alt: "The failure the row opens onto: a warning triangle over the Gemini error, a line pointing to the API key in Settings, and a Try Again button",
+          },
+        ],
+      },
+      {
         type: "text",
         text: "I included a sample paper so users can test before setting up an API key.",
+      },
+      {
+        type: "image",
+        src: "/projects/paper-reader-sample-detail.png",
+        width: 367,
+        alt: "The sample paper's row in My Papers, marked SAMPLE above its title, 77 per cent listened, and a play button on its right",
       },
 
       
@@ -239,7 +268,10 @@ export const caseStudies: Record<string, CaseStudy> = {
       // then the audio system finishes playing the last sample and tells the app. the app then highlights the first sentence of the next group as the next sample/group starts to play.
       // a 40 minute paper is roughly 50 groups. without the reset, every small error would stack onto the last, and by the end of the highlight could end up being minutes from the voice. 
       // with this, each estimate only has to survive about 45 seconds before it starts at the beginning of the next group. 
-
+        {
+        type: "text",
+        text: "The user's key is stored on their own device in the iOS Keychain.",
+      },
 
       {
         type: "images",
@@ -269,11 +301,6 @@ export const caseStudies: Record<string, CaseStudy> = {
       // the best action is to revoke the key at aistudio.google.com/apikey if the user is worried about an orphaned key
 
       // the user's api key is stored on their own device in the iOS Keychain, which is encrypted and inaccessible to other apps. The key is only sent to Google's API.
-
-      {
-        type: "text",
-        text: "The user's key is stored on their own device in the iOS Keychain.",
-      },
 
 
       // gemini flash latest - title + document, then the per chunk cleanup
@@ -320,24 +347,15 @@ export const caseStudies: Record<string, CaseStudy> = {
       // word lasts about 0.3 seconds, a sentence lasts 5-15 seconds. so words are better, but word level would have required real timings which is more complicated and probably requires another model to do
       // the re-sync for the end of every clip/chunk/group, so the app stops guessing and it knows whats the current sentence that needs to be highlighted to match the audio
       //
-      {
-        type: "images",
-        items: [
-          {
-            src: "/projects/paper-reader-logo-blue-soft.png",
-            alt: "The same icon with the unread lines dropped to gray, so the highlighted one carries the only black text",
-          },
-        ],
-      },
 
-      // friction is anything that makes a user slow down, work, or think before getting what they came for. every tap, form field, decision, wait, and moment of confusion is friction. 
 
      // write to the level of my understanding
       
+            { type: "heading", text: "Result" },
 
       {
         type: "text",
-        text: "If I continued Paper Reader, I would integrate an API key into the app, minimize costs, and charge per paper. Asking users to set up their own API key is the app's biggest point of friction. Since there are many TTS products like Speechify and Blinkist that address similar problems, I shipped this project and moved on.",
+        text: "If I continued Paper Reader, I would integrate an API key into the app, minimize costs, and charge per paper. Asking users to set up their own key is this app's biggest point of friction. There are many TTS products like Speechify, Blinkist that address similar problems, so I shipped this project and moved on.",
       },
     
       // Gemini 3.1 flash

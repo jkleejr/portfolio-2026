@@ -158,8 +158,11 @@ function Block({ block }: { block: CaseStudyBlock }) {
           <img
             src={block.src}
             alt={block.alt}
-            className="w-full rounded-xl border border-foreground/10"
-            style={block.crop ? { objectPosition: block.crop } : undefined}
+            className="mx-auto w-full max-w-full rounded-xl border border-foreground/10"
+            style={{
+              ...(block.width ? { width: block.width } : null),
+              ...(block.crop ? { objectPosition: block.crop } : null),
+            }}
           />
           <Caption text={block.caption} />
         </figure>
@@ -186,7 +189,9 @@ function Block({ block }: { block: CaseStudyBlock }) {
                 key={i}
                 src={item.src}
                 alt={item.alt}
-                className="w-[calc((100%_-_1rem)/2)] rounded-xl border border-foreground/10 sm:w-[calc((100%_-_2rem)/3)]"
+                className={`w-[calc((100%_-_1rem)/2)] rounded-xl border border-foreground/10 ${
+                  block.columns === 2 ? "" : "sm:w-[calc((100%_-_2rem)/3)]"
+                }`}
               />
             ))}
           </div>
