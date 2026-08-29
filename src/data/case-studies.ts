@@ -224,7 +224,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "When an API call fails, the app shows the exact error and a message telling users what to fix.",
+        text: "When processing fails, the paper enters an error state and shows the exact error.",
       },
       
       // (total samples / 24,000 = total seconds)
