@@ -89,7 +89,7 @@ export const entries: Entry[] = [
     images: [
       {
         src: "/projects/paper-reader-2.png",
-        cover: "/projects/paper-reader-highlight-detail.png",
+        cover: "/projects/paper-reader-cover-highlight.png",
         coverCrop: "left",
         alt: "Reader view with the sentence being read aloud highlighted",
         crop: "50% 34%",
