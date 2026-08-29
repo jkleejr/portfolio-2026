@@ -130,10 +130,6 @@ export const caseStudies: Record<string, CaseStudy> = {
         width: 388,
         alt: "The optional detail field under a photo of an OP-1 in its case, with \"keyboard and synth\" typed in and a tip to include a close-up of the brand logo",
       },
-      {
-        type: "text",
-        text: "Since most marketplaces don't offer a public listing API, I couldn't automate the entire listing process.",
-      },
 
       // 2 key decisions....
       // claude sonnet 4.6 because its cheap enough to run per scan and still accurate.
