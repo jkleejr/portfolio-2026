@@ -63,24 +63,21 @@ export type CaseStudy = {
 // problem, context, process, solution, and results
 // real cocnstraints and what changed over time
 
-// hero - one line description, my role, the outcome (designed and shipped, live on app store)
-  // the best visual i have
   // showcase the final rpoduct at the top of each case study - never open with process
-// the problem - start with the situation - what was happening and why it mattered
-  // be specific about the pain point i identified. avoid general openings like "the goal was to improve the user experience"
+// the problem - what was happening and why it mattered
+  // be specific about the pain point i identified
+
   // for screen translator - the annoyance of having to switch apps to use translator, having to copy and paste, wasting time
+
 // key decisions, not full process - pick 2-3 interesting decisions and explain the reasoning and tradeoffs
-  // "i tried X, it failed because Y, so I did Z" 
-// craft details
-  // one section zooming into something small i cared about
-    // maybe the word-sync animation in Paper Reader, a transition, an empty state
-    // small detials may seem insignificant but they are actually indispensable - highlight these and recap why they matter
+// "i tried X, it failed because Y, so I did Z" 
+
+  // one section zooming into something i cared about
+
 // outcome + reflection - i wont have team metrics and thats fine. outcomes should show direction, learning, or real world impact. "shipped to app store", downloads, honestly what i'd do differently. or what i'd do from here.
 
 // note on figma: when good designers show process artifacts, they present them beautifully, cleaned up, on consistent backgrounds, annotated
-// sketches or wireframes are fine, the amateurism isnt in showing process, its in showing raw uncropped screenshots w mismatchced sizes
-// use ai to create some animated video showing the features of the app, for example, for loot check, screen recording of someone using the app to take pictures of things around their house. interesting things, the app can value items too, or help someone remember the name of the item, even if it has no brand name.
-// 
+// dont show raw uncropped screenshots w mismatchced sizes
 
 
 export const caseStudies: Record<string, CaseStudy> = {
@@ -89,10 +86,10 @@ export const caseStudies: Record<string, CaseStudy> = {
     appStore: "https://apps.apple.com/us/app/loot-check/id6785767104",
     date: "June 2026",
     blocks: [
-      {
+       {
         type: "text",
-        text: "Take a photo of any item to find its name, resale value, and where to sell it."
-       },
+        text: "Existing apps looked poorly designed and required a subscription to use. My solution was a fast, accurate, and free identifying app.",
+      },
       {
         type: "video",
         src: "/projects/loot-check-shark.mp4",
@@ -100,121 +97,44 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "Existing apps looked poorly designed and required a subscription to use. My solution was a fast, accurate, and free identifying app.",
-      },
-      {
-        type: "text",
         text: "I used Claude Sonnet 4.6 to identify, find the price, and write the listing due to its high accuracy and low API costs at ~$0.013 per scan. I considered Kimi K3, but the costs were similar and I wanted the results to be as trustworthy as possible.",
       },
+      // designing for uncertainty
       {
         type: "text",
-        text: "Vision models aren't 100% accurate so I designed for uncertainty. Users can type in what they know about the item to guide Claude toward the right product. Low confidence results are labeled 'best guess'.",
+        text: "Users can type in what they know about the item to guide Claude toward the right product. Low confidence results are labeled 'best guess'.",
       },
       {
         type: "text",
-        text: "The 'where to sell' table predicts how much could be made after marketplace fees to help users decide where to list. I wanted to automate the listing process, but most marketplaces don't offer a public listing API, so the app writes a title and description to copy and paste.",
+        text: "Since most marketplaces don't offer a public listing API, I couldn't automate the listing process.",
       },
-      {
-        type: "text",
-        text: "A backend server stores my API key off the device. Each scan is 1 call.",
-      },
+
       // 2 key decisions....
       // claude sonnet 4.6 because its cheap enough to run per scan and still accurate.
       // costs me about $0.013 per scan.
       // thought about the users and making a subscription too but decided i would make it free to use since the cost is low
 
-      // SERVER SIDE UPDATES ARE LIVE IMMEDIATELY
-      // the backend is the code that does the actual work. when I tap identify, my phone sends. the photo to resell-it-backend.vercel.app/api/analyze, that computer talks to Claude, and it sends back the finisehd JSON - title, price, marketplace, description.
-      // why does the backend exist?
-      // because of my API Key.
-      // talking to claude costs money and requires a secret key. if that key were inside the app, anyone could pull it out of the downloaded app file - and spend my money
-      // so the key lives in exactly one place: on the server. the app has no idea it exists. the app can only call your endpoints, and your server decides whether to spend money on that request. that's also where the 60 scans per day limit is enforced.
-      // Vercel is the compnay that runs that computer for you.
-      // "deploying" for this project just means: uploading your current code files to Vercel, replacing what was there before.
-      // the instructions that produce the description are a file on the server - lib/analyze.ts, containing the prompt that tells Claude "write 1-3 factual sentences..."
-      // that file is not in the app and never has been in the app.
-      // running "vercel --prod" replaces the old file with the new one on their machines. the very next scan anyone does goes through the new instructions
+      // BACKEND
+      // photo -> Claude -> result
+      // When I tap identify, my phone sends the photo, hits Claude, and it sends back title, price, marketplace, description.
+      // instructions to find resale vale and base it on item type, brand, and condition
+      // 60 scans per day limit
+      // key is stored
 
+      // HOW IS LOOT CHECK VALUING ITEMS? (8.29.26)
+      // It's a well informed guess from Claude, no lookup
 
-      // HOW IS LOOT CHECK VALUING ITEMS? (as of 8.29.26)
-      // right now the model estimates it, there is no lookup.
-      // the price comes from the same API call that identifies the item. Claude looks at the photo and returns a dollar range as one field in the JSON, alongside the title and category. nothing queries eBay, or any pricing database, at any point.
-      // one field in the schema: estimatedValueUSD: {low: 5, high: 9}
-      // one rule in the prompt that governs it: the RESALE value - what this item would realistically sell for SECONDHAND today - is not the original retail/store price, a used item is normally well below retail. Base it on the item type, brand, and apparent condition.
-      // without this rule a vision model quotes roughly what the thing costs new, which is useless to a seller. There's a second rule too: if the photo is blurry or ambiguous, give a wide range - so uncertainty shows up as a wider spread rather than a confidently wrong number.
-      // what happens to the number after that: everything downstream is arithmetic, no AI
-      // 1. the server clamps it - negatives become zero, and if high somehow came back below low, they're equalised. whole dollars only.
-      // 2. your phone computes the midpoint (toPrice() in mobile/pricing.ts):
-      // median = round ((low + high) / 2)
-      // thats the big $110 style number on the price card. the low - high range is the smaller line under it.
-      // 3. the midpoint anchors the marketplace table. each platform's payout is the median minus that platform's published fees:
-      // net = anchor x (1 - feePct) - flatFee
-      // the fee percentages are hardcoded constraints in the app, they're fixed 
-      
-
-      // ULTIMATELY, the number/estimated resale value is a well informed guess from a model that has seen an enormous amount of resale listings, constrained by a prompt that pushes it toward secondhand pricing and told to widen the range when unsure. It is not derived from what anything actually sold for.
-      // thats why the app says "estimated resale value" and nothing more
-
-      // One API call is being made per scan, not per photo. if i add 4 photos of the same item, they all go into a single request as 4 images attached to 1 message. 1 call.
-      // 1 call returns all 12 fields:
-        // identification - title, category, brand, condition, specificity
-        // price - estimatedValueUSD {low, high}
-        // Routing - recommendedPlatform, recommendationReason, expectedSpeed
-        // Copy - listingDescription, keywords, searchQuery
-      // identify, price, title, description, and which marketplace to sell on and why - all one round trip to Claude
-      // more photos costs more, but not more calls. each image is roughly 1,900 tokens, so a 4 photo scan is pricier than a 1 photo scan. but its 1 request either way. the photos are capped at 4
-
-
-      // right now, the flow is : photo -> Claude -> done. one call, one round trip.
+      // 1 API call is being made per scan, not per photo.
+      // more photos costs more, capped at 4.
 
       // if i wanted to get sales data online to make the price estimation more accurate....
-
-
+      // id have to pay $.01 per search online (Anthropic's rate) so it would be 2-3x more expensive per scan
+      // decided not to
     
-
-      {
-        type: "images",
-        items: [
-          {
-            src: "/projects/loot-check-home.png",
-            alt: "The home screen: take a photo, or choose one from the library",
-          },
-          {
-            src: "/projects/loot-check-detail.png",
-            alt: "A photo of an OP-1 in its case, with \"Op1 synth\" typed into the detail field before identifying it",
-          },
-          {
-            src: "/projects/loot-check-op1-result.png",
-            alt: "The OP-1 identified from the photo, with an estimated resale value of $825",
-          },
-          {
-            src: "/projects/loot-check-op1-marketplaces.png",
-            alt: "Where to sell the OP-1, with eBay marked as the best bet at $717 after fees",
-          },
-          {
-            src: "/projects/loot-check-op1-listing.png",
-            alt: "A ready-to-post listing for the OP-1, with its title and description to copy",
-          },
-        ],
-      },
-      {
-        type: "images",
-        items: [
-          {
-            src: "/projects/loot-check-logo-scan-white-on-blue.png",
-            alt: "A price tag with its hole punched out, set inside camera scan brackets, in white on a solid blue tile",
-          },
-          {
-            src: "/projects/loot-check-logo-scan-blue-on-white.png",
-            alt: "The same tag and brackets reversed, blue on white",
-          },
-        ],
-      },
       {
         type: "text",
-        text: "Loot Check is on the app store. The next step for this project is marketing and finding users. Depending on the cost, I would use a cheaper AI model or consider subscriptions for the most active users.",
+        text: "Loot Check is on the app store. The next step for this project is marketing and finding users.",
       },
-
     ],
   },
 
@@ -232,38 +152,33 @@ export const caseStudies: Record<string, CaseStudy> = {
         src: "/projects/paper-reader-add-and-listen.mp4",
         controls: true,
         captionAlign: "high",
-        caption: "Adding a new paper from files",
+        caption: "add a new paper from files",
         captionLeft: [
-          "Text cleanup and audio generation for a 12 page paper took ~40 seconds",
-          "Audio is generated as the user needs it, reducing costs and initial wait time",
+          "12 pages takes ~40 seconds until start",
+          "audio is generated as the user needs",
         ],
       },
       
       {
         type: "text",
-        text: "I designed the app around users paying for their own API usage due to the costs of audio generation at ~$1-3 per paper. To keep it simple for users, one API key had to identify text and generate audio. Gemini 3.1 flash was the best option for both of these tasks since it could clean up the text and had TTS with 8 voices.",
+        text: "I designed the app around users paying for their own API usage due to the costs of audio generation at ~$1-3 per paper. I used 1 API to identify text and generate audio. Gemini 3.1 flash was the best option since it could clean up the text and had TTS with 8 voices.",
       },
-      {
-        type: "text",
-        text: "How it works:",
-      },
+      { type: "heading", text: "Steps" },
+
       {
         type: "list",
         ordered: true,
         items: [
-          "PDFKit pulls text from the PDF and fixes spacing.",
-          "Text is split into sections, each getting its own Gemini call to filter out citations, captions, etc. while prose is unchanged.",
-          "NLTokenizer splits the script into sentences, which are grouped as ~750 character chunks, ~45 seconds of speech.",
-          "Each group is sent to Gemini TTS, comes back as raw audio data, is wrapped in a WAV, and cached.",
-          "Highlighted sentences are estimated from audio length and character count, and resets at the end of every group to reduce mistiming."
+          "Fix spacing",
+          "Gemini splits text into sections, filters out citations, etc. and keeps prose unchanged.",
+          "Group sentences ~750 characters, ~45 seconds of speech.",
+          "TTS returns audio data",
+          "Highlight the current sentence"
         ],
-        // extract
-        // identify
-        // clean
-        // segment
-        // narrate
-        // display
+    
       },
+            { type: "heading", text: "Highlighting" },
+
       {
         type: "text",
         text: "Because Gemini only returns audio, the app has to estimate when each sentence is being spoken. Audio clips arrive as 24,000 samples per second, so the total seconds in a group can be calculated (total samples / 24,000 = total seconds). At this point the app knows the total seconds, the number of sentences, but not how long each sentence could take. It splits the group proportionally by text, so a sentence with 5% of the group's characters is assumed to take 5% of the audio. (characters in each sentence / group total characters = % of group text) then (% of group text x total seconds = how long each sentence could take). As the audio plays, the app tracks the time and highlights a sentence based on the estimated duration. However, it's not always accurate.",
@@ -296,38 +211,35 @@ export const caseStudies: Record<string, CaseStudy> = {
       // (characters in each sentence / group total characters = % of group text)
       // (% of group text x total seconds = how long each sentence could take)
       // as the audio for that group plays, the app tracks how many seconds have passed to estimate the current sentence. but its not always accurate because some sentences take longer than others due to punctuation
-
       // splits proportionally by text, so a sentence with 30% of the group's characters is assumed to take 30% of the audio.
       // as playback runs, the app tracks elapsed time against these estimates to decide which sentence to highlight.
+      // the split is only an estimate, so the highlight can drift slightly, but the moment a clip ends is exact and it re-syncs there
 
 
       // 24000 samples per second is the same as 24000 numbers for every second of sound
         // knows the number of sentences from splitting the script into sentences using Apple NLTokenizer, producing a numbered list of sentences through the whole paper
+ 
+      // Gemini returns no timings so the app estimates them. each sentence takes a share of the group's audio in proportion to its length. that drifts slightly, but the highlight is corrected every 45 seconds and the error never builds up
+    
 
-        //Gemini sends back the audio and nothing else — no note saying when each sentence is spoken
-        // The audio is a list of numbers, 24,000 for every second of sound, count them and you have the clip's exact length.
-        // the app also knows which sentences went into that clip, it just doesnt know where each one falls inside it. so it splits the time by text; a sentence with a third of the characters gets a third of the seconds.
-        // as the clip plays, the app keeps track of how many seconds have gone by and looks up which sentence that lands in. that's the one it highlights.
-        // the split is only an estimate, so the highlight can drift slightly, but the moment a clip ends is exact and it re-syncs there
-
-
-      // display - longer sentences get a longer share of each group's audio. the highlight follows that estimate, and resets to exact at the end of every group.
-      // gemini returns no timings so the app estimates them. each sentence takes a share of the group's audio in proportion to its length. that drifts slightly, but a group's end is an exact moment, so the highlight is corrected every 45 seconds and the error never builds up
-      // a "timing" would be the API telling you when something is spoken, a list like: "Hello there.." starts at 3.87s
-      // Gemini's TTS response comes back as the audio, as base64 sound data, and an audio format label
+      // Gemini's TTS response comes back as the audio, as base64 sound data
       // so the app has to derive everything itself: the total length by counting samples, and the position of each sentence inside that length by the character count estimate. thats why the highlight works the way it does, its sentence level rather than word level
+
       // group is 5-8 sentences that were sent to gemini and came back as one clip, about 45 seconds long.
-      // the app knows that clip's length precisely, not from a stopwatch but by counting: the clip is a list of sound samples, 24,000 of them per second, so a million samples means 41.7 seconds.
-      // what the app doesn't know is where each sentence sits inside those 45 seconds. Gemini doesn't say.
+      // the app knows that clip's length precisely: the clip is a list of sound samples, 24,000 of them per second, so a million samples means 41.7 seconds.
+
+      // what the app doesn't know is where each sentence sits inside those 45 seconds.
       // so it divides the clip by text length
-      // the sentence "The paper is TradingAgents..." has 192 characters, 31% share of the clip, and took 14.29 seconds. 192 characters out of 623 is 31% of the text, so its assumed to take 31% of the time. the shares always sum to the clip's real length. 
-      // the highlight follows that estimate. 4 times a second, the app adds the elapsed time to a running total, multiplied by your playback speed, so at 1.5x the total climbs 1.5 seconds per real second. then it walks down the list: past 3.87, past 14.29, and so on, until it finds which sentence that total lands in. That's the one that gets highlighted.
-      // so nothing is listening to the audio. It's arithmetic on a clock and a list of numbers. 
+      // the sentence "The paper is TradingAgents..." has 192 characters, 31% share of the clip, and took 14.29 seconds. 192 characters out of 623 is 31% of the text, so its assumed to take 31% of the time. 
+
+      // the highlight follows that estimate. 4 times a second, the app adds the elapsed time to a running total.. at 1.5x the total climbs 1.5 seconds per real second. 
+      
+      // so nothing is listening to the audio. It's a clock and a list of numbers. 
       // the estimate drifts because people don't read at an even pace, a sentence full of commas takes longer. halfway through a group, the highlight might be half a second ahead of the voice. 
-      // then the clip ends, that moment is not estimated. the audio system finishes playing the last sample and tells the app so. the app then highlights the first sentence of the next group as the next sample/group starts to play.
+      // then the audio system finishes playing the last sample and tells the app. the app then highlights the first sentence of the next group as the next sample/group starts to play.
       // a 40 minute paper is roughly 50 groups. without the reset, every small error would stack onto the last, and by the end of the highlight could end up being minutes from the voice. 
       // with this, each estimate only has to survive about 45 seconds before it starts at the beginning of the next group. 
-      // 
+
 
       {
         type: "images",
@@ -360,7 +272,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "The user's key is stored on their own device in the iOS Keychain and only sent to Google's API.",
+        text: "The user's key is stored on their own device in the iOS Keychain.",
       },
 
 
@@ -380,7 +292,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       // while the user is listening to one chunk, the next one finishes. users can pay as they listen
 
       // Gemini TTS sends back an audio file for each group of sentences, but the question is how to know which sentence is currently being said to highlight it on the user's screen
-      // the trick: guess by length. if one sentence has 50 letters and the next has 150, the second one probably takes about 3 times as long to say.
+      // if one sentence has 50 letters and the next has 150, the second one probably takes about 3 times as long to say.
       // the app knows the clip is exactly 46 seconds total, so it slices those 46 seconds up in proportion to how long each sentence is
       // its only a guess because people don't read at a perfectly steady pace. a sentence with a lot of commas takes longer than a simple one. so highlight might be half a second early or late.
       // why that never gets bad: each clip is only about 50 seconds long. when it finishes playing, the app knows it finished. so it moves the highlight to the first sentence of the next clip and starts counting from 0 again.
@@ -412,52 +324,16 @@ export const caseStudies: Record<string, CaseStudy> = {
         type: "images",
         items: [
           {
-            src: "/projects/paper-reader-library.png",
-            alt: "My Papers: the papers added so far, each with how much of it has been listened to, and a player docked at the bottom",
-          },
-          {
-            src: "/projects/paper-reader-follow-along.png",
-            alt: "A paper being read aloud with the current sentence highlighted, how much has been listened to, and playback controls",
-          },
-        ],
-      },
-      {
-        type: "images",
-        items: [
-          {
-            src: "/projects/paper-reader-logo-4.png",
-            alt: "Lines of a page on cream, with the line being read aloud marked in yellow highlighter and a play triangle at its end",
-          },
-          {
             src: "/projects/paper-reader-logo-blue-soft.png",
             alt: "The same icon with the unread lines dropped to gray, so the highlighted one carries the only black text",
           },
         ],
       },
 
-      // Asking users to go get a Gemini API key is the biggest friction in the app. that's why i preloaded the sample paper. 
-      // hard constraint -> mitigation -> what you'd do with more resources
-
       // friction is anything that makes a user slow down, work, or think before getting what they came for. every tap, form field, decision, wait, and moment of confusion is friction. 
-        // ex) creating an account before you can browse, a 5 screen onboarding tour, a permission popup, a loading spinner, a paywall, a form asking for information you don't understand why they need. 
-        // none of these stop a determined user, but users mostly aren't determined. they're mildly curious, and each bit of resistance peels some of them away. that's why friction gets measured in drop-off: 100 people open the app, 60 survive the signup screen, 40 finish onboarding, 25 reach the actual product. 
-        // friction compounds where motivation is lowest - at the start, before anyone has seen value. a user who already loves your app will tolerate a clunky settings screen; a first time user with 0 investment will abondon over almost nothing.
-        // this is why "time to first value" is the metric people obsess over. second, friction isn't always bad. confirming before deleting, a deliberate pause before a large payment, making it slightly hard to send an angry message - thats intentional friction, added where speed causes harm.
-        // good designers don't remove all friction, they remove it from the path to value and sometimes add it before mistakes.
-        // loot check is friction removal in its purest form. the user's motivation window is tiny. they're mildly curious, that curiosity survives maybe 10 seconds of effort. i deleted the entire pre product ritual, no account, no onboarding, no paywall. (open -> camera -> result)
-        // paper reader is the opposite situation, the bring your own key model forced friction in - and worse, at the exact spot friction is most lethal, before first value. Asking someone to leave your app, navigate Google's developer console, and return with a pasted key is a huge ask of someone who hasn't yet hear the voice or seen the kraoke sync. my countermove was about moving value before the friction: the preloaded sample paper lets people experience the product with 0 setup, so by the time they hit the key wall, they know whats on the other side of it.
-          // loot check: i removed friction because the use case couldn't survive any.
-          // paper reader: i couldn't remove the friction, so i made sure value arrived first. 
-          // that contrast, same principle, opposite constraints, is a genuinely strong thing to be able to talk about
 
-        // the depth of my case study should match the depth of my actual understanding - not because i can't fake more, but because the case study isn't the finish line. it's the script for your interviews.
-        // every sentence i publish is a sentence someone can ask about. when a hiring manager reads "the app writes to the keychain and sends the key only to Google's API", some of them might ask "tell me more about how you handled the key". if you wrote it at the level you understand it, which I genuinely do, that question is a gift. if you write 3 paragraphs of security architecture you copied from an AI without absorbing, the same question is a trap you set for yourself.
-        // so the rule is simple, never publish a claim you couldn't explain out loud, in your own words, without notes. that's depth calibration.
-        // some readers will know more than me and thats fine - a senior engineer reading my case study isnt grading me on whether i know what they know. they're checking whether your reasoning is sound at whatever level im operating at, and whether im honest about the boundaries.
-        // "i used a backend so my key never ships in the app" is correct, appropriately deep, and defensible. engineers respect accurate and simple far more than deep and shaky - shaky depth is bad because it suggests i'll misrepresent my understanding on the job
-        // meanwhile, other readers will know less than me 
-        // don't hide AI assisted building. for design engineer roles, AI assisted building is how a lot of shipping happens now, and a "designer who ships real products with AI leverage" is legit.
-        // what matters is where i was in the loop. the case study should make clear that the decisions were yours: what to build, what to cut, what the error state shows, why there's no onboarding, why the sample paper exists.
+     // write to the level of my understanding
+      
 
       {
         type: "text",
@@ -645,9 +521,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         src: "/projects/buy-side-site-terminal.png",
         alt: "The terminal dashboard: a live quote strip over index tiles, a row of running stats, and today's playbook of long and short calls with their stops and targets beside an open risk panel",
       },
-      // One to a row rather than a grid: these are pages seen on a desktop,
-      // and three across the column would leave them too small to read.
-
+  
       // current design
       { type: "heading", text: "Current design" },
 
