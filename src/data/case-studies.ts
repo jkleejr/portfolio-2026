@@ -180,7 +180,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         captionAlign: "high",
         caption: "add a new paper from files",
         captionLeft: [
-          "audio is generated as the user needs",
+          "audio is generated as the user plays",
         ],
       },
       
