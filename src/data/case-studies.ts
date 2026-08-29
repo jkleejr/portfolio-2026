@@ -220,8 +220,13 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "I preloaded a sample paper into the app so new users can hear the voice and try the full experience before setting up an API key.",
+        text: "I preloaded a sample paper into the app so users try the full experience before setting up an API key.",
       },
+      {
+        type: "text",
+        text: "When an API call fails, the app shows the exact error and a message telling users what to fix.",
+      },
+      
       // (total samples / 24,000 = total seconds)
       // (characters in each sentence / group total characters = % of group text)
       // (% of group text x total seconds = how long each sentence could take)
