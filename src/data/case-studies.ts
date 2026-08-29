@@ -108,11 +108,11 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "Vision models aren't 100% accurate so I designed around uncertainty. Users can type in what they know about an item to steer Claude toward the right product. If confidence is low, the result is labeled 'best guess'.",
+        text: "Vision models aren't 100% accurate so I designed around uncertainty. You can type in what you know about an item to steer Claude toward the right product. If confidence is low, the result is labeled 'best guess'.",
       },
       {
         type: "text",
-        text: "The marketplace table shows how much the user would keep after each marketplace's fees.",
+        text: "The 'where to sell' table predicts how much you keep after each marketplace's fees to help you decide where to list.",
       },
       {
         type: "text",
