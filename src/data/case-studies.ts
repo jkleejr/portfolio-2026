@@ -338,7 +338,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "If I continued Paper Reader, I would integrate an API key into the app, minimize costs, and charge per paper. Asking users to set up their own key is this app's biggest point of friction. It was a huge limitation because most users wouldn't know what to do. There are many TTS products like Speechify, Blinkist that address similar problems, so I moved on.",
+        text: "If I continued Paper Reader, I would integrate an API key into the app, minimize costs, and charge per paper. Asking users to set up their own key is this app's biggest point of friction and honestly a bad idea. It was a huge limitation. There are many TTS products like Speechify, Blinkist that address similar problems, so I moved on.",
       },
     
       // Gemini 3.1 flash
