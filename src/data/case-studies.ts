@@ -292,7 +292,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "A sample paper with narration is included into the app so users can test before setting up an API key.",
+        text: "A sample paper with narration is included into the app so users can experience the app before setting up an API key.",
       },
 
       
@@ -441,6 +441,27 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       // Asking users to go get a Gemini API key is the biggest friction in the app. that's why i preloaded the sample paper. 
       // hard constraint -> mitigation -> what you'd do with more resources
+
+      // friction is anything that makes a user slow down, work, or think before getting what they came for. every tap, form field, decision, wait, and moment of confusion is friction. 
+        // ex) creating an account before you can browse, a 5 screen onboarding tour, a permission popup, a loading spinner, a paywall, a form asking for information you don't understand why they need. 
+        // none of these stop a determined user, but users mostly aren't determined. they're mildly curious, and each bit of resistance peels some of them away. that's why friction gets measured in drop-off: 100 people open the app, 60 survive the signup screen, 40 finish onboarding, 25 reach the actual product. 
+        // friction compounds where motivation is lowest - at the start, before anyone has seen value. a user who already loves your app will tolerate a clunky settings screen; a first time user with 0 investment will abondon over almost nothing.
+        // this is why "time to first value" is the metric people obsess over. second, friction isn't always bad. confirming before deleting, a deliberate pause before a large payment, making it slightly hard to send an angry message - thats intentional friction, added where speed causes harm.
+        // good designers don't remove all friction, they remove it from the path to value and sometimes add it before mistakes.
+        // loot check is friction removal in its purest form. the user's motivation window is tiny. they're mildly curious, that curiosity survives maybe 10 seconds of effort. i deleted the entire pre product ritual, no account, no onboarding, no paywall. (open -> camera -> result)
+        // paper reader is the opposite situation, the bring your own key model forced friction in - and worse, at the exact spot friction is most lethal, before first value. Asking someone to leave your app, navigate Google's developer console, and return with a pasted key is a huge ask of someone who hasn't yet hear the voice or seen the kraoke sync. my countermove was about moving value before the friction: the preloaded sample paper lets people experience the product with 0 setup, so by the time they hit the key wall, they know whats on the other side of it.
+          // loot check: i removed friction because the use case couldn't survive any.
+          // paper reader: i couldn't remove the friction, so i made sure value arrived first. 
+          // that contrast, same principle, opposite constraints, is a genuinely strong thing to be able to talk about
+
+        // the depth of my case study should match the depth of my actual understanding - not because i can't fake more, but because the case study isn't the finish line. it's the script for your interviews.
+        // every sentence i publish is a sentence someone can ask about. when a hiring manager reads "the app writes to the keychain and sends the key only to Google's API", some of them might ask "tell me more about how you handled the key". if you wrote it at the level you understand it, which I genuinely do, that question is a gift. if you write 3 paragraphs of security architecture you copied from an AI without absorbing, the same question is a trap you set for yourself.
+        // so the rule is simple, never publish a claim you couldn't explain out loud, in your own words, without notes. that's depth calibration.
+        // some readers will know more than me and thats fine - a senior engineer reading my case study isnt grading me on whether i know what they know. they're checking whether your reasoning is sound at whatever level im operating at, and whether im honest about the boundaries.
+        // "i used a backend so my key never ships in the app" is correct, appropriately deep, and defensible. engineers respect accurate and simple far more than deep and shaky - shaky depth is bad because it suggests i'll misrepresent my understanding on the job
+        // meanwhile, other readers will know less than me 
+        // don't hide AI assisted building. for design engineer roles, AI assisted building is how a lot of shipping happens now, and a "designer who ships real products with AI leverage" is legit.
+        // what matters is where i was in the loop. the case study should make clear that the decisions were yours: what to build, what to cut, what the error state shows, why there's no onboarding, why the sample paper exists.
 
       {
         type: "text",
