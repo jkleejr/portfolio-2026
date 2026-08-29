@@ -112,7 +112,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "The 'where to sell' table predicts how much could be made after marketplace fees to help users decide where to list. I wanted to automate the listing process, but most marketplaces don't offer a public listing API, so the app writes a title and description for copy and paste.",
+        text: "The 'where to sell' table predicts how much could be made after marketplace fees to help users decide where to list. I wanted to automate the listing process, but most marketplaces don't offer a public listing API, so the app writes a title and description to copy and paste.",
       },
       {
         type: "text",
@@ -288,7 +288,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "A sample paper with narration is included into the app so users can experience the app before setting up an API key.",
+        text: "I included a sample paper so users can test before setting up an API key.",
       },
 
       
