@@ -108,11 +108,11 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "Vision models aren't 100% accurate so I designed around uncertainty. You can type in what you know to steer Claude toward the right product and low confidence results are labeled 'best guess'.",
+        text: "Vision models aren't 100% accurate so I designed around uncertainty. Users can type in what you know to steer Claude toward the right product and low confidence results are labeled 'best guess'.",
       },
       {
         type: "text",
-        text: "The 'where to sell' table predicts how much you could keep after marketplace fees to help you decide where to list. I wanted to automate the listing process, but most marketplaces don't offer a public listing API, so the app writes a title and description for copy and paste.",
+        text: "The 'where to sell' table predicts how much could be made after marketplace fees to help users decide where to list. I wanted to automate the listing process, but most marketplaces don't offer a public listing API, so the app writes a title and description for copy and paste.",
       },
       // 2 key decisions....
       // claude sonnet 4.6 because its cheap enough to run per scan and still accurate.
@@ -217,6 +217,10 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "text",
         text: "Because Gemini only returns audio, the app has to estimate when each sentence is being spoken. Audio clips arrive as 24,000 samples per second, so the total seconds in a group can be calculated (total samples / 24,000 = total seconds). At this point the app knows the total seconds, the number of sentences, but not how long each sentence could take. It splits the group proportionally by text, so a sentence with 5% of the group's characters is assumed to take 5% of the audio. (characters in each sentence / group total characters = % of group text) then (% of group text x total seconds = how long each sentence could take). As the audio plays, the app tracks the time and highlights a sentence based on the estimated duration. However, it's not always accurate.",
+      },
+      {
+        type: "text",
+        text: "I included a complete sample paper in the app so a new user can test and hear the voice before using a key.",
       },
       // (total samples / 24,000 = total seconds)
       // (characters in each sentence / group total characters = % of group text)
