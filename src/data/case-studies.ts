@@ -616,6 +616,35 @@ export const caseStudies: Record<string, CaseStudy> = {
         src: "/projects/buy-side-site-briefing.png",
         alt: "A single briefing: the night's headline over three key points, each one repeated underneath with the source it came from and a link out to it",
       },
+
+      // mobile design
+      { type: "heading", text: "Mobile design" },
+      {
+        type: "images",
+        items: [
+          {
+            src: "/projects/buy-side-mobile-today.png",
+            alt: "The Today page on a phone: the ticker strip under the nav, an AM and PM switch beside the night briefing, its headline and the paragraph that argues it, and the chart panel opening underneath",
+          },
+          {
+            src: "/projects/buy-side-mobile-briefing.png",
+            alt: "A briefing opened on a phone: the night's headline over three key points, each repeated underneath with the outlet it came from, and the rest folded away behind a line of sourced points",
+          },
+        ],
+      },
+      {
+        type: "images",
+        items: [
+          {
+            src: "/projects/buy-side-mobile-methodology.png",
+            alt: "The full read on a phone, opening on the methodology note that lists every source behind the night's numbers",
+          },
+          {
+            src: "/projects/buy-side-mobile-full-read.png",
+            alt: "Further down the full read: what happened today, holding the morning brief's calls against how the session actually closed",
+          },
+        ],
+      },
     ],
   },
 };

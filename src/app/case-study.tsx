@@ -175,8 +175,11 @@ function Block({ block }: { block: CaseStudyBlock }) {
               set from the same two and three across the grid used, so a shot
               is the same size however many are beside it, and a row that does
               not fill sits in the middle of the column rather than hanging off
-              its left edge. */}
-          <div className="flex flex-wrap justify-center gap-4">
+              its left edge. Aligned to the top rather than stretched: a row of
+              shots that are not all the same shape would otherwise pull the
+              short ones to the height of the tallest and squash what is in
+              them. */}
+          <div className="flex flex-wrap items-start justify-center gap-4">
             {block.items.map((item, i) => (
               // eslint-disable-next-line @next/next/no-img-element
               <img
