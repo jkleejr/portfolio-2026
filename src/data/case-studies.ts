@@ -359,7 +359,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "The user's API key is safely secured in the iOS Keychain, unaccessible to other apps.",
+        text: "The user's API key is safely secured in the iOS Keychain, inaccessible to other apps.",
       },
 
 
