@@ -190,7 +190,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         type: "list",
         ordered: true,
         items: [
-          "Gemini splits text into groups, filters out citations, etc. and keeps prose unchanged",
+          "Gemini splits text into groups, filters out citations, etc. and keeps prose the same",
         // Group sentences ~750 characters, ~45 seconds of speech.",
           "TTS returns audio for each group",
         ],
