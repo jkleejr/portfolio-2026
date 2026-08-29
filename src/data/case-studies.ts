@@ -342,7 +342,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "If I continued this project, I would integrate an API key into the app, minimize costs, and charge per paper. Since there are many TTS products like Speechify and Blinkist that address similar problems, I decided to work on new ideas.",
+        text: "If I continued this project, I would integrate an API key into the app, minimize costs, and charge per paper. Since there are many TTS products like Speechify and Blinkist that address similar problems, I decided to ship Paper Reader and work on new ideas.",
       },
     
       // Gemini 3.1 flash
