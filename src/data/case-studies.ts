@@ -114,10 +114,6 @@ export const caseStudies: Record<string, CaseStudy> = {
         type: "text",
         text: "I wanted to automate the listing process, but most marketplaces don't offer a public listing API, so the app writes a title and description for copy and paste.",
       },
-      {
-        type: "text",
-        text: "There are no accounts, onboarding screens, or paywalls to eliminate friction.",
-      },
       // 2 key decisions....
       // claude sonnet 4.6 because its cheap enough to run per scan and still accurate.
       // costs me about $0.013 per scan.
