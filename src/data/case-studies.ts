@@ -135,7 +135,8 @@ export const caseStudies: Record<string, CaseStudy> = {
       // that file is not in the app and never has been in the app.
       // running "vercel --prod" replaces the old file with the new one on their machines. the very next scan anyone does goes through the new instructions
 
-      // How is Loot Check valuing items?
+
+      // HOW IS LOOT CHECK VALUING ITEMS? (as of 8.29.26)
       // right now the model estimates it, there is no lookup.
       // the price comes from the same API call that identifies the item. Claude looks at the photo and returns a dollar range as one field in the JSON, alongside the title and category. nothing queries eBay, or any pricing database, at any point.
       // one field in the schema: estimatedValueUSD: {low: 5, high: 9}
@@ -150,6 +151,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       // net = anchor x (1 - feePct) - flatFee
       // the fee percentages are hardcoded constraints in the app, they're fixed 
       
+
       // ULTIMATELY, the number/estimated resale value is a well informed guess from a model that has seen an enormous amount of resale listings, constrained by a prompt that pushes it toward secondhand pricing and told to widen the range when unsure. It is not derived from what anything actually sold for.
       // thats why the app says "estimated resale value" and nothing more
 
@@ -166,6 +168,9 @@ export const caseStudies: Record<string, CaseStudy> = {
       // right now, the flow is : photo -> Claude -> done. one call, one round trip.
 
       // if i wanted to get sales data online to make the price estimation more accurate....
+
+
+    
 
       {
         type: "images",
