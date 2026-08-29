@@ -106,6 +106,10 @@ export const caseStudies: Record<string, CaseStudy> = {
         type: "text",
         text: "I used Claude Sonnet 4.6 to identify the item, find the price, and write the listing due to its high accuracy and low API costs at ~$0.013 per scan. I considered Kimi K3, but the costs were similar and I wanted the results to be as trustworthy as possible.",
       },
+      {
+        type: "text",
+        text: "Sonnet 4.6 is not 100% accurate so I added an option where users can type in what they know about the item to steer the model toward the right product. If Claude still isn't sure, it makes a guess and labels it as 'best guess' in the result. I wanted to automate the entire listing process but since most marketplaces don't have a public listing API, the app writes a title and description to save the user's time.",
+      },
       // 2 key decisions....
       // claude sonnet 4.6 because its cheap enough to run per scan and still accurate.
       // costs me about $0.013 per scan.
