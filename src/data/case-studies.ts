@@ -115,7 +115,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "Claude Sonnet 4.6 identifies the item, its value, and writes the listing. I considered Kimi K3, but the costs were similar and I wanted the results to be as trustworthy as possible.",
+        text: "Claude Sonnet 4.6 identifies the item, its value, and writes the listing.",
       },
       // designing for uncertainty
                   { type: "heading", text: "" },
