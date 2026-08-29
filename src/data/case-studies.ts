@@ -108,7 +108,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "Vision models aren't 100% accurate so I designed around uncertainty. Users can type in what they know about an item to steer Claude toward the right product. If confidence is low, the result is labeled 'best guess'.",
+        text: "Vision models aren't 100% accurate so I designed around uncertainty. Users can type in what they know about an item to steer Claude toward the right product. When confidence is low, the result is labeled 'best guess'.",
       },
       {
         type: "text",
