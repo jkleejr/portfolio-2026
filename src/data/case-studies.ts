@@ -174,9 +174,9 @@ export const caseStudies: Record<string, CaseStudy> = {
         src: "/projects/paper-reader-add-and-listen.mp4",
         controls: true,
         captionAlign: "high",
-        caption: "add a new paper from files",
+        caption: "Add a new paper from files",
         captionLeft: [
-          "audio is generated as the narration continues",
+          "Audio is generated as the narration continues",
         ],
       },
       
