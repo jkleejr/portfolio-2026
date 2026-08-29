@@ -364,7 +364,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "The user's API key is stored on their own device in the iOS Keychain and only sent to Google's API.",
+        text: "The user's key is stored on their own device in the iOS Keychain and only sent to Google's API.",
       },
 
 
