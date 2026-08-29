@@ -116,7 +116,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         text: "I used Claude Sonnet 4.6 to identify, find the price, and write the listing due to its high accuracy and low API costs at ~$0.013 per scan. I considered Kimi K3, but the costs were similar and I wanted the results to be as trustworthy as possible.",
       },
       // designing for uncertainty
-                  { type: "heading", text: "Designing for uncertainty" },
+                  { type: "heading", text: "Reducing friction" },
 
       {
         type: "text",
