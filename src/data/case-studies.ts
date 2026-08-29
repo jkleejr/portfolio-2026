@@ -212,7 +212,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "When processing fails, the paper enters an error state showing the exact error.",
+        text: "When processing fails, the paper enters an error state.",
       },
       {
         type: "images",
