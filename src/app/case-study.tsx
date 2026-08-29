@@ -192,6 +192,7 @@ function Block({ block }: { block: CaseStudyBlock }) {
                 className={`w-[calc((100%_-_1rem)/2)] rounded-xl border border-foreground/10 ${
                   block.columns === 2 ? "" : "sm:w-[calc((100%_-_2rem)/3)]"
                 }`}
+                style={item.width ? { width: item.width } : undefined}
               />
             ))}
           </div>

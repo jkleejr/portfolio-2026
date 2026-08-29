@@ -4,8 +4,13 @@ export type EntryImage = {
   crop?: string; // CSS object-position, e.g. "top" or "50% 20%" (default center)
   // Shown on the homepage in place of `src` — for a project whose thumbnail
   // reads better as a logo than as one of its screens. The page the thumbnail
-  // opens still shows `src`, and a cover is used as-is, without `crop`.
+  // opens still shows `src`, and a cover ignores `crop`, which frames that
+  // shot rather than this one.
   cover?: string;
+  // How the cover sits in the square, for one that is not square itself and
+  // loses something to the middle crop. CSS object-position, "left" or
+  // "50% 20%". Centred when unset.
+  coverCrop?: string;
   // A dot painted over the cover that drifts toward the pointer. The cover
   // image has to have it erased — see screen-translator-logo-4-base.png. All
   // lengths are percentages of the thumbnail, so they hold at any size.
@@ -84,7 +89,8 @@ export const entries: Entry[] = [
     images: [
       {
         src: "/projects/paper-reader-2.png",
-        cover: "/projects/paper-reader-logo-blue-soft.png",
+        cover: "/projects/paper-reader-highlight-detail.png",
+        coverCrop: "left",
         alt: "Reader view with the sentence being read aloud highlighted",
         crop: "50% 34%",
         title: "Paper Reader",

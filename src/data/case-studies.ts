@@ -17,9 +17,11 @@ export type CaseStudyBlock =
     }
   // Three across from sm up, or two where the shots are wider than they are
   // tall and three would leave them too small to read.
+  // A shot takes its width from the row unless it sets one, which holds it to
+  // that many pixels — for one that reads bigger than what is beside it.
   | {
       type: "images";
-      items: { src: string; alt: string; crop?: string }[];
+      items: { src: string; alt: string; crop?: string; width?: number }[];
       caption?: string;
       columns?: 2;
     }
@@ -135,19 +137,18 @@ export const caseStudies: Record<string, CaseStudy> = {
       // BACKEND
       // photo -> Claude -> result
       // When I tap identify, my phone sends the photo, hits Claude, and it sends back title, price, marketplace, description.
-      // instructions to find resale vale and base it on item type, brand, and condition
+      // prompted to find resale vale and base it on item type, brand, and condition
       // 60 scans per day limit
       // key is stored
 
       // HOW IS LOOT CHECK VALUING ITEMS? (8.29.26)
       // It's a well informed guess from Claude, no lookup
-
       // 1 API call is being made per scan, not per photo.
       // more photos costs more, capped at 4.
-
       // if i wanted to get sales data online to make the price estimation more accurate....
       // id have to pay $.01 per search online (Anthropic's rate) so it would be 2-3x more expensive per scan
       // decided not to
+      
                 { type: "heading", text: "Shipped" },
 
       {
@@ -179,7 +180,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       
       {
         type: "text",
-        text: "I designed the app around users paying for their own API usage due to the costs of audio generation at ~$1-3 per paper. I used 1 API for text and audio. Gemini 3.1 flash was the best option since it could clean up text and had TTS with 8 voices.",
+        text: "I designed the app around users paying for their own API usage due to the costs of audio generation at ~$1-3 per paper. Gemini 3.1 flash was the best option since it could clean up text and had TTS with 8 voices.",
       },
       { type: "heading", text: "AI" },
 
@@ -191,8 +192,11 @@ export const caseStudies: Record<string, CaseStudy> = {
         // Group sentences ~750 characters, ~45 seconds of speech.",
           "TTS returns audio data",
         ],
+        
     
       },
+   
+
             { type: "heading", text: "Highlighting" },
 
       {
@@ -220,6 +224,7 @@ export const caseStudies: Record<string, CaseStudy> = {
           },
           {
             src: "/projects/paper-reader-error-detail.png",
+            width: 265,
             alt: "The failure the row opens onto: a warning triangle over the Gemini error, a line pointing to the API key in Settings, and a Try Again button",
           },
         ],
@@ -262,31 +267,9 @@ export const caseStudies: Record<string, CaseStudy> = {
       // the sentence "The paper is TradingAgents..." has 192 characters, 31% share of the clip, and took 14.29 seconds. 192 characters out of 623 is 31% of the text, so its assumed to take 31% of the time. 
 
       // the highlight follows that estimate. 4 times a second, the app adds the elapsed time to a running total.. at 1.5x the total climbs 1.5 seconds per real second. 
-      
-      // so nothing is listening to the audio. It's a clock and a list of numbers. 
-      // the estimate drifts because people don't read at an even pace, a sentence full of commas takes longer. halfway through a group, the highlight might be half a second ahead of the voice. 
-      // then the audio system finishes playing the last sample and tells the app. the app then highlights the first sentence of the next group as the next sample/group starts to play.
-      // a 40 minute paper is roughly 50 groups. without the reset, every small error would stack onto the last, and by the end of the highlight could end up being minutes from the voice. 
-      // with this, each estimate only has to survive about 45 seconds before it starts at the beginning of the next group. 
-        {
-        type: "text",
-        text: "The user's key is stored on their own device in the iOS Keychain.",
-      },
-
-      {
-        type: "images",
-        items: [
-          {
-            src: "/projects/paper-reader-api-key.png",
-            alt: "The Gemini API key screen: why the app asks for a key, a link to get one, what a paper costs to narrate, where the key is kept, what leaves the device, and the field to paste it in",
-          },
-          {
-            src: "/projects/paper-reader-settings.png",
-            alt: "Settings: the Gemini API key, the text and voice models, and the narration voice",
-          },
-        ],
-      },
-
+    
+      // a 40 minute paper is roughly 50 groups
+       
       // the user's Gemini API key is safely stored in the iOS keychain. it can't be read by other apps, is encryptoed by the rest of the OS tied to the device's hardware.
       // where it goes:
       // generativelanguage.googleapis.com over HTTPS, in a request header (x-goog-api-key), not in the URL, which matters because URLs get logged by proxies and headers generally don't. There's one URLSession in the entire app and one destination host.
@@ -355,7 +338,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "If I continued Paper Reader, I would integrate an API key into the app, minimize costs, and charge per paper. Asking users to set up their own key is this app's biggest point of friction. There are many TTS products like Speechify, Blinkist that address similar problems, so I shipped this project and moved on.",
+        text: "If I continued Paper Reader, I would integrate an API key into the app, minimize costs, and charge per paper. Asking users to set up their own key is this app's biggest point of friction. It was a huge limitation because most users wouldn't know what to do. There are many TTS products like Speechify, Blinkist that address similar problems, so I moved on.",
       },
     
       // Gemini 3.1 flash

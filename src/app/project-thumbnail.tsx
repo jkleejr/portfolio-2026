@@ -124,9 +124,13 @@ export function ProjectThumbnail({
         quality={90}
         className="object-cover"
         style={
-          !image.cover && image.crop
-            ? { objectPosition: image.crop }
-            : undefined
+          image.cover
+            ? image.coverCrop
+              ? { objectPosition: image.coverCrop }
+              : undefined
+            : image.crop
+              ? { objectPosition: image.crop }
+              : undefined
         }
       />
       {image.coverDot && <CoverDot dot={image.coverDot} />}
