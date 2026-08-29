@@ -128,7 +128,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         type: "image",
         src: "/projects/loot-check-detail-input.png",
         width: 388,
-        alt: "The optional detail field under a photo of an OP-1 in its case, with \"Op1 synth\" typed in and a tip to include a close-up of the brand logo",
+        alt: "The optional detail field under a photo of an OP-1 in its case, with \"keyboard and synth\" typed in and a tip to include a close-up of the brand logo",
       },
       {
         type: "text",
@@ -235,17 +235,6 @@ export const caseStudies: Record<string, CaseStudy> = {
           },
         ],
       },
-      {
-        type: "text",
-        text: "I included a sample paper so users can test before setting up an API key.",
-      },
-      {
-        type: "image",
-        src: "/projects/paper-reader-sample-detail.png",
-        width: 367,
-        alt: "The sample paper's row in My Papers, marked SAMPLE above its title, 77 per cent listened, and a play button on its right",
-      },
-
       
       // (total samples / 24,000 = total seconds)
       // (characters in each sentence / group total characters = % of group text)
