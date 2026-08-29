@@ -114,10 +114,26 @@ export const caseStudies: Record<string, CaseStudy> = {
         type: "text",
         text: "The 'where to sell' table predicts how much could be made after marketplace fees to help users decide where to list. I wanted to automate the listing process, but most marketplaces don't offer a public listing API, so the app writes a title and description for copy and paste.",
       },
+      {
+        type: "text",
+        text: "backend, using a server to store my API key",
+      },
       // 2 key decisions....
       // claude sonnet 4.6 because its cheap enough to run per scan and still accurate.
       // costs me about $0.013 per scan.
       // thought about the users and making a subscription too but decided i would make it free to use since the cost is low
+
+      // SERVER SIDE UPDATES ARE LIVE IMMEDIATELY
+      // the backend is the code that does the actual work. when I tap identify, my phone sends. the photo to resell-it-backend.vercel.app/api/analyze, that computer talks to Claude, and it sends back the finisehd JSON - title, price, marketplace, description.
+      // why does the backend exist?
+      // because of my API Key.
+      // talking to claude costs money and requires a secret key. if that key were inside the app, anyone could pull it out of the downloaded app file - and spend my money
+      // so the key lives in exactly one place: on the server. the app has no idea it exists. the app can only call your endpoints, and your server decides whether to spend money on that request. that's also where the 60 scans per day limit is enforced.
+      // Vercel is the compnay that runs that computer for you.
+      // "deploying" for this project just means: uploading your current code files to Vercel, replacing what was there before.
+      // the instructions that produce the description are a file on the server - lib/analyze.ts, containing the prompt that tells Claude "write 1-3 factual sentences..."
+      // that file is not in the app and never has been in the app.
+      // running "vercel --prod" replaces the old file with the new one on their machines. the very next scan anyone does goes through the new instructionss
       {
         type: "images",
         items: [
