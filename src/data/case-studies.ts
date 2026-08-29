@@ -348,7 +348,7 @@ export const caseStudies: Record<string, CaseStudy> = {
     blocks: [
       {
         type: "text",
-        text: "Translate without having to switch apps. It runs in the background, identifies text in a section of the screen, and displays the translation live.",
+        text: "Translate without switching apps. It runs in the background, identifies text in a section of the screen, and displays the translation live.",
       },
       // had to use the dynamic island iOS does not allow you to render anything over an existing app
       // had 2 choices, use the dynamic island or a floating window
