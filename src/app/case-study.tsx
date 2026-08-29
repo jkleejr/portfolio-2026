@@ -168,19 +168,22 @@ function Block({ block }: { block: CaseStudyBlock }) {
     case "images":
       return (
         <figure>
-          {/* A grid rather than a wrapping row: a row shares its width between
-              whatever is on it, so a last shot left on its own would blow up
-              to the width of the column while the ones above it stayed small.
-              Columns hold their size however many shots there are. Two across
-              on a phone, three from sm up. */}
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
+          {/* A wrapping row with each shot sized to a column of the grid it
+              would have been: a plain row shares its width between whatever is
+              on it, so a last shot left on its own would blow up to the width
+              of the column while the ones above it stayed small. Widths are
+              set from the same two and three across the grid used, so a shot
+              is the same size however many are beside it, and a row that does
+              not fill sits in the middle of the column rather than hanging off
+              its left edge. */}
+          <div className="flex flex-wrap justify-center gap-4">
             {block.items.map((item, i) => (
               // eslint-disable-next-line @next/next/no-img-element
               <img
                 key={i}
                 src={item.src}
                 alt={item.alt}
-                className="w-full rounded-xl border border-foreground/10"
+                className="w-[calc((100%_-_1rem)/2)] rounded-xl border border-foreground/10 sm:w-[calc((100%_-_2rem)/3)]"
               />
             ))}
           </div>

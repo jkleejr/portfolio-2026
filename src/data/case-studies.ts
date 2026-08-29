@@ -218,14 +218,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         type: "text",
         text: "Because Gemini only returns audio, the app has to estimate when each sentence is being spoken. Audio clips arrive as 24,000 samples per second, so the total seconds in a group can be calculated (total samples / 24,000 = total seconds). At this point the app knows the total seconds, the number of sentences, but not how long each sentence could take. It splits the group proportionally by text, so a sentence with 5% of the group's characters is assumed to take 5% of the audio. (characters in each sentence / group total characters = % of group text) then (% of group text x total seconds = how long each sentence could take). As the audio plays, the app tracks the time and highlights a sentence based on the estimated duration. However, it's not always accurate.",
       },
-      {
-        type: "text",
-        text: "I preloaded a sample paper into the app so users can test before setting up an API key.",
-      },
-      {
-        type: "text",
-        text: "When processing fails, the paper enters an error state and shows the exact error.",
-      },
+
       {
         type: "images",
         items: [
@@ -238,6 +231,14 @@ export const caseStudies: Record<string, CaseStudy> = {
             alt: "The same failure opened up, with the Gemini error it came back with, a line pointing to the API key in Settings, and a Try Again button",
           },
         ],
+      },
+      {
+        type: "text",
+        text: "When processing fails, the paper enters an error state and shows the exact error.",
+      },
+      {
+        type: "text",
+        text: "I included a fully narrated sample paper into the app so users can test before setting up an API key.",
       },
       
       // (total samples / 24,000 = total seconds)
@@ -276,20 +277,6 @@ export const caseStudies: Record<string, CaseStudy> = {
       // a 40 minute paper is roughly 50 groups. without the reset, every small error would stack onto the last, and by the end of the highlight could end up being minutes from the voice. 
       // with this, each estimate only has to survive about 45 seconds before it starts at the beginning of the next group. 
       // 
-
-      {
-        type: "images",
-        items: [
-          {
-            src: "/projects/paper-reader-library.png",
-            alt: "My Papers: the papers added so far, each with how much of it has been listened to, and a player docked at the bottom",
-          },
-          {
-            src: "/projects/paper-reader-follow-along.png",
-            alt: "A paper being read aloud with the current sentence highlighted, how much has been listened to, and playback controls",
-          },
-        ],
-      },
 
       {
         type: "images",
@@ -348,7 +335,19 @@ export const caseStudies: Record<string, CaseStudy> = {
       // word lasts about 0.3 seconds, a sentence lasts 5-15 seconds. so words are better, but word level would have required real timings which is more complicated and probably requires another model to do
       // the re-sync for the end of every clip/chunk/group, so the app stops guessing and it knows whats the current sentence that needs to be highlighted to match the audio
       //
-  
+      {
+        type: "images",
+        items: [
+          {
+            src: "/projects/paper-reader-library.png",
+            alt: "My Papers: the papers added so far, each with how much of it has been listened to, and a player docked at the bottom",
+          },
+          {
+            src: "/projects/paper-reader-follow-along.png",
+            alt: "A paper being read aloud with the current sentence highlighted, how much has been listened to, and playback controls",
+          },
+        ],
+      },
       {
         type: "images",
         items: [
