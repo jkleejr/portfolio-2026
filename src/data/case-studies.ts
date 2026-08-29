@@ -116,7 +116,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "backend, using a server to store my API key, not the app, 1 call is made per scan",
+        text: "backend, using a server to store my API key, 1 call is made per scan",
       },
       // 2 key decisions....
       // claude sonnet 4.6 because its cheap enough to run per scan and still accurate.
