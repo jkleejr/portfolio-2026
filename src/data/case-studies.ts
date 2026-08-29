@@ -331,7 +331,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "If I continued this project, I would integrate a key into the app. Asking users to set up their own key is the biggest pain point and its honestly a bad idea. There are many TTS products like Speechify that address the same problems, so I moved on.",
+        text: "If I continued this project, I would integrate a key into the app. Asking users to set up their own key is the biggest pain point and a bad idea. There are many TTS products like Speechify that address the same problems, so I moved on.",
       },
     
       // Gemini 3.1 flash
@@ -357,11 +357,9 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "text",
         text: "My first idea was to generate text over the current display, but iOS does not allow an app to draw over another app. To get around this, I used a ReplayKit broadcast extension to receive pixels of what's on screen, and showed the translation using the dynamic island and floating window."
+
       },
-      {
-        type: "text",
-        text: "AI:"
-      },
+        { type: "heading", text: "AI" },
       // first, focusing this app on live captions translations, and trying to make that process as seamless as i can.
       // audio later
       {
