@@ -130,10 +130,6 @@ export const caseStudies: Record<string, CaseStudy> = {
             src: "/projects/loot-check-detail-input.png",
             alt: "The optional detail field under a photo of an OP-1 in its case, with \"keyboard and synth\" typed in and a tip to include a close-up of the brand logo",
           },
-          {
-            src: "/projects/loot-check-result-detail.png",
-            alt: "What that scan came back with: the OP-1 named in full, tags for the category and condition, the brand, and the keywords it was matched on",
-          },
         ],
       },
 
