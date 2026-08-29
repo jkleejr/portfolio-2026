@@ -287,7 +287,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "I included a fully narrated sample paper into the app so users can test before setting up an API key.",
+        text: "A sample paper with narration is included into the app so users can test before setting up an API key.",
       },
       
       // (total samples / 24,000 = total seconds)
