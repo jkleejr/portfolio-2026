@@ -116,7 +116,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "backend, using a server to store my API key, 1 call is made per scan",
+        text: "backend, using a server to store my API key, not the app, 1 call is made per scan",
       },
       // 2 key decisions....
       // claude sonnet 4.6 because its cheap enough to run per scan and still accurate.
@@ -161,6 +161,11 @@ export const caseStudies: Record<string, CaseStudy> = {
         // Copy - listingDescription, keywords, searchQuery
       // identify, price, title, description, and which marketplace to sell on and why - all one round trip to Claude
       // more photos costs more, but not more calls. each image is roughly 1,900 tokens, so a 4 photo scan is pricier than a 1 photo scan. but its 1 request either way. the photos are capped at 4
+
+
+      // right now, the flow is : photo -> Claude -> done. one call, one round trip.
+
+      // if i wanted to get sales data online to make the price estimation more accurate....
 
       {
         type: "images",
@@ -461,6 +466,10 @@ export const caseStudies: Record<string, CaseStudy> = {
         type: "images",
         items: [
           {
+            src: "/projects/screen-translator-2.png",
+            alt: "The Dynamic Island expanded over a Korean news feed, holding the headline and its English translation",
+          },
+          {
             src: "/projects/screen-translator-1.png",
             alt: "The recording screen: a red Recording card over a running list of live captions, each Korean line with its English under it",
           },
@@ -468,19 +477,13 @@ export const caseStudies: Record<string, CaseStudy> = {
             src: "/projects/screen-translator-3.png",
             alt: "The translation region picker: a phone outline with a blue box dragged over the top third of the screen, and a resize handle at its corner",
           },
-          {
-            src: "/projects/screen-translator-4.png",
-            alt: "Settings for captions over other apps: Dynamic Island on, floating caption window off",
-          },
-          {
-            src: "/projects/screen-translator-2.png",
-            alt: "The Dynamic Island expanded over a Korean news feed, holding the headline and its English translation",
-          },
         ],
       },
+
       {
         type: "images",
         items: [
+          
           {
             src: "/projects/screen-translator-logo-clean.png",
             alt: "The mark in black on white: a record dot inside a ring, set on a pale grey circle",
