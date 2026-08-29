@@ -220,7 +220,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "I preloaded a sample paper into the app so users try the full experience before setting up an API key.",
+        text: "I preloaded a sample paper into the app so users can try the full experience before setting up an API key.",
       },
       {
         type: "text",
