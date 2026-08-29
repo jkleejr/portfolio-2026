@@ -127,22 +127,6 @@ export const entries: Entry[] = [
     ],
   },
   {
-    title: "SleepTalk",
-    blurb:
-      "Records what you say in your sleep and tracks the patterns over time.",
-    slug: "sleeptalk",
-    platform: "mobile",
-    images: [
-      {
-        src: "/projects/sleeptalk-1.png",
-        alt: "SleepTalk record screen waiting to start listening",
-        crop: "50% 41%",
-        title: "SleepTalk",
-        description: "",
-      },
-    ],
-  },
-  {
     title: "Time with Tree",
     blurb:
       "Website for a birch tree farm in South Korea.",

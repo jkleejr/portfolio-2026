@@ -398,44 +398,6 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
     ],
   },
-
-  sleeptalk: {
-    title: "SleepTalk",
-    date: "August 2026",
-    status: "Work in Progress",
-    blocks: [
-      {
-        type: "text",
-        text: "SleepTalk is a mobile app that tracks your sleep talking patterns over time.",
-      },
-      {
-        type: "text",
-        text: "",
-      },
-      {
-        type: "images",
-        items: [
-          {
-            src: "/projects/sleeptalk-logo-icon.svg",
-            alt: "The app icon: a crescent moon with a speech wave coming out of it, on a purple gradient",
-          },
-          {
-            src: "/projects/sleeptalk-logo-handdrawn.png",
-            alt: "A hand-drawn take: blue Zs trailing off inside a rough black square",
-          },
-          {
-            src: "/projects/sleeptalk-logo-blue.png",
-            alt: "The Zs in white, filling a solid blue tile",
-          },
-        ],
-      },
-      {
-        type: "text",
-        text: "",
-      },
-    ],
-  },
-
   "time-with-tree": {
     title: "Time with Tree",
     date: "May 2026",
