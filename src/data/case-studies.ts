@@ -151,12 +151,12 @@ export const caseStudies: Record<string, CaseStudy> = {
             alt: "A shoe icon in a blue tag",
           },
           {
-            src: "/projects/loot-check-logo-blue-on-white.png",
-            alt: "Price tag icon in blue on white inside corner brackets",
+            src: "/projects/loot-check-logo-scan-white-on-blue.png",
+            alt: "The same tag and brackets reversed, white on a solid blue tile",
           },
           {
-            src: "/projects/loot-check-logo-white-on-blue.png",
-            alt: "The same price tag icon reversed out in white on blue",
+            src: "/projects/loot-check-logo-scan-blue-on-white.png",
+            alt: "A price tag with its hole punched out, set inside camera scan brackets, blue on white",
           },
         ],
       },
@@ -225,6 +225,19 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "text",
         text: "When processing fails, the paper enters an error state and shows the exact error.",
+      },
+      {
+        type: "images",
+        items: [
+          {
+            src: "/projects/paper-reader-library-error.png",
+            alt: "My Papers with a paper that failed to process, its error in red beside a retry button, while the other papers keep their progress",
+          },
+          {
+            src: "/projects/paper-reader-error-state.png",
+            alt: "The same failure opened up, with the Gemini error it came back with, a line pointing to the API key in Settings, and a Try Again button",
+          },
+        ],
       },
       
       // (total samples / 24,000 = total seconds)
