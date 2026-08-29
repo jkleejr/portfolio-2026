@@ -331,7 +331,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "If I continued this project, I would integrate a key into the app. Asking users to set up their own key is the biggest pain point and a bad idea. There are many TTS products like Speechify that address the same problems, so I moved on.",
+        text: "If I continued this project, I would integrate a key into the app. Asking users to set up their own key is a big pain point and a bad idea. There are many TTS products like Speechify that address the same problems, so I moved on.",
       },
     
       // Gemini 3.1 flash
