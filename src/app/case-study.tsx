@@ -110,7 +110,7 @@ function Block({ block }: { block: CaseStudyBlock }) {
   switch (block.type) {
     case "heading":
       return (
-        <h2 className="pt-8 mb-7 text-xl font-bold leading-snug">
+        <h2 className="pt-8 mb-2 text-xl font-bold leading-snug">
           {block.text}
         </h2>
       );
