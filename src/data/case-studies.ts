@@ -438,9 +438,13 @@ export const caseStudies: Record<string, CaseStudy> = {
           },
         ],
       },
+
+      // Asking users to go get a Gemini API key is the biggest friction in the app. that's why i preloaded the sample paper. 
+      // hard constraint -> mitigation -> what you'd do with more resources
+
       {
         type: "text",
-        text: "If I continued Paper Reader, I would integrate an API key into the app, minimize costs, and charge per paper. Since there are many TTS products like Speechify and Blinkist that address similar problems, I shipped this project and moved on.",
+        text: "If I continued Paper Reader, I would integrate an API key into the app, minimize costs, and charge per paper. Asking users to set up their own API key is the app's biggest point of friction. Since there are many TTS products like Speechify and Blinkist that address similar problems, I shipped this project and moved on.",
       },
     
       // Gemini 3.1 flash
