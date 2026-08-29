@@ -116,7 +116,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "backend, using a server to safely store my API key, 1 call is made per scan",
+        text: "backend, using a server to safely store my API key, 1 call is made per scan.",
       },
       // 2 key decisions....
       // claude sonnet 4.6 because its cheap enough to run per scan and still accurate.
@@ -289,6 +289,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         type: "text",
         text: "A sample paper with narration is included into the app so users can test before setting up an API key.",
       },
+
       
       // (total samples / 24,000 = total seconds)
       // (characters in each sentence / group total characters = % of group text)
@@ -340,6 +341,28 @@ export const caseStudies: Record<string, CaseStudy> = {
           },
         ],
       },
+
+      // the user's Gemini API key is safely stored in the iOS keychain. it can't be read by other apps, is encryptoed by the rest of the OS tied to the device's hardware.
+      // where it goes:
+      // generativelanguage.googleapis.com over HTTPS, in a request header (x-goog-api-key), not in the URL, which matters because URLs get logged by proxies and headers generally don't. There's one URLSession in the entire app and one destination host.
+      // the key is never printed to a log, never written into a paper's JSON, never attached to an error message, and never sent anywhere else.
+      // So who has access?
+      // only the user and Google. thats it. Theres no paper reader server, so theres nothing for anyone to have access to - the requests go from the user's phone straight to Google, billed to their account. Its the user's key, on their device, talking to Google.
+      // users can wipe it any time with Remove API Key in Settings, which deletes it from the Keychain outright 
+
+      // but what happens if the user deletes the app without removing their key?
+      // iOS does not erase Keychain items when you delete an app. your papers, audio, and settings all go - those live in the app's container - but the keychain entry typically survives, orphaned. so reinstalling paper reader would find the key already there
+      // however, no other app can read it so access to the key is scoped to the app's identity, so an orphaned item isn't exposed to anything else on the phone.
+      // the best action is to revoke the key at aistudio.google.com/apikey if the user is worried about an orphaned key
+
+
+
+      {
+        type: "text",
+        text: "The user's API key is safely secured in the iOS Keychain, unaccessible to other apps.",
+      },
+
+
       // gemini flash latest - title + document, then the per chunk cleanup
       // gemini 3.1 flash tts - narration, 8 curated prebuilt voices
       // cleanup is a few cents while the text to spesech per paper is $1-$3
