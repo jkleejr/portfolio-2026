@@ -104,11 +104,11 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "I used Claude Sonnet 4.6 to identify the item, find the price, and write the listing due to its high accuracy and low API costs at ~$0.013 per scan. I considered Kimi K3, but the costs were similar and I wanted the results to be as trustworthy as possible.",
+        text: "I used Claude Sonnet 4.6 to identify, find the price, and write the listing due to its high accuracy and low API costs at ~$0.013 per scan. I considered Kimi K3, but the costs were similar and I wanted the results to be as trustworthy as possible.",
       },
       {
         type: "text",
-        text: "Vision models aren't 100% accurate so I designed for uncertainty. Users can type in what you know to steer Claude toward the right product and low confidence results are labeled 'best guess'.",
+        text: "Vision models aren't 100% accurate so I designed for uncertainty. Users can type in what they know about the item to guide Claude toward the right product. Low confidence results are labeled 'best guess'.",
       },
       {
         type: "text",
