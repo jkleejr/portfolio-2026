@@ -112,11 +112,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "The 'where to sell' table predicts how much you keep after each marketplace's fees to help you decide where to list.",
-      },
-      {
-        type: "text",
-        text: "I wanted to automate the listing process, but most marketplaces don't offer a public listing API, so the app writes a title and description for copy and paste.",
+        text: "The 'where to list' table shows how much you keep after marketplace fees to help you decide where to list. I wanted to automate the listing process, but most marketplaces don't offer a public listing API, so the app writes a title and description for copy and paste.",
       },
       // 2 key decisions....
       // claude sonnet 4.6 because its cheap enough to run per scan and still accurate.
