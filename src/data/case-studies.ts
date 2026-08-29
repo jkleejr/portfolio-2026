@@ -288,6 +288,10 @@ export const caseStudies: Record<string, CaseStudy> = {
             src: "/projects/paper-reader-follow-along.png",
             alt: "A paper being read aloud with the current sentence highlighted, how much has been listened to, and playback controls",
           },
+          {
+            src: "/projects/paper-reader-settings.png",
+            alt: "Settings: the Gemini API key, the text and voice models, and the narration voice",
+          },
         ],
       },
       // gemini flash latest - title + document, then the per chunk cleanup
@@ -334,21 +338,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       // word lasts about 0.3 seconds, a sentence lasts 5-15 seconds. so words are better, but word level would have required real timings which is more complicated and probably requires another model to do
       // the re-sync for the end of every clip/chunk/group, so the app stops guessing and it knows whats the current sentence that needs to be highlighted to match the audio
       //
-
-
-      {
-        type: "images",
-        items: [
-            {
-            src: "/projects/paper-reader-settings.png",
-            alt: "Settings: the Gemini API key, the text and voice models, and the narration voice",
-          },
-          {
-            src: "/projects/paper-reader-error.png",
-            alt: "The failure screen: a paper that could not be processed, with the error it came back with and a way to try again",
-          },
-        ],
-      },
+  
       {
         type: "images",
         items: [
