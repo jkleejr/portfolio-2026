@@ -118,17 +118,23 @@ export const caseStudies: Record<string, CaseStudy> = {
         text: "Claude Sonnet 4.6 identifies the item, its value, and writes the listing.",
       },
       // designing for uncertainty
-                  { type: "heading", text: "" },
-
       {
         type: "text",
         text: "Users can type in what they know about the item to guide Claude toward the right product. Low confidence results are labeled 'best guess'.",
       },
       {
-        type: "image",
-        src: "/projects/loot-check-detail-input.png",
-        width: 388,
-        alt: "The optional detail field under a photo of an OP-1 in its case, with \"keyboard and synth\" typed in and a tip to include a close-up of the brand logo",
+        type: "images",
+        columns: 2,
+        items: [
+          {
+            src: "/projects/loot-check-detail-input.png",
+            alt: "The optional detail field under a photo of an OP-1 in its case, with \"keyboard and synth\" typed in and a tip to include a close-up of the brand logo",
+          },
+          {
+            src: "/projects/loot-check-result-detail.png",
+            alt: "What that scan came back with: the OP-1 named in full, tags for the category and condition, the brand, and the keywords it was matched on",
+          },
+        ],
       },
 
       // 2 key decisions....
