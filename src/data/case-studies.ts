@@ -220,7 +220,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "I pre-downloaded a sample paper into the app so new users can hear the voice before setting up an API key.",
+        text: "I preloaded a sample paper into the app so new users can hear the voice and try the full experience before setting up an API key.",
       },
       // (total samples / 24,000 = total seconds)
       // (characters in each sentence / group total characters = % of group text)
