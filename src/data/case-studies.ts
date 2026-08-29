@@ -116,7 +116,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "backend, using a server to safely store my API key, 1 call is made per scan.",
+        text: "A backend server stores my API key off the device. Each scan is 1 call.",
       },
       // 2 key decisions....
       // claude sonnet 4.6 because its cheap enough to run per scan and still accurate.
@@ -355,11 +355,11 @@ export const caseStudies: Record<string, CaseStudy> = {
       // however, no other app can read it so access to the key is scoped to the app's identity, so an orphaned item isn't exposed to anything else on the phone.
       // the best action is to revoke the key at aistudio.google.com/apikey if the user is worried about an orphaned key
 
-
+      // the user's api key is stored on their own device in the iOS Keychain, which is encrypted and inaccessible to other apps. The key is only sent to Google's API.
 
       {
         type: "text",
-        text: "The user's Gemini API key is safely secured in the iOS Keychain, inaccessible to other apps.",
+        text: "The user's API key is stored on their own device in the iOS Keychain and only sent to Google's API.",
       },
 
 
