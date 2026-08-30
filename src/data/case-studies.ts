@@ -125,13 +125,20 @@ export const caseStudies: Record<string, CaseStudy> = {
         ordered: true,
         items: [
           "The user takes a photo of an item",
-          "Claude identifies and values it from its type, brand, and condition",
+          "Claude identifies and estimates a resale range from its type, brand, and condition",
         ],
       },
 
       {
         type: "text",
         text: "I used Claude Sonnet 4.6 to identify an item, find its resale value, and write the listing due to its low costs at ~$0.013 per scan. I considered Kimi K3, but the costs were similar and I wanted the results to be as trustworthy as possible.",
+      },
+
+                                    { type: "heading", text: "Prices" },
+
+      {
+        type: "text",
+        text: "Currently the app uses the model's trained data to value the item.... To make results more accurate,  ",
       },
 
                         { type: "heading", text: "Designing for uncertainty" },
@@ -157,7 +164,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "I started with the resale value, but as I was testing the app I thought it would be interesting to estimate the value for original items like a painting. This expanded the use case as a price discovery tool to help users price used items and original artwork.",
+        text: "I started with the resale value, but I thought it would be interesting to estimate the value for original items like a painting. This expanded the use case as a price discovery tool to help users price used items and original artwork.",
       },
 
       // 2 key decisions....
