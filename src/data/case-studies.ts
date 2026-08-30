@@ -134,11 +134,18 @@ export const caseStudies: Record<string, CaseStudy> = {
         text: "I used Claude Sonnet 4.6 to identify an item, find its resale value, and write the listing due to its low costs at ~$0.013 per scan. I considered Kimi K3, but the costs were similar and I wanted the results to be as trustworthy as possible.",
       },
 
+                              { type: "heading", text: "Scope" },
+
+      {
+        type: "text",
+        text: "I started with the resale value, but the app provided the most interesting results for estimating the value of original items like a painting which don't have a resale value. This expanded the app's function as a price discovery tool from only used items to somehow valuing creative work.",
+      },
+
                                     { type: "heading", text: "Prices" },
 
       {
         type: "text",
-        text: "Currently the app uses the model's trained data to value the item.... To make results more accurate,  ",
+        text: "In the first version of the app, the valuation came from the model's trained data. I considered having AI complete a web search to get the most current prices for every scan, but I decided not to because it increases the cost by 3-4x. Now, the app decides whether to do a web search depending on its level of confidence and if it thinks the photo is worth looking up."
       },
 
                         { type: "heading", text: "Designing for uncertainty" },
@@ -158,13 +165,6 @@ export const caseStudies: Record<string, CaseStudy> = {
             alt: "The optional detail field under a photo of an OP-1 in its case, with \"keyboard and synth\" typed in and a tip to include a close-up of the brand logo",
           },
         ],
-      },
-
-                        { type: "heading", text: "Scope" },
-
-      {
-        type: "text",
-        text: "I started with the resale value, but I thought it would be interesting to estimate the value for original items like a painting. This expanded the idea as a price discovery tool for used items and original things.",
       },
 
       // 2 key decisions....
