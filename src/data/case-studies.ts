@@ -141,11 +141,11 @@ export const caseStudies: Record<string, CaseStudy> = {
         text: "I focused on resale, but the app was the most interesting when I showed it original items like a painting. Since I didn't buy the painting, the app should display the potential value. This idea expanded the app's function as a price discovery tool for used items and creative work.",
       },
 
-                                    { type: "heading", text: "Prices" },
+                                    { type: "heading", text: "Valuation" },
 
       {
         type: "text",
-        text: "In the first version of the app, the valuation came from the model's trained data. I considered having AI complete a web search to get the most current prices for every scan, but I decided not to because it increases the cost by 3-4x. Now, the app decides whether to do a web search depending on its level of confidence and if it thinks the photo is worth looking up."
+        text: "In the first version of the app, the estimate came from the model's trained data. I considered having AI complete a web search for every scan to get the most current prices, but decided not to because it increased costs 3-4x. Now, the app decides whether to do a web search depending on its level of confidence and if it thinks the photo is worth looking up."
       },
 
                         { type: "heading", text: "Designing for uncertainty" },
