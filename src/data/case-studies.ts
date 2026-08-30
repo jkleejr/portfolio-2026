@@ -122,7 +122,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "I used Claude Sonnet 4.6 to identify an item, find its value, and write the listing due to its low costs at ~$0.013 per scan. I considered Kimi K3, but the costs were similar and I wanted the results to be as trustworthy as possible.",
+        text: "The user takes a photo, Claude analyzes the image, and returns the potential value. I used Claude Sonnet 4.6 to identify an item, find its value, and write the listing due to its low costs at ~$0.013 per scan. I considered Kimi K3, but the costs were similar and I wanted the results to be as trustworthy as possible.",
       },
 
                         { type: "heading", text: "Designing for uncertainty" },
@@ -244,11 +244,12 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "A sample paper with narration is pre downloaded so users can experience the app before setting up an API key.",
+        text: "A sample paper with narration is pre downloaded so users can experience the app before setting up a key.",
       },
       {
         type: "image",
         src: "/projects/paper-reader-sample-paper-detail.png",
+        width: 367,
         alt: "A close read of the sample row: a SAMPLE tag over the paper's title, 77% listened beneath it with a progress bar, and a play button on its right",
       },
 
