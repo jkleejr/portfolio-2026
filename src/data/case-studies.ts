@@ -126,7 +126,6 @@ export const caseStudies: Record<string, CaseStudy> = {
         items: [
           "The user takes a photo of an item",
           "Claude identifies it and returns a resale value from its type, brand, and condition",
-          "Done",
         ],
       },
 
