@@ -95,6 +95,12 @@ export type CaseStudy = {
 // note on figma: when good designers show process artifacts, they present them beautifully, cleaned up, on consistent backgrounds, annotated
 // dont show raw uncropped screenshots w mismatchced sizes
 
+// ease of access
+// ease of use
+// clearly designed
+// tells a story
+// visually appealing
+
 
 export const caseStudies: Record<string, CaseStudy> = {
   "loot-check": {
@@ -104,24 +110,29 @@ export const caseStudies: Record<string, CaseStudy> = {
     blocks: [
        {
         type: "text",
-        text: "Existing apps looked poorly designed and required a subscription to use. My solution was a fast, accurate, and free identifying app.",
+        text: "When I was moving places, I wanted a quick way to find the used value of an item and decide what to keep or sell. I tried existing apps but they felt poorly designed and required a subscription to use. My solution was a fast, accurate, and free identifying app.",
       },
+
       {
         type: "video",
         src: "/projects/loot-check-shark.mp4",
         caption: "Finding the potential value of my shark painting",
       },
-                  { type: "heading", text: "AI" },
+                  { type: "heading", text: "How it works" },
 
       {
         type: "text",
-        text: "Claude Sonnet 4.6 identifies the item, its value, and writes the listing.",
+        text: "I used Claude Sonnet 4.6 to identify an item, find its value, and write the listing due to its low costs at ~$0.013 per scan. I considered Kimi K3, but the costs were similar and I wanted the results to be as trustworthy as possible.",
       },
+
+                        { type: "heading", text: "Designing for uncertainty" },
+
       // designing for uncertainty
       {
         type: "text",
-        text: "Users can type in what they know about the item to guide Claude toward the right product. Low confidence results are labeled 'best guess'.",
+        text: "Since vision models are not 100% accurate, users can enter what they know about an item to guide Claude toward the right product. Results with low confidence are labeled 'best guess'",
       },
+
       {
         type: "images",
         columns: 2,
@@ -153,11 +164,11 @@ export const caseStudies: Record<string, CaseStudy> = {
       // id have to pay $.01 per search online (Anthropic's rate) so it would be 2-3x more expensive per scan
       // decided not to
       
-                { type: "heading", text: "Shipped" },
+                { type: "heading", text: "Result" },
 
       {
         type: "text",
-        text: "Loot Check is on the app store. The next step for this project is marketing and finding users.",
+        text: "Loot Check was the first app I put on the app store and I learned a lot about iOS and mobile development from this project. I wanted to automate the entire listing process but since most marketplaces don't have a public listing API, the app creates a title and description for copy and paste. The next step for this project is finding users and marketing on social media.",
       },
     ],
   },
@@ -178,34 +189,32 @@ export const caseStudies: Record<string, CaseStudy> = {
         captionAlign: "high",
         caption: "Add a new paper from files",
         captionLeft: [
-          "Audio is generated as the narration continues",
+          "Audio is generated in the background as the user needs it, lowering costs and the initial wait time",
         ],
       },
       
       {
         type: "text",
-        text: "I designed the app around users paying for their own API usage due to the costs of audio generation at ~$1-3 per paper. Gemini 3.1 flash was the best option since it could clean up text and had TTS with 8 voices.",
+        text: "I designed the app around users paying for their own API usage due to the costs of audio generation at ~$1-3 per paper. To keep things simple, I used one API to identify text and generate  audio. Gemini 3.1 flash was the best option because it could clean up text and had TTS with 8 voices.",
       },
-      { type: "heading", text: "AI" },
+      { type: "heading", text: "API calls" },
 
       {
         type: "list",
         ordered: true,
         items: [
-          "Gemini splits text into groups, filters out citations, etc. and keeps prose the same",
+          "Gemini splits text into groups, filters out citations, captions, etc. and keeps prose the same",
         // Group sentences ~750 characters, ~45 seconds of speech.",
           "TTS returns audio for each group",
         ],
-        
-    
       },
    
 
-            { type: "heading", text: "Highlight" },
+            { type: "heading", text: "Highlighting" },
 
       {
         type: "text",
-        text: "Because Gemini only returns audio and no timestamps, the app has to estimate when each sentence is being said. It splits a group's audio proportionally by character count, so a sentence with 5% of a group's characters is assumed to take 5% of the audio. As the audio plays, the app tracks the time and highlights a sentence based on its estimate. However, its not always accurate.",
+        text: "Because Gemini only returns audio and no timestamps, the app has to estimate when each sentence is being narrated. It splits a group's audio proportionally by character count, so a sentence with 5% of a group's characters is assumed to take 5% of the audio. As the audio plays, the app tracks the time passed and highlights a sentence based on its estimate. However, this is not always accurate. Highlighted sentences are re-synced at the end of every group to minimize errors.",
       },
       {
         type: "image",
@@ -216,7 +225,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "The paper enters an error state when processing fails.",
+        text: "When processing fails, the paper enters an error state and shows the exact error message.",
       },
       {
         type: "images",
@@ -233,7 +242,16 @@ export const caseStudies: Record<string, CaseStudy> = {
           },
         ],
       },
-      
+      {
+        type: "text",
+        text: "A sample paper with narration is pre downloaded so users can experience the app before setting up an API key.",
+      },
+      {
+        type: "image",
+        src: "/projects/paper-reader-sample-paper-detail.png",
+        alt: "A close read of the sample row: a SAMPLE tag over the paper's title, 77% listened beneath it with a progress bar, and a play button on its right",
+      },
+
       // (total samples / 24,000 = total seconds)
       // (characters in each sentence / group total characters = % of group text)
       // (% of group text x total seconds = how long each sentence could take)
@@ -267,17 +285,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       // where it goes:
       // generativelanguage.googleapis.com over HTTPS, in a request header (x-goog-api-key), not in the URL, which matters because URLs get logged by proxies and headers generally don't. There's one URLSession in the entire app and one destination host.
       // the key is never printed to a log, never written into a paper's JSON, never attached to an error message, and never sent anywhere else.
-      // So who has access?
-      // only the user and Google. thats it. Theres no paper reader server, so theres nothing for anyone to have access to - the requests go from the user's phone straight to Google, billed to their account. Its the user's key, on their device, talking to Google.
-      // users can wipe it any time with Remove API Key in Settings, which deletes it from the Keychain outright 
-
-      // but what happens if the user deletes the app without removing their key?
-      // iOS does not erase Keychain items when you delete an app. your papers, audio, and settings all go - those live in the app's container - but the keychain entry typically survives, orphaned. so reinstalling paper reader would find the key already there
-      // however, no other app can read it so access to the key is scoped to the app's identity, so an orphaned item isn't exposed to anything else on the phone.
-      // the best action is to revoke the key at aistudio.google.com/apikey if the user is worried about an orphaned key
-
-      // the user's api key is stored on their own device in the iOS Keychain, which is encrypted and inaccessible to other apps. The key is only sent to Google's API.
-
+    
 
       // gemini flash latest - title + document, then the per chunk cleanup
       // gemini 3.1 flash tts - narration, 8 curated prebuilt voices
@@ -331,7 +339,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "If I continued this project, I would integrate a key into the app. Asking users to set up their own key is a big pain point and a bad idea. There are many TTS products like Speechify that address the same problems, so I moved on.",
+        text: "I would integrate an API key into the app if I continued this project. I realized that asking users to set up their own key creates a lot of friction and is a bad idea. There are many TTS products like Speechify that address the same problems, so I moved on.",
       },
     
       // Gemini 3.1 flash
@@ -348,7 +356,7 @@ export const caseStudies: Record<string, CaseStudy> = {
     blocks: [
       {
         type: "text",
-        text: "Translate without switching apps. It runs in the background, identifies text in a section of the screen, and displays the translation live.",
+        text: "Constantly switching apps while learning a language is frustating and time consuming. I created an app that translates the Korean text on screen to English in real time.",
       },
       // had to use the dynamic island iOS does not allow you to render anything over an existing app
       // had 2 choices, use the dynamic island or a floating window
@@ -398,6 +406,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
     ],
   },
+
   "time-with-tree": {
     title: "Time with Tree",
     date: "May 2026",
@@ -405,7 +414,7 @@ export const caseStudies: Record<string, CaseStudy> = {
     blocks: [
       {
         type: "text",
-        text: "Website for a birch tree farm in South Korea.",
+        text: "The client needed a website to teach customers about the farm, sell trees, and manage communications.",
       },
       {
         type: "images",
@@ -440,6 +449,10 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "text",
         text: "Buy Side Briefings is a personal website with daily reports on the stock market. The goal is to create a trustworthy source of information and eventually share it with others.",
+      },
+      {
+        type: "text",
+        text: "Initially, I was using AI to analyze the market and indicate whether to buy or sell. However, I realized that an unbiased and informational website would help me more. The first design was inspired by Bloomberg Terminal and evolved as I added charts and features I actually use.",
       },
       { type: "heading", text: "Old design" },
       {
