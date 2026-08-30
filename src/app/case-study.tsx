@@ -92,7 +92,7 @@ export function StudyBody({ study }: { study: CaseStudy }) {
 
       <div className="mt-8 space-y-4">
         {study.blocks.map((block, i) => (
-          <Block key={i} block={block} />
+          <Block key={i} block={block} after={study.blocks[i - 1]?.type} />
         ))}
       </div>
     </article>
@@ -106,15 +106,36 @@ function Caption({ text }: { text?: string }) {
   );
 }
 
-function Block({ block }: { block: CaseStudyBlock }) {
+/** Blocks a heading needs less room after — see the heading case below. */
+const PICTURES = new Set(["image", "images", "video"]);
+
+function Block({
+  block,
+  after,
+}: {
+  block: CaseStudyBlock;
+  // What the block above this one was, or nothing for the first.
+  after?: CaseStudyBlock["type"];
+}) {
   switch (block.type) {
     case "heading":
       // A heading opens a section, so it takes its space from what came before
       // rather than sharing the 16px the block list puts between everything —
       // 32px of air above, and 8px under, holding it to the writing it
       // introduces.
+      //
+      // Less after a picture. A paragraph ends at a baseline with a few pixels
+      // of leading hanging under the letters, so some of that 32px is already
+      // there before the padding starts; a shot or a recording ends at a hard
+      // edge with nothing under it, and the same number reads as a hole. The
+      // homepage settles the same argument the same way — see the gap above
+      // its first project row.
       return (
-        <h2 className="pt-4 mb-2 text-xl font-bold leading-snug">
+        <h2
+          className={`${
+            after && PICTURES.has(after) ? "pt-2" : "pt-4"
+          } mb-2 text-xl font-bold leading-snug`}
+        >
           {block.text}
         </h2>
       );
