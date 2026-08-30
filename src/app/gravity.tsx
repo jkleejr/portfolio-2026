@@ -157,13 +157,27 @@ function snapshotWords(root: HTMLElement, atoms: HTMLElement[]): Snapshot[] {
   const range = document.createRange();
   const theme = themeColors();
 
+  // Text that is in the layout but not on the screen. A line of the homepage
+  // that has not finished writing itself keeps a full-strength copy of itself
+  // underneath at zero opacity, to hold the space the finished line will take
+  // — see typed-line.tsx. Nothing invisible should fall.
+  const faded = new Map<Element, boolean>();
+  const invisible = (el: Element) => {
+    let value = faded.get(el);
+    if (value === undefined) {
+      value = getComputedStyle(el).opacity === "0";
+      faded.set(el, value);
+    }
+    return value;
+  };
+
   let node = walker.nextNode() as Text | null;
   while (node) {
     const parent = node.parentElement;
     const text = node.nodeValue ?? "";
     const inAtom = parent ? atoms.some((a) => a.contains(parent)) : false;
 
-    if (parent && !inAtom && /\S/.test(text)) {
+    if (parent && !inAtom && !invisible(parent) && /\S/.test(text)) {
       let css = styles.get(parent);
       if (!css) {
         const cs = getComputedStyle(parent);

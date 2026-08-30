@@ -15,7 +15,12 @@
 //     scripting off the <noscript> rule in layout.tsx brings it back to full
 //     opacity, so the page still says what it says.
 //   - The typed one, absolutely over it and hidden from assistive tech, so the
-//     line is not announced twice.
+//     line is not announced twice. It exists only while the line is being
+//     written: the moment the last character lands the overlay comes off and
+//     the copy underneath is brought up to full opacity, so a settled page
+//     holds one copy of each line and not two. Anything that reads the page as
+//     text — find-in-page, a selection, the gravity effect gathering the words
+//     it is about to drop — would otherwise see every word twice.
 //
 // Selection follows the eye: the sizing copy is select-none, so a drag across
 // the line takes the visible text rather than both copies.
@@ -73,6 +78,10 @@ export function TypedLine({
     prefersReducedMotion,
     motionWantedOnServer,
   );
+  // The overlay is up only while there is something left to write. Both halves
+  // of the swap ride the same render, and the glyphs land in the same places in
+  // either state, so there is nothing to see at the handover.
+  const typing = animate && !done;
 
   // Stable, or TextType's typing effect would tear down and re-schedule its
   // next character every time anything above this re-renders.
@@ -86,11 +95,11 @@ export function TypedLine({
     <span className="relative inline-block max-w-full whitespace-pre-wrap">
       <span
         data-typed-fallback
-        className={animate ? "select-none opacity-0" : undefined}
+        className={typing ? "select-none opacity-0" : undefined}
       >
         {text}
       </span>
-      {animate && (
+      {typing && (
         <span aria-hidden className="absolute inset-0">
           <TextType
             as="span"
@@ -101,9 +110,9 @@ export function TypedLine({
             // The rows further down the page are written as they are reached
             // rather than off-screen while the top is still being read.
             startOnVisible
-            // The caret belongs to the line being written. Left on, the
-            // finished page would carry one at the end of every line.
-            showCursor={!done}
+            // The caret belongs to the line being written; the overlay it
+            // sits in is gone by the time the line is finished.
+            showCursor
             cursorCharacter="|"
             onComplete={handleComplete}
           />
