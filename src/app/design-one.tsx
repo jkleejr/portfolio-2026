@@ -19,8 +19,13 @@ import { TypedLine } from "./typed-line";
 // it. The header runs slower than the rows below it: it is the first thing
 // anyone sees, and it is three lines rather than four.
 const NAME_DELAY = 0;
-const ROLE_DELAY = 300;
-const INTRO_DELAY = 620;
+// The name is eight characters. At the pace the sentences run it is over
+// before it registers as having been typed at all, so it gets a slower one of
+// its own — about eight tenths of a second, which is long enough to watch and
+// short enough not to hold up the lines under it.
+const NAME_SPEED = 100;
+const ROLE_DELAY = 900;
+const INTRO_DELAY = 1280;
 const TITLE_DELAY = 0;
 const BLURB_DELAY = 240;
 const DATE_DELAY = 440;
@@ -56,7 +61,7 @@ export function DesignOne() {
             — see "The page on a phone" in globals.css. */}
         <header>
           <h1 className="text-2xl font-bold">
-            <TypedLine text={site.name} delay={NAME_DELAY} />
+            <TypedLine text={site.name} delay={NAME_DELAY} speed={NAME_SPEED} />
           </h1>
           <p className="mt-1 text-lg font-medium text-foreground">
             <TypedLine text={site.role} delay={ROLE_DELAY} />

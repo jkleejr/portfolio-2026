@@ -48,17 +48,22 @@ function motionWantedOnServer() {
 }
 
 // Fast enough that the page has finished writing itself before it reads as a
-// wait. The line below sets how much later each one starts.
+// wait. Lines set their own where the default does not suit their length — a
+// short one is over before it registers at this pace.
 const TYPING_SPEED = 24;
 
 export function TypedLine({
   text,
   delay = 0,
+  speed = TYPING_SPEED,
 }: {
   // How long after the line scrolls into view it starts typing. The lines of a
   // block are staggered rather than run end to end: a strict queue would make
   // the last row of the page wait on every word above it.
   delay?: number;
+  // Milliseconds a character. The default reads well for a sentence; a line of
+  // a few words needs longer per character to last long enough to watch.
+  speed?: number;
   text: string;
 }) {
   const [done, setDone] = useState(false);
@@ -90,7 +95,7 @@ export function TypedLine({
           <TextType
             as="span"
             text={text}
-            typingSpeed={TYPING_SPEED}
+            typingSpeed={speed}
             initialDelay={delay}
             loop={false}
             // The rows further down the page are written as they are reached
