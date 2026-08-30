@@ -44,7 +44,9 @@ const outfit = localFont({
 });
 
 export const metadata: Metadata = {
-  title: `${site.name} — ${site.role}`,
+  // Just the name in the tab. The role still carries the description, which
+  // is what a search result or a link preview shows.
+  title: site.name,
   description: `${site.name} — ${site.role}`,
 };
 
