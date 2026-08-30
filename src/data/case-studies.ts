@@ -138,7 +138,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "I focused on resale, but the app was the most interesting when I showed it original items like a painting. Since I didn't buy the painting, the app should display the potential value. This idea expanded the app's function as a price discovery tool from used items to creative work.",
+        text: "I focused on resale, but the app was the most interesting when I showed it original items like a painting. Since I didn't buy the painting, the app should display the potential value. This idea expanded the app's function as a price discovery tool for used items and creative work.",
       },
 
                                     { type: "heading", text: "Prices" },
