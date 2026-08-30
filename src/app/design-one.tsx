@@ -18,9 +18,11 @@ import { TypedLine } from "./typed-line";
 // gesture and the page is finished by the time the eye reaches the bottom of
 // it.
 //
-// Every line runs at the same pace, the name included: it is a heading like
-// the project titles below it are, and one heading writing itself out at a
-// different speed from the rest reads as an accident.
+// The headings — the name, and the title of each project — all run at
+// TypedLine's own pace, so no one of them writes itself out faster than
+// another. The writing under them runs a little quicker: it is there to be
+// read rather than watched, and there is a lot more of it.
+const BODY_SPEED = 20;
 const NAME_DELAY = 0;
 const ROLE_DELAY = 300;
 const INTRO_DELAY = 620;
@@ -62,7 +64,7 @@ export function DesignOne() {
             <TypedLine text={site.name} delay={NAME_DELAY} />
           </h1>
           <p className="mt-1 text-lg font-medium text-foreground">
-            <TypedLine text={site.role} delay={ROLE_DELAY} />
+            <TypedLine text={site.role} delay={ROLE_DELAY} speed={BODY_SPEED} />
           </p>
           {/* Who that is. A paragraph per line of site.intro, so a sentence that
               should start fresh does, rather than being wrapped into the one
@@ -76,7 +78,11 @@ export function DesignOne() {
             <div className="mt-8 space-y-3">
               {site.intro.map((line, i) => (
                 <p key={line} className="text-lg font-medium leading-relaxed text-foreground">
-                  <TypedLine text={line} delay={INTRO_DELAY + i * 220} />
+                  <TypedLine
+                    text={line}
+                    delay={INTRO_DELAY + i * 220}
+                    speed={BODY_SPEED}
+                  />
                 </p>
               ))}
             </div>
@@ -135,17 +141,29 @@ export function DesignOne() {
                 </h2>
                 {entry.blurb && (
                   <p className="mt-3 text-base leading-relaxed">
-                    <TypedLine text={entry.blurb} delay={BLURB_DELAY} />
+                    <TypedLine
+                      text={entry.blurb}
+                      delay={BLURB_DELAY}
+                      speed={BODY_SPEED}
+                    />
                   </p>
                 )}
                 {entry.date && (
                   <p className="mt-2 text-base leading-relaxed">
-                    <TypedLine text={`Date: ${entry.date}`} delay={DATE_DELAY} />
+                    <TypedLine
+                      text={`Date: ${entry.date}`}
+                      delay={DATE_DELAY}
+                      speed={BODY_SPEED}
+                    />
                   </p>
                 )}
                 {entry.tools && (
                   <p className="mt-1 text-base leading-relaxed">
-                    <TypedLine text={`Tools: ${entry.tools}`} delay={TOOLS_DELAY} />
+                    <TypedLine
+                      text={`Tools: ${entry.tools}`}
+                      delay={TOOLS_DELAY}
+                      speed={BODY_SPEED}
+                    />
                   </p>
                 )}
               </div>
