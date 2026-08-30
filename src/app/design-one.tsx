@@ -110,7 +110,7 @@ export function DesignOne() {
             bottom-heavy. A phone fits the row by shrinking the cover and the
             gap rather than by stacking the two; see "The page on a phone" in
             globals.css. */}
-        <div className="mt-15 flex flex-col items-start gap-18">
+        <div className="mt-16 flex flex-col items-start gap-18">
           {entries.map((entry) => (
             <article
               key={entry.slug}
