@@ -122,7 +122,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "The user takes a photo, Claude analyzes the image, and returns the potential value. I used Claude Sonnet 4.6 to identify an item, find its value, and write the listing due to its low costs at ~$0.013 per scan. I considered Kimi K3, but the costs were similar and I wanted the results to be as trustworthy as possible.",
+        text: "The user takes a photo, AI analyzes the image, and returns the potential value. I used Claude Sonnet 4.6 to identify an item, find its value, and write the listing due to its low costs at ~$0.013 per scan. I considered Kimi K3, but the costs were similar and I wanted the results to be as trustworthy as possible.",
       },
 
                         { type: "heading", text: "Designing for uncertainty" },
