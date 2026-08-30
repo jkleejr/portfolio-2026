@@ -39,15 +39,17 @@ export default async function ProjectPage({ params }: Params) {
   if (!study) notFound();
 
   return (
-    // 70px, not a step on the scale, because it is a subtraction rather than a
+    // 86px, not a step on the scale, because it is a subtraction rather than a
     // choice: the homepage drops its name 136px from the top, and the title
     // here lands on that same line once the breadcrumb's 26px line and the
-    // 40px under it are taken off the front. The breadcrumb goes above it.
+    // 24px under it are taken off the front. The breadcrumb goes above it —
+    // tighten or open that gap and this number moves the other way to match,
+    // or the title comes off the line it shares with the homepage's name.
     //
     // A phone keeps the small padding it had. There is no room to lift a title
     // 66px there, and the breadcrumb is level with the corner buttons at that
     // width, which is where the homepage puts its name too.
-    <main className="pb-8 pt-6 sm:pb-28 sm:pt-[70px]">
+    <main className="pb-8 pt-6 sm:pb-28 sm:pt-[86px]">
       {/* The same column the homepage is set in, so a study reads as another
           page of the same site rather than a document dropped into it. */}
       <div className="mx-auto w-[var(--column)] max-w-[calc(100%-3rem)]">
@@ -67,7 +69,9 @@ export default async function ProjectPage({ params }: Params) {
           </span>
           {study.title}
         </nav>
-        <div className="mt-10">
+        {/* Close under the breadcrumb: the two read as one heading block, the
+            way back and then where it leads. */}
+        <div className="mt-6">
           <StudyBody study={study} />
         </div>
       </div>
