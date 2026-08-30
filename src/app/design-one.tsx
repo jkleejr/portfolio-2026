@@ -23,6 +23,11 @@ import { TypedLine } from "./typed-line";
 // another. The writing under them runs a little quicker: it is there to be
 // read rather than watched, and there is a lot more of it.
 const BODY_SPEED = 20;
+// The name runs a touch behind the project titles. It is eight characters and
+// the first thing on the page, and at the headings' own pace it is over before
+// anyone has looked at it. Still inside the 300ms the role waits, so the header
+// writes itself in order without the delays below moving.
+const NAME_SPEED = 32;
 const NAME_DELAY = 0;
 const ROLE_DELAY = 300;
 const INTRO_DELAY = 620;
@@ -61,7 +66,7 @@ export function DesignOne() {
             — see "The page on a phone" in globals.css. */}
         <header>
           <h1 className="text-2xl font-bold">
-            <TypedLine text={site.name} delay={NAME_DELAY} />
+            <TypedLine text={site.name} delay={NAME_DELAY} speed={NAME_SPEED} />
           </h1>
           <p className="mt-1 text-lg font-medium text-foreground">
             <TypedLine text={site.role} delay={ROLE_DELAY} speed={BODY_SPEED} />
