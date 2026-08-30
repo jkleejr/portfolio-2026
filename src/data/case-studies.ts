@@ -110,7 +110,7 @@ export const caseStudies: Record<string, CaseStudy> = {
     blocks: [
        {
         type: "text",
-        text: "When I was moving places, I wanted a quick way to find the used value of an item and decide what to keep or sell. I tried existing apps but they felt poorly designed and required a subscription to use. My solution was a fast, accurate, and free identifying app.",
+        text: "When I was moving places, I wanted a quick way to find the value of an item and decide what to keep or sell. I tried existing apps but they felt poorly designed and required a subscription to use. My solution was a fast, accurate, and free identifying app.",
       },
 
       {
@@ -131,7 +131,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "I used Claude Sonnet 4.6 to identify an item, find its value, and write the listing due to its low costs at ~$0.013 per scan. I considered Kimi K3, but the costs were similar and I wanted the results to be as trustworthy as possible.",
+        text: "I used Claude Sonnet 4.6 to identify an item, find its resale value, and write the listing due to its low costs at ~$0.013 per scan. I considered Kimi K3, but the costs were similar and I wanted the results to be as trustworthy as possible.",
       },
 
                         { type: "heading", text: "Designing for uncertainty" },
@@ -431,25 +431,16 @@ export const caseStudies: Record<string, CaseStudy> = {
     blocks: [
       {
         type: "text",
-        text: "I created a website for Time With Tree, a birch tree farm in South Korea. The client wanted to teach readers about the farm, sell trees, and manage communications with customers. This was my first website so I used Lovable to prompt the design. I followed the client's expectations and created a design similar to other tree farms in Korea.",
+        text: "I created a website for a birch tree farm in South Korea. This was my first website so I used Lovable to prompt the design. I followed the client's expectations and created a design similar to other tree farms in Korea.",
       },
 
       {
-        type: "images",
-        items: [
-          {
-            src: "/projects/time-with-tree-logo-v1.png",
-            alt: "A birch tree drawn in outline, its branches carrying leaves in two greens",
-          },
-          {
-            src: "/projects/time-with-tree-logo-v4.png",
-            alt: "The mark on its own, three leaves over two bands of field",
-          },
-          {
-            src: "/projects/time-with-tree-logo-v3.png",
-            alt: "A later lockup: leaves rising out of a field, beside the same name set in a heavier face",
-          },
-        ],
+        type: "image",
+        src: "/projects/time-with-tree-logo-v3.png",
+        // The export is 768px across, so this is a hair under half of it —
+        // still short of the point where a retina screen has to stretch it.
+        width: 410,
+        alt: "A later lockup: leaves rising out of a field, beside the same name set in a heavier face",
       },
 
       // following expectations from client, so less ideation 

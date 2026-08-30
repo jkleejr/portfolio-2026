@@ -66,7 +66,7 @@ export const entries: Entry[] = [
   {
     title: "Loot Check",
     blurb:
-      "Photograph any item to find its name, resale value, and where to sell it.",
+      "Photograph any item to find its name, value, and where to sell it.",
     slug: "loot-check",
     appStore: "https://apps.apple.com/us/app/loot-check/id6785767104",
     platform: "mobile",
@@ -101,7 +101,10 @@ export const entries: Entry[] = [
   {
     title: "Screen Translator",
     blurb:
-      "Live translation of whatever is on screen, running in the background from the Dynamic Island.",
+      "Translate the text on screen without having to switch apps",
+      //Live translation of whatever is on screen, running in the background from the Dynamic Island.
+      // translate text on screen without having to switch apps.
+      // Live translation of whatever is on screen without having to switch apps
     slug: "screen-translator",
     platform: "mobile",
     images: [
