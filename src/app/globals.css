@@ -22,16 +22,24 @@
   --text-width: 49ch;
   --text-start: calc(var(--cover) + var(--cover-gap));
   --column: calc(var(--text-start) + var(--text-width));
+
+  color-scheme: light;
 }
 
-/* The dark half of the page. Light is the default and sits on :root above, so
-   this is the palette the toggle switches into: data-theme is set on <html> —
-   "light" in the markup, then whatever the toggle stored, applied before first
-   paint. */
+/* The dark half of the page, and what a first visit gets: data-theme is
+   "dark" in the markup, then whatever the toggle stored, applied before first
+   paint. The light palette stays on :root above — it is what this block is
+   layered over, and what the toggle switches back to.
+
+   color-scheme is set alongside each palette so the parts of the page the
+   stylesheet does not paint — scrollbars, the canvas behind the document
+   before CSS arrives — are dark too, rather than a white bar down the side of
+   a black page. */
 [data-theme="dark"] {
   --background: #000000;
   --foreground: #ffffff;
   --muted: #a3a3a3;
+  color-scheme: dark;
 }
 
 @theme inline {
