@@ -130,6 +130,25 @@ function themeColors() {
   return { foreground, muted };
 }
 
+/**
+ * The line-height an inline atom needs so that pinning it does not move its
+ * letters, or null if it is not one — anything already laying out as a block
+ * keeps the leading it has, and one that has wrapped across two lines was
+ * measured across both and has no single line box to correct.
+ */
+function inlineLeading(el: HTMLElement, rect: DOMRect): number | null {
+  const cs = getComputedStyle(el);
+  if (cs.display !== "inline") return null;
+  if (el.getClientRects().length !== 1) return null;
+  const trim =
+    parseFloat(cs.paddingTop) +
+    parseFloat(cs.paddingBottom) +
+    parseFloat(cs.borderTopWidth) +
+    parseFloat(cs.borderBottomWidth);
+  const content = rect.height - trim;
+  return content > 0 ? content : null;
+}
+
 /** The outermost interactive or drawn elements — nested ones fall with them. */
 function collectAtoms(roots: HTMLElement[]): HTMLElement[] {
   const found: HTMLElement[] = [];
@@ -302,6 +321,16 @@ function run(
   const restores = atoms.map((el, i) => {
     const rect = atomRects[i];
     const before = el.getAttribute("style");
+    // An atom that was running inline in a line of text — the breadcrumb's
+    // "Home" is the one on the page — needs its leading taken off before it is
+    // pinned. The box measured above is the inline one, which is only as tall
+    // as the letters; position: fixed turns the element into a block, and a
+    // block lays its line out at the full line-height, splitting the extra
+    // above and below the letters and dropping them a couple of pixels down
+    // their own box. Setting the leading to the height that was measured
+    // leaves nothing to split, so the letters stay where they were standing.
+    const leading = inlineLeading(el, rect);
+    if (leading !== null) el.style.lineHeight = `${leading}px`;
     el.classList.add("gravity-atom");
     el.style.position = "fixed";
     el.style.left = "0";
