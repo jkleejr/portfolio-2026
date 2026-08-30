@@ -109,8 +109,12 @@ function Caption({ text }: { text?: string }) {
 function Block({ block }: { block: CaseStudyBlock }) {
   switch (block.type) {
     case "heading":
+      // A heading opens a section, so it takes its space from what came before
+      // rather than sharing the 16px the block list puts between everything —
+      // 40px of air above, and 8px under, holding it to the writing it
+      // introduces.
       return (
-        <h2 className="pt-8 mb-2 text-xl font-bold leading-snug">
+        <h2 className="pt-6 mb-2 text-xl font-bold leading-snug">
           {block.text}
         </h2>
       );
