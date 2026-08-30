@@ -121,6 +121,16 @@ export const caseStudies: Record<string, CaseStudy> = {
                   { type: "heading", text: "How it works" },
 
       {
+        type: "list",
+        ordered: true,
+        items: [
+          "The user takes a photo of an item",
+          "Claude identifies it and estimates a resale value from its type, brand, and condition",
+          "Users can see its name, price, and marketplaces",
+        ],
+      },
+
+      {
         type: "text",
         text: "The user takes a photo, AI analyzes the image, and returns the potential value. I used Claude Sonnet 4.6 to identify an item, find its value, and write the listing due to its low costs at ~$0.013 per scan. I considered Kimi K3, but the costs were similar and I wanted the results to be as trustworthy as possible.",
       },
@@ -142,6 +152,13 @@ export const caseStudies: Record<string, CaseStudy> = {
             alt: "The optional detail field under a photo of an OP-1 in its case, with \"keyboard and synth\" typed in and a tip to include a close-up of the brand logo",
           },
         ],
+      },
+
+                        { type: "heading", text: "Scope" },
+
+      {
+        type: "text",
+        text: "Initially I only focused on the resell value, but as I was testing the app I thought it would be interesting to estimate the value for original items like a painting. This expanded the use case to help users not only price used items but also original artwork.",
       },
 
       // 2 key decisions....
