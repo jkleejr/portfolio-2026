@@ -164,7 +164,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "I started with the resale value, but I thought it would be interesting to estimate the value for original items like a painting. This expanded the idea as a price discovery tool to help users price used items and original things.",
+        text: "I started with the resale value, but I thought it would be interesting to estimate the value for original items like a painting. This expanded the idea as a price discovery tool for used items and original things.",
       },
 
       // 2 key decisions....
