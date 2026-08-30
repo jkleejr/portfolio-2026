@@ -367,7 +367,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         text: "My first idea was to generate text over the current display, but iOS does not allow an app to draw over another app. To get around this, I used a ReplayKit broadcast extension to receive pixels of what's on screen, and showed the translation using the dynamic island and floating window."
 
       },
-        { type: "heading", text: "AI" },
+        { type: "heading", text: "How it works" },
       // first, focusing this app on live captions translations, and trying to make that process as seamless as i can.
       // audio later
       {
@@ -414,8 +414,9 @@ export const caseStudies: Record<string, CaseStudy> = {
     blocks: [
       {
         type: "text",
-        text: "The client needed a website to teach customers about the farm, sell trees, and manage communications.",
+        text: "I created a website for Time With Tree, a birch tree farm in South Korea. The client wanted to teach readers about the farm, sell trees, and manage communications with customers. This was my first website for a client so I used Lovable to prompt the design.",
       },
+
       {
         type: "images",
         items: [
