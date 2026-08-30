@@ -10,6 +10,21 @@ import { site } from "@/data/site";
 import { entries } from "@/data/projects";
 import { ProjectThumbnail } from "./project-thumbnail";
 import { AppStoreBadge, SiteBadge } from "./title-badge";
+import { TypedLine } from "./typed-line";
+
+// Every line on this page is written out a character at a time on load. These
+// are how long each waits before it starts, counted from the moment its line
+// comes into view — a stagger rather than a queue, so a row is written as one
+// gesture and the page is finished by the time the eye reaches the bottom of
+// it. The header runs slower than the rows below it: it is the first thing
+// anyone sees, and it is three lines rather than four.
+const NAME_DELAY = 0;
+const ROLE_DELAY = 300;
+const INTRO_DELAY = 620;
+const TITLE_DELAY = 0;
+const BLURB_DELAY = 240;
+const DATE_DELAY = 440;
+const TOOLS_DELAY = 560;
 
 export function DesignOne() {
   // The bottom padding is trimmed on a phone so the page fits the screen. That
@@ -40,9 +55,11 @@ export function DesignOne() {
             header no longer reserves the height a row of them used to sit in
             — see "The page on a phone" in globals.css. */}
         <header>
-          <h1 className="text-2xl font-bold">{site.name}</h1>
+          <h1 className="text-2xl font-bold">
+            <TypedLine text={site.name} delay={NAME_DELAY} />
+          </h1>
           <p className="mt-1 text-lg font-medium text-foreground">
-            {site.role}
+            <TypedLine text={site.role} delay={ROLE_DELAY} />
           </p>
           {/* Who that is. A paragraph per line of site.intro, so a sentence that
               should start fresh does, rather than being wrapped into the one
@@ -54,9 +71,9 @@ export function DesignOne() {
               the role and this. */}
           {site.intro.length > 0 && (
             <div className="mt-8 space-y-3">
-              {site.intro.map((line) => (
+              {site.intro.map((line, i) => (
                 <p key={line} className="text-lg font-medium leading-relaxed text-foreground">
-                  {line}
+                  <TypedLine text={line} delay={INTRO_DELAY + i * 220} />
                 </p>
               ))}
             </div>
@@ -105,7 +122,7 @@ export function DesignOne() {
                   pushes the row off the side of the screen. */}
               <div className="min-w-0 flex-1 sm:w-[var(--text-width)] sm:flex-none sm:shrink-0">
                 <h2 className="text-xl font-semibold leading-snug">
-                  {entry.title}
+                  <TypedLine text={entry.title} delay={TITLE_DELAY} />
                   {entry.appStore !== undefined && (
                     <AppStoreBadge href={entry.appStore} label={entry.title} />
                   )}
@@ -115,17 +132,17 @@ export function DesignOne() {
                 </h2>
                 {entry.blurb && (
                   <p className="mt-3 text-base leading-relaxed">
-                    {entry.blurb}
+                    <TypedLine text={entry.blurb} delay={BLURB_DELAY} />
                   </p>
                 )}
                 {entry.date && (
                   <p className="mt-2 text-base leading-relaxed">
-                    Date: {entry.date}
+                    <TypedLine text={`Date: ${entry.date}`} delay={DATE_DELAY} />
                   </p>
                 )}
                 {entry.tools && (
                   <p className="mt-1 text-base leading-relaxed">
-                    Tools: {entry.tools}
+                    <TypedLine text={`Tools: ${entry.tools}`} delay={TOOLS_DELAY} />
                   </p>
                 )}
               </div>
