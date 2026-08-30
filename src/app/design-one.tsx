@@ -27,7 +27,7 @@ const BODY_SPEED = 20;
 // the first thing on the page, and at the headings' own pace it is over before
 // anyone has looked at it. Still inside the 300ms the role waits, so the header
 // writes itself in order without the delays below moving.
-const NAME_SPEED = 32;
+const NAME_SPEED = 36;
 const NAME_DELAY = 0;
 const ROLE_DELAY = 300;
 const INTRO_DELAY = 620;
