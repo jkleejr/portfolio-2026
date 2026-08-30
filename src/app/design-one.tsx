@@ -97,12 +97,12 @@ export function DesignOne() {
             The covers hold the left of the column and the writing the right of
             it, on the same two lines the header above them keeps.
 
-            The first row needs the room between projects above it: any less and
-            it reads as more of the intro rather than the start of the work. A
-            hair under it, in fact — this gap starts at the bottom of a line of
-            text, which carries a few pixels of leading below the letters,
-            where the gaps between projects start at the hard bottom edge of a
-            cover. Equal numbers would not look equal.
+            The first row needs most of the room between projects above it:
+            much less and it reads as more of the intro rather than the start
+            of the work. Under it, though — this gap starts at the bottom of a
+            line of text, which carries a few pixels of leading below the
+            letters, where the gaps between projects start at the hard bottom
+            edge of a cover. Equal numbers would not look equal.
 
             Beside at every width, and centred on the cover rather than hung
             from its top edge — a title and a line under it are shorter than
@@ -110,7 +110,7 @@ export function DesignOne() {
             bottom-heavy. A phone fits the row by shrinking the cover and the
             gap rather than by stacking the two; see "The page on a phone" in
             globals.css. */}
-        <div className="mt-17 flex flex-col items-start gap-18">
+        <div className="mt-15 flex flex-col items-start gap-18">
           {entries.map((entry) => (
             <article
               key={entry.slug}
