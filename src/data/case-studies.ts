@@ -414,7 +414,7 @@ export const caseStudies: Record<string, CaseStudy> = {
     blocks: [
       {
         type: "text",
-        text: "I created a website for Time With Tree, a birch tree farm in South Korea. The client wanted to teach readers about the farm, sell trees, and manage communications with customers. This was my first website for a client so I used Lovable to prompt the design.",
+        text: "I created a website for Time With Tree, a birch tree farm in South Korea. The client wanted to teach readers about the farm, sell trees, and manage communications with customers. This was my first website so I used Lovable to prompt the design, and followed the client's expectations.",
       },
 
       {
