@@ -472,7 +472,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "The homepage is designed to take less time to read with the option of reading the full briefing.",
+        text: "The homepage is designed to be concise with the option of reading the full briefing.",
       },
 
       { type: "heading", text: "Old design" },
