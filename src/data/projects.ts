@@ -159,6 +159,7 @@ export const entries: Entry[] = [
         crop: "24% 50%",
       },
     ],
-
+    // spacing from the last project to the bottom of the page is 112 px on desktop, 32 px on phone
+  
   },
 ];
