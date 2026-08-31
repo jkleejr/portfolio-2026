@@ -124,8 +124,8 @@ export const caseStudies: Record<string, CaseStudy> = {
         type: "list",
         ordered: true,
         items: [
-          "The user takes a photo of an item",
-          "Claude identifies and estimates a price range from its type, brand, and condition",
+          "The user takes a photo",
+          "Claude identifies the item and provides the resale value",
         ],
       },
 
@@ -145,7 +145,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "For most items, the value is based on the model's pre-trained data. Claude can complete a web search to value items accurately based on its level of confidence. I decided not to do a web search for every scan because it increases the costs by 3-4x, and Sonnet 4.6 is accurate enough for most items."
+        text: "For most items, the value is based on the model's pre-trained data. Depending on the level of confidence, Claude does a web search to find the current value of an item. I decided not to do a web search for every scan because it increases the costs by 3-4x, and Sonnet 4.6 is accurate enough for most items."
       },
 
                         { type: "heading", text: "Designing for uncertainty" },
