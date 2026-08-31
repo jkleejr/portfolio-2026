@@ -440,6 +440,10 @@ export const caseStudies: Record<string, CaseStudy> = {
         type: "text",
         text: "Time with Tree is a small birch tree farm in South Korea. They had healthy trees but no way for customers to find them, so I created the brand and built the website.",
       },
+      {
+        type: "text",
+        text: "",
+      },
 
       {
         type: "image",
