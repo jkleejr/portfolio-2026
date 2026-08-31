@@ -23,14 +23,15 @@ import { TypedLine } from "./typed-line";
 // another. The writing under them runs a little quicker: it is there to be
 // read rather than watched, and there is a lot more of it.
 const BODY_SPEED = 20;
-// The name runs a touch behind the project titles. It is eight characters and
-// the first thing on the page, and at the headings' own pace it is over before
-// anyone has looked at it. Still inside the 300ms the role waits, so the header
-// writes itself in order without the delays below moving.
-const NAME_SPEED = 36;
+// The name runs well behind the project titles. It is eight characters and the
+// first thing on the page, and at the headings' own pace it is over before
+// anyone has looked at it. 384ms at this speed, which is what sets the 400 the
+// role waits: the three header lines run one after another, each starting as
+// the one above it finishes, so slowing the name moves the two under it.
+const NAME_SPEED = 48;
 const NAME_DELAY = 0;
-const ROLE_DELAY = 300;
-const INTRO_DELAY = 620;
+const ROLE_DELAY = 400;
+const INTRO_DELAY = 720;
 const TITLE_DELAY = 0;
 const BLURB_DELAY = 240;
 const DATE_DELAY = 440;
