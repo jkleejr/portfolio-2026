@@ -8,6 +8,18 @@
 // lying on the floor is the same button it was, so clicking it still switches
 // the theme.
 //
+// What has not been touched is still solid. A word that falls lands on the
+// line of text under it and stays there, held up by a paragraph that has not
+// been hovered yet; hover that paragraph and the whole lot comes down
+// together. The page comes apart in the order you touch it, and the parts of
+// it you have not reached are what the rest is resting on.
+//
+// That is why the world is measured in PAGE coordinates rather than window
+// ones, with the scroll subtracted only at the moment of drawing. What is
+// standing then genuinely does not move, so a heap resting on a paragraph goes
+// on resting on it however far you scroll. The floor is the one thing that
+// follows you, and only downwards — see run().
+//
 // Two kinds of thing fall, for one reason:
 //
 //   Atoms   Buttons, links, images. These are the REAL elements, pinned to the
@@ -73,13 +85,6 @@ type Piece = {
   body: MatterType.Body;
   w: number;
   h: number;
-  // Where it sits on the PAGE, not in the window. A piece that has not been
-  // let go of yet is drawn from this spot as the page scrolls under it, so it
-  // travels with the layout it is standing in for, and it is the spot its body
-  // is placed at when it finally enters the world. Once it falls it belongs to
-  // the window instead, and this is not read again.
-  pageX: number;
-  pageY: number;
 };
 
 /**
@@ -286,14 +291,18 @@ function run(
   loose.className = "gravity-overlay gravity-overlay-loose";
   document.body.appendChild(loose);
 
-  // Sleeping matters here more than in most simulations: everything that
-  // falls ends up in one heap at the bottom of the window, and a heap that
-  // deep never quite stops solving — the pieces at the base shuffle against
-  // each other for as long as it stands, which reads as a jitter and costs a
-  // frame's work every frame. Asleep, a settled heap is free and still, and
-  // matter-js wakes anything that is landed on or picked up.
+  // Sleeping matters here more than in most simulations: a heap this deep
+  // never quite stops solving, and the pieces at the base shuffle against each
+  // other for as long as it stands — a jitter that costs a frame's work every
+  // frame. Asleep, a settled heap is free and still. matter-js wakes a
+  // sleeping body when something hits it; what it cannot know about is support
+  // being taken away rather than arriving, which is what disturb() is for.
   const engine = Matter.Engine.create({ enableSleeping: true });
   const world = engine.world;
+
+  // Everything that has been let go of. Only these can be woken — what is
+  // still standing is static, and static bodies do not sleep.
+  const fallen: MatterType.Body[] = [];
 
   function makeBody(x: number, y: number, w: number, h: number, disc = false) {
     const shape = {
@@ -304,9 +313,10 @@ function run(
     const body = disc
       ? Matter.Bodies.circle(x + w / 2, y + h / 2, w / 2, shape)
       : Matter.Bodies.rectangle(x + w / 2, y + h / 2, w, h, shape);
-    // Every piece starts pinned, and stays out of the world entirely until it
-    // is dropped — see drop(). Pinning is what marks it as still standing:
-    // nothing reads a static body's position, so the flag is the whole state.
+    // Every piece starts pinned, and pinned is what "still standing" means —
+    // solid, holding up whatever lands on it, and going nowhere until it is
+    // touched. The flag is the whole state; drop() is the only thing that
+    // lifts it.
     //
     // Pinned only AFTER construction. Body.setStatic snapshots mass and
     // inertia so it can restore them on release, but it skips the snapshot
@@ -344,16 +354,14 @@ function run(
     pieces.push({
       el,
       body: makeBody(
-        rect.left,
-        rect.top,
+        rect.left + window.scrollX,
+        rect.top + window.scrollY,
         rect.width,
         rect.height,
         isDisc(el, rect.width, rect.height),
       ),
       w: rect.width,
       h: rect.height,
-      pageX: rect.left + window.scrollX,
-      pageY: rect.top + window.scrollY,
     });
     return () => {
       el.classList.remove("gravity-atom");
@@ -399,75 +407,123 @@ function run(
     el.style.transform = `translate3d(${left}px, ${top}px, 0)`;
     pieces.push({
       el,
-      body: makeBody(left, top, w, h),
+      body: makeBody(left + window.scrollX, top + window.scrollY, w, h),
       w,
       h,
-      pageX: left + window.scrollX,
-      pageY: top + window.scrollY,
     });
   }
 
-  // The bodies are NOT added here. A piece that is still standing has no part
-  // in the simulation: it is drawn from its place on the page, and a page can
-  // hold a few thousand words, every one of which would otherwise be a body
-  // the engine sorts and pairs off every step for a piece that cannot move.
-  // Worse, a standing piece is solid and moves with the scroll, so a flick of
-  // the trackpad used to sweep the whole layout through whatever had already
-  // fallen at hundreds of pixels a step — and the heap went everywhere. Each
-  // body joins the world at the moment it is let go of, and only then.
+  // Everything is a body from the start, standing pieces included — that is
+  // the whole point of them. A word that falls has to land on the line of text
+  // below it and stay there, and then go down with that line when it is
+  // hovered in turn. What is still standing IS the floor of the page.
+  Matter.Composite.add(
+    world,
+    pieces.map((p) => p.body),
+  );
 
-  const vw = window.innerWidth;
-  const vh = window.innerHeight;
+  // The world is the PAGE, not the window: a body's coordinates are where it
+  // sits in the document, and the drawing subtracts the scroll at the last
+  // moment. This is the fix for nearly everything that was going wrong.
+  //
+  // Before, the world was the window, so a standing piece had to be dragged
+  // through it every time the page scrolled to keep it over the layout it
+  // stands for. That made it a moving wall: a flick of the trackpad drove the
+  // whole page through the heap at hundreds of pixels a step, and matter-js
+  // was told to give it a velocity to match, so it hit like one — which is why
+  // a word would shoot off the top of the screen or get slammed down, and why
+  // touching anything just after a scroll flung it. In the page's own
+  // coordinates a standing piece simply never moves. Scrolling is only ever a
+  // change of view, and a heap resting on a paragraph rests on it for good.
+  const pageW = root.clientWidth;
+  const pageH = root.scrollHeight;
+  const reach = () => window.scrollY + window.innerHeight;
+
+  // The floor is the bottom of the deepest screen you have looked at, and it
+  // only ever goes down. Down is safe: what is lying on it simply falls the
+  // rest of the way, which is what keeps the heap at your feet as you read on
+  // down the page. A floor that came back up as you scrolled back would be a
+  // wall rising through everything resting on it, and that is the one motion
+  // this cannot take. Scroll back up and you leave the heap where it fell, on
+  // the page, which is where it belongs.
+  let floorAt = reach();
   const ground = Matter.Bodies.rectangle(
-    vw / 2,
-    vh + WALL / 2,
-    vw + WALL * 2,
+    pageW / 2,
+    floorAt + WALL / 2,
+    pageW + WALL * 2,
     WALL,
     { isStatic: true },
   );
-  const left = Matter.Bodies.rectangle(-WALL / 2, vh / 2, WALL, vh * 3, {
+  // The sides run the height of the document, with a screen's slack at each
+  // end so nothing can round the end of one.
+  const sides = pageH + window.innerHeight * 2;
+  const left = Matter.Bodies.rectangle(-WALL / 2, pageH / 2, WALL, sides, {
     isStatic: true,
   });
-  const right = Matter.Bodies.rectangle(vw + WALL / 2, vh / 2, WALL, vh * 3, {
-    isStatic: true,
-  });
-  // A lid as well as a floor. Something thrown hard enough would otherwise
-  // leave over the top of the window and never come back — the walls catch it
-  // sideways and the floor catches it falling, so the top was the one way out.
+  const right = Matter.Bodies.rectangle(
+    pageW + WALL / 2,
+    pageH / 2,
+    WALL,
+    sides,
+    {
+      isStatic: true,
+    },
+  );
+  // A lid as well as a floor, at the top of the document. Something thrown
+  // hard enough would otherwise leave over the top and never come back — the
+  // sides catch it sideways and the floor catches it falling, so the top was
+  // the one way out.
   const ceiling = Matter.Bodies.rectangle(
-    vw / 2,
+    pageW / 2,
     -WALL / 2,
-    vw + WALL * 2,
+    pageW + WALL * 2,
     WALL,
     { isStatic: true },
   );
   Matter.Composite.add(world, [ground, left, right, ceiling]);
 
+  /**
+   * Wakes whatever has fallen and is lying against `body`.
+   *
+   * A settled heap sleeps, and matter-js only wakes a sleeping body when
+   * something arrives to hit it. Support LEAVING is the opposite of that and
+   * goes unnoticed: pull a word out from under a heap and the heap hangs there
+   * in the air. So whenever a piece is about to move out from under whatever
+   * is on it, the things on it are told first.
+   */
+  function disturb(body: MatterType.Body) {
+    const near = {
+      min: { x: body.bounds.min.x - 4, y: body.bounds.min.y - 4 },
+      max: { x: body.bounds.max.x + 4, y: body.bounds.max.y + 4 },
+    };
+    for (const other of Matter.Query.region(fallen, near)) {
+      Matter.Sleeping.set(other, false);
+    }
+  }
+
   // Something only starts falling once it is touched, so the page comes apart
   // under the cursor rather than all at once.
   //
-  // This is also where a piece becomes physical at all. Until now it has been
-  // drawn from its place on the page; here its body is put where the piece is
-  // standing on screen at this moment — which is somewhere else entirely if
-  // the page has been scrolled since gravity came on — and handed to the
-  // engine, at rest. At rest is the point: a piece that arrives carrying speed
-  // it never visibly had is the thing that made words shoot off the top of the
-  // screen when they were touched just after a scroll.
+  // It goes both ways: the piece starts falling, and so does anything that had
+  // been resting on it. That is the whole game — a line of text holds up the
+  // words that landed on it until the line itself is touched, and then the lot
+  // comes down together.
   function drop(piece: Piece) {
-    const { body, el, w, h } = piece;
+    const { body, el } = piece;
     if (!body.isStatic) return;
-    Matter.Body.setPosition(body, {
-      x: piece.pageX - window.scrollX + w / 2,
-      y: piece.pageY - window.scrollY + h / 2,
-    });
+    disturb(body);
     Matter.Body.setStatic(body, false);
-    Matter.Body.setVelocity(body, { x: 0, y: 0 });
+    // And wake it. matter-js counts a body as asleep once it has not moved for
+    // a second, and it does not spare the static ones — so everything still
+    // standing is asleep by definition, and coming off the pin does not undo
+    // that. A sleeping body ignores gravity: without this line the page would
+    // come apart for one second and then stop answering the cursor entirely.
+    Matter.Sleeping.set(body, false);
     Matter.Body.setAngularVelocity(body, (Math.random() - 0.5) * 0.15);
-    Matter.Composite.add(world, body);
-    // Lift it over everything still standing. What has fallen belongs to the
-    // window and what is standing belongs to the page, and the two slide past
-    // each other as you scroll — so the heap is drawn in front of the layout
-    // rather than being sorted into it.
+    fallen.push(body);
+    // Lift it over everything still standing, so a piece that comes to rest on
+    // top of the page is drawn on top of it too — the heap builds up in front
+    // of the layout rather than getting lost inside it.
     if (el.parentElement === overlay) loose.appendChild(el);
     else el.classList.add("gravity-loose");
   }
@@ -535,9 +591,11 @@ function run(
   overlay.removeEventListener("touchstart", mouse.mousedown);
   overlay.removeEventListener("touchend", mouse.mouseup);
 
+  // In the page's terms, like everything else in the world — otherwise what
+  // you grab is off by however far you have scrolled.
   const track = (e: { clientX: number; clientY: number }) => {
-    mouse.absolute.x = mouse.position.x = e.clientX;
-    mouse.absolute.y = mouse.position.y = e.clientY;
+    mouse.absolute.x = mouse.position.x = e.clientX + window.scrollX;
+    mouse.absolute.y = mouse.position.y = e.clientY + window.scrollY;
   };
   const onMove = (e: MouseEvent) => track(e);
   const onDown = (e: MouseEvent) => {
@@ -567,27 +625,25 @@ function run(
   });
   Matter.Composite.add(world, mouseConstraint);
 
+  // Picking a piece up out of a heap takes it out from under whatever was on
+  // it, the same as dropping one does — so the same warning goes out.
+  Matter.Events.on(mouseConstraint, "startdrag", (e) => {
+    const grabbed = (e as unknown as { body?: MatterType.Body }).body;
+    if (grabbed) disturb(grabbed);
+  });
+
   const runner = Matter.Runner.create();
   Matter.Runner.run(runner, engine);
 
-  // The page still scrolls while this runs, and the pieces answer to it in two
-  // different ways. One that has not been let go of is standing in for content
-  // that is still part of the layout, so it travels with the page: it is drawn
-  // at wherever its place on the page now sits in the window, straight from
-  // the scroll position, with no physics in it at all. One that has fallen has
-  // come loose of the page and belongs to the window, where the floor it
-  // landed on is the bottom of the screen — it is left where the engine put it.
+  // Drawing is the one place the window comes into it: the world is in page
+  // coordinates, and the scroll is subtracted here, at the last moment, to say
+  // where each piece falls on the screen. A standing piece therefore holds
+  // still in the page and only appears to move — which is what scrolling is.
   //
-  // The two frames of reference are why a standing piece is not simulated. It
-  // moves with the page while the heap below it stays with the window, so the
-  // pair can never rest against each other honestly, and every scroll was a
-  // shove. Drawn rather than simulated, a standing piece is simply scenery
-  // until it is touched.
-  //
-  // Reading the scroll here rather than on a scroll event puts the drawing in
-  // the same frame as the scroll that caused it; a frame apart and the page
-  // visibly drags behind. Read first, write after: the whole loop is one read
-  // of the scroll position and then transforms, which do not disturb layout.
+  // The scroll is read here rather than on a scroll event so the drawing lands
+  // in the same frame as the scroll that caused it; a frame apart and the page
+  // visibly drags behind. Read first, write after: one read of the scroll
+  // position and then transforms, which do not disturb layout.
   let scrolledX = window.scrollX;
   let scrolledY = window.scrollY;
   let frame = requestAnimationFrame(function paint() {
@@ -597,31 +653,47 @@ function run(
     scrolledX = x;
     scrolledY = y;
 
+    // Read further down the page than you have been and the floor comes with
+    // you, and everything lying on it falls the rest of the way — which needs
+    // saying out loud, because a heap that has settled is asleep and the floor
+    // going out from under it is exactly the kind of leaving nothing notices.
+    if (reach() > floorAt) {
+      // Told before it moves, while it is still under them: the floor is
+      // support like any other, and it is about to leave. Whatever is resting
+      // on the page rather than on the floor is not woken and does not care —
+      // it is held up by something that is not going anywhere.
+      disturb(ground);
+      floorAt = reach();
+      Matter.Body.setPosition(ground, {
+        x: ground.position.x,
+        y: floorAt + WALL / 2,
+      });
+    }
+
     for (const piece of pieces) {
       const { el, body, w, h } = piece;
-      if (body.isStatic) {
-        // Still part of the layout. Nothing has happened to it unless the
-        // page moved under it, so nothing is written unless it did.
-        if (moved) {
-          el.style.transform = `translate3d(${piece.pageX - x}px, ${piece.pageY - y}px, 0)`;
-        }
-        continue;
-      }
+      // A standing piece has not moved and cannot have; there is nothing to
+      // write unless the view it is being drawn into has changed.
+      if (body.isStatic && !moved) continue;
       el.style.transform =
-        `translate3d(${body.position.x - w / 2}px, ${body.position.y - h / 2}px, 0)` +
+        `translate3d(${body.position.x - w / 2 - x}px, ${body.position.y - h / 2 - y}px, 0)` +
         ` rotate(${body.angle}rad)`;
     }
     frame = requestAnimationFrame(paint);
   });
 
-  // Keep the floor and walls on the viewport edges when the window changes.
+  // Keep the sides on the edges of the page when the window changes, and let
+  // the floor down to the new screen bottom if that is further than it has
+  // been. It is never raised — see above.
   const resize = () => {
-    const w = window.innerWidth;
-    const h = window.innerHeight;
-    Matter.Body.setPosition(ground, { x: w / 2, y: h + WALL / 2 });
+    const w = root.clientWidth;
+    const h = root.scrollHeight;
     Matter.Body.setPosition(left, { x: -WALL / 2, y: h / 2 });
     Matter.Body.setPosition(right, { x: w + WALL / 2, y: h / 2 });
     Matter.Body.setPosition(ceiling, { x: w / 2, y: -WALL / 2 });
+    disturb(ground);
+    floorAt = Math.max(floorAt, reach());
+    Matter.Body.setPosition(ground, { x: w / 2, y: floorAt + WALL / 2 });
   };
   window.addEventListener("resize", resize);
 
