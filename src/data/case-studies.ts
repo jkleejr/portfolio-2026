@@ -138,14 +138,14 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "I focused on resale, but the app was the most interesting when I showed it original items like a painting. Since I didn't buy the painting, I was looking for its potential value. This expanded the app's function as a price discovery tool for used items and original things.",
+        text: "I focused on resale, but the app was the most interesting when I showed it original items like a painting. Since I didn't buy the painting, I was looking for its potential value. This expanded the app's function as a price discovery tool for used items and creative things.",
       },
 
                                     { type: "heading", text: "Valuing items" },
 
       {
         type: "text",
-        text: "For most items, the value is based on the model's pre-trained data. Depending on the level of confidence, Claude does a web search to find the current value of an item. I decided not to do a web search for every scan because it increases the costs by 3-4x, and Sonnet 4.6 is accurate enough for most items."
+        text: "For most items, the value is based on the model's pre-trained data. Depending on the level of confidence, Claude does a web search to find the current value. I decided not to do a web search for every scan because it increased the cost by 3-4x, and Sonnet 4.6 is accurate enough for most things."
       },
 
                         { type: "heading", text: "Designing for uncertainty" },
