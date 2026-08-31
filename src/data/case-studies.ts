@@ -191,7 +191,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "Loot Check on the app store. I wanted to automate the entire listing process but since most marketplaces don't have a public listing API, the app creates a title and description for copy and paste. The next steps are finding users and marketing on social media.",
+        text: "Loot Check is on the app store. I wanted to automate the entire listing process but since most marketplaces don't have a public listing API, the app creates a title and description for copy and paste. The next steps are finding users and marketing on social media.",
       },
       // Loot Check is the first app I put on the app store so I learned a lot about iOS and mobile development from this project.
     ],
