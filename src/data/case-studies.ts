@@ -125,20 +125,20 @@ export const caseStudies: Record<string, CaseStudy> = {
         ordered: true,
         items: [
           "The user takes a photo",
-          "Claude identifies the item and provides its potential value",
+          "Claude identifies the item and values it",
         ],
       },
 
       {
         type: "text",
-        text: "I used Claude Sonnet 4.6 to identify the item, find its resale value, and write a listing due to its low costs and high accuracy at ~$0.013 per scan. I considered other AI models but the costs were similar and I wanted the results to be as trustworthy as possible.",
+        text: "I used Claude Sonnet 4.6 due to its low costs and high accuracy at ~$0.013 per scan. I considered other AI models but the costs were similar and I wanted the results to be as trustworthy as possible.",
       },
 
                               { type: "heading", text: "Scope" },
 
       {
         type: "text",
-        text: "I focused on resale, but the app was the most interesting when I showed it original items like a painting. Since I didn't buy the painting, I was looking for its potential value. This expanded the app's function as a price discovery tool for used items and creative work.",
+        text: "I focused on resale, but the app was the most interesting when I showed it original items like a painting. Since I didn't buy the painting, I was looking for its potential value. This expanded the app's function as a price discovery tool for used items and original things.",
       },
 
                                     { type: "heading", text: "Valuing items" },
