@@ -29,6 +29,7 @@
 // ---------------------------------------------------------------------------
 
 import { useEffect, useRef, useState, type RefObject } from "react";
+import { usePathname } from "next/navigation";
 import type MatterType from "matter-js";
 
 // Walls sit this far outside the viewport so fast-moving bodies cannot tunnel
@@ -67,23 +68,15 @@ type MouseWithHandlers = MatterType.Mouse & {
   mousewheel: EventListener;
 };
 
-// matter-js 0.20 takes a third argument on Body.setPosition: move the body
-// with a velocity to match instead of teleporting it there. It is in the
-// library but not in its type definitions.
-type SetPosition = (
-  body: MatterType.Body,
-  position: MatterType.Vector,
-  updateVelocity?: boolean,
-) => void;
-
 type Piece = {
   el: HTMLElement;
   body: MatterType.Body;
   w: number;
   h: number;
   // Where it sits on the PAGE, not in the window. A piece that has not been
-  // let go of yet is held at this spot as the page scrolls under it, so it
-  // travels with the layout it is standing in for. Once it falls it belongs to
+  // let go of yet is drawn from this spot as the page scrolls under it, so it
+  // travels with the layout it is standing in for, and it is the spot its body
+  // is placed at when it finally enters the world. Once it falls it belongs to
   // the window instead, and this is not read again.
   pageX: number;
   pageY: number;
@@ -293,7 +286,13 @@ function run(
   loose.className = "gravity-overlay gravity-overlay-loose";
   document.body.appendChild(loose);
 
-  const engine = Matter.Engine.create();
+  // Sleeping matters here more than in most simulations: everything that
+  // falls ends up in one heap at the bottom of the window, and a heap that
+  // deep never quite stops solving — the pieces at the base shuffle against
+  // each other for as long as it stands, which reads as a jitter and costs a
+  // frame's work every frame. Asleep, a settled heap is free and still, and
+  // matter-js wakes anything that is landed on or picked up.
+  const engine = Matter.Engine.create({ enableSleeping: true });
   const world = engine.world;
 
   function makeBody(x: number, y: number, w: number, h: number, disc = false) {
@@ -305,6 +304,10 @@ function run(
     const body = disc
       ? Matter.Bodies.circle(x + w / 2, y + h / 2, w / 2, shape)
       : Matter.Bodies.rectangle(x + w / 2, y + h / 2, w, h, shape);
+    // Every piece starts pinned, and stays out of the world entirely until it
+    // is dropped — see drop(). Pinning is what marks it as still standing:
+    // nothing reads a static body's position, so the flag is the whole state.
+    //
     // Pinned only AFTER construction. Body.setStatic snapshots mass and
     // inertia so it can restore them on release, but it skips the snapshot
     // when the body is already static — which passing `isStatic: true` as a
@@ -404,10 +407,14 @@ function run(
     });
   }
 
-  Matter.Composite.add(
-    world,
-    pieces.map((p) => p.body),
-  );
+  // The bodies are NOT added here. A piece that is still standing has no part
+  // in the simulation: it is drawn from its place on the page, and a page can
+  // hold a few thousand words, every one of which would otherwise be a body
+  // the engine sorts and pairs off every step for a piece that cannot move.
+  // Worse, a standing piece is solid and moves with the scroll, so a flick of
+  // the trackpad used to sweep the whole layout through whatever had already
+  // fallen at hundreds of pixels a step — and the heap went everywhere. Each
+  // body joins the world at the moment it is let go of, and only then.
 
   const vw = window.innerWidth;
   const vh = window.innerHeight;
@@ -438,14 +445,29 @@ function run(
 
   // Something only starts falling once it is touched, so the page comes apart
   // under the cursor rather than all at once.
+  //
+  // This is also where a piece becomes physical at all. Until now it has been
+  // drawn from its place on the page; here its body is put where the piece is
+  // standing on screen at this moment — which is somewhere else entirely if
+  // the page has been scrolled since gravity came on — and handed to the
+  // engine, at rest. At rest is the point: a piece that arrives carrying speed
+  // it never visibly had is the thing that made words shoot off the top of the
+  // screen when they were touched just after a scroll.
   function drop(piece: Piece) {
-    const { body, el } = piece;
+    const { body, el, w, h } = piece;
     if (!body.isStatic) return;
+    Matter.Body.setPosition(body, {
+      x: piece.pageX - window.scrollX + w / 2,
+      y: piece.pageY - window.scrollY + h / 2,
+    });
     Matter.Body.setStatic(body, false);
+    Matter.Body.setVelocity(body, { x: 0, y: 0 });
     Matter.Body.setAngularVelocity(body, (Math.random() - 0.5) * 0.15);
-    // Lift it over everything still standing, so a piece that comes to rest on
-    // top of the page is drawn on top of it too — the pile builds up in front
-    // of the layout rather than getting lost inside it.
+    Matter.Composite.add(world, body);
+    // Lift it over everything still standing. What has fallen belongs to the
+    // window and what is standing belongs to the page, and the two slide past
+    // each other as you scroll — so the heap is drawn in front of the layout
+    // rather than being sorted into it.
     if (el.parentElement === overlay) loose.appendChild(el);
     else el.classList.add("gravity-loose");
   }
@@ -550,17 +572,22 @@ function run(
 
   // The page still scrolls while this runs, and the pieces answer to it in two
   // different ways. One that has not been let go of is standing in for content
-  // that is still part of the layout, so it travels with the page: its body is
-  // moved to wherever its place on the page now sits in the window. One that
-  // has fallen has come loose of the page and belongs to the window, where the
-  // floor it landed on is the bottom of the screen — it is left where it lies.
+  // that is still part of the layout, so it travels with the page: it is drawn
+  // at wherever its place on the page now sits in the window, straight from
+  // the scroll position, with no physics in it at all. One that has fallen has
+  // come loose of the page and belongs to the window, where the floor it
+  // landed on is the bottom of the screen — it is left where the engine put it.
   //
-  // The carrying happens here rather than on a scroll event so that it lands
-  // in the same frame as the drawing that follows it; a frame apart and the
-  // page would visibly drag behind the scroll. Read first, write after: the
-  // whole loop is one read of the scroll position and then transforms, which
-  // do not disturb layout.
-  const carry = Matter.Body.setPosition as SetPosition;
+  // The two frames of reference are why a standing piece is not simulated. It
+  // moves with the page while the heap below it stays with the window, so the
+  // pair can never rest against each other honestly, and every scroll was a
+  // shove. Drawn rather than simulated, a standing piece is simply scenery
+  // until it is touched.
+  //
+  // Reading the scroll here rather than on a scroll event puts the drawing in
+  // the same frame as the scroll that caused it; a frame apart and the page
+  // visibly drags behind. Read first, write after: the whole loop is one read
+  // of the scroll position and then transforms, which do not disturb layout.
   let scrolledX = window.scrollX;
   let scrolledY = window.scrollY;
   let frame = requestAnimationFrame(function paint() {
@@ -572,20 +599,13 @@ function run(
 
     for (const piece of pieces) {
       const { el, body, w, h } = piece;
-      if (moved && body.isStatic) {
-        // Moved WITH its velocity, not teleported. A carried piece is solid
-        // the whole way — nothing loose may pass through the page — and the
-        // velocity is what lets it push what it meets aside and carry what is
-        // resting on it, instead of the two overlapping and the engine firing
-        // them apart.
-        carry(
-          body,
-          {
-            x: piece.pageX - x + w / 2,
-            y: piece.pageY - y + h / 2,
-          },
-          true,
-        );
+      if (body.isStatic) {
+        // Still part of the layout. Nothing has happened to it unless the
+        // page moved under it, so nothing is written unless it did.
+        if (moved) {
+          el.style.transform = `translate3d(${piece.pageX - x}px, ${piece.pageY - y}px, 0)`;
+        }
+        continue;
       }
       el.style.transform =
         `translate3d(${body.position.x - w / 2}px, ${body.position.y - h / 2}px, 0)` +
@@ -640,7 +660,24 @@ export function useGravity(trigger: RefObject<HTMLElement | null>): {
   on: boolean;
   toggle: () => void;
 } {
-  const [on, setOn] = useState(false);
+  // The switch does not remember that it is on; it remembers WHERE it was
+  // thrown, and it is on only while you are still there. Leaving the page ends
+  // the game, and this is how, without a single line spent on noticing that
+  // you left.
+  //
+  // It has to end. The switch lives in the layout, so it survives a navigation
+  // that the page under it does not: the pieces stand in for a page that has
+  // just been replaced, and the new one arrives hidden — gravity hides the real
+  // content and draws the stand-ins over it — with nothing standing in for it.
+  // That is what made a cover vanish instead of opening. It did open; it opened
+  // onto a page held invisible by the simulation of the page before it.
+  //
+  // Come back to the page you threw it on and it is still thrown, which is the
+  // same rule read the other way round: the switch belongs to the page, and
+  // walking out of the room does not put the weight back into the world.
+  const pathname = usePathname();
+  const [thrownAt, setThrownAt] = useState<string | null>(null);
+  const on = thrownAt === pathname;
   const teardown = useRef<(() => void) | null>(null);
 
   useEffect(() => {
@@ -661,5 +698,8 @@ export function useGravity(trigger: RefObject<HTMLElement | null>): {
     // satisfies the rule without ever re-running the effect.
   }, [on, trigger]);
 
-  return { on, toggle: () => setOn((v) => !v) };
+  return {
+    on,
+    toggle: () => setThrownAt((at) => (at === pathname ? null : pathname)),
+  };
 }

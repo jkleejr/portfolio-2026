@@ -40,6 +40,13 @@ function CoverDot({ dot }: { dot: NonNullable<EntryImage["coverDot"]> }) {
         frame = 0;
         const el = ref.current;
         if (!el) return;
+        // Not while the page has weight. The cover is tumbling around the
+        // screen by then, so a glance toward the cursor means nothing on it —
+        // and the measurement below is a layout read on every pointer move,
+        // taken against a page whose every word is being rewritten each frame.
+        // That is the one place it is expensive, and it is the one place it
+        // buys nothing.
+        if (document.documentElement.classList.contains("gravity-on")) return;
         const box = el.getBoundingClientRect();
         const dx = e.clientX - (box.left + box.width / 2);
         const dy = e.clientY - (box.top + box.height / 2);
