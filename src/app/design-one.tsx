@@ -12,34 +12,22 @@ import { ProjectThumbnail } from "./project-thumbnail";
 import { AppStoreBadge, SiteBadge } from "./title-badge";
 import { TypedLine } from "./typed-line";
 
-// Every line on this page is written out a character at a time on load. These
-// are how long each waits before it starts, counted from the moment its line
-// comes into view — a stagger rather than a queue, so a row is written as one
-// gesture and the page is finished by the time the eye reaches the bottom of
-// it.
+// The header writes itself out a character at a time on load — the name, the
+// role, and the intro, in that order, each starting as the one above it
+// finishes. The work below is set plainly: it is a list to be read down, and
+// six rows of it arriving letter by letter is a wait rather than a greeting.
 //
-// The headings — the name, and the title of each project — all run at
-// TypedLine's own pace, so no one of them writes itself out faster than
-// another. The writing under them runs a little quicker: it is there to be
-// read rather than watched, and there is a lot more of it.
-const BODY_SPEED = 20;
-// The name runs well behind the project titles. It is eight characters and the
-// first thing on the page, and at the headings' own pace it is over before
-// anyone has looked at it. 384ms at this speed, which is what sets the 400 the
-// role waits: the three header lines run one after another, each starting as
-// the one above it finishes, so slowing the name moves the two under it.
+// The name runs slowest. It is eight characters, and at the pace of the lines
+// under it, it is over before anyone has looked at it. 384ms at this speed,
+// which is what sets the 400 the role waits; the intro's 720 is that plus the
+// 320 the role itself takes. Change one and the two below it follow.
 const NAME_SPEED = 48;
-// A shade behind the writing under them, so the two are told apart by more
-// than their size. Was TypedLine's own default, which the titles were the last
-// thing on the page still using.
-const TITLE_SPEED = 28;
+// The writing under the name. Quicker, because it is there to be read rather
+// than watched.
+const BODY_SPEED = 20;
 const NAME_DELAY = 0;
 const ROLE_DELAY = 400;
 const INTRO_DELAY = 720;
-const TITLE_DELAY = 0;
-const BLURB_DELAY = 240;
-const DATE_DELAY = 440;
-const TOOLS_DELAY = 560;
 
 export function DesignOne() {
   // The bottom padding is trimmed on a phone so the page fits the screen. That
@@ -142,11 +130,7 @@ export function DesignOne() {
                   pushes the row off the side of the screen. */}
               <div className="min-w-0 flex-1 sm:w-[var(--text-width)] sm:flex-none sm:shrink-0">
                 <h2 className="text-xl font-semibold leading-snug">
-                  <TypedLine
-                    text={entry.title}
-                    delay={TITLE_DELAY}
-                    speed={TITLE_SPEED}
-                  />
+                  {entry.title}
                   {entry.appStore !== undefined && (
                     <AppStoreBadge href={entry.appStore} label={entry.title} />
                   )}
@@ -156,29 +140,17 @@ export function DesignOne() {
                 </h2>
                 {entry.blurb && (
                   <p className="mt-3 text-base leading-relaxed">
-                    <TypedLine
-                      text={entry.blurb}
-                      delay={BLURB_DELAY}
-                      speed={BODY_SPEED}
-                    />
+                    {entry.blurb}
                   </p>
                 )}
                 {entry.date && (
                   <p className="mt-2 text-base leading-relaxed">
-                    <TypedLine
-                      text={`Date: ${entry.date}`}
-                      delay={DATE_DELAY}
-                      speed={BODY_SPEED}
-                    />
+                    Date: {entry.date}
                   </p>
                 )}
                 {entry.tools && (
                   <p className="mt-1 text-base leading-relaxed">
-                    <TypedLine
-                      text={`Tools: ${entry.tools}`}
-                      delay={TOOLS_DELAY}
-                      speed={BODY_SPEED}
-                    />
+                    Tools: {entry.tools}
                   </p>
                 )}
               </div>
