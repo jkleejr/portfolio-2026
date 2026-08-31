@@ -191,7 +191,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "Loot Check is on the app store. I wanted to automate the entire listing process but since most marketplaces don't have a public listing API, the app creates a title and description for copy and paste. The next steps are finding users and marketing on social media.",
+        text: "Loot Check is live on the app store. I wanted to automate the entire listing process but since most marketplaces don't have a public listing API, the app creates a title and description for copy and paste. The next steps are finding users and marketing on social media.",
       },
       // Loot Check is the first app I put on the app store so I learned a lot about iOS and mobile development from this project.
     ],
@@ -219,7 +219,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       
       {
         type: "text",
-        text: "I designed the app around users paying for their own API usage due to the costs of audio generation at ~$1-3 per paper. To keep things simple, I used one API to identify text and generate  audio. Gemini 3.1 flash was the best option because it could clean up text and had TTS with 8 voices.",
+        text: "I designed the app around users paying for their own API usage due to the costs of audio generation at ~$1-3 per paper. To keep things simple, I used one API to identify text and generate audio. Gemini 3.1 flash was the best option because it could clean up text and had TTS with 8 voices.",
       },
       { type: "heading", text: "API calls" },
 
@@ -268,7 +268,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "A sample paper with narration is pre downloaded so users can experience the app before setting up a key.",
+        text: "A sample paper with narration is pre-downloaded so users can experience the app before setting up a key.",
       },
       {
         type: "image",
