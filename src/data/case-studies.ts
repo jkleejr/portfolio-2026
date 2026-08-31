@@ -438,7 +438,7 @@ export const caseStudies: Record<string, CaseStudy> = {
     blocks: [
       {
         type: "text",
-        text: "I used Lovable to create a website for a birch tree farm in South Korea, following the client's expectations.",
+        text: "I used Lovable to make a website for a birch tree farm in South Korea.",
       },
 
       {
