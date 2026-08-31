@@ -145,6 +145,18 @@ export function DesignOne() {
             </article>
           ))}
         </div>
+
+        {/* What the work was leading to. Set as the intro at the top is, and
+            held to the same left edge as the name — the header and this are
+            the two things on the page speaking rather than listing, and they
+            close the column at the same line the covers are stacked on. The
+            room above it is a project gap, so it reads as the thing after the
+            last row rather than part of it. */}
+        {site.closing && (
+          <p className="mt-16 text-lg font-medium leading-relaxed text-foreground">
+            {site.closing}
+          </p>
+        )}
       </div>
     </main>
   );
