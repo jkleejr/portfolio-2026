@@ -444,9 +444,9 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "image",
         src: "/projects/time-with-tree-logo-v3.png",
-        // The export is 768px across, so this is a hair under half of it —
-        // still short of the point where a retina screen has to stretch it.
-        width: 410,
+        // The export is 768px across, so this sits under half of it and a
+        // retina screen still has pixels to spare.
+        width: 370,
         alt: "A later lockup: leaves rising out of a field, beside the same name set in a heavier face",
       },
 
