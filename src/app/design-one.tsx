@@ -29,6 +29,10 @@ const BODY_SPEED = 20;
 // role waits: the three header lines run one after another, each starting as
 // the one above it finishes, so slowing the name moves the two under it.
 const NAME_SPEED = 48;
+// A shade behind the writing under them, so the two are told apart by more
+// than their size. Was TypedLine's own default, which the titles were the last
+// thing on the page still using.
+const TITLE_SPEED = 28;
 const NAME_DELAY = 0;
 const ROLE_DELAY = 400;
 const INTRO_DELAY = 720;
@@ -138,7 +142,11 @@ export function DesignOne() {
                   pushes the row off the side of the screen. */}
               <div className="min-w-0 flex-1 sm:w-[var(--text-width)] sm:flex-none sm:shrink-0">
                 <h2 className="text-xl font-semibold leading-snug">
-                  <TypedLine text={entry.title} delay={TITLE_DELAY} />
+                  <TypedLine
+                    text={entry.title}
+                    delay={TITLE_DELAY}
+                    speed={TITLE_SPEED}
+                  />
                   {entry.appStore !== undefined && (
                     <AppStoreBadge href={entry.appStore} label={entry.title} />
                   )}
