@@ -66,7 +66,7 @@ export const entries: Entry[] = [
   {
     title: "Loot Check",
     blurb:
-      "Photograph any item to find its name, value, and where to sell it.",
+      "Photograph any item to find its name, value, and where to sell it",
     slug: "loot-check",
     appStore: "https://apps.apple.com/us/app/loot-check/id6785767104",
     platform: "mobile",
@@ -83,7 +83,7 @@ export const entries: Entry[] = [
   {
     title: "Paper Reader",
     blurb:
-      "Upload a PDF and hear it read aloud in a natural voice, citations and formatting filtered out.",
+      "Upload a PDF and hear it read aloud in a natural voice, citations and formatting filtered out",
     slug: "paper-reader",
     platform: "mobile",
     images: [
@@ -132,7 +132,7 @@ export const entries: Entry[] = [
   {
     title: "Time with Tree",
     blurb:
-      "Website for a birch tree farm in South Korea.",
+      "Website for a birch tree farm in South Korea",
     slug: "time-with-tree",
     titleHref: "https://timewithtree.co.kr/",
     platform: "web",
@@ -147,7 +147,7 @@ export const entries: Entry[] = [
   {
     title: "Buy Side Briefings",
     blurb:
-      "Personal website for daily stock market reports.",
+      "Personal website for daily stock market reports",
     slug: "buy-side-briefings",
     titleHref: "https://buy-side-briefings.vercel.app/",
     platform: "web",
