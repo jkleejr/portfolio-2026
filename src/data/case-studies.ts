@@ -438,7 +438,7 @@ export const caseStudies: Record<string, CaseStudy> = {
     blocks: [
       {
         type: "text",
-        text: "Time with Tree is a small birch tree farm in South Korea. They had healthy trees but no way for customers to find them, so I created the brand and built the website.",
+        text: "Time with Tree is a small birch tree farm in South Korea. They had healthy trees but no way for customers to find them, so I created the brand and built their online store. "
       },
       {
         type: "text",
