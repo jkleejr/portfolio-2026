@@ -125,13 +125,13 @@ export const caseStudies: Record<string, CaseStudy> = {
         ordered: true,
         items: [
           "The user takes a photo of an item",
-          "Claude identifies and estimates a resale range from its type, brand, and condition",
+          "Claude identifies and estimates a price range from its type, brand, and condition",
         ],
       },
 
       {
         type: "text",
-        text: "I used Claude Sonnet 4.6 to identify the item, find its value, and write a listing due to its low costs and high accuracy at ~$0.013 per scan. I considered other AI models but the costs were similar and I wanted the results to be as trustworthy as possible.",
+        text: "I used Claude Sonnet 4.6 to identify the item, find its resale value, and write a listing due to its low costs and high accuracy at ~$0.013 per scan. I considered other AI models but the costs were similar and I wanted the results to be as trustworthy as possible.",
       },
 
                               { type: "heading", text: "Scope" },
@@ -141,11 +141,11 @@ export const caseStudies: Record<string, CaseStudy> = {
         text: "I focused on resale, but the app was the most interesting when I showed it original items like a painting. Since I didn't buy the painting, I was looking for its potential value. This idea expanded the app's function as a price discovery tool for used items and creative work.",
       },
 
-                                    { type: "heading", text: "Valuation" },
+                                    { type: "heading", text: "Valuing items" },
 
       {
         type: "text",
-        text: "In the first version, an item's value was based on the model's pre-trained data. To get current prices, I had Claude do a web search for every scan, but decided not to because that increased costs 3-4x. Now, the app decides whether to do a web search depending on its level of confidence and if it thinks the photo is worth looking up."
+        text: "In the first version of the app, an item's value was based on the model's pre-trained data. Now, Claude does a web search to value items accurately based on its level of confidence. I decided not to do a web search for every scan because it increases the costs by 3-4x, and Sonnet 4.6 is accurate enough for most items."
       },
 
                         { type: "heading", text: "Designing for uncertainty" },
@@ -153,7 +153,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       // designing for uncertainty
       {
         type: "text",
-        text: "Since vision models are not 100% accurate, users can enter what they know about an item to guide AI toward the right product. Results with low confidence are labeled 'best guess'",
+        text: "Since vision models are not 100% accurate, users can type a few words to guide AI toward the right product. Results with low confidence are labeled 'best guess'",
       },
 
       {
