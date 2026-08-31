@@ -145,7 +145,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "In the first version of the app, the valuation was based on the model's pre-trained data. Now, Claude does a web search to value items accurately based on its level of confidence. I decided not to do a web search for every scan because it increases the costs by 3-4x, and Sonnet 4.6 is accurate enough for most items."
+        text: "For most items, the value is based on the model's pre-trained data. Claude can complete a web search to value items accurately based on its level of confidence. I decided not to do a web search for every scan because it increases the costs by 3-4x, and Sonnet 4.6 is accurate enough for most items."
       },
 
                         { type: "heading", text: "Designing for uncertainty" },
