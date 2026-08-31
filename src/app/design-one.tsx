@@ -44,6 +44,18 @@ export function DesignOne() {
           <p className="mt-1 text-lg font-medium text-foreground">
             {site.role}
           </p>
+          {/* Set as the role above it so the header stays one block, but in
+              the muted colour that says it is a link — the same one the
+              breadcrumb on a study uses, coming up to full strength under the
+              pointer. */}
+          <p className="mt-1 text-lg font-medium">
+            <a
+              href={`mailto:${site.email}`}
+              className="text-muted transition-colors duration-200 ease-out hover:text-foreground"
+            >
+              {site.email}
+            </a>
+          </p>
           {/* Who that is. A paragraph per line of site.intro, so a sentence that
               should start fresh does, rather than being wrapped into the one
               above it. Set exactly as the role above it — same size, same
