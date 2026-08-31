@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Quicksand } from "next/font/google";
 import localFont from "next/font/local";
 import { site } from "@/data/site";
 import { ThemeToggle } from "./theme-toggle";
@@ -7,13 +6,8 @@ import { PhotoGalleryButton, PhotoGalleryProvider } from "./photo-gallery";
 import { AppleButton } from "./apple-button";
 import "./globals.css";
 
-const quicksand = Quicksand({
-  variable: "--font-quicksand",
-  subsets: ["latin"],
-});
-
-// Both are the variable cuts, so one file covers every weight in the range.
-// Licences sit next to the files in src/app/fonts/.
+// The variable cut, so one file covers every weight in the range. The licence
+// sits next to the files in src/app/fonts/.
 const satoshi = localFont({
   variable: "--font-satoshi",
   display: "swap",
@@ -27,18 +21,6 @@ const satoshi = localFont({
       path: "./fonts/Satoshi-VariableItalic.woff2",
       weight: "300 900",
       style: "italic",
-    },
-  ],
-});
-
-const outfit = localFont({
-  variable: "--font-outfit",
-  display: "swap",
-  src: [
-    {
-      path: "./fonts/Outfit-Variable.woff2",
-      weight: "100 900",
-      style: "normal",
     },
   ],
 });
@@ -80,7 +62,7 @@ export default function RootLayout({
         </noscript>
       </head>
       <body
-        className={`${quicksand.variable} ${satoshi.variable} ${outfit.variable} antialiased`}
+        className={`${satoshi.variable} antialiased`}
       >
         {/* Wraps the lot because the gallery switch reaches past its own
             button: it decides whether the ribbons or the photos are the thing

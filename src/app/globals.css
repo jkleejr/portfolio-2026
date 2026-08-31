@@ -73,8 +73,6 @@ html.theme-ready {
 body {
   background: var(--background);
   color: var(--foreground);
-  /* Swap --font-satoshi for --font-outfit or --font-quicksand here (and in
-     @theme above) to try the other two — all three are loaded. */
   font-family: var(--font-satoshi), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
