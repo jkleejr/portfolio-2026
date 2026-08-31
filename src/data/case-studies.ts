@@ -363,7 +363,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "I would integrate an API key into the app if I continued this project. I realized that asking users to set up their own key creates a lot of friction and is a bad idea. There are many TTS products like Speechify that address the same problems, so I moved on.",
+        text: "If I continued this project, I would integrate an API key into the app. I realized that asking users to set up their own key creates a lot of friction and is a bad idea. There are many TTS products like Speechify that address the same problems, so I moved on.",
       },
     
       // Gemini 3.1 flash
