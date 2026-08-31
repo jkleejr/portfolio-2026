@@ -19,9 +19,22 @@ export type CaseStudyBlock =
   // tall and three would leave them too small to read.
   // A shot takes its width from the row unless it sets one, which holds it to
   // that many pixels — for one that reads bigger than what is beside it.
+  //
+  // Set fullOnPhone on a shot that is half a column too small to read. A row
+  // is two across at every width, so on a phone half of it is around 160px —
+  // fine for a whole screen, which is only being placed, and too small for a
+  // crop, which is being read. Such a shot takes the column to itself there
+  // and goes back to sharing the row from sm up. Not with `width`, which is a
+  // fixed number of pixels and wins at every size, this one included.
   | {
       type: "images";
-      items: { src: string; alt: string; crop?: string; width?: number }[];
+      items: {
+        src: string;
+        alt: string;
+        crop?: string;
+        width?: number;
+        fullOnPhone?: boolean;
+      }[];
       caption?: string;
       columns?: 2;
     }
@@ -162,6 +175,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         items: [
           {
             src: "/projects/loot-check-detail-input.png",
+            fullOnPhone: true,
             alt: "The optional detail field under a photo of an OP-1 in its case, with \"keyboard and synth\" typed in and a tip to include a close-up of the brand logo",
           },
         ],
@@ -257,6 +271,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         items: [
           {
             src: "/projects/paper-reader-library-error-detail.png",
+            fullOnPhone: true,
             alt: "A close read of the failed row: the paper's name over the Gemini error in red, with a retry button on its right",
           },
           {

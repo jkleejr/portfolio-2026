@@ -214,9 +214,14 @@ function Block({
                 key={i}
                 src={item.src}
                 alt={item.alt}
+                // fullOnPhone takes the column on a phone and gives the row
+                // back from sm up, for a crop that half a column leaves too
+                // small to read. It is written after the base width so it wins
+                // inside its own media query; an inline `width` still beats
+                // both, which is why the two are alternatives.
                 className={`w-[calc((100%_-_1rem)/2)] rounded-xl border border-foreground/10 ${
                   block.columns === 2 ? "" : "sm:w-[calc((100%_-_2rem)/3)]"
-                }`}
+                } ${item.fullOnPhone ? "max-sm:w-full" : ""}`}
                 style={item.width ? { width: item.width } : undefined}
               />
             ))}
