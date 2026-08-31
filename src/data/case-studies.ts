@@ -131,7 +131,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "I used Claude Sonnet 4.6 to identify the item, find its value, and write a listing due to its low costs and high accuracy at ~$0.013 per scan. I considered Kimi K3, but the costs were similar and I wanted the results to be as trustworthy as possible.",
+        text: "I used Claude Sonnet 4.6 to identify the item, find its value, and write a listing due to its low costs and high accuracy at ~$0.013 per scan. I considered other AI models but the costs were similar and I wanted the results to be as trustworthy as possible.",
       },
 
                               { type: "heading", text: "Scope" },
@@ -145,7 +145,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "In the first version of the app, the estimate came from the model's trained data. I considered having AI complete a web search for every scan to get the most current prices, but decided not to because it increased costs 3-4x. Now, the app decides whether to do a web search depending on its level of confidence and if it thinks the photo is worth looking up."
+        text: "In the first version of Loot Check, an item's value was based on the model's trained data. To get more accurate results, I had Claude do a web search for every scan to get the most current prices, but decided not to because that increased costs 3-4x. Now, the app decides whether to do a web search depending on its level of confidence and if it thinks the photo is worth looking up."
       },
 
                         { type: "heading", text: "Designing for uncertainty" },
@@ -153,7 +153,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       // designing for uncertainty
       {
         type: "text",
-        text: "Since vision models are not 100% accurate, users can enter what they know about an item to guide Claude toward the right product. Results with low confidence are labeled 'best guess'",
+        text: "Since vision models are not 100% accurate, users can enter what they know about an item to guide AI toward the right product. Results with low confidence are labeled 'best guess'",
       },
 
       {
