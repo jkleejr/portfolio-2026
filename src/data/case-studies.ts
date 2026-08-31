@@ -110,7 +110,7 @@ export const caseStudies: Record<string, CaseStudy> = {
     blocks: [
        {
         type: "text",
-        text: "When I was moving places, I wanted a quick way to find the value of a used item and decide what to keep or sell. I tried existing apps but they felt poorly designed and required a subscription to use. My solution was a fast, accurate, and free identifying app.",
+        text: "When I was moving places, I wanted a quick way to find the value of a used item and decide what to sell. I tried existing apps but they felt poorly designed and required a subscription to use. My solution was a fast, accurate, and free identifying app.",
       },
 
       {
