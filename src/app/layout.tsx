@@ -29,7 +29,26 @@ export const metadata: Metadata = {
   // Just the name in the tab. The role still carries the description, which
   // is what a search result or a link preview shows.
   title: site.name,
-  description: `${site.name} — ${site.role}`,
+  description: site.intro[0],
+  // What a relative image URL below is resolved against. Open Graph readers
+  // are other people's servers fetching the card off the internet, so the
+  // absolute address has to be spelled out — a path alone means nothing to
+  // them. This has to be the production domain or the card comes up blank.
+  metadataBase: new URL("https://johnkleejr.com"),
+  // The card itself: what Slack, iMessage, LinkedIn and the rest draw when
+  // the link is pasted. The name alone is enough in a browser tab, which sits
+  // beside a dozen others and is read as a label; a card is read as an
+  // introduction, so it carries the role too.
+  openGraph: {
+    title: `${site.name} — ${site.role}`,
+    description: site.intro[0],
+    url: "https://johnkleejr.com",
+    siteName: site.name,
+    images: [{ url: "/og.png", width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+  },
 };
 
 export default function RootLayout({
