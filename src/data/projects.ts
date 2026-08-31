@@ -139,7 +139,7 @@ export const entries: Entry[] = [
     images: [
       {
         cover: "/projects/time-with-tree-logo-3.png",
-        alt: "Time with Tree homepage",
+        alt: "The Time with Tree logo, green leaves growing from a curved base",
       },
     ],
   },
@@ -153,7 +153,7 @@ export const entries: Entry[] = [
     images: [
       {
         cover: "/projects/buy-side-briefings-logo-3.png",
-        alt: "Night briefing front page",
+        alt: "The Buy Side Briefings logo, a row of red and green candlesticks",
       },
     ],
     // spacing from the last project to the bottom of the page is 112 px on desktop, 32 px on phone
