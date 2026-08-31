@@ -439,7 +439,7 @@ export const caseStudies: Record<string, CaseStudy> = {
     blocks: [
       {
         type: "text",
-        text: "Time with Tree is a small birch tree farm in South Korea. They had healthy trees but no way for customers to find them, so I created the brand and built their online store. "
+        text: "Time with Tree is a small birch tree farm in South Korea. They had trees but no way for customers to find them, so I built their online store. "
       },
       {
         type: "text",
@@ -447,12 +447,8 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
 
       {
-        type: "image",
-        src: "/projects/time-with-tree-logo-v3.png",
-        // The export is 768px across, so this sits under half of it and a
-        // retina screen still has pixels to spare.
-        width: 370,
-        alt: "A later lockup: leaves rising out of a field, beside the same name set in a heavier face",
+        type: "text",
+        text: "",
       },
 
       // following expectations from client, so less ideation 
