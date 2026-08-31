@@ -237,7 +237,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "Because Gemini only returns audio and no timestamps, the app has to estimate when each sentence is being narrated. It splits a group's audio proportionally by character count, so a sentence with 5% of a group's characters is assumed to take 5% of the audio. As the audio plays, the app tracks the time passed and highlights a sentence based on its estimate. However, this is not always accurate. Highlighted sentences are re-synced at the end of every group to minimize errors.",
+        text: "Because Gemini only returns audio and no timestamps, the app has to estimate when each sentence is being narrated. It splits a group's audio proportionally by character count, so a sentence with 5% of a group's characters is assumed to take 5% of the audio. As audio plays, the app tracks the time passed and highlights a sentence based on its estimate. However, this is not always accurate. Highlighted sentences are re-synced at the start of every group to minimize errors.",
       },
       {
         type: "image",
