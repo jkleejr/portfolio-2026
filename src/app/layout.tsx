@@ -52,14 +52,6 @@ export default function RootLayout({
             __html: `(function(){try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t);var m=document.querySelector('meta[name="theme-color"]');if(!m){m=document.createElement("meta");m.name="theme-color";document.head.appendChild(m)}m.setAttribute("content",t==="light"?"#ffffff":"#000000")}catch(e){}})()`,
           }}
         />
-        {/* The homepage writes its lines out a character at a time, which
-            means the visible copy of each one is drawn by script. With
-            scripting off there is nothing to draw it, so the copy underneath —
-            the one TypedLine holds at zero opacity to reserve the space — is
-            brought back instead, and the page reads as it always did. */}
-        <noscript>
-          <style>{`[data-typed-fallback]{opacity:1!important}`}</style>
-        </noscript>
       </head>
       <body
         className={`${satoshi.variable} antialiased`}

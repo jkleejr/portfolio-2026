@@ -176,10 +176,9 @@ function snapshotWords(root: HTMLElement, atoms: HTMLElement[]): Snapshot[] {
   const range = document.createRange();
   const theme = themeColors();
 
-  // Text that is in the layout but not on the screen. A line of the homepage
-  // that has not finished writing itself keeps a full-strength copy of itself
-  // underneath at zero opacity, to hold the space the finished line will take
-  // — see typed-line.tsx. Nothing invisible should fall.
+  // Text that is in the layout but not on the screen — a line held at zero
+  // opacity to reserve the space something else is drawn into, say. Nothing
+  // invisible should fall: it would arrive as words out of nowhere.
   const faded = new Map<Element, boolean>();
   const invisible = (el: Element) => {
     let value = faded.get(el);

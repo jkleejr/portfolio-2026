@@ -10,24 +10,6 @@ import { site } from "@/data/site";
 import { entries } from "@/data/projects";
 import { ProjectThumbnail } from "./project-thumbnail";
 import { AppStoreBadge, SiteBadge } from "./title-badge";
-import { TypedLine } from "./typed-line";
-
-// The header writes itself out a character at a time on load — the name, the
-// role, and the intro, in that order, each starting as the one above it
-// finishes. The work below is set plainly: it is a list to be read down, and
-// six rows of it arriving letter by letter is a wait rather than a greeting.
-//
-// The name runs slowest. It is eight characters, and at the pace of the lines
-// under it, it is over before anyone has looked at it. 384ms at this speed,
-// which is what sets the 400 the role waits; the intro's 720 is that plus the
-// 320 the role itself takes. Change one and the two below it follow.
-const NAME_SPEED = 48;
-// The writing under the name. Quicker, because it is there to be read rather
-// than watched.
-const BODY_SPEED = 20;
-const NAME_DELAY = 0;
-const ROLE_DELAY = 400;
-const INTRO_DELAY = 720;
 
 export function DesignOne() {
   // The bottom padding is trimmed on a phone so the page fits the screen. That
@@ -58,11 +40,9 @@ export function DesignOne() {
             header no longer reserves the height a row of them used to sit in
             — see "The page on a phone" in globals.css. */}
         <header>
-          <h1 className="text-2xl font-bold">
-            <TypedLine text={site.name} delay={NAME_DELAY} speed={NAME_SPEED} />
-          </h1>
+          <h1 className="text-2xl font-bold">{site.name}</h1>
           <p className="mt-1 text-lg font-medium text-foreground">
-            <TypedLine text={site.role} delay={ROLE_DELAY} speed={BODY_SPEED} />
+            {site.role}
           </p>
           {/* Who that is. A paragraph per line of site.intro, so a sentence that
               should start fresh does, rather than being wrapped into the one
@@ -74,13 +54,9 @@ export function DesignOne() {
               the role and this. */}
           {site.intro.length > 0 && (
             <div className="mt-8 space-y-3">
-              {site.intro.map((line, i) => (
+              {site.intro.map((line) => (
                 <p key={line} className="text-lg font-medium leading-relaxed text-foreground">
-                  <TypedLine
-                    text={line}
-                    delay={INTRO_DELAY + i * 220}
-                    speed={BODY_SPEED}
-                  />
+                  {line}
                 </p>
               ))}
             </div>
