@@ -212,7 +212,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         captionAlign: "high",
         caption: "Add a new paper from files",
         captionLeft: [
-          "Audio is generated in the background as the user needs it, lowering costs and the initial wait time",
+          "Audio is generated in the background as the user needs it, lowering initial cost and wait time",
         ],
       },
       
