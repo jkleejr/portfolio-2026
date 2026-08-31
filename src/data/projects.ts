@@ -3,9 +3,11 @@ export type EntryImage = {
   alt: string;
   crop?: string; // CSS object-position, e.g. "top" or "50% 20%" (default center)
   // Shown on the homepage in place of `src` — for a project whose thumbnail
-  // reads better as a logo than as one of its screens. The page the thumbnail
-  // opens still shows `src`, and a cover ignores `crop`, which frames that
-  // shot rather than this one.
+  // reads better as a logo than as one of its screens. A cover ignores `crop`,
+  // which frames that shot rather than this one, and it is the ONLY thing the
+  // homepage draws: an entry that has a cover never shows its `src` anywhere,
+  // since a study's page is built from its own blocks in case-studies.ts. Give
+  // an entry one or the other, not both, or the shot is dead weight in public/.
   cover?: string;
   // How the cover sits in the square, for one that is not square itself and
   // loses something to the middle crop. CSS object-position, "left" or
@@ -88,11 +90,9 @@ export const entries: Entry[] = [
     platform: "mobile",
     images: [
       {
-        src: "/projects/paper-reader-2.png",
         cover: "/projects/paper-reader-cover-highlight.png",
         coverCrop: "left",
         alt: "Reader view with the sentence being read aloud highlighted",
-        crop: "50% 34%",
         title: "Paper Reader",
         description: "",
       },
@@ -138,7 +138,6 @@ export const entries: Entry[] = [
     platform: "web",
     images: [
       {
-        src: "/projects/time-with-tree.png",
         cover: "/projects/time-with-tree-logo-3.png",
         alt: "Time with Tree homepage",
       },
@@ -153,10 +152,8 @@ export const entries: Entry[] = [
     platform: "web",
     images: [
       {
-        src: "/projects/buy-side-briefings-1.png",
         cover: "/projects/buy-side-briefings-logo-3.png",
         alt: "Night briefing front page",
-        crop: "24% 50%",
       },
     ],
     // spacing from the last project to the bottom of the page is 112 px on desktop, 32 px on phone
