@@ -191,7 +191,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "Loot Check is live on the app store. I wanted to automate the entire listing process but since most marketplaces don't have a public listing API, the app creates a title and description for copy and paste. The next steps are finding users and marketing on social media.",
+        text: "Loot Check is live on the App Store. I wanted to automate the entire listing process but since most marketplaces don't have a public listing API, the app creates a title and description for copy and paste. The next steps are finding users and marketing on social media.",
       },
       // Loot Check is the first app I put on the app store so I learned a lot about iOS and mobile development from this project.
     ],
@@ -364,8 +364,10 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "If I continued this project, I would integrate an API key into the app. I realized that asking users to set up their own key creates a lot of friction and is a bad idea. There are many TTS products like Speechify that address the same problems, so I moved on.",
+        text: "If I continued this project, I would integrate an API key into the app. I realized that asking users to set up their own key creates too much friction and is a bad idea. I should have considered the user more in the planning stage because I ended up designing the app around that. There are many TTS products like Speechify that address the same problems, so I moved on.",
       },
+      // should have considered the user more during planning, so I didn't end up designing the whole app around the user paying for themselves
+      // should have thought about this earlier
     
       // Gemini 3.1 flash
       // costs about $0.03 per minute of audio, about $1-3 per paper.
