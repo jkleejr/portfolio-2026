@@ -191,8 +191,9 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "Loot Check is the first app I put on the app store so I learned a lot about iOS and mobile development from this project. I wanted to automate the entire listing process but since most marketplaces don't have a public listing API, the app creates a title and description for copy and paste. The next steps are finding users and marketing on social media.",
+        text: "Loot Check on the app store. I wanted to automate the entire listing process but since most marketplaces don't have a public listing API, the app creates a title and description for copy and paste. The next steps are finding users and marketing on social media.",
       },
+      // Loot Check is the first app I put on the app store so I learned a lot about iOS and mobile development from this project.
     ],
   },
 
@@ -380,7 +381,7 @@ export const caseStudies: Record<string, CaseStudy> = {
     blocks: [
       {
         type: "text",
-        text: "Constantly switching apps while learning a language is frustating and time consuming. I created an app that translates the Korean text on screen to English in real time.",
+        text: "Constantly switching apps while learning a language is too time consuming. I created an app that translates the Korean text on screen to English in real time.",
       },
       // had to use the dynamic island iOS does not allow you to render anything over an existing app
       // had 2 choices, use the dynamic island or a floating window
