@@ -145,7 +145,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "In the first version of Loot Check, an item's value was based on the model's trained data. To get more accurate results, I had Claude do a web search for every scan to get the most current prices, but decided not to because that increased costs 3-4x. Now, the app decides whether to do a web search depending on its level of confidence and if it thinks the photo is worth looking up."
+        text: "In the first version, an item's value was based on the model's trained data. To get more accurate results, I had Claude do a web search for every scan to get the most current prices, but decided not to because that increased costs 3-4x. Now, the app decides whether to do a web search depending on its level of confidence and if it thinks the photo is worth looking up."
       },
 
                         { type: "heading", text: "Designing for uncertainty" },
