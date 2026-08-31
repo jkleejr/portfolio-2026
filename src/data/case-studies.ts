@@ -125,7 +125,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         ordered: true,
         items: [
           "The user takes a photo",
-          "Claude identifies the item and values it",
+          "Claude identifies and values the item",
         ],
       },
 
