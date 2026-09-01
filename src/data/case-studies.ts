@@ -121,7 +121,6 @@ export const caseStudies: Record<string, CaseStudy> = {
     appStore: "https://apps.apple.com/us/app/loot-check/id6785767104",
     date: "June 2026",
     blocks: [
-                  { type: "heading", text: "Overview " },
 
        {
         type: "text",
@@ -218,7 +217,6 @@ export const caseStudies: Record<string, CaseStudy> = {
     title: "Paper Reader",
     date: "July 2026",
     blocks: [
-                  { type: "heading", text: "Overview " },
 
       {
         type: "text",
@@ -400,7 +398,6 @@ export const caseStudies: Record<string, CaseStudy> = {
     title: "Screen Translator",
     date: "August 2026",
     blocks: [
-                  { type: "heading", text: "Overview " },
 
       {
         
@@ -461,7 +458,6 @@ export const caseStudies: Record<string, CaseStudy> = {
     date: "May 2026",
     href: "https://timewithtree.co.kr/",
     blocks: [
-                  { type: "heading", text: "Overview " },
 
       {
         type: "text",
@@ -490,8 +486,6 @@ export const caseStudies: Record<string, CaseStudy> = {
     href: "https://buy-side-briefings.vercel.app/",
     blocks: [
 
-            { type: "heading", text: "Overview " },
-
       {
         type: "text",
         text: "Buy Side is an automated market reporting website designed to save the reader time. The website tracks the stock market, filters out noise to focus on critical events, and analyzes stock performance to generate daily publications.",
@@ -511,7 +505,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       // context switching - constantly jumping between multiple disconnected browser tabs and apps to gather information, which can be mentally exhausting and lead to cognitive fatigue
       {
         type: "text",
-        text: "I designed Buy Side to reduce cognitive fatigue by using AI to remove the manual work of navigating sources and collecting information. AI curates the information and outputs a high density but concise briefing that takes around 5 minutes to read."
+        text: "I designed Buy Side to reduce cognitive fatigue by using AI to remove the manual work of navigating sources and collecting information. AI curates the information and outputs a high density but concise briefing that takes ~5 minutes to read."
       },
   
       // current design
