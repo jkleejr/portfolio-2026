@@ -506,27 +506,16 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "To understand why prices are moving, I needed to read multiple sources and analyze the data. This is a time consuming process that leads to cognitive fatigue due to context switching."
+        text: "To understand why prices were moving, I needed to use multiple sources and analyze the data. This was a fragmented workflow due to context switching and increased cognitive fatigue."
       },
       // context switching - constantly jumping between multiple disconnected browser tabs and apps to gather information, which can be mentally exhausting and lead to cognitive fatigue
       {
         type: "text",
         text: "I designed Buy Side to eliminate this friction by using AI to remove the manual work of navigating sources and analyzing data. AI curates the information and outputs a high density, concise briefing that takes less than 10 minutes to read."
       },
-
-      { type: "heading", text: "Old design" },
-      {
-        type: "text",
-        text: "Initially, I used AI to analyze stock market prices, find opportunities, and signal when to buy, sell, or hold."
-      },
-      {
-        type: "image",
-        src: "/projects/buy-side-site-terminal.png",
-        alt: "The terminal dashboard: a live quote strip over index tiles, a row of running stats, and today's playbook of long and short calls with their stops and targets beside an open risk panel",
-      },
   
       // current design
-      { type: "heading", text: "Current design" },
+      { type: "heading", text: "Current Design" },
 
       {
         type: "text",
@@ -538,45 +527,12 @@ export const caseStudies: Record<string, CaseStudy> = {
         text: "The homepage is designed to be concise with an option to read the full report.",
       },
 
-      {
-        type: "image",
-        src: "/projects/buy-side-site-today.png",
-        alt: "The Today page: a live ticker strip under the nav, the night briefing's headline and the paragraph that argues it, and the chart panel opening underneath",
-      },
-      {
-        type: "image",
-        src: "/projects/buy-side-site-briefing.png",
-        alt: "A single briefing: the night's headline over three key points, each one repeated underneath with the source it came from and a link out to it",
-      },
+
 
       // mobile design
       { type: "heading", text: "Mobile design" },
-      {
-        type: "images",
-        items: [
-          {
-            src: "/projects/buy-side-mobile-today.png",
-            alt: "The Today page on a phone: the ticker strip under the nav, an AM and PM switch beside the night briefing, its headline and the paragraph that argues it, and the chart panel opening underneath",
-          },
-          {
-            src: "/projects/buy-side-mobile-briefing.png",
-            alt: "A briefing opened on a phone: the night's headline over three key points, each repeated underneath with the outlet it came from, and the rest folded away behind a line of sourced points",
-          },
-        ],
-      },
-      {
-        type: "images",
-        items: [
-          {
-            src: "/projects/buy-side-mobile-methodology.png",
-            alt: "The full read on a phone, opening on the methodology note that lists every source behind the night's numbers",
-          },
-          {
-            src: "/projects/buy-side-mobile-full-read.png",
-            alt: "Further down the full read: what happened today, holding the morning brief's calls against how the session actually closed",
-          },
-        ],
-      },
+
+   
     ],
   },
 };
