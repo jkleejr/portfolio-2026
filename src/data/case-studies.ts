@@ -121,6 +121,8 @@ export const caseStudies: Record<string, CaseStudy> = {
     appStore: "https://apps.apple.com/us/app/loot-check/id6785767104",
     date: "June 2026",
     blocks: [
+                  { type: "heading", text: "Overview " },
+
        {
         type: "text",
         text: "When I was moving places, I wanted a quick way to find the value of a used item and decide what to sell. I tried existing apps but they felt poorly designed and required a subscription to use. My solution was a fast, accurate, and free identifying app.",
@@ -216,6 +218,8 @@ export const caseStudies: Record<string, CaseStudy> = {
     title: "Paper Reader",
     date: "July 2026",
     blocks: [
+                  { type: "heading", text: "Overview " },
+
       {
         type: "text",
         text: "A friend was listening to a research paper while walking and got '[1] et al., pp. 234-256' read aloud in a robot voice. That gave me the idea to create a PDF reader that filtered out unnecessary information and spoke in a natural voice.",
@@ -396,7 +400,10 @@ export const caseStudies: Record<string, CaseStudy> = {
     title: "Screen Translator",
     date: "August 2026",
     blocks: [
+                  { type: "heading", text: "Overview " },
+
       {
+        
         type: "text",
         text: "Constantly switching apps while learning a language is too time consuming. I created an app that translates the Korean text on screen to English in real time.",
       },
@@ -454,6 +461,8 @@ export const caseStudies: Record<string, CaseStudy> = {
     date: "May 2026",
     href: "https://timewithtree.co.kr/",
     blocks: [
+                  { type: "heading", text: "Overview " },
+
       {
         type: "text",
         text: "Time with Tree is a birch tree farm in South Korea. They had trees but no way for customers to find them, so I built their online store. "
@@ -477,31 +486,40 @@ export const caseStudies: Record<string, CaseStudy> = {
 
   "buy-side-briefings": {
     title: "Buy Side Briefings",
-    date: "2026",
+    date: "May 2026",
     href: "https://buy-side-briefings.vercel.app/",
     blocks: [
+
+            { type: "heading", text: "Overview " },
+
       {
         type: "text",
-        text: "Buy Side Briefings is a personal website with daily reports on the stock market. The goal is to create a trustworthy source of information and eventually share it with others.",
+        text: "Buy Side is an automated market reporting website designed to save the reader time. The website tracks the stock market, filters out noise to focus on critical events, and analyzes stock performance to generate daily publications.",
+        // reduce information overload and cognitive fatigue for investors by providing concise insights and a quick read
       },
-      {
+
+            { type: "heading", text: "Preventing Cognitive Fatigue" },
+
+            {
         type: "text",
-        text: "Initially, I was using AI to analyze the market and indicate whether to buy or sell. However, I realized that an unbiased and informational website would help me more. The first design was inspired by Bloomberg Terminal and changed as I added charts and features I actually use.",
+        text: "Stock prices change constantly but it takes time to navigate multiple sources, find the right information, and understand it all. This builds information overload and turns a quick read into a hard task. I tried to reduce friction "
       },
+
+
       {
-        type: "text",
-        text: "The homepage is designed to be concise with an option to read the full report.",
+        type: "list",
+        ordered: true,
+        items: [
+          "Maximizing information d",
+          "Keeping the reports concise while holding on to the depth of analysis and context behind them",
+          "Leading with the conclusion and letting the full report sit one press away",
+        ],
       },
 
       { type: "heading", text: "Old design" },
       {
         type: "text",
-        text: "",
-      },
-      {
-        type: "image",
-        src: "/projects/buy-side-site-evening-brief.png",
-        alt: "The evening brief: a market sentiment scale over the night's headline and the paragraph that argues it, key points underneath, and a rail of index levels and market hours down the left",
+        text: "Initially, I used AI to analyze stock market prices, find opportunities, and signal when to buy, sell, or hold."
       },
       {
         type: "image",
@@ -514,8 +532,14 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "",
+        text: "I  Now, the AI organizes information and writes 2 daily reports so I can focus on my own decision-making, which influenced my current design." 
       },
+
+      {
+        type: "text",
+        text: "The homepage is designed to be concise with an option to read the full report.",
+      },
+
       {
         type: "image",
         src: "/projects/buy-side-site-today.png",
