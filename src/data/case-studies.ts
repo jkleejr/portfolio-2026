@@ -516,12 +516,6 @@ export const caseStudies: Record<string, CaseStudy> = {
   
       // current design
       { type: "heading", text: "Current Design" },
-
-      {
-        type: "text",
-        text: "I  Now, the AI organizes information and writes 2 daily reports so I can focus on my own decision-making, which influenced my current design." 
-      },
-
       {
         type: "text",
         text: "The homepage is designed to be concise with an option to read the full report.",
