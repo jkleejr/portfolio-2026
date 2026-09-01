@@ -502,7 +502,16 @@ export const caseStudies: Record<string, CaseStudy> = {
 
             {
         type: "text",
-        text: "Stock prices change constantly and it takes time to know why. It takes time to navigate multiple sources, find the right information, and understand it all. This turns a quick read into a hard task. I tried to reduce information overload "
+        text: "Stock prices change constantly and it takes time to know why. It takes time to navigate multiple sources, find the right information, and understand it all. This turns a quick read into a hard task. "
+      },
+      {
+        type: "text",
+        text: "To understand why prices are moving, I needed to read multiple sources and analyze the data. This is a time consuming process that leads to cognitive fatigue due to context switching."
+      },
+      // context switching - constantly jumping between multiple disconnected browser tabs and apps to gather information, which can be mentally exhausting and lead to cognitive fatigue
+      {
+        type: "text",
+        text: "I designed Buy Side to eliminate this friction by using AI to remove the manual work of navigating sources and analyzing data. AI curates the information and outputs a high density, concise briefing that takes less than 10 minutes to read."
       },
 
 
