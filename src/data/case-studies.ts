@@ -494,15 +494,19 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "Buy Side is an automated market reporting website designed to save the reader time. The website tracks the stock market, filters out noise to focus on critical events, and analyzes stock performance to generate daily publications.",
-        // reduce information overload and cognitive fatigue for investors by providing concise insights and a quick read
+        text: "Stock prices change constantly and it takes time to know why. It takes time to navigate multiple sources, find the right information, and understand it all. This turns a quick read into a hard task."
       },
+      {
+        type: "text",
+        text: "Buy Side is an automated market reporting website designed to save the reader time. The website tracks the stock market, filters out noise to focus on critical events, and analyzes stock performance to generate daily publications.",
+      },
+      // reduce information overload and cognitive fatigue for investors by providing concise insights and a quick read
 
             { type: "heading", text: "Preventing Cognitive Fatigue" },
 
             {
         type: "text",
-        text: "Stock prices change constantly but it takes time to navigate multiple sources, find the right information, and understand it all. This builds information overload and turns a quick read into a hard task. I tried to reduce friction "
+        text: "Stock prices change constantly and it takes time to know why. It takes time to navigate multiple sources, find the right information, and understand it all. This turns a quick read into a hard task. I tried to reduce information overload "
       },
 
 
