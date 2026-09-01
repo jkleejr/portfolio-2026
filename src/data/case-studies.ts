@@ -514,6 +514,11 @@ export const caseStudies: Record<string, CaseStudy> = {
         type: "text",
         text: "The homepage is designed to be concise with an option to read the full report.",
       },
+      {
+        type: "image",
+        src: "/projects/buy-side-site-morning.png",
+        alt: "The Today page: a live ticker strip under the nav, then the morning report's headline on a global bond selloff, the paragraph that argues it, a link out to the full seven minute read, and the charts panel opening underneath",
+      },
 
 
 
