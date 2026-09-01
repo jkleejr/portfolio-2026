@@ -500,7 +500,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "To understand why prices were moving, I needed to use multiple sources and analyze the data. This was a fragmented workflow due to context switching and increased friction."
+        text: "To understand why prices were moving, I needed to use multiple sources and analyze the data. This was a fragmented workflow because of context switching and friction."
       },
       // context switching - constantly jumping between multiple disconnected browser tabs and apps to gather information, which can be mentally exhausting and lead to cognitive fatigue
       {
@@ -510,10 +510,6 @@ export const caseStudies: Record<string, CaseStudy> = {
   
       // current design
       { type: "heading", text: "Current Design" },
-      {
-        type: "text",
-        text: "Text on the homepage is concise with an option to read the full report.",
-      },
       {
         type: "image",
         src: "/projects/buy-side-site-morning.png",
