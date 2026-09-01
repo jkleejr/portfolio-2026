@@ -514,17 +514,6 @@ export const caseStudies: Record<string, CaseStudy> = {
         text: "I designed Buy Side to eliminate this friction by using AI to remove the manual work of navigating sources and analyzing data. AI curates the information and outputs a high density, concise briefing that takes less than 10 minutes to read."
       },
 
-
-      {
-        type: "list",
-        ordered: true,
-        items: [
-          "Maximizing information d",
-          "Keeping the reports concise while holding on to the depth of analysis and context behind them",
-          "Leading with the conclusion and letting the full report sit one press away",
-        ],
-      },
-
       { type: "heading", text: "Old design" },
       {
         type: "text",
