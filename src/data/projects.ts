@@ -132,7 +132,7 @@ export const entries: Entry[] = [
   {
     title: "Buy Side Briefings",
     blurb:
-      "Automated daily market reports",
+      "Automated daily stock market reports",
     slug: "buy-side-briefings",
     titleHref: "https://buy-side-briefings.vercel.app/",
     platform: "web",
