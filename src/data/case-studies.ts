@@ -480,7 +480,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "Buy Side is an automated market reporting website designed to save the reader time. The website tracks the stock market, filters out noise to focus on critical events, and analyzes stock performance to generate daily publications.",
+        text: "Buy Side is an automated market reporting website designed to save time. The website tracks the stock market, filters out noise to focus on critical events, and analyzes stock performance to generate daily publications.",
       },
 
       {
@@ -498,7 +498,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "To understand why prices were moving, I used multiple platforms to find data. It was a fragmented workflow because of context switching and friction."
+        text: "To understand why prices were moving, I used multiple platforms to find information. It was a fragmented workflow because of context switching and friction."
       },
       // context switching - constantly jumping between multiple disconnected browser tabs and apps to gather information, which can be mentally exhausting and lead to cognitive fatigue
       {
@@ -530,7 +530,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
             {
         type: "text",
-        text: "A table displays changes in different sectors."
+        text: "A table displays 1 day and 50 day changes for ETFs of different sectors."
       },
 
       {
@@ -555,22 +555,11 @@ export const caseStudies: Record<string, CaseStudy> = {
         alt: "The earnings timeline: nineteen tickers from MU down to WMT, each with a dot placed along a line running from today past sixty days out and a count of days until it reports, filled dots for confirmed dates and hollow ones for estimates",
       },
 
-      {
-        type: "text",
-        text: "Claude generated a grid for macroeconomic data. A tile changes color when it thinks it's worth noticing.",
-      },
 
       // each tile carries a rule, and the tint changes color when the number crosses a threshold worth noticing. the color is 6% opacity
       // there are 2 levels, warning and alert. faint amber is warn meaning worth attention and faint red is worth more attention
       // live data from FRED API and other sources, thresholds set previously by Claude's recommendation from when i was trying to learn about these topics and what numbers are worth paying attention to.
 
-
-      {
-        type: "image",
-        src: "/projects/buy-side-macro-grid.png",
-        width: 620,
-        alt: "The macro grid: four panels of tiles for interest rates and monetary policy, inflation and purchasing power, economic growth and activity, and unemployment and labor, each tile a figure with a line of context under it, and a source line at the bottom crediting FRED",
-      },
 
      // current design
       // mobile design
@@ -595,7 +584,7 @@ export const caseStudies: Record<string, CaseStudy> = {
             { type: "heading", text: "Future iterations" },
       {
         type: "text",
-        text: ""
+        text: "I plan to keep working on this project and only add something if I find it helpful. I think the current design is a good balance of information and simplicity. Reports used to be much longer but are now brief and focused on the most important information."
       },
       // what to write here?
       //
