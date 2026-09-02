@@ -537,7 +537,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
             {
         type: "text",
-        text: "A table displays 1 day and 50 day changes for ETFs of different sectors."
+        text: "A table is commonly used to track ETFs of different sectors."
       },
 
       {
