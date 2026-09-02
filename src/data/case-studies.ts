@@ -512,7 +512,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         type: "text",
         text: "I used Claude Code to build live data visualizations. I added a chart to quickly visualize a stock.",
       },
-      
+      // live data for chart comes from Yahoo Finance API
       {
         type: "image",
         src: "/projects/buy-side-chart.png",
@@ -523,7 +523,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
             {
         type: "text",
-        text: "A table displays sector rotation data for the past day and 50 days."
+        text: "A table displays sector rotation data for 1 day and 50 days."
       },
 
       {
@@ -555,6 +555,8 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       // each tile carries a rule, and the tint changes color when the number crosses a threshold worth noticing. the color is 6% opacity
       // there are 2 levels, warning and alert. faint amber is warn meaning worth attention and faint red is worth more attention
+      // live data from FRED API and other sources, thresholds set previously by Claude's recommendation from when i was trying to learn about these topics and what numbers are worth paying attention to.
+
 
       {
         type: "image",
