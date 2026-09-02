@@ -503,8 +503,8 @@ export const caseStudies: Record<string, CaseStudy> = {
         text: "."
       },
 
-            { type: "heading", text: "Sector rotation table" },
-      {
+            { type: "heading", text: "Data visualization" },
+            {
         type: "text",
         text: "."
       },
