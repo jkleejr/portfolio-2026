@@ -582,7 +582,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         ],
       },
 
-            { type: "heading", text: "Future iterations" },
+            { type: "heading", text: "Future iterations and product reflection" },
       {
         type: "text",
         text: "I think the current design is a good balance of information and simplicity. Reports used to be much longer but are now brief and always take less than 10 minutes to read. Since this website keeps a record of previous reports it would be interesting to use that to track sentiment trends over time."
