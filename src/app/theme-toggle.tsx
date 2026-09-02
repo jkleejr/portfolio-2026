@@ -142,8 +142,8 @@ export function ThemeToggle() {
       {/* Sun — shown in light mode */}
       <svg
         className="theme-icon-sun"
-        width="20"
-        height="20"
+        width="19.5"
+        height="19.5"
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
