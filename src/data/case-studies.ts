@@ -487,13 +487,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "image",
         src: "/projects/buy-side-site-today.png",
-        alt: "The Today page: a live ticker strip under the nav, then the morning report's headline on a global bond selloff, the paragraph that argues it, a link out to the full six minute read, and the charts panel opening underneath",
-      },
-
-      {
-        type: "image",
-        src: "/projects/buy-side-site-today-night.png",
-        alt: "The same page with the toggle on PM: the night report of Tuesday, September 1, filed at 8:18 PM ET, its headline on US strikes on Iran pushing oil to a six-week high and cracking the stock market, the paragraph tracing the move through the discount rate, a link out to the eight minute read, and the charts panel below with S&P 500 selected on three month daily bars",
+        alt: "The Today page with the toggle on AM: a live ticker strip under the nav, then the morning report of Wednesday, September 2, filed at 8:04 AM ET, its headline on a government bond selloff turning global as Japan's 10-year hits a level unseen since 1996, the paragraph that argues it, a link out to the full seven minute read, and the charts panel opening underneath",
       },
       // reduce information overload and cognitive fatigue for investors by providing concise insights and a quick read
 
@@ -510,7 +504,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       // context switching - constantly jumping between multiple disconnected browser tabs and apps to gather information, which can be mentally exhausting and lead to cognitive fatigue
       {
         type: "text",
-        text: "I designed Buy Side to reduce cognitive fatigue by using AI to remove the manual work of navigating sources and collecting information. AI curates the information and outputs a dense but concise report that takes ~6 minutes to read, and it writes pretty good headlines."
+        text: "I designed Buy Side to reduce cognitive fatigue by using AI to remove the manual work of navigating sources and collecting information. AI curates the information and outputs a dense but concise report that takes ~6 minutes to read."
       },
 
                   { type: "heading", text: "AM/PM toggle" },
@@ -531,7 +525,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         type: "image",
         src: "/projects/buy-side-chart.png",
         width: 620,
-        alt: "The charts panel: a row of tickers with Nvidia selected, range and bar controls under it, and a three month candlestick chart with a hover card on the June 10 bar showing its open, high, low, and volume",
+        alt: "The charts panel: a row of tickers with Nvidia selected, range and bar controls under it, and a three month candlestick chart with a hover card on the June 10 bar showing its open, high, low, and volume, over a footer crediting Yahoo Finance and noting quotes are delayed about fifteen minutes",
       },
 
 
