@@ -481,7 +481,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "Buy Side is an automated market reporting website designed to save time. The website tracks the stock market, filters out noise to focus on critical events, and analyzes stock performance to generate daily publications.",
+        text: "Buy Side is an automated market reporting website designed to save time. The website tracks the stock market, filters out noise to focus on critical events, and analyzes stock performance to generate daily publications using Claude.",
       },
 
       {
