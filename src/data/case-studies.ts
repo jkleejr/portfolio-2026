@@ -563,7 +563,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         type: "image",
         src: "/projects/buy-side-macro-grid.png",
         width: 620,
-        alt: "The macro grid: four panels of tiles for interest rates and monetary policy, inflation and purchasing power, economic growth and activity, and unemployment and labor, each tile a figure with a line of context under it",
+        alt: "The macro grid: four panels of tiles for interest rates and monetary policy, inflation and purchasing power, economic growth and activity, and unemployment and labor, each tile a figure with a line of context under it, and a source line at the bottom crediting FRED",
       },
 
      // current design
