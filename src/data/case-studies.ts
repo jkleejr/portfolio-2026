@@ -456,33 +456,6 @@ export const caseStudies: Record<string, CaseStudy> = {
     ],
   },
 
-  "time-with-tree": {
-    title: "Time with Tree",
-    date: "May 2026",
-    href: "https://timewithtree.co.kr/",
-    blocks: [
-
-      {
-        type: "text",
-        text: "Time with Tree is a birch tree farm in South Korea. They had trees but no way for customers to find them, so I built their online store. "
-      },
-      {
-        type: "text",
-        text: "",
-      },
-
-      {
-        type: "text",
-        text: "",
-      },
-
-      // following expectations from client, so less ideation 
-      // looked at other true farm websites in Korea 
-      // used lovable
-    ],
-  },
-
-
   "buy-side-briefings": {
     title: "Buy Side Briefings",
     date: "May 2026",
@@ -548,6 +521,32 @@ export const caseStudies: Record<string, CaseStudy> = {
           },
         ],
       },
+    ],
+  },
+
+  "time-with-tree": {
+    title: "Time with Tree",
+    date: "May 2026",
+    href: "https://timewithtree.co.kr/",
+    blocks: [
+
+      {
+        type: "text",
+        text: "Time with Tree is a birch tree farm in South Korea. They had trees but no way for customers to find them, so I built their online store. "
+      },
+      {
+        type: "text",
+        text: "",
+      },
+
+      {
+        type: "text",
+        text: "",
+      },
+
+      // following expectations from client, so less ideation 
+      // looked at other true farm websites in Korea 
+      // used lovable
     ],
   },
 };
