@@ -264,6 +264,8 @@ export const caseStudies: Record<string, CaseStudy> = {
         alt: "A close read of the narration: the sentence being spoken sits in a pale blue block, the lines either side of it in grey",
       },
 
+                        { type: "heading", text: "Design decisions" },
+
       {
         type: "text",
         text: "When processing fails, the paper enters an error state and shows the exact error message.",
@@ -491,6 +493,12 @@ export const caseStudies: Record<string, CaseStudy> = {
         type: "text",
         text: "Buy Side is an automated market reporting website designed to save the reader time. The website tracks the stock market, filters out noise to focus on critical events, and analyzes stock performance to generate daily publications.",
       },
+
+      {
+        type: "image",
+        src: "/projects/buy-side-site-today.png",
+        alt: "The Today page: a live ticker strip under the nav, then the morning report's headline on a global bond selloff, the paragraph that argues it, a link out to the full six minute read, and the charts panel opening underneath",
+      },
       // reduce information overload and cognitive fatigue for investors by providing concise insights and a quick read
 
             { type: "heading", text: "Preventing cognitive fatigue" },
@@ -508,23 +516,20 @@ export const caseStudies: Record<string, CaseStudy> = {
         type: "text",
         text: "I designed Buy Side to reduce cognitive fatigue by using AI to remove the manual work of navigating sources and collecting information. AI curates the information and outputs a dense but concise report that takes ~6 minutes to read."
       },
-  
+
+                  { type: "heading", text: "AM/PM toggle" },
+      {
+        type: "text",
+        text: "."
+      },
+
             { type: "heading", text: "Sector rotation matrix" },
       {
         type: "text",
         text: "."
       },
 
-      // current design
-      { type: "heading", text: "Current design" },
-      {
-        type: "image",
-        src: "/projects/buy-side-site-today.png",
-        alt: "The Today page: a live ticker strip under the nav, then the night report's headline on US strikes on Iran pushing oil to a six-week high, the paragraph that argues it, a link out to the full eight minute read, and the charts panel opening underneath",
-      },
-
-
-
+     // current design
       // mobile design
       { type: "heading", text: "Mobile design" },
       {
