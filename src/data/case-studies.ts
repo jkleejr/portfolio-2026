@@ -281,7 +281,7 @@ export const caseStudies: Record<string, CaseStudy> = {
           },
           {
             src: "/projects/paper-reader-error-detail.png",
-            width: 265,
+            width: 258,
             alt: "The failure the row opens onto: a warning triangle over the Gemini error, a line pointing to the API key in Settings, and a Try Again button",
           },
         ],
