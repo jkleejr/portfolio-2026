@@ -500,12 +500,12 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "To understand why prices were moving, I needed to use multiple sources and analyze the data. This was a fragmented workflow because of context switching and friction."
+        text: "To understand why prices were moving, I had to read news from different platforms and analyze data from multiple sources. This was a fragmented workflow because of context switching and friction."
       },
       // context switching - constantly jumping between multiple disconnected browser tabs and apps to gather information, which can be mentally exhausting and lead to cognitive fatigue
       {
         type: "text",
-        text: "I designed Buy Side to reduce cognitive fatigue by using AI to remove the manual work of navigating sources and collecting information. AI curates the information and outputs a high density but concise report that takes ~6 minutes to read."
+        text: "I designed Buy Side to reduce cognitive fatigue by using AI to remove the manual work of navigating sources and collecting information. AI curates the information and outputs a dense but concise report that takes ~6 minutes to read."
       },
   
       // current design
