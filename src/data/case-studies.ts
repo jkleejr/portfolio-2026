@@ -549,19 +549,6 @@ export const caseStudies: Record<string, CaseStudy> = {
             width: 290,
             alt: "The full read on a phone: a methodology note in italics up top, the report's first section heading in blue capitals, the paragraph under it on the strikes and the oil settle, and the underlined source citations that follow",
           },
-          {
-            src: "/projects/buy-side-mobile-movers.png",
-            width: 290,
-            alt: "The Movers section of the full read on a phone: a bulleted list with Semiconductors, NVDA, Energy, and BTC in blue, each followed by the day's move and the underlined sources behind it",
-          },
-          {
-            src: "/projects/buy-side-mobile-what-to-watch.png",
-            width: 290,
-            scale: 0.91,
-            lift: 4,
-            caption: "light mode view",
-            alt: "The What to Watch section on a phone in the light theme: three paragraphs, each opening with a bold blue lead on the 30-year yield, transit in Hormuz, and the labour market, with the Next 5 Trading Days table starting below",
-          },
         ],
       },
 
