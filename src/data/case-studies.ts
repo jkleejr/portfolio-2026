@@ -557,7 +557,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "Claude generated a KPI tile grid for macroeconomic data. The tile changes color when it thinks it's worth noticing.",
+        text: "Claude generated a grid for macroeconomic data. A tile changes color when it thinks it's worth noticing.",
       },
 
       // each tile carries a rule, and the tint changes color when the number crosses a threshold worth noticing. the color is 6% opacity
