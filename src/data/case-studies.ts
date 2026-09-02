@@ -37,7 +37,9 @@ export type CaseStudyBlock =
         caption?: string; // under this one shot, where the row's is under them all
         // Drawn at this fraction of its slot and centred in it, both ways, so
         // it keeps its place beside the shot next to it while sitting a
-        // little smaller. 0.94 for one a touch under the rest.
+        // little smaller. 0.91 for one a touch under the rest. Its caption
+        // hangs under the picture rather than adding to its height, so the
+        // picture is what sits centred.
         scale?: number;
       }[];
       caption?: string;
@@ -501,7 +503,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         text: "."
       },
 
-            { type: "heading", text: "Sector rotation matrix" },
+            { type: "heading", text: "Sector rotation table" },
       {
         type: "text",
         text: "."
@@ -539,7 +541,7 @@ export const caseStudies: Record<string, CaseStudy> = {
           {
             src: "/projects/buy-side-mobile-what-to-watch.png",
             width: 290,
-            scale: 0.94,
+            scale: 0.91,
             caption: "light mode view",
             alt: "The What to Watch section on a phone in the light theme: three paragraphs, each opening with a bold blue lead on the 30-year yield, transit in Hormuz, and the labour market, with the Next 5 Trading Days table starting below",
           },

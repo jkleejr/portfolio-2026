@@ -111,11 +111,22 @@ export function StudyBody({ study }: { study: CaseStudy }) {
   );
 }
 
-function Caption({ text, center }: { text?: string; center?: boolean }) {
+function Caption({
+  text,
+  center,
+  hang,
+}: {
+  text?: string;
+  center?: boolean;
+  /** Hung under the picture, out of the flow, so it adds nothing to its height. */
+  hang?: boolean;
+}) {
   if (!text) return null;
   return (
     <figcaption
-      className={`mt-3 text-base italic leading-relaxed ${center ? "text-center" : ""}`}
+      className={`mt-3 text-base italic leading-relaxed ${center ? "text-center" : ""} ${
+        hang ? "absolute inset-x-0 top-full" : ""
+      }`}
     >
       {text}
     </figcaption>
@@ -248,15 +259,32 @@ function Block({
                 }`}
                 style={item.width ? { width: item.width } : undefined}
               >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={item.src}
-                  alt={item.alt}
-                  className="w-full rounded-xl border border-foreground/10"
-                  style={item.scale ? { width: `${item.scale * 100}%` } : undefined}
-                />
-                {/* Centred under the shot, which is itself centred in the row. */}
-                <Caption text={item.caption} center />
+                {item.scale ? (
+                  // The picture alone is what is centred on the shot beside
+                  // it: the caption hangs under it out of the flow, since in
+                  // the flow it made the pair as tall as the neighbour and
+                  // left the picture pinned to the top.
+                  <div className="relative" style={{ width: `${item.scale * 100}%` }}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={item.src}
+                      alt={item.alt}
+                      className="w-full rounded-xl border border-foreground/10"
+                    />
+                    <Caption text={item.caption} center hang />
+                  </div>
+                ) : (
+                  <>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={item.src}
+                      alt={item.alt}
+                      className="w-full rounded-xl border border-foreground/10"
+                    />
+                    {/* Centred under the shot, which is itself centred in the row. */}
+                    <Caption text={item.caption} center />
+                  </>
+                )}
               </figure>
             ))}
           </div>
