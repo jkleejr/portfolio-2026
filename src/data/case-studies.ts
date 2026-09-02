@@ -543,7 +543,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "Claude generated a Gantt chart to track earnings and I only changed a couple things.",
+        text: "Claude generated a Gantt chart to track earnings.",
       },
       // earnings calendar data comes from yahoo finance
       // the earnings calendar is a Gantt chart and a dot for a company's earnings date, filled is confirmed, hollow is estimated
