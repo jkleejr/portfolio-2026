@@ -510,7 +510,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
             {
         type: "text",
-        text: "I used Claude Code to build the data visualizations. I added a chart to quickly visualize a stock.",
+        text: "Claude Code built the data visualizations and I iterated on them. I added a chart to quickly visualize a stock.",
       },
       {
         type: "image",
@@ -522,7 +522,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
             {
         type: "text",
-        text: "I used a table to display sector rotation data."
+        text: "A table displays sector rotation data for the past day and fifty days."
       },
 
       {
@@ -531,11 +531,26 @@ export const caseStudies: Record<string, CaseStudy> = {
         width: 620,
         alt: "The sector rotation table: eleven sectors from Energy down to Consumer Discretionary, each with its ETF ticker, today's move, and the fifty day move, the gains in green and the losses in red",
       },
+
+      {
+        type: "text",
+        text: "I added an earnings timeline. Claude generated a Gantt chart and I liked the result so I kept it.",
+      },
+      // earnings calendar data comes from yahoo finance
+      // the earnings calendar is a Gantt chart and a dot for a company's earnings date, filled is confirmed, hollow is estimated
+      // 90 days out
+
       {
         type: "image",
         src: "/projects/buy-side-earnings-timeline.png",
         width: 620,
         alt: "The earnings timeline: nineteen tickers from MU down to WMT, each with a dot placed along a line running from today past sixty days out and a count of days until it reports, filled dots for confirmed dates and hollow ones for estimates",
+      },
+      {
+        type: "image",
+        src: "/projects/buy-side-macro-grid.png",
+        width: 620,
+        alt: "The macro grid: four panels of tiles for interest rates and monetary policy, inflation and purchasing power, economic growth and activity, and unemployment and labor, each tile a figure with a line of context under it",
       },
 
      // current design
