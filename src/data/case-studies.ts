@@ -523,7 +523,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
             {
         type: "text",
-        text: "A table displays sector rotation data for 1 day and 50 days."
+        text: "A table displays sector rotation data of 11 ETFs for 1 day and 50 days."
       },
 
       {
