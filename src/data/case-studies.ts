@@ -41,6 +41,9 @@ export type CaseStudyBlock =
         // hangs under the picture rather than adding to its height, so the
         // picture is what sits centred.
         scale?: number;
+        // Pixels a scaled shot is raised from the middle of its slot, for one
+        // that reads a hair low there.
+        lift?: number;
       }[];
       caption?: string;
       columns?: 2;
@@ -542,6 +545,7 @@ export const caseStudies: Record<string, CaseStudy> = {
             src: "/projects/buy-side-mobile-what-to-watch.png",
             width: 290,
             scale: 0.91,
+            lift: 4,
             caption: "light mode view",
             alt: "The What to Watch section on a phone in the light theme: three paragraphs, each opening with a bold blue lead on the 30-year yield, transit in Hormuz, and the labour market, with the Next 5 Trading Days table starting below",
           },

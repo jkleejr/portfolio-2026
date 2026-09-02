@@ -264,7 +264,15 @@ function Block({
                   // it: the caption hangs under it out of the flow, since in
                   // the flow it made the pair as tall as the neighbour and
                   // left the picture pinned to the top.
-                  <div className="relative" style={{ width: `${item.scale * 100}%` }}>
+                  <div
+                    className="relative"
+                    style={{
+                      width: `${item.scale * 100}%`,
+                      ...(item.lift
+                        ? { transform: `translateY(-${item.lift}px)` }
+                        : null),
+                    }}
+                  >
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={item.src}
