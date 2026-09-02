@@ -510,7 +510,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
             {
         type: "text",
-        text: "I used Claude Code to build live data visualizations. I added a chart to quickly visualize a stock.",
+        text: "I used Claude Code to build data visualizations from real time market data (delayed quotes). I added a chart to quickly visualize a stock.",
       },
       // live data for chart comes from Yahoo Finance API
       {
