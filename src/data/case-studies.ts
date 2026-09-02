@@ -585,7 +585,7 @@ export const caseStudies: Record<string, CaseStudy> = {
             { type: "heading", text: "Future iterations" },
       {
         type: "text",
-        text: "I plan to keep working on this project and only add something helpful. I think the current design is a good balance of information and simplicity. Reports used to be much longer but are now brief. This website keeps a record of previous reports so it would be interesting to track sentiment trends over time and use it to make predictions about the future."
+        text: "I plan to keep working on this project and only add something helpful. I think the current design is a good balance of information and simplicity. Reports used to be much longer but are now brief. This website keeps a record of previous reports so it would be interesting to track sentiment trends over time and use it to make predictions."
       },
       // what to write here?
       //
