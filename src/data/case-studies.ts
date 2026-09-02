@@ -534,7 +534,7 @@ export const caseStudies: Record<string, CaseStudy> = {
           {
             src: "/projects/buy-side-mobile-what-to-watch.png",
             width: 290,
-            alt: "The What to Watch section on a phone: three paragraphs, each opening with a bold blue lead on the 30-year yield, transit in Hormuz, and the labour market, with the Next 5 Trading Days table starting below",
+            alt: "The What to Watch section on a phone in the light theme: three paragraphs, each opening with a bold blue lead on the 30-year yield, transit in Hormuz, and the labour market, with the Next 5 Trading Days table starting below",
           },
         ],
       },
