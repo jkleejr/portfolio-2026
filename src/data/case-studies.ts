@@ -522,7 +522,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         type: "image",
         src: "/projects/buy-side-chart.png",
         width: 620,
-        alt: "The charts panel in the light theme: a row of tickers with S&P 500 selected, range and bar controls under it, and a three month candlestick chart with a hover card on the August 27 bar showing its open, high, low, and volume",
+        alt: "The charts panel: a row of tickers with S&P 500 selected, range and bar controls under it, and a three month candlestick chart with a hover card on the July 6 bar showing its open, high, low, and volume",
       },
 
      // current design
