@@ -509,7 +509,7 @@ export const caseStudies: Record<string, CaseStudy> = {
                   { type: "heading", text: "AM/PM toggle" },
       {
         type: "text",
-        text: "2 reports are generated for different reasons. A morning report prepares readers for market open and a night report reflects on what happened during the day. I added an AM/PM button to switch between reports and update the layout with the right information."
+        text: "2 reports are generated for different reasons. A morning report prepares readers for market open and a night report reflects on what happened during the day. I added an AM/PM button to switch reports and update the layout with the right information."
       },
 
             { type: "heading", text: "Data visualization" },
@@ -530,7 +530,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
             {
         type: "text",
-        text: "A table displays 1 day and 50 day sector rotation data for 11 ETFs."
+        text: "A table displays 1 day and 50 day changes for 11 ETFs."
       },
 
       {
@@ -557,7 +557,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "Claude generated a KPI tile grid for macroeconomic data. The tile changes color when a number crosses a threshold worth noticing.",
+        text: "Claude generated a KPI tile grid for macroeconomic data. The tile changes color when it thinks it's worth noticing.",
       },
 
       // each tile carries a rule, and the tint changes color when the number crosses a threshold worth noticing. the color is 6% opacity
@@ -597,6 +597,9 @@ export const caseStudies: Record<string, CaseStudy> = {
         type: "text",
         text: ""
       },
+      // what to write here?
+      //
+
 
 
     ],
