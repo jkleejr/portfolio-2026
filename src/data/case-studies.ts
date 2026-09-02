@@ -512,7 +512,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         type: "text",
         text: "I used Claude Code to build data visualizations from real time market data (delayed quotes). I added a chart to quickly visualize a stock.",
       },
-      // delay only applies during the trading session, since outside market hours the last price is the close for most stocks
+      // delay only applies during the trading session, since outside market hours the last price is the close for most stocks. us stocks and etfs are delayed by ~15 minutes, crypto is closer to current
       // data for chart comes from Yahoo Finance API
       {
         type: "image",
