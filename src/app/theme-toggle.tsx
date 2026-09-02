@@ -156,8 +156,8 @@ export function ThemeToggle() {
       {/* Moon — shown in dark mode */}
       <svg
         className="theme-icon-moon"
-        width="20"
-        height="20"
+        width="19"
+        height="19"
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
