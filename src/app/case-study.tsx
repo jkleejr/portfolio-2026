@@ -25,15 +25,21 @@ export function StudyBody({ study }: { study: CaseStudy }) {
       <header>
         {/* The title is the way to the live site when there is one — a link
             mark after it says so. A button under the title said the same
-            thing at more cost. */}
+            thing at more cost. With no site but a listing on the App Store,
+            the title goes there instead, and the App Store mark after it is
+            the one that says so. */}
         <h1 className="text-2xl font-bold">
           {study.href ? (
             <SiteLink href={study.href}>{study.title}</SiteLink>
+          ) : study.appStore ? (
+            <SiteLink href={study.appStore} glyph={false}>
+              {study.title}
+            </SiteLink>
           ) : (
             study.title
           )}
-          {/* Outside the title's own link, so the two go to different places
-              without one being nested in the other. */}
+          {/* Outside the title's own link, so the two can go to different
+              places without one being nested in the other. */}
           {study.appStore !== undefined && (
             <AppStoreBadge href={study.appStore} label={study.title} />
           )}

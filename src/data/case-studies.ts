@@ -67,8 +67,9 @@ export type CaseStudy = {
   // "Shipped", "Shelved". Printed as written, and left out when unset.
   status?: string;
   // On the App Store: the mark goes after the title. The value is the listing
-  // it opens; an empty string shows the mark without a link. See the same
-  // field on an entry in projects.ts.
+  // it opens; an empty string shows the mark without a link. When there is no
+  // `href`, the title itself opens the listing too. See the same field on an
+  // entry in projects.ts.
   appStore?: string;
   // --- all optional; add to a study to switch one on ---
   cover?: { src: string; alt: string; crop?: string }; // wide image up top
@@ -422,7 +423,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         items: [
           "Apple Vision reads the screen",
           "Apple Speech transcribes audio",
-          "DeepL for translating text",
+          "DeepL translates the text",
         ],
       },
       {
