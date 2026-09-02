@@ -507,9 +507,22 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
 
             { type: "heading", text: "Data visualization" },
+
             {
         type: "text",
-        text: "I used a table to display sector rotation data "
+        text: "I added a chart to quickly visualize the market.",
+      },
+      {
+        type: "image",
+        src: "/projects/buy-side-chart.png",
+        width: 620,
+        alt: "The charts panel: a row of tickers with S&P 500 selected, range and bar controls under it, and a three month candlestick chart with a hover card on the July 6 bar showing its open, high, low, and volume",
+      },
+
+
+            {
+        type: "text",
+        text: "I used a table to display sector rotation data."
       },
 
       {
@@ -517,12 +530,6 @@ export const caseStudies: Record<string, CaseStudy> = {
         src: "/projects/buy-side-sector-rotation.png",
         width: 620,
         alt: "The sector rotation table: eleven sectors from Energy down to Consumer Discretionary, each with its ETF ticker, today's move, and the fifty day move, the gains in green and the losses in red",
-      },
-      {
-        type: "image",
-        src: "/projects/buy-side-chart.png",
-        width: 620,
-        alt: "The charts panel: a row of tickers with S&P 500 selected, range and bar controls under it, and a three month candlestick chart with a hover card on the July 6 bar showing its open, high, low, and volume",
       },
 
      // current design
