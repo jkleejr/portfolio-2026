@@ -380,7 +380,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
      // write to the level of my understanding
       
-            { type: "heading", text: "Result" },
+            { type: "heading", text: "Lesson learned" },
 
       {
         type: "text",
