@@ -516,7 +516,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
             {
         type: "text",
-        text: "I used Claude Code to build data visualizations from real time market data (delayed quotes). I added a chart to quickly visualize a stock.",
+        text: "I used Claude Code to build data visualizations from real time market data (delayed quotes). I added charts.",
       },
       // delay only applies during the trading session, since outside market hours the last price is the close for most stocks. us stocks and etfs are delayed by ~15 minutes, crypto is closer to current
       // data for chart comes from Yahoo Finance API
@@ -530,7 +530,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
             {
         type: "text",
-        text: "A table displays 1 day and 50 day changes for 11 ETFs."
+        text: "A table displays changes in different sectors."
       },
 
       {
@@ -542,7 +542,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "Claude generated a Gantt chart for an earnings timeline and I liked the result so I kept it.",
+        text: "Claude generated a Gantt chart to track earnings and I liked the result so I kept it.",
       },
       // earnings calendar data comes from yahoo finance
       // the earnings calendar is a Gantt chart and a dot for a company's earnings date, filled is confirmed, hollow is estimated
