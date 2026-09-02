@@ -476,6 +476,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       // Reports take time to generate, so they are queued at 7:55 AM and 8:00 PM.
       // reports can take longer or shorter to generate, so the time on the homepage displays the time the report finished generating.
       // the times are accurate for morning and night reports.
+      // can i make a better logo idkk
       
 
       {
@@ -584,12 +585,10 @@ export const caseStudies: Record<string, CaseStudy> = {
             { type: "heading", text: "Future iterations" },
       {
         type: "text",
-        text: "I plan to keep working on this project and only add something if I find it helpful. I think the current design is a good balance of information and simplicity. Reports used to be much longer but are now brief and focused on the most important information."
+        text: "I plan to keep working on this project and only add something helpful. I think the current design is a good balance of information and simplicity. Reports used to be much longer but are now brief. This website keeps a record of previous reports so it would be interesting to track sentiment trends over time and use it to make predictions about the future."
       },
       // what to write here?
       //
-
-
 
     ],
   },
