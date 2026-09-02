@@ -498,14 +498,15 @@ export const caseStudies: Record<string, CaseStudy> = {
 
             { type: "heading", text: "Sector rotation matrix" },
       {
-        type: "image",
-        src: "/projects/buy-side-sector-rotation.png",
-        width: 580,
-        alt: "The sector rotation table: eleven sectors from Energy down to Consumer Discretionary, each with its ETF ticker, today's move, and the fifty day move, the gains in green and the losses in red",
-      },
-      {
         type: "text",
         text: "."
+      },
+
+      {
+        type: "image",
+        src: "/projects/buy-side-sector-rotation.png",
+        width: 600,
+        alt: "The sector rotation table: eleven sectors from Energy down to Consumer Discretionary, each with its ETF ticker, today's move, and the fifty day move, the gains in green and the losses in red",
       },
 
      // current design
