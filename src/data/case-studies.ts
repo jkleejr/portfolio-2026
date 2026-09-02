@@ -510,7 +510,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
             {
         type: "text",
-        text: "I used Claude Code to help me build data visualizations. I added a chart to quickly visualize a stock.",
+        text: "I used Claude Code to build the data visualizations. I added a chart to quickly visualize a stock.",
       },
       {
         type: "image",
@@ -530,6 +530,12 @@ export const caseStudies: Record<string, CaseStudy> = {
         src: "/projects/buy-side-sector-rotation.png",
         width: 620,
         alt: "The sector rotation table: eleven sectors from Energy down to Consumer Discretionary, each with its ETF ticker, today's move, and the fifty day move, the gains in green and the losses in red",
+      },
+      {
+        type: "image",
+        src: "/projects/buy-side-earnings-timeline.png",
+        width: 620,
+        alt: "The earnings timeline: nineteen tickers from MU down to WMT, each with a dot placed along a line running from today past sixty days out and a count of days until it reports, filled dots for confirmed dates and hollow ones for estimates",
       },
 
      // current design
