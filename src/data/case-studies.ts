@@ -503,13 +503,13 @@ export const caseStudies: Record<string, CaseStudy> = {
                   { type: "heading", text: "AM/PM toggle" },
       {
         type: "text",
-        text: "."
+        text: "2 reports are generated for different reasons. A morning report prepares readers for market open and a night report reflects on what happened during the day. I added an AM/PM button to switch between reports and update the layout with the right information."
       },
 
             { type: "heading", text: "Data visualization" },
             {
         type: "text",
-        text: "."
+        text: "I used a table to display sector rotation data "
       },
 
       {
@@ -555,7 +555,7 @@ export const caseStudies: Record<string, CaseStudy> = {
             { type: "heading", text: "Future iterations" },
       {
         type: "text",
-        text: "."
+        text: ""
       },
 
 
