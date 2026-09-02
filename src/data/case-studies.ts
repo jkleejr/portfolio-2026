@@ -34,6 +34,7 @@ export type CaseStudyBlock =
         crop?: string;
         width?: number;
         fullOnPhone?: boolean;
+        caption?: string; // under this one shot, where the row's is under them all
       }[];
       caption?: string;
       columns?: 2;
@@ -490,7 +491,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         text: "I designed Buy Side to reduce cognitive fatigue by using AI to remove the manual work of navigating sources and collecting information. AI curates the information and outputs a dense but concise report that takes ~6 minutes to read."
       },
 
-                  { type: "heading", text: "AM/PM mode" },
+                  { type: "heading", text: "AM/PM toggle" },
       {
         type: "text",
         text: "."
@@ -534,6 +535,7 @@ export const caseStudies: Record<string, CaseStudy> = {
           {
             src: "/projects/buy-side-mobile-what-to-watch.png",
             width: 290,
+            caption: "light mode view",
             alt: "The What to Watch section on a phone in the light theme: three paragraphs, each opening with a bold blue lead on the 30-year yield, transit in Hormuz, and the labour market, with the Next 5 Trading Days table starting below",
           },
         ],
