@@ -130,20 +130,6 @@ export const entries: Entry[] = [
     ],
   },
   {
-    title: "Time with Tree",
-    blurb:
-      "Website for a birch tree farm in South Korea",
-    slug: "time-with-tree",
-    titleHref: "https://timewithtree.co.kr/",
-    platform: "web",
-    images: [
-      {
-        cover: "/projects/time-with-tree-logo-3.png",
-        alt: "The Time with Tree logo, green leaves growing from a curved base",
-      },
-    ],
-  },
-  {
     title: "Buy Side Briefings",
     blurb:
       "Personal website for daily stock market reports",
@@ -156,7 +142,21 @@ export const entries: Entry[] = [
         alt: "The Buy Side Briefings logo, a row of red and green candlesticks",
       },
     ],
+  },
+  {
+    title: "Time with Tree",
+    blurb:
+      "Website for a birch tree farm in South Korea",
+    slug: "time-with-tree",
+    titleHref: "https://timewithtree.co.kr/",
+    platform: "web",
+    images: [
+      {
+        cover: "/projects/time-with-tree-logo-3.png",
+        alt: "The Time with Tree logo, green leaves growing from a curved base",
+        // spacing from the last project to the bottom of the page is 112 px on desktop, 32 px on phone
+  },
+    ],
     // spacing from the last project to the bottom of the page is 112 px on desktop, 32 px on phone
-  
   },
 ];
