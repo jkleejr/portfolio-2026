@@ -234,9 +234,18 @@ function Block({
                 // small to read. It is written after the base width so it wins
                 // inside its own media query; an inline `width` still beats
                 // both, which is why the two are alternatives.
+                //
+                // A scaled shot keeps the slot and is centred in it: stretched
+                // to the height of its line so it sits level with the shot
+                // beside it rather than at the top, and its picture and
+                // caption held in the middle.
                 className={`w-[calc((100%_-_1rem)/2)] ${
                   block.columns === 2 ? "" : "sm:w-[calc((100%_-_2rem)/3)]"
-                } ${item.fullOnPhone ? "max-sm:w-full" : ""}`}
+                } ${item.fullOnPhone ? "max-sm:w-full" : ""} ${
+                  item.scale
+                    ? "flex flex-col items-center justify-center self-stretch"
+                    : ""
+                }`}
                 style={item.width ? { width: item.width } : undefined}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -244,6 +253,7 @@ function Block({
                   src={item.src}
                   alt={item.alt}
                   className="w-full rounded-xl border border-foreground/10"
+                  style={item.scale ? { width: `${item.scale * 100}%` } : undefined}
                 />
                 {/* Centred under the shot, which is itself centred in the row. */}
                 <Caption text={item.caption} center />
