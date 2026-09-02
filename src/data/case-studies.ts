@@ -510,7 +510,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
             {
         type: "text",
-        text: "I used Claude Code to design and build the data visualization. I added a chart to quickly visualize the market.",
+        text: "I used Claude Code to design and build the data visualization. I added a chart to quickly visualize a stock.",
       },
       {
         type: "image",
