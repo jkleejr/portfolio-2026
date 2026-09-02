@@ -578,12 +578,12 @@ export const caseStudies: Record<string, CaseStudy> = {
           {
             src: "/projects/buy-side-mobile-today.png",
             width: 290,
-            alt: "The Today page on a phone: the ticker strip under the nav, the date with an AM/PM toggle set to PM, the night report's headline on US strikes on Iran pushing oil to a six-week high, its opening paragraph, a link to the eight minute read, and the charts panel starting below",
+            alt: "The Today page on a phone: the ticker strip under the nav, the date with an AM/PM toggle set to AM, the morning report's headline on a government bond selloff turning global as Japan's 10-year hits a level unseen since 1996, its opening paragraph, a link to the seven minute read, and the charts panel starting below",
           },
           {
             src: "/projects/buy-side-mobile-full-read.png",
             width: 290,
-            alt: "The full read on a phone: a methodology note in italics up top, the report's first section heading in blue capitals, the paragraph under it on the strikes and the oil settle, and the underlined source citations that follow",
+            alt: "The full read on a phone: a back link to all reports, the date as a heading, the time the report was generated, the headline, then three bulleted takeaways on the Japanese 10-year, the US Treasury yield and the split in September hike odds, with the body and its source citations below",
           },
         ],
       },
