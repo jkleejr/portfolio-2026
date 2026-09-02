@@ -260,7 +260,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "image",
         src: "/projects/paper-reader-highlight-detail.png",
-        width: 353,
+        width: 345,
         alt: "A close read of the narration: the sentence being spoken sits in a pale blue block, the lines either side of it in grey",
       },
 
