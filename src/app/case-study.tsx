@@ -111,10 +111,14 @@ export function StudyBody({ study }: { study: CaseStudy }) {
   );
 }
 
-function Caption({ text }: { text?: string }) {
+function Caption({ text, center }: { text?: string; center?: boolean }) {
   if (!text) return null;
   return (
-    <figcaption className="mt-3 text-base italic leading-relaxed">{text}</figcaption>
+    <figcaption
+      className={`mt-3 text-base italic leading-relaxed ${center ? "text-center" : ""}`}
+    >
+      {text}
+    </figcaption>
   );
 }
 
@@ -241,7 +245,8 @@ function Block({
                   alt={item.alt}
                   className="w-full rounded-xl border border-foreground/10"
                 />
-                <Caption text={item.caption} />
+                {/* Centred under the shot, which is itself centred in the row. */}
+                <Caption text={item.caption} center />
               </figure>
             ))}
           </div>
