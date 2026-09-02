@@ -510,7 +510,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
             {
         type: "text",
-        text: "Claude Code built the data visualizations and I iterated on them. I added a chart to quickly visualize a stock.",
+        text: "I used Claude Code to build live data visualizations. I added a chart to quickly visualize a stock.",
       },
       {
         type: "image",
@@ -522,7 +522,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
             {
         type: "text",
-        text: "A table displays sector rotation data for the past day and fifty days."
+        text: "A table displays sector rotation data for the past day and 50 days."
       },
 
       {
@@ -534,7 +534,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "I added an earnings timeline. Claude generated a Gantt chart and I liked the result so I kept it.",
+        text: "Claude generated a Gantt chart for an earnings timeline and I liked the result so I kept it.",
       },
       // earnings calendar data comes from yahoo finance
       // the earnings calendar is a Gantt chart and a dot for a company's earnings date, filled is confirmed, hollow is estimated
@@ -546,6 +546,15 @@ export const caseStudies: Record<string, CaseStudy> = {
         width: 620,
         alt: "The earnings timeline: nineteen tickers from MU down to WMT, each with a dot placed along a line running from today past sixty days out and a count of days until it reports, filled dots for confirmed dates and hollow ones for estimates",
       },
+
+      {
+        type: "text",
+        text: "Claude generated a KPI tile grid for macroeconomic data. The tile changes color when a number crosses a threshold worth noticing.",
+      },
+
+      // each tile carries a rule, and the tint changes color when the number crosses a threshold worth noticing. the color is 6% opacity
+      // there are 2 levels, warning and alert. faint amber is warn meaning worth attention and faint red is worth more attention
+
       {
         type: "image",
         src: "/projects/buy-side-macro-grid.png",
