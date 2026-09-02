@@ -493,7 +493,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       // reduce information overload and cognitive fatigue for investors by providing concise insights and a quick read
 
-            { type: "heading", text: "Preventing Cognitive Fatigue" },
+            { type: "heading", text: "Preventing cognitive fatigue" },
 
             {
         type: "text",
@@ -510,7 +510,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
   
       // current design
-      { type: "heading", text: "Current Design" },
+      { type: "heading", text: "Current design" },
       {
         type: "image",
         src: "/projects/buy-side-site-morning.png",
