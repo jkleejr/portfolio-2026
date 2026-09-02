@@ -518,6 +518,12 @@ export const caseStudies: Record<string, CaseStudy> = {
         width: 620,
         alt: "The sector rotation table: eleven sectors from Energy down to Consumer Discretionary, each with its ETF ticker, today's move, and the fifty day move, the gains in green and the losses in red",
       },
+      {
+        type: "image",
+        src: "/projects/buy-side-chart.png",
+        width: 620,
+        alt: "The charts panel in the light theme: a row of tickers with S&P 500 selected, range and bar controls under it, and a three month candlestick chart with a hover card on the August 27 bar showing its open, high, low, and volume",
+      },
 
      // current design
       // mobile design
