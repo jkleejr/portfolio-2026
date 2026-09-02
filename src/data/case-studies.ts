@@ -489,6 +489,12 @@ export const caseStudies: Record<string, CaseStudy> = {
         src: "/projects/buy-side-site-today.png",
         alt: "The Today page: a live ticker strip under the nav, then the morning report's headline on a global bond selloff, the paragraph that argues it, a link out to the full six minute read, and the charts panel opening underneath",
       },
+
+      {
+        type: "image",
+        src: "/projects/buy-side-site-today-night.png",
+        alt: "The same page with the toggle on PM: the night report of Tuesday, September 1, filed at 8:18 PM ET, its headline on US strikes on Iran pushing oil to a six-week high and cracking the stock market, the paragraph tracing the move through the discount rate, a link out to the eight minute read, and the charts panel below with S&P 500 selected on three month daily bars",
+      },
       // reduce information overload and cognitive fatigue for investors by providing concise insights and a quick read
 
             { type: "heading", text: "Preventing cognitive fatigue" },
@@ -543,7 +549,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "Claude generated a Gantt chart to track earnings and I liked the result so I kept it.",
+        text: "Claude generated a Gantt chart to track earnings and I only changed a couple things.",
       },
       // earnings calendar data comes from yahoo finance
       // the earnings calendar is a Gantt chart and a dot for a company's earnings date, filled is confirmed, hollow is estimated
@@ -585,7 +591,7 @@ export const caseStudies: Record<string, CaseStudy> = {
             { type: "heading", text: "Future iterations" },
       {
         type: "text",
-        text: "I plan to keep working on this project and only add something helpful. I think the current design is a good balance of information and simplicity. Reports used to be much longer but are now brief. This website keeps a record of previous reports so it would be interesting to track sentiment trends over time and use it to make predictions."
+        text: "I think the current design is a good balance of information and simplicity. Reports used to be much longer but are now brief and always take less than 10 minutes to read. Since this website keeps a record of previous reports it would be interesting to use that to track sentiment trends over time to try having AI make its own strategies/predictions."
       },
       // what to write here?
       //
