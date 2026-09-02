@@ -527,12 +527,12 @@ export const caseStudies: Record<string, CaseStudy> = {
         items: [
           {
             src: "/projects/buy-side-mobile-today.png",
-            width: 260,
+            width: 280,
             alt: "The Today page on a phone: the ticker strip under the nav, the date with an AM/PM toggle set to PM, the night report's headline on US strikes on Iran pushing oil to a six-week high, its opening paragraph, a link to the eight minute read, and the charts panel starting below",
           },
           {
             src: "/projects/buy-side-mobile-full-read.png",
-            width: 260,
+            width: 280,
             alt: "The full read on a phone: a methodology note in italics up top, the report's first section heading in blue capitals, the paragraph under it on the strikes and the oil settle, and the underlined source citations that follow",
           },
         ],
