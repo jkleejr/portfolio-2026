@@ -466,11 +466,17 @@ export const caseStudies: Record<string, CaseStudy> = {
     ],
   },
 
+
   "buy-side-briefings": {
     title: "Buy Side Briefings",
     date: "May 2026",
     href: "https://buy-side-briefings.vercel.app/",
     blocks: [
+
+      // Reports take time to generate, so they are queued at 7:55 AM and 8:00 PM.
+      // reports can take longer or shorter to generate, so the time on the homepage displays the time the report finished generating.
+      // the times are accurate for morning and night reports.
+      
 
       {
         type: "text",
