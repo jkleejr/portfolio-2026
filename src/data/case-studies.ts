@@ -490,7 +490,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         text: "I designed Buy Side to reduce cognitive fatigue by using AI to remove the manual work of navigating sources and collecting information. AI curates the information and outputs a dense but concise report that takes ~6 minutes to read."
       },
 
-                  { type: "heading", text: "AM/PM toggle" },
+                  { type: "heading", text: "AM/PM mode" },
       {
         type: "text",
         text: "."
