@@ -551,6 +551,14 @@ export const caseStudies: Record<string, CaseStudy> = {
           },
         ],
       },
+
+            { type: "heading", text: "Future iterations" },
+      {
+        type: "text",
+        text: "."
+      },
+
+
     ],
   },
 
