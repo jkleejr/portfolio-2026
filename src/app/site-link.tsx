@@ -8,9 +8,9 @@
 // drawn rather than an image: it is one two-path glyph, it takes the colour of
 // the text it sits beside, and it stays sharp at any size.
 //
-// A title that goes to an App Store listing instead keeps the same anchor and
-// press guard but drops the glyph, since the App Store mark after it already
-// says where it goes.
+// A title that goes to an App Store listing instead carries the App Store mark
+// in place of the chain, inside the same anchor — so the title and the mark
+// are one link, and hovering either lights both.
 //
 // A client component only because of the press guard — with gravity on, the
 // title can be picked up and thrown, and the throw ends with the pointer
@@ -22,12 +22,12 @@ import { LinkGlyph } from "./link-glyph";
 
 export function SiteLink({
   href,
-  glyph = true,
+  mark,
   children,
 }: {
   href: string;
-  /** Whether the link mark follows the title. Off when another mark does. */
-  glyph?: boolean;
+  /** What follows the title. The chain glyph when unset. */
+  mark?: React.ReactNode;
   children: React.ReactNode;
 }) {
   const { onPointerDown, dragged } = usePress();
@@ -47,7 +47,7 @@ export function SiteLink({
       {/* Sized in em so it follows the title rather than a fixed number of
           pixels, and sat on the middle of the title's caps rather than the
           middle of its line box. */}
-      {glyph && (
+      {mark ?? (
         <LinkGlyph className="h-[0.62em] w-[0.62em] shrink-0 translate-y-[0.09em]" />
       )}
     </a>

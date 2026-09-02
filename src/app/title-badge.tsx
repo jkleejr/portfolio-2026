@@ -64,6 +64,23 @@ export function SiteBadge({ href, label }: { href: string; label: string }) {
   );
 }
 
+/**
+ * The App Store mark on its own, for a link that already says where it goes —
+ * a study's title that opens the listing carries this in place of its chain.
+ */
+export function AppStoreMark({ className = "" }: { className?: string }) {
+  return (
+    <Image
+      src="/app-store.png"
+      alt=""
+      width={135}
+      height={128}
+      className={`inline-block h-[0.85em] w-auto ${className}`}
+      aria-hidden
+    />
+  );
+}
+
 export function AppStoreBadge({
   href,
   label,
@@ -73,20 +90,11 @@ export function AppStoreBadge({
   /** The project's name, for what a screen reader says. */
   label: string;
 }) {
-  const mark = (
-    <Image
-      src="/app-store.png"
-      alt=""
-      width={135}
-      height={128}
-      // Raised off the baseline to sit level with the letters rather than
-      // stand on them. An inline box rests its bottom edge on the baseline, so
-      // a 0.85em mark next to caps about 0.7em tall hangs low by half the
-      // difference — which is what this takes back, centring the two.
-      className="inline-block h-[0.85em] w-auto -translate-y-[0.08em]"
-      aria-hidden
-    />
-  );
+  // Raised off the baseline to sit level with the letters rather than stand
+  // on them. An inline box rests its bottom edge on the baseline, so a 0.85em
+  // mark next to caps about 0.7em tall hangs low by half the difference —
+  // which is what this takes back, centring the two.
+  const mark = <AppStoreMark className="-translate-y-[0.08em]" />;
 
   if (!href) return <span className="ml-2 inline-block">{mark}</span>;
 

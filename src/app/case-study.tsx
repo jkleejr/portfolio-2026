@@ -15,7 +15,7 @@
 
 import { type CaseStudy, type CaseStudyBlock } from "@/data/case-studies";
 import { SiteLink } from "./site-link";
-import { AppStoreBadge } from "./title-badge";
+import { AppStoreBadge, AppStoreMark } from "./title-badge";
 export function StudyBody({ study }: { study: CaseStudy }) {
   return (
     // No margins of its own: the page around it puts it in the same column the
@@ -26,21 +26,27 @@ export function StudyBody({ study }: { study: CaseStudy }) {
         {/* The title is the way to the live site when there is one — a link
             mark after it says so. A button under the title said the same
             thing at more cost. With no site but a listing on the App Store,
-            the title goes there instead, and the App Store mark after it is
-            the one that says so. */}
+            the title goes there instead, and the App Store mark rides inside
+            the same link so the two light up as one. */}
         <h1 className="text-2xl font-bold">
           {study.href ? (
             <SiteLink href={study.href}>{study.title}</SiteLink>
           ) : study.appStore ? (
-            <SiteLink href={study.appStore} glyph={false}>
+            <SiteLink
+              href={study.appStore}
+              // Sat on the middle of the title's caps rather than the middle
+              // of its line box, the way the chain is.
+              mark={<AppStoreMark className="shrink-0 translate-y-[0.06em]" />}
+            >
               {study.title}
             </SiteLink>
           ) : (
             study.title
           )}
-          {/* Outside the title's own link, so the two can go to different
-              places without one being nested in the other. */}
-          {study.appStore !== undefined && (
+          {/* Its own link after the title's when the two go to different
+              places, or a plain mark when there is no listing to go to yet.
+              A title that already opens the listing carries the mark itself. */}
+          {study.appStore !== undefined && (study.href || !study.appStore) && (
             <AppStoreBadge href={study.appStore} label={study.title} />
           )}
         </h1>
