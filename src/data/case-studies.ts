@@ -496,7 +496,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         alt: "The Today page with the toggle on PM: a live ticker strip under the nav, then the night report of Wednesday, September 2, filed at 8:14 PM ET, its headline on the weakest private hiring since January barely denting the odds of a Fed rate hike, the paragraph that argues it, a link out to the full eight minute read, and the charts panel opening underneath",
       },
       // reduce information overload and cognitive fatigue for investors by providing concise insights and a quick read
-            { type: "heading", text: "Problem: Market Context Fragmentation" },
+            { type: "heading", text: "Problem: Accurate Market Context" },
 
 
       {
