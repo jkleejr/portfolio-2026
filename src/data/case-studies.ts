@@ -477,7 +477,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       // reports can take longer or shorter to generate, so the time on the homepage displays the time the report finished generating.
       // the times are accurate for morning and night reports.
       // can i make a better logo idkk
-      
+    
 
       {
         type: "text",
@@ -487,7 +487,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "image",
         src: "/projects/buy-side-site-today.png",
-        alt: "The Today page with the toggle on AM: a live ticker strip under the nav, then the morning report of Wednesday, September 2, filed at 8:04 AM ET, its headline on a government bond selloff turning global as Japan's 10-year hits a level unseen since 1996, the paragraph that argues it, a link out to the full seven minute read, and the charts panel opening underneath",
+        alt: "The Today page with the toggle on PM: a live ticker strip under the nav, then the night report of Wednesday, September 2, filed at 8:14 PM ET, its headline on the weakest private hiring since January barely denting the odds of a Fed rate hike, the paragraph that argues it, a link out to the full eight minute read, and the charts panel opening underneath",
       },
       // reduce information overload and cognitive fatigue for investors by providing concise insights and a quick read
 
@@ -511,6 +511,8 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "text",
         text: "2 reports are generated for different reasons. A morning report prepares readers for market open and a night report reflects on what happened during the day. I added an AM/PM button to switch reports and update the layout with the right information."
+        // explain why this improves ux
+        // traders have a different mindset in the morning than at night
       },
 
             { type: "heading", text: "Data visualization" },
