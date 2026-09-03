@@ -135,7 +135,7 @@ export const caseStudies: Record<string, CaseStudy> = {
     title: "Loot Check",
     appStore: "https://apps.apple.com/us/app/loot-check/id6785767104",
     date: "June 2026",
-    role: "Design and development",
+    role: "Mobile UX, iOS",
     scope: "Shipped to the App Store",
     blocks: [
 
@@ -233,7 +233,7 @@ export const caseStudies: Record<string, CaseStudy> = {
   "paper-reader": {
     title: "Paper Reader",
     date: "July 2026",
-    role: "Design and development",
+    role: "Mobile UI/UX, iOS",
     scope: "Prototype",
     blocks: [
 
@@ -418,7 +418,7 @@ export const caseStudies: Record<string, CaseStudy> = {
   "screen-translator": {
     title: "Screen Translator",
     date: "August 2026",
-    role: "Design and development",
+    role: "Mobile UI/UX, iOS",
     scope: "Prototype",
     blocks: [
 
