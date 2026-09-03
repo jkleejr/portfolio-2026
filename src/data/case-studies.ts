@@ -480,7 +480,7 @@ export const caseStudies: Record<string, CaseStudy> = {
   "buy-side-briefings": {
     title: "Buy Side Briefings",
     date: "May 2026",
-    role: "Solo Designer and Developer",
+    role: "Designer and developer",
     scope: "Concept to live website",
     href: "https://buy-side-briefings.vercel.app/",
     blocks: [
@@ -493,7 +493,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "Buy Side is an AI curated market intelligence website designed to prevent information overload for retail investors. By synthesizing real time market movements, company earnings, and macroeconomic data into 2 daily briefs, Buy Side reduces the time spent on information gathering and morning research from 30+ minutes to a ~8 minute read.   AI tracks the stock market, filters out noise to focus on critical events, and analyzes stock performance to generate daily publications using Claude.",
+        text: "Buy Side is an AI curated market intelligence website designed to prevent information overload and filter out noise for retail investors. By synthesizing real time market movements, company earnings, and macroeconomic data into 2 daily briefs, it reduces the time spent on information gathering and generates a helpful ~8 minute read."
       },
 
       {
@@ -502,24 +502,16 @@ export const caseStudies: Record<string, CaseStudy> = {
         alt: "The Today page with the toggle on PM: a live ticker strip under the nav, then the night report of Wednesday, September 2, filed at 8:14 PM ET, its headline on the weakest private hiring since January barely denting the odds of a Fed rate hike, the paragraph that argues it, a link out to the full eight minute read, and the charts panel opening underneath",
       },
       // reduce information overload and cognitive fatigue for investors by providing concise insights and a quick read
-            { type: "heading", text: "The Problem: Market Context Fragmentation" },
+            { type: "heading", text: "Problem: Market Context Fragmentation" },
 
 
       {
         type: "text",
-        text: "Tracking why assets moved during volatile sessions requires aggregating information from different sources, like financial news outlets, social media, SEC filings, Reddit threads, and stock exchanges."
+        text: "Tracking why assets moved during volatile sessions requires aggregating information from different sources, like stock exchanges, financial news outlets, SEC filings, and social media."
       },
       {
         type: "text",
-        text: "Context switching: constantly jumping between multiple disconnected browser tabs and apps to gather information, which can be mentally exhausting and lead to cognitive fatigue."
-      },
-      {
-        type: "text",
-        text: "Action paralysis: disorganized information and lack of clear insights can lead to indecision and missed opportunities."
-      },
-      {
-        type: "text",
-        text: "Trust: Mainstream financial news outlets are biased and prioritize clickbait and attention over accuracy leading to misinformation"
+        text: "This workflow causes context switching which can be mentally exhausting leading to cognitive fatigue. Sometimes it is hard to know what information is relevant and what is noise, which causes missed opportunities."
       },
 
             { type: "heading", text: "Preventing cognitive fatigue" },
