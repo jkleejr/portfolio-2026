@@ -135,7 +135,7 @@ export const caseStudies: Record<string, CaseStudy> = {
     title: "Loot Check: Using AI for Price Discovery",
     appStore: "https://apps.apple.com/us/app/loot-check/id6785767104",
     date: "June 2026",
-    role: "Product Design, iOS Development",
+    role: "Product Design",
     scope: "Live on the App Store",
     blocks: [
 
@@ -241,7 +241,7 @@ export const caseStudies: Record<string, CaseStudy> = {
   "paper-reader": {
     title: "Paper Reader",
     date: "July 2026",
-    role: "Product Design, iOS Development",
+    role: "Product Design",
     scope: "Prototype",
     // functional prototype integrated with LLMs, dealt with audio streaming, and designed the UI
     blocks: [
@@ -427,7 +427,7 @@ export const caseStudies: Record<string, CaseStudy> = {
   "screen-translator": {
     title: "Screen Translator",
     date: "August 2026",
-    role: "Product Design, iOS Development",
+    role: "Product Design, viibeee coded",
     scope: "Prototype",
     blocks: [
 
@@ -498,7 +498,10 @@ export const caseStudies: Record<string, CaseStudy> = {
       // reports can take longer or shorter to generate, so the time on the homepage displays the time the report finished generating.
       // the times are accurate for morning and night reports.
       // can i make a better logo idkk
-    
+      // i built this for 1 user
+      // working with ai builder
+      // interface design changed, started as bloomberg terminal and now like a newspaper
+      // some design work was removing things, lot sof pages, paper trading desk, track record page, books page, sectors page
 
       {
         type: "text",
@@ -638,7 +641,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         text: "Initial reports were too long but I shortened the read time to under 10 minutes and prioritized what was necessary. Since this website keeps a record of previous reports, it would be interesting to use that data to find sentiment trends. I plan to keep improving the reports and add features I find useful."
       },
       // what to write here?
-      //
+      // how i used ai to build the website
 
     ],
   },
@@ -646,7 +649,7 @@ export const caseStudies: Record<string, CaseStudy> = {
   "time-with-tree": {
     title: "Time with Tree",
     date: "May 2026",
-    role: "Web Design",
+    role: "",
     scope: "Live website",
     href: "https://timewithtree.co.kr/",
     blocks: [
