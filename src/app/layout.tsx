@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import { site } from "@/data/site";
-import { ThemeToggle } from "./theme-toggle";
 import { PhotoGalleryButton, PhotoGalleryProvider } from "./photo-gallery";
 import { AppleButton } from "./apple-button";
 import "./globals.css";
@@ -24,6 +23,10 @@ const satoshi = localFont({
     },
   ],
 });
+
+export const viewport: Viewport = {
+  themeColor: "#000000",
+};
 
 export const metadata: Metadata = {
   // Just the name in the tab. The role still carries the description, which
@@ -57,21 +60,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" data-theme="dark" suppressHydrationWarning>
-      <head>
-        <script
-          dangerouslySetInnerHTML={{
-            // Applies the stored theme before first paint, and seeds
-            // theme-color so the iOS status bar / toolbar strips start on the
-            // right colour. Hex values mirror --background in globals.css.
-            //
-            // Dark is what the markup carries and what someone who has never
-            // touched the toggle gets, so anything other than a stored
-            // "light" resolves to it — an empty store included.
-            __html: `(function(){try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t);var m=document.querySelector('meta[name="theme-color"]');if(!m){m=document.createElement("meta");m.name="theme-color";document.head.appendChild(m)}m.setAttribute("content",t==="light"?"#ffffff":"#000000")}catch(e){}})()`,
-          }}
-        />
-      </head>
+    <html lang="en" data-theme="dark">
       <body
         className={`${satoshi.variable} antialiased`}
       >
@@ -86,16 +75,15 @@ export default function RootLayout({
               the name and the role, which are short enough to sit beside it.
 
               items-center is not decoration: the apple's box is 44px where the
-              other two are 40, and a flex row leaves boxes of different sizes
+              gallery's is 40, and a flex row leaves boxes of different sizes
               standing on the same top edge — which put the apple's icon two
-              pixels below its neighbours' in a row, and four pixels to their
+              pixels below its neighbour's in a row, and four pixels to its
               right in a column. Centred, the icons line up whatever their
               boxes measure. */}
           <div
             data-gravity="atom"
             className="corner-stack absolute right-6 top-6 z-20 flex flex-row items-center gap-2 sm:flex-col"
           >
-            <ThemeToggle />
             <PhotoGalleryButton />
             <AppleButton />
           </div>

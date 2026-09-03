@@ -64,12 +64,6 @@
   background-color: var(--background);
 }
 
-/* .theme-ready is added after hydration so the stored theme that the inline
-   script applies before first paint does not animate on load. */
-html.theme-ready {
-  transition: background-color 0.31s ease-in;
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
@@ -80,116 +74,6 @@ body {
 ::selection {
   background: var(--foreground);
   color: var(--background);
-}
-
-/* ---------------------------------------------------------------------------
-   Theme toggle
-   The button shows the mode it is in — moon in dark, sun in light — and the
-   switch sweeps the new theme out from under it as a circle.
-   --------------------------------------------------------------------------- */
-
-/* Both icons inherit the button's foreground colour, at rest and under the
-   pointer alike — the hover is the button's own fade, and nothing tints
-   either icon. */
-.theme-icon-moon {
-  display: none;
-}
-
-[data-theme="dark"] .theme-icon-moon {
-  display: block;
-}
-[data-theme="dark"] .theme-icon-sun {
-  display: none;
-}
-
-/* Theme switch wave: the new theme sweeps out as a growing circle
-   centered on the toggle button (--wave-x/--wave-y set on click) */
-::view-transition-old(root),
-::view-transition-new(root) {
-  animation: none;
-  mix-blend-mode: normal;
-}
-::view-transition-old(root) {
-  z-index: 1;
-}
-::view-transition-new(root) {
-  z-index: 2;
-  animation: theme-wave 0.31s ease-in forwards;
-}
-@keyframes theme-wave {
-  from {
-    clip-path: circle(0% at var(--wave-x, 100%) var(--wave-y, 0%));
-  }
-  to {
-    clip-path: circle(150% at var(--wave-x, 100%) var(--wave-y, 0%));
-  }
-}
-
-/* The icon plays under the pointer — whichever of the two is showing, so the
-   moon shakes on a dark page and the sun flashes on a light one. Hovering off
-   and back on plays it again, since the rule stops applying in between.
-
-   Click feedback: .theme-toggled is (re-)added on each click. Under a pointer
-   the hover rules below outrank it and it never shows, which costs nothing —
-   the icon swaps on the click and plays its own hover animation as it appears.
-   It is the feedback on a touch screen, where there is no hover at all. */
-.theme-toggled .theme-icon-moon {
-  animation: moon-shake 0.5s ease;
-}
-.theme-toggled .theme-icon-sun {
-  animation: sun-flash 0.5s ease;
-}
-
-.theme-toggle:hover .theme-icon-moon {
-  animation: moon-shake 0.5s ease;
-}
-.theme-toggle:hover .theme-icon-sun {
-  animation: sun-flash 0.5s ease;
-}
-
-/* Neither plays when movement is not wanted. */
-@media (prefers-reduced-motion: reduce) {
-  .theme-toggled .theme-icon-moon,
-  .theme-toggled .theme-icon-sun,
-  .theme-toggle:hover .theme-icon-moon,
-  .theme-toggle:hover .theme-icon-sun {
-    animation: none;
-  }
-}
-
-@keyframes moon-shake {
-  0%,
-  100% {
-    transform: rotate(0deg);
-  }
-  25% {
-    transform: rotate(-18deg);
-  }
-  50% {
-    transform: rotate(14deg);
-  }
-  75% {
-    transform: rotate(-7deg);
-  }
-}
-
-@keyframes sun-flash {
-  0% {
-    transform: scale(0.5) rotate(-90deg);
-  }
-  55% {
-    transform: scale(1.2) rotate(8deg);
-  }
-  100% {
-    transform: scale(1) rotate(0deg);
-  }
-}
-
-/* The page-wide fade the wave rides on stops too, when motion is not wanted. */
-@media (prefers-reduced-motion: reduce) {
-  html.theme-ready {
-    transition-duration: 0.01ms;
-  }
 }
 
 /* ---------------------------------------------------------------------------
