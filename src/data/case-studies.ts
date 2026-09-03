@@ -141,7 +141,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "I tested other apps to create a mental model:",
+        text: "I formed a mental model of the core loop based on my experience testing existing apps:",
       },
 
       
