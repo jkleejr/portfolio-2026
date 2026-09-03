@@ -540,15 +540,11 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "AM Report (~8AM ET): Forward looking, pre-market, looks to see what happened overnight and what to expect during the trading day."
-      },
-       {
-        type: "text",
-        text: "PM Report (~8PM ET): Analytical and reflective, focusing on the day's performance and insights."
+        text: "The morning report is forward looking and focuses on preparing investors during pre-market open. The night report is analytical and reflective, focusing on the day's performance."
       },
       {
         type: "text",
-        text: "I added an AM/PM toggle to accommodate different mental states. Users can switch between the 2 reports and the page is restructured with the right information."
+        text: "I added an AM/PM toggle to visually accommodate different mental states. Users can switch between 2 reports and the layout is restructured with the right information."
       },
 
             { type: "heading", text: "Data visualizations" },
@@ -581,7 +577,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "I used a Gantt chart to display a timeline view of the earnings calendar.",
+        text: "A Gantt chart to visualize future earnings calls.",
       },
       // earnings calendar data comes from yahoo finance
       // the earnings calendar is a Gantt chart and a dot for a company's earnings date, filled is confirmed, hollow is estimated
