@@ -527,7 +527,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         text: "This workflow causes context switching and can bring cognitive fatigue. Sometimes it's difficult to tell relevant information from noise, which results in missed opportunities."
       },
 
-            { type: "heading", text: "Preventing Cognitive Fatigue" },
+            { type: "heading", text: "Curating Market Context with AI" },
 
             {
         type: "text",
