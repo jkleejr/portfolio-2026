@@ -518,7 +518,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
             {
         type: "text",
-        text: "Stock prices change constantly and it takes time and judgement to find the right information. This is a difficult task because updates come from multiple sources like news outlets, FED data, and social media."
+        text: "Stock prices change constantly but it takes time and judgement to find the right information. Sources like news outlets, FED data, and social media all provide valuable insight."
       },
       // context switching - constantly jumping between multiple disconnected browser tabs and apps to gather information, which can be mentally exhausting and lead to cognitive fatigue
       {
