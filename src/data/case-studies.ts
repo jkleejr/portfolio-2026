@@ -76,6 +76,10 @@ export type CaseStudy = {
   // A line under the date for where the project stands — "Work in Progress",
   // "Shipped", "Shelved". Printed as written, and left out when unset.
   status?: string;
+  // What I did on it and what it was built with, on the two lines under the
+  // date. Each is printed after its label as written, and left out when unset.
+  role?: string;
+  stack?: string;
   // On the App Store: the mark goes after the title. The value is the listing
   // it opens; an empty string shows the mark without a link. When there is no
   // `href`, the title itself opens the listing too. See the same field on an
@@ -131,6 +135,8 @@ export const caseStudies: Record<string, CaseStudy> = {
     title: "Loot Check",
     appStore: "https://apps.apple.com/us/app/loot-check/id6785767104",
     date: "June 2026",
+    role: "__",
+    stack: "__",
     blocks: [
 
        {
@@ -227,6 +233,8 @@ export const caseStudies: Record<string, CaseStudy> = {
   "paper-reader": {
     title: "Paper Reader",
     date: "July 2026",
+    role: "__",
+    stack: "__",
     blocks: [
 
       {
@@ -410,6 +418,8 @@ export const caseStudies: Record<string, CaseStudy> = {
   "screen-translator": {
     title: "Screen Translator",
     date: "August 2026",
+    role: "__",
+    stack: "__",
     blocks: [
 
       {
@@ -470,6 +480,8 @@ export const caseStudies: Record<string, CaseStudy> = {
   "buy-side-briefings": {
     title: "Buy Side Briefings",
     date: "May 2026",
+    role: "__",
+    stack: "__",
     href: "https://buy-side-briefings.vercel.app/",
     blocks: [
 
@@ -481,7 +493,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "Buy Side is an automated market reporting website designed to save time. The website tracks the stock market, filters out noise to focus on critical events, and analyzes stock performance to generate daily publications using Claude.",
+        text: "Buy Side is an AI curated market intelligence website designed to prevent information overload for retail investors. By synthesizing real time market movements, company earnings, and macroeconomic data into 2 daily briefs, Buy Side reduces the time spent on information gathering and morning research from 30+ minutes to a ~8 minute read.   AI tracks the stock market, filters out noise to focus on critical events, and analyzes stock performance to generate daily publications using Claude.",
       },
 
       {
@@ -490,6 +502,26 @@ export const caseStudies: Record<string, CaseStudy> = {
         alt: "The Today page with the toggle on PM: a live ticker strip under the nav, then the night report of Wednesday, September 2, filed at 8:14 PM ET, its headline on the weakest private hiring since January barely denting the odds of a Fed rate hike, the paragraph that argues it, a link out to the full eight minute read, and the charts panel opening underneath",
       },
       // reduce information overload and cognitive fatigue for investors by providing concise insights and a quick read
+            { type: "heading", text: "The Problem: Market Context Fragmentation" },
+
+
+      {
+        type: "text",
+        text: "Tracking why assets moved during volatile sessions requires aggregating information from different sources, like financial news outlets, social media, SEC filings, reddit threads. and stock exchanges."
+      },
+      {
+        type: "text",
+        text: "Context switching: constantly jumping between multiple disconnected browser tabs and apps to gather information, which can be mentally exhausting and lead to cognitive fatigue."
+      },
+      {
+        type: "text",
+        text: "Action paralysis: disorganzied infoirmation and lack of clear insights can lead to indecision and missed opportunities."
+      },
+      {
+        type: "text",
+        text: "Trust: Mainstream financial news outlets are biased and prioritize clickbait and attention over accuracy leading to misinformation"
+      },
+
 
             { type: "heading", text: "Preventing cognitive fatigue" },
 
@@ -499,7 +531,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "To understand why prices were moving, I used multiple platforms to find information. It was a fragmented workflow because of context switching and friction."
+        text: "Tracking why assets moved during volatile sessions requires watching different sources, like financial news outlets, social media, SEC filings, and reddit threads."
       },
       // context switching - constantly jumping between multiple disconnected browser tabs and apps to gather information, which can be mentally exhausting and lead to cognitive fatigue
       {
@@ -507,19 +539,32 @@ export const caseStudies: Record<string, CaseStudy> = {
         text: "I designed Buy Side to reduce cognitive fatigue by using AI to remove the manual work of navigating sources and collecting information. AI curates the information and outputs a dense but concise report that takes ~6 minutes to read."
       },
 
-                  { type: "heading", text: "AM/PM toggle" },
+                  { type: "heading", text: "Temporal Design: Pre-Market vs. Market Close Workflows" },
       {
         type: "text",
-        text: "2 reports are generated for different reasons. A morning report prepares readers for market open and a night report reflects on what happened during the day. I added an AM/PM button to switch reports and update the layout with the right information."
+        text: "An investor's mental state changes fundamentally depending on the time of day."
         // explain why this improves ux
         // traders have a different mindset in the morning than at night
+      },
+
+      {
+        type: "text",
+        text: "AM Report (~8AM ET): Forward looking, pre-market, looks to see what happened overnight and what to expect during the trading day."
+      },
+       {
+        type: "text",
+        text: "PM Report (~8PM ET): Analytical and reflective, focusing on the day's performance and insights."
+      },
+      {
+        type: "text",
+        text: "I added an AM/PM toggle to accomidate different mental states. Users can switch between the 2 reports and the page is restructured with the right information."
       },
 
             { type: "heading", text: "Data visualization" },
 
             {
         type: "text",
-        text: "I used Claude Code to build data visualizations from real time market data (delayed quotes). I added charts.",
+        text: "I used Claude Code to build data visualizations from real time market data (delayed quotes). I created a charts panel with a row of tickers, and added features I actually used for trading.",
       },
       // delay only applies during the trading session, since outside market hours the last price is the close for most stocks. us stocks and etfs are delayed by ~15 minutes, crypto is closer to current
       // data for chart comes from Yahoo Finance API
@@ -598,6 +643,8 @@ export const caseStudies: Record<string, CaseStudy> = {
   "time-with-tree": {
     title: "Time with Tree",
     date: "May 2026",
+    role: "__",
+    stack: "__",
     href: "https://timewithtree.co.kr/",
     blocks: [
 

@@ -61,6 +61,14 @@ export function StudyBody({ study }: { study: CaseStudy }) {
         {study.status && (
           <p className="mt-1 text-base leading-relaxed">{study.status}</p>
         )}
+        {/* What I did and what it was built with, each on its own line under
+            the date, so the label reads as part of the same small block. */}
+        {study.role && (
+          <p className="mt-1 text-base leading-relaxed">Role: {study.role}</p>
+        )}
+        {study.stack && (
+          <p className="mt-1 text-base leading-relaxed">Stack: {study.stack}</p>
+        )}
 
         {study.links && study.links.length > 0 && (
           <div className="mt-6 flex flex-wrap gap-3">
