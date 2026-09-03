@@ -530,7 +530,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
        {
         type: "text",
-        text: "I decided to use AI for market research and to curate the information it finds so I can quickly understand whats going on in the market."
+        text: "My solution was having AI assist me with researching tasks so I can quickly understand whats going on and make faster decisions."
       },
 
             { type: "heading", text: "Curating Market Context with AI" },
@@ -566,6 +566,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         type: "text",
         text: "Because LLM's don't have long term memory, the agent calibrates itself by reading reports of the last few days before writing. This creates continuity and prevents the AI from overreacting if a trend only continued."
       },
+
 
       { type: "heading", text: "Designing a Pre-Market vs. After-Hours Workflow" },
 
@@ -632,7 +633,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
        {
         type: "text",
-        text: "And a grid for macro indicators with tiles that highlight when a metric crosses a certain level."
+        text: "And a grid for macro indicators with tiles that highlight when a metric crosses a level."
       },
       {
         type: "image",
