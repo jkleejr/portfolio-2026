@@ -130,6 +130,8 @@ export type CaseStudy = {
 // visually appealing
 
 
+// fuck this shit im writing what i want
+
 export const caseStudies: Record<string, CaseStudy> = {
   "loot-check": {
     title: "Loot Check: Using AI for Price Discovery",
@@ -513,8 +515,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         src: "/projects/buy-side-site-today.png",
         alt: "The Today page with the toggle on PM: a live ticker strip under the nav, then the night report of Wednesday, September 2, filed at 8:14 PM ET, its headline on the weakest private hiring since January barely denting the odds of a Fed rate hike, the paragraph that argues it, a link out to the full eight minute read, and the charts panel opening underneath",
       },
-      // reduce information overload and cognitive fatigue for investors by providing concise insights and a quick read
-            { type: "heading", text: "Problem: Keeping up with Market News" },
+            { type: "heading", text: "Keeping up with Market Velocity" },
 
 
       {
@@ -535,7 +536,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       // context switching - constantly jumping between multiple disconnected browser tabs and apps to gather information, which can be mentally exhausting and lead to cognitive fatigue
       {
         type: "text",
-        text: "Buy Side reduces cognitive fatigue by using AI to remove the manual work of navigating sources and collecting information. Claude curates the information and outputs a dense but concise report that takes ~6 minutes to read."
+        text: "Buy Side reduces cognitive fatigue by using AI to remove the manual work of navigating sources and collecting information. Claude curates the information and outputs a dense but concise report."
         
         // following a set of instructions on what to look for."
         // market data, a stock list, sentiment, news. runs these as parallel web searches. contuinity - the agent reads the most recent prior report so today's read connects to yesterday's, and the night run reads that morning's report so it can say in one sentence whether the morning read held up. 
@@ -638,7 +639,7 @@ export const caseStudies: Record<string, CaseStudy> = {
             { type: "heading", text: "Future Iterations" },
       {
         type: "text",
-        text: "Initial reports were too long but I shortened the read time to under 10 minutes and prioritized what was necessary. Since this website keeps a record of previous reports, it would be interesting to use that data to find sentiment trends. I plan to keep improving the reports and add features I find useful."
+        text: "Initial reports were too long so I prioritized what was necessary. Since this website keeps a record of previous reports, it would be interesting to use that data to find sentiment trends. I plan to keep improving the reports and add features I find useful."
       },
       // what to write here?
       // how i used ai to build the website
