@@ -507,7 +507,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "Tracking why assets moved during volatile sessions requires aggregating information from different sources, like financial news outlets, social media, SEC filings, reddit threads. and stock exchanges."
+        text: "Tracking why assets moved during volatile sessions requires aggregating information from different sources, like financial news outlets, social media, SEC filings, Reddit threads, and stock exchanges."
       },
       {
         type: "text",
@@ -515,13 +515,12 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "Action paralysis: disorganzied infoirmation and lack of clear insights can lead to indecision and missed opportunities."
+        text: "Action paralysis: disorganized information and lack of clear insights can lead to indecision and missed opportunities."
       },
       {
         type: "text",
         text: "Trust: Mainstream financial news outlets are biased and prioritize clickbait and attention over accuracy leading to misinformation"
       },
-
 
             { type: "heading", text: "Preventing cognitive fatigue" },
 
@@ -531,7 +530,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "Tracking why assets moved during volatile sessions requires watching different sources, like financial news outlets, social media, SEC filings, and reddit threads."
+        text: "Tracking why assets moved during volatile sessions requires watching different sources, like financial news outlets, social media, SEC filings, and Reddit threads."
       },
       // context switching - constantly jumping between multiple disconnected browser tabs and apps to gather information, which can be mentally exhausting and lead to cognitive fatigue
       {
@@ -539,7 +538,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         text: "I designed Buy Side to reduce cognitive fatigue by using AI to remove the manual work of navigating sources and collecting information. AI curates the information and outputs a dense but concise report that takes ~6 minutes to read."
       },
 
-                  { type: "heading", text: "Temporal Design: Pre-Market vs. Market Close Workflows" },
+                  { type: "heading", text: "Designing for Pre-Market vs. Market Close Workflows" },
       {
         type: "text",
         text: "An investor's mental state changes fundamentally depending on the time of day."
@@ -557,14 +556,14 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "I added an AM/PM toggle to accomidate different mental states. Users can switch between the 2 reports and the page is restructured with the right information."
+        text: "I added an AM/PM toggle to accommodate different mental states. Users can switch between the 2 reports and the page is restructured with the right information."
       },
 
-            { type: "heading", text: "Data visualization" },
+            { type: "heading", text: "Data visualizations" },
 
             {
         type: "text",
-        text: "I used Claude Code to build data visualizations from real time market data (delayed quotes). I created a charts panel with a row of tickers, and added features I actually used for trading.",
+        text: "I used Claude Code to build data visualizations from real time market data (delayed quotes). I designed an interactive chart and added features I actually used.",
       },
       // delay only applies during the trading session, since outside market hours the last price is the close for most stocks. us stocks and etfs are delayed by ~15 minutes, crypto is closer to current
       // data for chart comes from Yahoo Finance API
@@ -590,7 +589,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "I used a Gantt chart to display the earnings calendar.",
+        text: "I used a Gantt chart to display a timeline view of the earnings calendar.",
       },
       // earnings calendar data comes from yahoo finance
       // the earnings calendar is a Gantt chart and a dot for a company's earnings date, filled is confirmed, hollow is estimated
