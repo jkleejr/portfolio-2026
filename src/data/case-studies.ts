@@ -523,7 +523,9 @@ export const caseStudies: Record<string, CaseStudy> = {
       // context switching - constantly jumping between multiple disconnected browser tabs and apps to gather information, which can be mentally exhausting and lead to cognitive fatigue
       {
         type: "text",
-        text: "Buy Side reduces cognitive fatigue by using AI to remove the manual work of navigating sources and collecting information. Claude curates the information and outputs a dense but concise report that takes ~6 minutes to read, following a set of instructions on what to look for."
+        text: "Buy Side reduces cognitive fatigue by using AI to remove the manual work of navigating sources and collecting information. Claude curates the information and outputs a dense but concise report that takes ~6 minutes to read."
+        
+        // following a set of instructions on what to look for."
         // market data, a stock list, sentiment, news. runs these as parallel web searches. contuinity - the agent reads the most recent prior report so today's read connects to yesterday's, and the night run reads that morning's report so it can say in one sentence whether the morning read held up. 
         // before writing anything it must decide the single thing a reader who saw nothing today needs to know... that gets the headline and the main read.
         // evidence is important. the read must be supported by data and numbers, no unsourced claims
