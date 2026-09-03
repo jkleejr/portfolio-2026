@@ -135,8 +135,6 @@ export const caseStudies: Record<string, CaseStudy> = {
     title: "Loot Check",
     appStore: "https://apps.apple.com/us/app/loot-check/id6785767104",
     date: "June 2026",
-    role: "__",
-    scope: "__",
     blocks: [
 
        {
@@ -233,8 +231,6 @@ export const caseStudies: Record<string, CaseStudy> = {
   "paper-reader": {
     title: "Paper Reader",
     date: "July 2026",
-    role: "__",
-    scope: "__",
     blocks: [
 
       {
@@ -418,8 +414,6 @@ export const caseStudies: Record<string, CaseStudy> = {
   "screen-translator": {
     title: "Screen Translator",
     date: "August 2026",
-    role: "__",
-    scope: "__",
     blocks: [
 
       {
@@ -493,7 +487,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "Buy Side is an AI curated market intelligence website designed to prevent information overload and filter out noise for retail investors. By synthesizing real time market movements, company earnings, and macroeconomic data into 2 daily briefs, it reduces the time spent on information gathering and generates a helpful ~8 minute read."
+        text: "Buy Side is an AI curated market intelligence website designed to prevent information overload and filter out noise for retail investors. By synthesizing real time market movements, company earnings, and macroeconomic data into 2 daily briefs, it reduces the time spent on information gathering and generates an ~8 minute read."
       },
 
       {
@@ -630,8 +624,6 @@ export const caseStudies: Record<string, CaseStudy> = {
   "time-with-tree": {
     title: "Time with Tree",
     date: "May 2026",
-    role: "__",
-    scope: "__",
     href: "https://timewithtree.co.kr/",
     blocks: [
 

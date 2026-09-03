@@ -54,20 +54,21 @@ export function StudyBody({ study }: { study: CaseStudy }) {
           <p className="mt-1 text-lg font-medium">{study.tagline}</p>
         )}
         {study.date && (
-          <p className="mt-2 text-base leading-relaxed">Date: {study.date}</p>
+          <p className="mt-2 text-base leading-relaxed">{study.date}</p>
         )}
         {/* Where the project stands, on the line under the date it belongs to
             — so the two read as one small block of facts about the work. */}
         {study.status && (
           <p className="mt-1 text-base leading-relaxed">{study.status}</p>
         )}
-        {/* Role and Scope, each on its own line under the date and labelled
-            the way it is, so the three read as one small block. */}
+        {/* Role and Scope, each on its own line under the date. Printed as
+            written with no label of their own, so the three lines read as one
+            small block of facts rather than a form. */}
         {study.role && (
-          <p className="mt-1 text-base leading-relaxed">Role: {study.role}</p>
+          <p className="mt-1 text-base leading-relaxed">{study.role}</p>
         )}
         {study.scope && (
-          <p className="mt-1 text-base leading-relaxed">Scope: {study.scope}</p>
+          <p className="mt-1 text-base leading-relaxed">{study.scope}</p>
         )}
 
         {study.links && study.links.length > 0 && (
