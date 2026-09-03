@@ -76,10 +76,10 @@ export type CaseStudy = {
   // A line under the date for where the project stands — "Work in Progress",
   // "Shipped", "Shelved". Printed as written, and left out when unset.
   status?: string;
-  // What I did on it and what it was built with, on the two lines under the
-  // date. Each is printed after its label as written, and left out when unset.
+  // Role and Scope, on the two lines under the date. Each is printed after
+  // its label as written, and left out when unset.
   role?: string;
-  stack?: string;
+  scope?: string;
   // On the App Store: the mark goes after the title. The value is the listing
   // it opens; an empty string shows the mark without a link. When there is no
   // `href`, the title itself opens the listing too. See the same field on an
@@ -136,7 +136,7 @@ export const caseStudies: Record<string, CaseStudy> = {
     appStore: "https://apps.apple.com/us/app/loot-check/id6785767104",
     date: "June 2026",
     role: "__",
-    stack: "__",
+    scope: "__",
     blocks: [
 
        {
@@ -234,7 +234,7 @@ export const caseStudies: Record<string, CaseStudy> = {
     title: "Paper Reader",
     date: "July 2026",
     role: "__",
-    stack: "__",
+    scope: "__",
     blocks: [
 
       {
@@ -419,7 +419,7 @@ export const caseStudies: Record<string, CaseStudy> = {
     title: "Screen Translator",
     date: "August 2026",
     role: "__",
-    stack: "__",
+    scope: "__",
     blocks: [
 
       {
@@ -480,8 +480,8 @@ export const caseStudies: Record<string, CaseStudy> = {
   "buy-side-briefings": {
     title: "Buy Side Briefings",
     date: "May 2026",
-    role: "__",
-    stack: "__",
+    role: "Solo Designer and Developer",
+    scope: "Concept to live website",
     href: "https://buy-side-briefings.vercel.app/",
     blocks: [
 
@@ -578,7 +578,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
             {
         type: "text",
-        text: "A table is commonly used to track ETFs of different sectors."
+        text: "I used a table to track 1 and 50 day changes in ETFs of different sectors."
       },
 
       {
@@ -590,7 +590,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "Claude generated a Gantt chart to track earnings.",
+        text: "I used a Gantt chart to display the earnings calendar.",
       },
       // earnings calendar data comes from yahoo finance
       // the earnings calendar is a Gantt chart and a dot for a company's earnings date, filled is confirmed, hollow is estimated
@@ -629,10 +629,10 @@ export const caseStudies: Record<string, CaseStudy> = {
         ],
       },
 
-            { type: "heading", text: "Future iterations and product reflection" },
+            { type: "heading", text: "Future Iterations" },
       {
         type: "text",
-        text: "I think the current design is a good balance of information and simplicity. Reports used to be much longer but are now brief and always take less than 10 minutes to read. Since this website keeps a record of previous reports it would be interesting to use that to track sentiment trends over time."
+        text: "Initial reports produced over 2,000 words per report but I shortened the read time to under 10 minutes focusing on the most important information. Since this website keeps a record of previous reports, it would be interesting to use that data to find sentiment trends over time."
       },
       // what to write here?
       //
@@ -644,7 +644,7 @@ export const caseStudies: Record<string, CaseStudy> = {
     title: "Time with Tree",
     date: "May 2026",
     role: "__",
-    stack: "__",
+    scope: "__",
     href: "https://timewithtree.co.kr/",
     blocks: [
 

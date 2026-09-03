@@ -66,8 +66,8 @@ export function StudyBody({ study }: { study: CaseStudy }) {
         {study.role && (
           <p className="mt-1 text-base leading-relaxed">Role: {study.role}</p>
         )}
-        {study.stack && (
-          <p className="mt-1 text-base leading-relaxed">Stack: {study.stack}</p>
+        {study.scope && (
+          <p className="mt-1 text-base leading-relaxed">Scope: {study.scope}</p>
         )}
 
         {study.links && study.links.length > 0 && (
