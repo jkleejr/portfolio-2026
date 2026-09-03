@@ -115,7 +115,7 @@ export type CaseStudy = {
 
 export const caseStudies: Record<string, CaseStudy> = {
   "loot-check": {
-    title: "Loot Check: Using AI for Price Discovery",
+    title: "Loot Check",
     appStore: "https://apps.apple.com/us/app/loot-check/id6785767104",
     date: "June 2026",
     role: "Product Design",
@@ -134,7 +134,17 @@ export const caseStudies: Record<string, CaseStudy> = {
         caption: "Finding the potential value of my shark painting",
       },
                   { type: "heading", text: "Optimizing User Flow" },
+    
+      {
+        type: "text",
+        text: "A goal for this project was maximizing the value a user experiences while spending the least amount of time using the app. This meant designing a user flow for the least amount of steps.",
+      },
+      {
+        type: "text",
+        text: "I tested other apps to create a mental model:",
+      },
 
+      
         // designing for speed: the core loop - time to value. remove unnecessary navigation.
         // users are often scanning multiple items at a time to declutter
         // interface needed to be simple
@@ -155,7 +165,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         text: "I used Claude Sonnet 4.6 due to its low costs and high accuracy at ~$0.013 per scan. I considered other AI models but the costs were similar and I wanted the results to be as trustworthy as possible.",
       },
 
-                              { type: "heading", text: "Scope" },
+                              { type: "heading", text: "Using AI for Price Discovery" },
 
       {
         type: "text",
