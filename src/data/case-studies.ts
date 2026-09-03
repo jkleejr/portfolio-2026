@@ -645,7 +645,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
      // current design
       // mobile design
-      { type: "heading", text: "Mobile First Reading" },
+      { type: "heading", text: "Mobile Designs" },
       {
         type: "text",
         text: "The mobile design keeps the same style as the desktop interface with a few small changes. The headline description is more concise and all other pages were moved into a menu button."
