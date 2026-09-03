@@ -632,7 +632,7 @@ export const caseStudies: Record<string, CaseStudy> = {
             { type: "heading", text: "Future Iterations" },
       {
         type: "text",
-        text: "Initial reports produced over 2,000 words per report but I shortened the read time to under 10 minutes focusing on the most important information. Since this website keeps a record of previous reports, it would be interesting to use that data to find sentiment trends over time."
+        text: "Initial reports produced over 2,000 words per report but I shortened the read time to under 10 minutes and prioritized what was necessary. Since this website keeps a record of previous reports, it would be interesting to use that data to find sentiment trends. I plan to keep improving the reports and add features that are useful."
       },
       // what to write here?
       //
