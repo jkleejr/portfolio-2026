@@ -507,11 +507,11 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "Tracking why assets moved during volatile sessions requires aggregating information from different sources, like stock exchanges, financial news outlets, SEC filings, and social media."
+        text: "Tracking why assets moved during volatile sessions requires aggregating information from different sources: stock exchanges, financial news outlets, SEC filings, and social media."
       },
       {
         type: "text",
-        text: "This workflow causes context switching which can be mentally exhausting leading to cognitive fatigue. Sometimes it is hard to know what information is relevant and what is noise, which causes missed opportunities."
+        text: "This workflow causes context switching which can create cognitive fatigue. Sometimes it is hard to know what information is relevant and what is noise, which causes missed opportunities."
       },
 
             { type: "heading", text: "Preventing Cognitive Fatigue" },
