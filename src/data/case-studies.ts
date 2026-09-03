@@ -97,40 +97,21 @@ export type CaseStudy = {
 // redesign / design
 // final thoughts
 
-// assume 20 second scan, 30 second read... need to have an interesting visual design, cant be basic 
-
-// dont over complicate
-
-// need to make ui designs look more professional
-// logos need some work still
-
-// problem, context, process, solution, and results
-// real cocnstraints and what changed over time
-
-  // showcase the final rpoduct at the top of each case study - never open with process
-// the problem - what was happening and why it mattered
-  // be specific about the pain point i identified
-
-  // for screen translator - the annoyance of having to switch apps to use translator, having to copy and paste, wasting time
-
-// key decisions, not full process - pick 2-3 interesting decisions and explain the reasoning and tradeoffs
-// "i tried X, it failed because Y, so I did Z" 
-
-  // one section zooming into something i cared about
-
 // outcome + reflection - i wont have team metrics and thats fine. outcomes should show direction, learning, or real world impact. "shipped to app store", downloads, honestly what i'd do differently. or what i'd do from here.
 
 // note on figma: when good designers show process artifacts, they present them beautifully, cleaned up, on consistent backgrounds, annotated
 // dont show raw uncropped screenshots w mismatchced sizes
 
-// ease of access
-// ease of use
-// clearly designed
-// tells a story
-// visually appealing
-
-
-// fuck this shit im writing what i want
+// overview
+// highlights
+// context
+// the problem
+// update flow
+// layout
+// interactions
+// visual design
+// fingla design
+// retrospective
 
 export const caseStudies: Record<string, CaseStudy> = {
   "loot-check": {
@@ -515,14 +496,15 @@ export const caseStudies: Record<string, CaseStudy> = {
         src: "/projects/buy-side-site-today.png",
         alt: "The Today page with the toggle on PM: a live ticker strip under the nav, then the night report of Wednesday, September 2, filed at 8:14 PM ET, its headline on the weakest private hiring since January barely denting the odds of a Fed rate hike, the paragraph that argues it, a link out to the full eight minute read, and the charts panel opening underneath",
       },
+
+
+
             { type: "heading", text: "Keeping up with Market Velocity" },
 
 
       {
         type: "text",
         text: "Stock prices change constantly and it takes time and judgement to find the right information. Tracking the market requires aggregating information from multiple sources: stock exchanges, financial news outlets, SEC filings, and social media. "
-
-        // i should have AI look through twitter and reddit more
       },
       {
         type: "text",
@@ -592,10 +574,17 @@ export const caseStudies: Record<string, CaseStudy> = {
 
             {
         type: "text",
-        text: "I used Claude Code to build data visualizations from real time market data (delayed quotes). I designed an interactive chart and added features I actually used.",
+        text: "I used Claude Code to build data visualizations from real time market data (delayed quotes).",
       },
       // delay only applies during the trading session, since outside market hours the last price is the close for most stocks. us stocks and etfs are delayed by ~15 minutes, crypto is closer to current
       // data for chart comes from Yahoo Finance API
+
+      {
+        type: "text",
+        text: "The interactive chart allows a quick inspection of tickers with candlestick ranges and some technical tools like volume, RSI, EMA, support/resistance and fibonacci levels."
+      },
+      // screen recording of using the chart?
+
       {
         type: "image",
         src: "/projects/buy-side-chart.png",
@@ -606,7 +595,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
             {
         type: "text",
-        text: "I used a table to track 1 and 50 day changes in ETFs of different sectors."
+        text: "To track the capital flow, I added a sector rotation table displaying short term (1 day) and medium term (50 day changes) for 11 primary ETFs. "
       },
 
       {
@@ -618,7 +607,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "A Gantt chart to track future earnings calls.",
+        text: "Instead of using a calendar list, I designed a timeline for upcoming earnings calls up to 90 days out. Solid dots represent confirmed dates and hollow dots are unconfirmed.",
       },
       // earnings calendar data comes from yahoo finance
       // the earnings calendar is a Gantt chart and a dot for a company's earnings date, filled is confirmed, hollow is estimated
@@ -633,8 +622,9 @@ export const caseStudies: Record<string, CaseStudy> = {
 
        {
         type: "text",
-        text: "And a grid for macro indicators with tiles that highlight when a metric crosses a level."
+        text: "For macro indicators, I added a grid and tiles that highlight so I can see when a metric crosses a key level."
       },
+
       {
         type: "image",
         src: "/projects/buy-side-macro-grid.png",
@@ -645,7 +635,12 @@ export const caseStudies: Record<string, CaseStudy> = {
 
      // current design
       // mobile design
-      { type: "heading", text: "Mobile design" },
+      { type: "heading", text: "Mobile First Reading" },
+      {
+        type: "text",
+        text: "The mobile design keeps the same style as the desktop interface with a few small changes. The headline description is more concise and all other pages were moved into a menu button."
+      },
+
       {
         type: "images",
         columns: 2,
@@ -670,6 +665,8 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       // what to write here?
       // how i used ai to build the website
+
+        // create a logo for the website later
 
     ],
   },
