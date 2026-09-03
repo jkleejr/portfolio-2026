@@ -132,16 +132,17 @@ export type CaseStudy = {
 
 export const caseStudies: Record<string, CaseStudy> = {
   "loot-check": {
-    title: "Loot Check",
+    title: "Loot Check: Using AI for Price Discovery",
     appStore: "https://apps.apple.com/us/app/loot-check/id6785767104",
     date: "June 2026",
-    role: "Mobile UI/UX",
-    scope: "Shipped to App Store",
+    role: "Product Designer and iOS Developer",
+    scope: "Live on the App Store",
     blocks: [
 
+      // frame the problem in terms of user friction and business opportunity. state a clear hypothesis or goal.
        {
         type: "text",
-        text: "When I was moving places, I wanted a quick way to find the value of a used item and decide what to sell. I tried existing apps but they felt poorly designed and required a subscription to use. My solution was a fast, accurate, and free identifying app.",
+        text: "Finding the resale value of items is a time consuming process. Existing appraisal apps require a subscription and have unnecessary steps. My solution was a fast, accurate, and free iOS app for users to identify and price their items.",
       },
 
       {
@@ -149,8 +150,14 @@ export const caseStudies: Record<string, CaseStudy> = {
         src: "/projects/loot-check-shark.mp4",
         caption: "Finding the potential value of my shark painting",
       },
-                  { type: "heading", text: "How it works" },
+                  { type: "heading", text: "Optimizing User Flow" },
 
+        // designing for speed: the core loop - time to value. remove unncessary navigation.
+        // users are often scanning multiple items at a time to declutter
+        // interface needed to be simple
+        // other ideas:
+        // could add 0 click entry - app opens directly to camera view, priotizes the primary action
+        // manage system latency - since it takes time to get the result, design a loading state with conversational text to improve the wait
       {
         type: "list",
         ordered: true,
@@ -172,19 +179,20 @@ export const caseStudies: Record<string, CaseStudy> = {
         text: "I built the app for resale, but the most interesting use case was showing it something original like a painting. I wanted to know the potential value of a painting that never had a listing. That grew the idea into a price discovery tool for both used and original items.",
       },
 
-                                    { type: "heading", text: "Valuing items" },
+
+                              { type: "heading", text: "Balancing Accuracy and API Costs" },
 
       {
         type: "text",
-        text: "Most estimates are based on the model's pre-trained data. Claude only does a web search to find the current value when its confidence is low. A web search wasn't necessary for every scan because it increased the cost by 3-4x and Sonnet 4.6 was accurate enough for most things."
+        text: "A key product decision was determining how AI values items. Using a web search for every scan increased accuracy, but because it raised API costs by 3-4x and made the user wait longer, I decided to rely on Claude Sonnet 4.6's pre-trained data for most items and only allow a web search when the model had low confidence. Claude only does a web search to find the current value for low confidence scans."
       },
 
-                        { type: "heading", text: "Designing for uncertainty" },
+                        { type: "heading", text: "Designing for Uncertainty" },
 
       // designing for uncertainty
       {
         type: "text",
-        text: "Since vision models are not 100% accurate, users can add a few words to guide AI toward the right product. Results with low confidence are labeled 'best guess'.",
+        text: "Since vision models are not 100% accurate, users can input optional keywords to guide the model before scanning. Results with low confidence are labeled 'best guess'.",
       },
 
       {
@@ -493,7 +501,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "Buy Side is a website that uses AI to curate reports and filter out the noise. By synthesizing real time market movements, company earnings, and macroeconomic data, it reduces the time spent on information gathering and generates an ~8 minute read."
+        text: "Buy Side is a website that uses AI to curate market information into concise daily reports. By tracking real time price movements, company earnings, and macroeconomic data, it reduces the time spent on information gathering and generates an ~8 minute read."
       },
 
       {
