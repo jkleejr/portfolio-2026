@@ -137,11 +137,11 @@ export const caseStudies: Record<string, CaseStudy> = {
     
       {
         type: "text",
-        text: "A goal for this project was maximizing the value a user experiences while spending the least amount of time using the app. This meant designing a user flow for the least amount of steps.",
+        text: "I focused on maximizing the value this app could add for users. Since resellers often scan multiple items at a time, I designed for the least amount of steps.",
       },
       {
         type: "text",
-        text: "I formed a mental model of the core loop based on my experience testing existing apps:",
+        text: "The core loop:",
       },
 
       
@@ -165,7 +165,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         text: "I used Claude Sonnet 4.6 due to its low costs and high accuracy at ~$0.013 per scan. I considered other AI models but the costs were similar and I wanted the results to be as trustworthy as possible.",
       },
 
-                              { type: "heading", text: "Using AI for Price Discovery" },
+            { type: "heading", text: "Using AI for Price Discovery" },
 
       {
         type: "text",
@@ -173,14 +173,14 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
 
 
-                              { type: "heading", text: "Balancing Accuracy and API Costs" },
+            { type: "heading", text: "Balancing Accuracy and API Costs" },
 
       {
         type: "text",
         text: "A key product decision was determining how AI values items. Using a web search for every scan increased accuracy, but because it raised API costs by 3-4x and made the user wait longer, I decided to rely on Claude Sonnet 4.6's pre-trained data for most items and only allow a web search when the model had low confidence. Claude only does a web search to find the current value for low confidence scans."
       },
 
-                        { type: "heading", text: "Designing for Uncertainty" },
+            { type: "heading", text: "Designing for Uncertainty" },
 
       // designing for uncertainty
       {
