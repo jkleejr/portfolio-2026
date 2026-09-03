@@ -436,7 +436,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         
         type: "text",
-        text: "Constantly switching apps while learning a language is too time consuming. I created an app that translates the Korean text on screen to English in real time.",
+        text: "Constantly switching apps while learning a language is annoying and time consuming. I created an app that translates the Korean text on screen to English in real time.",
       },
       // had to use the dynamic island iOS does not allow you to render anything over an existing app
       // had 2 choices, use the dynamic island or a floating window
@@ -507,7 +507,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "Buy Side is a website that uses AI to curate market information into concise daily reports. By tracking real time price movements, company earnings, and macroeconomic data, it reduces time spent on information gathering and generates an ~8 minute read."
+        text: "Buy Side is an automated market reporting website that tracks price movements, macro events, and generates daily briefings. I built it for myself to save time and reduce decision fatigue."
       },
 
       {
@@ -520,25 +520,29 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "Tracking why assets moved requires aggregating information from multiple sources: stock exchanges, financial news outlets, SEC filings, and social media."
+        text: "Stock prices change constantly and it takes time and judgement to find the right information. Tracking the market requires aggregating information from multiple sources: stock exchanges, financial news outlets, SEC filings, and social media. "
+
+        // i should have AI look through twitter and reddit more
       },
       {
         type: "text",
-        text: "This workflow causes context switching and can bring cognitive fatigue. Sometimes it's difficult to tell relevant information from noise, which results in missed opportunities."
+        text: "This is a fragmented workflow due to context switching and information overload. Sometimes it's difficult to separate whats relevant from the noise, leading to missed opportunities."
+      },
+       {
+        type: "text",
+        text: "I decided to use AI for market research and to curate the information it finds so I can quickly understand whats going on in the market."
       },
 
             { type: "heading", text: "Curating Market Context with AI" },
+      // turning hours of research into minutes
+      // how did i format the AI output
+      // citations and trust - the report always lists its citations so i can check if somethign seems off
 
-            {
-        type: "text",
-        text: "Stock prices change constantly but it takes time and judgement to find the right information. Different sources provide different insights."
-      },
       // context switching - constantly jumping between multiple disconnected browser tabs and apps to gather information, which can be mentally exhausting and lead to cognitive fatigue
       {
         type: "text",
-        text: "Buy Side reduces cognitive fatigue by using AI to remove the manual work of navigating sources and collecting information. Claude curates the information and outputs a dense but concise report."
+        text: "I gave Claude clear rules on how to research and structure each report. Instead of running one query, it runs parallel web searches across market feeds and stock watchlists to collect data.",
         
-        // following a set of instructions on what to look for."
         // market data, a stock list, sentiment, news. runs these as parallel web searches. contuinity - the agent reads the most recent prior report so today's read connects to yesterday's, and the night run reads that morning's report so it can say in one sentence whether the morning read held up. 
         // before writing anything it must decide the single thing a reader who saw nothing today needs to know... that gets the headline and the main read.
         // evidence is important. the read must be supported by data and numbers, no unsourced claims
@@ -546,10 +550,26 @@ export const caseStudies: Record<string, CaseStudy> = {
         // a hard word budget - roughly 900 - 1200 words for the morning, 1200 to 1600 at night
         // no buy, sell, or hold recommendations. the read is purely informational and analytical, not advisory
         // calibration - it checks the last few days of output and if the only news is a trend that continued, it says so rather than escalating the language. 
-        // 
+
+        // revised instructions 24 times
+        // the system prompt is in charge of ux bc every change i make changes future reports
+        
+        // LLM doesnt remember the last report so it reads previous reports on github 
       },
 
-                  { type: "heading", text: "Designing a Pre-Market vs. Market Close Workflow" },
+      {
+        type: "text",
+        text: "The core design work is in the instructions file in the repository. It took 24 revisions to get the reports to its current state and I am still improving it whenever I notice a problem. The file behaves as a living design system because every adjustment I make changes future reports."
+      },
+
+      {
+        type: "text",
+        text: "Because LLM's don't have long term memory, the agent calibrates itself by reading reports of the last few days before writing. This creates continuity and prevents the AI from overreacting if a trend only continued."
+      },
+
+      { type: "heading", text: "Designing a Pre-Market vs. After-Hours Workflow" },
+
+
       {
         type: "text",
         text: "An investor's mental state changes fundamentally depending on the time of day."
@@ -564,7 +584,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "I added an AM/PM toggle to visually accommodate different mental states. Users can switch between 2 reports and the layout is restructured with the right information."
+        text: "I added an AM/PM toggle to visually accommodate different mental states. Switching to another report restructures the page with the right information."
       },
 
             { type: "heading", text: "Data Visualization" },
@@ -610,10 +630,16 @@ export const caseStudies: Record<string, CaseStudy> = {
         alt: "The earnings timeline: nineteen tickers from MU down to WMT, each with a dot placed along a line running from today past sixty days out and a count of days until it reports, filled dots for confirmed dates and hollow ones for estimates",
       },
 
-
-      // each tile carries a rule, and the tint changes color when the number crosses a threshold worth noticing. the color is 6% opacity
-      // there are 2 levels, warning and alert. faint amber is warn meaning worth attention and faint red is worth more attention
-      // live data from FRED API and other sources, thresholds set previously by Claude's recommendation from when i was trying to learn about these topics and what numbers are worth paying attention to.
+       {
+        type: "text",
+        text: "And a grid for macro indicators with tiles that highlight when a metric crosses a certain level."
+      },
+      {
+        type: "image",
+        src: "/projects/buy-side-macro-grid.png",
+        width: 620,
+        alt: "The macro indicators grid: tiles grouped into Interest Rates & Monetary Policy, Inflation & Purchasing Power, Economic Growth & Activity, and Unemployment & Labor, with warning and alert threshold color highlights on key metrics",
+      },
 
 
      // current design
