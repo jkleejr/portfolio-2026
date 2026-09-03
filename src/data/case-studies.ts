@@ -493,7 +493,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "Buy Side is an AI curated market intelligence website designed to prevent information overload and filter out noise for retail investors. By synthesizing real time market movements, company earnings, and macroeconomic data, it reduces the time spent on information gathering and generates an ~8 minute read."
+        text: "Buy Side is a website that uses AI to curate reports and filter out the noise. By synthesizing real time market movements, company earnings, and macroeconomic data, it reduces the time spent on information gathering and generates an ~8 minute read."
       },
 
       {
