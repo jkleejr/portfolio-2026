@@ -523,7 +523,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       // context switching - constantly jumping between multiple disconnected browser tabs and apps to gather information, which can be mentally exhausting and lead to cognitive fatigue
       {
         type: "text",
-        text: "Buy Side reduces cognitive fatigue by using AI to remove the manual work of navigating sources and collecting information. Claude curates the information and outputs a dense but concise report that takes ~6 minutes to read, following a set of instructions."
+        text: "Buy Side reduces cognitive fatigue by using AI to remove the manual work of navigating sources and collecting information. Claude curates the information and outputs a dense but concise report that takes ~6 minutes to read, following a set of instructions on what to look for."
       },
 
                   { type: "heading", text: "Designing a Pre-Market vs. Market Close Workflow" },
