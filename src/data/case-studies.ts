@@ -152,7 +152,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
                   { type: "heading", text: "Optimizing User Flow" },
 
-        // designing for speed: the core loop - time to value. remove unncessary navigation.
+        // designing for speed: the core loop - time to value. remove unnecessary navigation.
         // users are often scanning multiple items at a time to declutter
         // interface needed to be simple
         // other ideas:
@@ -243,12 +243,13 @@ export const caseStudies: Record<string, CaseStudy> = {
     date: "July 2026",
     role: "Product Design, iOS Development",
     scope: "Prototype",
+    // functional prototype integrated with LLMs, dealt with audio streaming, and designed the UI
     blocks: [
-
       {
         type: "text",
-        text: "A friend was listening to a research paper while walking and got '[1] et al., pp. 234-256' read aloud in a robot voice. That gave me the idea to create a PDF reader that filtered out unnecessary information and spoke in a natural voice.",
+        text: "A friend was listening to a research paper while walking and got '[1] et al., pp. 234-256' read aloud in a robot voice. I tried building a solution by using AI to filter unnecessary information and generate a natural voice.",
       },
+
       {
         type: "video",
         src: "/projects/paper-reader-add-and-listen.mp4",
@@ -501,7 +502,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "Buy Side is a website that uses AI to curate market information into concise daily reports. By tracking real time price movements, company earnings, and macroeconomic data, it reduces the time spent on information gathering and generates an ~8 minute read."
+        text: "Buy Side is a website that uses AI to curate market information into concise daily reports. By tracking real time price movements, company earnings, and macroeconomic data, it reduces time spent on information gathering and generates an ~8 minute read."
       },
 
       {
@@ -515,18 +516,18 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "Tracking why assets moved during volatile sessions requires aggregating information from different sources: stock exchanges, financial news outlets, SEC filings, and social media."
+        text: "Tracking why assets moved requires aggregating information from multiple sources: stock exchanges, financial news outlets, SEC filings, and social media."
       },
       {
         type: "text",
-        text: "This workflow causes context switching which can create cognitive fatigue. Sometimes it is hard to know what information is relevant and what is noise, which causes missed opportunities."
+        text: "This workflow causes context switching and can bring cognitive fatigue. Sometimes it's difficult to tell relevant information from noise, which results in missed opportunities."
       },
 
             { type: "heading", text: "Preventing Cognitive Fatigue" },
 
             {
         type: "text",
-        text: "Stock prices change constantly but it takes time and judgement to find the right information. Sources like news outlets, FED data, and social media all provide valuable insight."
+        text: "Stock prices change constantly but it takes time and judgement to find the right information. Different sources provide different insights."
       },
       // context switching - constantly jumping between multiple disconnected browser tabs and apps to gather information, which can be mentally exhausting and lead to cognitive fatigue
       {
@@ -554,8 +555,9 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "The morning report is forward looking and focuses on preparing investors during pre-market open. The night report is analytical and reflective, focusing on the day's performance."
+        text: "The morning report is forward looking and focuses on preparation for pre-market open. The night report is analytical and reflects on the day's performance."
       },
+
       {
         type: "text",
         text: "I added an AM/PM toggle to visually accommodate different mental states. Users can switch between 2 reports and the layout is restructured with the right information."
@@ -633,7 +635,7 @@ export const caseStudies: Record<string, CaseStudy> = {
             { type: "heading", text: "Future Iterations" },
       {
         type: "text",
-        text: "Initial reports produced over 2,000 words per report but I shortened the read time to under 10 minutes and prioritized what was necessary. Since this website keeps a record of previous reports, it would be interesting to use that data to find sentiment trends. I plan to keep improving the reports and add useful features."
+        text: "Initial reports were too long but I shortened the read time to under 10 minutes and prioritized what was necessary. Since this website keeps a record of previous reports, it would be interesting to use that data to find sentiment trends. I plan to keep improving the reports and add features I find useful."
       },
       // what to write here?
       //
