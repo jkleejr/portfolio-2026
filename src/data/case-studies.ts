@@ -496,7 +496,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         alt: "The Today page with the toggle on PM: a live ticker strip under the nav, then the night report of Wednesday, September 2, filed at 8:14 PM ET, its headline on the weakest private hiring since January barely denting the odds of a Fed rate hike, the paragraph that argues it, a link out to the full eight minute read, and the charts panel opening underneath",
       },
       // reduce information overload and cognitive fatigue for investors by providing concise insights and a quick read
-            { type: "heading", text: "Problem: Accurate Market Context" },
+            { type: "heading", text: "Problem: Keeping up with the Market" },
 
 
       {
@@ -508,23 +508,19 @@ export const caseStudies: Record<string, CaseStudy> = {
         text: "This workflow causes context switching which can be mentally exhausting leading to cognitive fatigue. Sometimes it is hard to know what information is relevant and what is noise, which causes missed opportunities."
       },
 
-            { type: "heading", text: "Preventing cognitive fatigue" },
+            { type: "heading", text: "Preventing Cognitive Fatigue" },
 
             {
         type: "text",
-        text: "Stock prices change constantly and it takes time to know why. It takes time to navigate multiple sources, find the right information, and understand it all. This turns a quick read into a hard task. "
-      },
-      {
-        type: "text",
-        text: "Tracking why assets moved during volatile sessions requires watching different sources, like financial news outlets, social media, SEC filings, and Reddit threads."
+        text: "Stock prices change constantly and it takes time and judgement to find the right information. This is a difficult task because updates come from multiple sources like news outlets, FED data, and social media."
       },
       // context switching - constantly jumping between multiple disconnected browser tabs and apps to gather information, which can be mentally exhausting and lead to cognitive fatigue
       {
         type: "text",
-        text: "I designed Buy Side to reduce cognitive fatigue by using AI to remove the manual work of navigating sources and collecting information. AI curates the information and outputs a dense but concise report that takes ~6 minutes to read."
+        text: "Buy Side reduces cognitive fatigue by using AI to remove the manual work of navigating sources and collecting information. Claude curates the information and outputs a dense but concise report that takes ~6 minutes to read, following a set of instructions."
       },
 
-                  { type: "heading", text: "Designing for Pre-Market vs. Market Close Workflows" },
+                  { type: "heading", text: "Designing a Pre-Market vs. Market Close Workflow" },
       {
         type: "text",
         text: "An investor's mental state changes fundamentally depending on the time of day."
@@ -541,7 +537,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         text: "I added an AM/PM toggle to visually accommodate different mental states. Users can switch between 2 reports and the layout is restructured with the right information."
       },
 
-            { type: "heading", text: "Data visualizations" },
+            { type: "heading", text: "Data Visualization" },
 
             {
         type: "text",
@@ -571,7 +567,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "A Gantt chart to visualize future earnings calls.",
+        text: "A Gantt chart to track future earnings calls.",
       },
       // earnings calendar data comes from yahoo finance
       // the earnings calendar is a Gantt chart and a dot for a company's earnings date, filled is confirmed, hollow is estimated
