@@ -44,18 +44,6 @@ export function DesignOne() {
           <p className="mt-1 text-lg font-medium text-foreground">
             {site.role}
           </p>
-          {/* Set as the role above it so the header stays one block, but in
-              the muted colour that says it is a link — the same one the
-              breadcrumb on a study uses, coming up to full strength under the
-              pointer. */}
-          <p className="mt-1 text-lg font-medium">
-            <a
-              href={`mailto:${site.email}`}
-              className="text-muted transition-colors duration-200 ease-out hover:text-foreground"
-            >
-              {site.email}
-            </a>
-          </p>
           {/* Who that is. A paragraph per line of site.intro, so a sentence that
               should start fresh does, rather than being wrapped into the one
               above it. Set exactly as the role above it — same size, same
@@ -152,11 +140,19 @@ export function DesignOne() {
             close the column at the same line the covers are stacked on. The
             room above it is a project gap, so it reads as the thing after the
             last row rather than part of it. */}
-        {site.closing && (
-          <p className="mt-16 text-lg font-medium leading-relaxed text-foreground">
-            {site.closing}
-          </p>
-        )}
+        <div className="mt-16 flex flex-col gap-4 sm:flex-row sm:items-baseline sm:justify-between">
+          {site.closing && (
+            <p className="text-lg font-medium leading-relaxed text-foreground">
+              {site.closing}
+            </p>
+          )}
+          <a
+            href={`mailto:${site.email}`}
+            className="self-end text-lg font-medium text-foreground transition-opacity duration-200 ease-out hover:opacity-70 sm:self-auto sm:ml-auto"
+          >
+            Contact
+          </a>
+        </div>
       </div>
     </main>
   );
