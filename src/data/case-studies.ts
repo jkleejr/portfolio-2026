@@ -247,7 +247,7 @@ export const caseStudies: Record<string, CaseStudy> = {
     blocks: [
       {
         type: "text",
-        text: "A friend was listening to a research paper while walking and got '[1] et al., pp. 234-256' read aloud in a robot voice. I tried building a solution by using AI to filter unnecessary information and generate a natural voice.",
+        text: "A friend was listening to a research paper while walking and got '[1] et al., pp. 234-256' read aloud in a robot voice. That gave me the idea to build my own solution using Gemini to organize text and generate a natural voice.",
       },
 
       {
@@ -257,7 +257,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         captionAlign: "high",
         caption: "Add a new paper from files",
         captionLeft: [
-          "Audio is generated as the user needs it, lowering initial cost and wait time",
+          "Audio is generated as the user needs, lowering initial cost and wait time",
         ],
       },
       
@@ -489,7 +489,7 @@ export const caseStudies: Record<string, CaseStudy> = {
   "buy-side-briefings": {
     title: "Buy Side Briefings",
     date: "May 2026",
-    role: "Web Design",
+    role: "Product Design",
     scope: "Concept to live website",
     href: "https://buy-side-briefings.vercel.app/",
     blocks: [
