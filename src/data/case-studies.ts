@@ -556,7 +556,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "Because LLM's don't have long term memory, the agent calibrates itself by reading reports of the last few days before writing. This creates continuity and prevents the AI from overreacting if a trend only continued."
+        text: "Because LLM's don't have long term memory, the agent calibrates itself by reading reports of the last few days before writing. This creates continuity and prevents the AI from overreacting if it sees the trend only continued."
       },
 
 
@@ -605,7 +605,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
             {
         type: "text",
-        text: "To track the capital flow, I added a sector rotation table displaying short term (1 day) and medium term (50 day changes) for 11 primary ETFs. "
+        text: "To track the flow of capital, I added a sector rotation table displaying short term (1 day) and medium term (50 day changes) for 11 primary ETFs. "
       },
 
       {
