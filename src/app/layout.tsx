@@ -118,20 +118,21 @@ export default function RootLayout({
             following the cursor. */}
         <PhotoGalleryProvider>
           {/* One container places every button, so their spacing is a gap
-              rather than a sum each of them has to know. The top-right corner
-              at every width: a column on a laptop, and a row on a phone, where
-              a column would run down the side of the writing. The row clears
-              the name and the role, which are short enough to sit beside it.
+              rather than a sum each of them has to know. The top-right corner,
+              as a row, at every width — no breakpoint, so the pair reads the
+              same on a laptop as on a phone. The apple is last, which puts it
+              hard against the right edge with the gallery on its left.
 
               items-center is not decoration: the apple's box is 44px where the
               gallery's is 40, and a flex row leaves boxes of different sizes
-              standing on the same top edge — which put the apple's icon two
-              pixels below its neighbour's in a row, and four pixels to its
-              right in a column. Centred, the icons line up whatever their
-              boxes measure. */}
+              standing on the same top edge, which put the apple's icon two
+              pixels below its neighbour's. Centred, the icons line up whatever
+              their boxes measure. It is also what --top-row on the homepage
+              measures against: the row is the apple's height, and the name is
+              dropped under it on a phone. */}
           <div
             data-gravity="atom"
-            className="corner-stack absolute right-6 top-6 z-20 flex flex-row items-center gap-2 sm:flex-col"
+            className="corner-stack absolute right-6 top-6 z-20 flex flex-row items-center gap-2"
           >
             <PhotoGalleryButton />
             <AppleButton />

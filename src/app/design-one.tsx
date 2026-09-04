@@ -20,64 +20,68 @@ export function DesignOne() {
   // The top padding drops the name to where the intro under it used to start —
   // 1.5rem plus the 112px the name, the role and the gap below them took up
   // back when all three were in flow — and the whole page follows it down. It
-  // still has to clear the role, which is now pinned in the top left corner.
-  // Only from sm up: on a phone the name spans the window at the top and the
-  // role stays under it in flow, so there is nothing to clear.
+  // also clears the row pinned across the top, the role and the buttons, which
+  // 8.5rem does comfortably. Only from sm up: a phone keeps the small padding,
+  // and the name clears that row with a margin of its own instead.
   return (
-    <main className="relative pb-8 pt-6 sm:pb-28 sm:pt-34">
+    <main data-home className="relative pb-8 pt-6 sm:pb-28 sm:pt-34">
       {/* The name, set in the blackletter — see .fraktur in globals.css, which
           carries the face and pins the weight. It is the one thing on the page
           that is not in the column: it runs the width of the window and is
           centred in that, rather than lining up with the covers below it.
 
-          It is one row from sm up and two on a phone, which is why every
-          value below is set twice. The reason it had to leave the column is
-          the row: "JOHN LEE" is far wider than the column's 628px at any
+          The top margin is what keeps it under the row pinned across the top
+          of the page — the role at the left, the buttons at the right. That
+          row is the fixed thing; the name is what moves. From sm up main's own
+          8.5rem of padding already clears it and the margin comes off, but a
+          phone keeps main's padding small, so the name takes --top-row plus a
+          gap of its own. Reading the row's height from the variable rather
+          than writing 44px here means the two cannot fall out of step.
+
+          One row at every width, which is why whitespace-nowrap carries no
+          breakpoint. It is also why the name is out here rather than in the
+          column: "JOHN LEE" is far wider than the column's 628px at any
           display size worth using, so in there it always broke in two.
 
-          Which makes the window, not the column, what the size has to fit.
+          Which makes the window what the size has to fit, and the whole
+          string, not its longest word. There is no give to spare: nowrap
+          cannot break, so going over does not wrap, it scrolls the page
+          sideways.
+
+          4.71em of text against the window less the padding is the whole sum,
+          which makes the padding worth as much as the size. px-4 on a phone
+          rather than px-6 buys 1rem of width, and that rem is what lets the
+          size be 18.5vw and still hold down to a 250px window — at px-6 the
+          same 18.5vw would give out at 375px, inside phone territory. From sm
+          up the padding goes back to px-6, where the extra rem buys nothing:
+          the size is capped at 18rem long before the window gets tight.
+
+          The other cost is worth naming. Letting the name break gave the
+          phone a much larger one — only "JOHN" at 2.62em had to fit, which
+          allowed 28vw, so a 375px screen ran 105px where one row runs 69px.
+          One row is the ask; this is what it takes.
+
           These numbers are cut to Old London and do not carry over to another
           face. It is the narrower and the shorter of the two loaded — on
           "JOHN LEE" it measures 4.71em against Fette UNZ Fraktur's 5.60em,
           and its capitals ink 0.80em tall against Fette's 0.96em. Both
           differences push the same way, so it carries more size: Fette ran
-          15vw/14rem on the row and 24vw/9rem on the phone.
+          15vw/14rem here. The 18rem ceiling is a shade over where this face's
+          short capitals stand as tall as Fette's did at 14rem.
 
-          The row is 17vw: 4.71em of it is 80vw of text, and the rest clears
-          px-6 down to about a 250px window. Raising it pushes the line off the
-          page, where nowrap has no give and the overflow becomes a sideways
-          scroll.
-
-          Below sm the nowrap comes off and the space is left to break, which
-          can only ever give two lines. That makes "JOHN", at 2.62em, the line
-          that has to fit rather than the whole 4.71em string — room enough to
-          go up to 28vw, so the name reads far larger on a phone than shrinking
-          it to hold one row would have allowed.
-
-          The ceilings, 16.5rem and 10.5rem, are the sizes at which this face's
-          short capitals stand as tall as Fette's did at 14rem and 9rem. Set to
-          the same numbers it would have read smaller.
-
-          px-6 is what the wrap measures against, and it matches the 3rem the
-          sizing above assumes. Without it the break would be computed against
-          the full window and the letters could reach the screen edge.
-
-          One leading, where the face before it needed two: this one can set
-          solid on two lines. Its caps ink from -0.131em to +0.670em, so "LEE"
-          under "JOHN" needs 0.787em between baselines to avoid touching, and a
-          1em box clears that on its own. Fette needed the phone opened out to
-          1.1 to get the same clearance.
+          leading-none because a single row of capitals has nothing to collide
+          with, and this face inks only 0.80em inside a 1em box.
 
           data-gravity="letters" is for when the apple is pressed: the name
           comes apart a character at a time rather than as "JOHN" and "LEE",
           so each letter waits for its own hover. It is the only thing on the
-          page marked that way, and the reason is the size — at 16.5rem a word
+          page marked that way, and the reason is the size — at 18rem a word
           is a slab, and two of them falling barely reads as the page coming
           apart. Everywhere else the text is small enough that whole words are
           the finer-grained answer, not the coarser one. */}
       <h1
         data-gravity="letters"
-        className="fraktur mb-16 px-6 text-center text-[clamp(2rem,28vw,10.5rem)] leading-none sm:mb-24 sm:whitespace-nowrap sm:text-[clamp(2rem,17vw,16.5rem)]"
+        className="fraktur mb-16 mt-[calc(var(--top-row)+1.5rem)] whitespace-nowrap px-4 text-center text-[length:var(--name-size)] leading-none sm:mb-24 sm:mt-0 sm:px-6"
       >
         {site.name}
       </h1>
@@ -100,20 +104,18 @@ export function DesignOne() {
             header no longer reserves the height a row of them used to sit in
             — see "The page on a phone" in globals.css. */}
         <header>
-          {/* The role sits in the top left corner of the page, opposite the
-              buttons in layout.tsx and pinned the same way — left-6 top-6
-              against the initial containing block, since nothing between here
-              and the root is positioned.
+          {/* The role holds the page's top left corner at every width, and
+              the buttons in layout.tsx the top right — one row across the top,
+              which is the layout's fixed point. Nothing here moves with the
+              window; it is the name below that gets out of the way, by taking
+              a top margin on a phone. See the note on it above.
 
-              Only from sm up. The name above is centred on the window and set
-              to fill most of it — on a phone it comes within about 30px of
-              either edge — so that corner is underneath it, and pinning at
-              every width would lay the role over the name's first letter.
-              Below sm it stays in flow, under the name, which is where the
-              header had it. sm:mt-0 because the flow margin still applies
-              once it is out of flow, and would push it 12px below the buttons
-              it is meant to line up with. */}
-          <p className="mt-3 text-lg font-medium text-foreground sm:absolute sm:left-6 sm:top-6 sm:z-20 sm:mt-0">
+              h-11 is that row's height, the apple's box, and the role is
+              centred in it so its text sits on the buttons' middle rather
+              than at the top of them. Only on a phone, where the row is tight
+              enough for the difference to show — from sm up the role is a
+              plain block in its corner, which is what it was. */}
+          <p className="absolute left-6 top-6 z-20 flex h-11 items-center text-lg font-medium text-foreground sm:block sm:h-auto">
             {site.role}
           </p>
           {/* Who that is. A paragraph per line of site.intro, so a sentence that

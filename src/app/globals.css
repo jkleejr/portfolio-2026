@@ -23,6 +23,18 @@
   --text-start: calc(var(--cover) + var(--cover-gap));
   --column: calc(var(--text-start) + var(--text-width));
 
+  /* The name across the top of the homepage. It sets solid, so its type size
+     is also its height — which is what the line beneath it has to clear, and
+     the reason the size lives here rather than only in the markup. Where the
+     18.5vw comes from, and why it is bounded, is in the note on the name in
+     design-one.tsx. */
+  --name-size: clamp(2rem, 18.5vw, 18rem);
+  /* The height of the row across the top of the page — the role at the left
+     of it, the two buttons at the right. It is the apple's box, the taller of
+     the two buttons. The homepage reads it to know how far to drop its name
+     on a phone, where the name would otherwise start on that same line. */
+  --top-row: 2.75rem;
+
   color-scheme: light;
 }
 
