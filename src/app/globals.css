@@ -97,10 +97,10 @@ body {
    than a bolder drawing. font-synthesis-weight makes that refusal explicit —
    without it a UA is free to embolden anyway.
 
-   Currently on Old London. Two faces are loaded in layout.tsx and this is the
-   line that picks one: --font-old-london or --font-fette-fraktur. Changing it is not the whole switch — the name's size
-   and leading in design-one.tsx are cut to whichever face is showing, and the
-   note there carries the measurements each one needs. */
+   Old London is the only blackletter loaded now, so this line names it
+   directly. Swapping it for another face is not the whole switch — the name's
+   size in design-one.tsx is cut to whichever one is showing, and the note
+   there says what has to be measured to move it. */
 .fraktur {
   font-family: var(--font-old-london), var(--font-satoshi), system-ui, sans-serif;
   font-weight: 400;

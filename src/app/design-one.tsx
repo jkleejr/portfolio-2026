@@ -62,12 +62,12 @@ export function DesignOne() {
           One row is the ask; this is what it takes.
 
           These numbers are cut to Old London and do not carry over to another
-          face. It is the narrower and the shorter of the two loaded — on
-          "JOHN LEE" it measures 4.71em against Fette UNZ Fraktur's 5.60em,
-          and its capitals ink 0.80em tall against Fette's 0.96em. Both
-          differences push the same way, so it carries more size: Fette ran
-          15vw/14rem here. The 18rem ceiling is a shade over where this face's
-          short capitals stand as tall as Fette's did at 14rem.
+          face. Two measurements move them: "JOHN LEE" is 4.71em wide in it,
+          which sets the vw, and its capitals ink only 0.80em tall inside the
+          em, which is why the ceiling is as high as 18rem — a face with taller
+          capitals reaches the same apparent size at a smaller number. Measure
+          both before swapping the face; neither is guessable from the look of
+          it.
 
           leading-none because a single row of capitals has nothing to collide
           with, and this face inks only 0.80em inside a 1em box.
