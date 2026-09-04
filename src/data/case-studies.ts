@@ -177,7 +177,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "A key product decision was determining how AI values items. Using a web search for every scan increased accuracy, but because it raised API costs by 3-4x and made the user wait longer, I decided to rely on Claude Sonnet 4.6's pre-trained data for most items and only allow a web search when the model had low confidence. Claude only does a web search to find the current value for low confidence scans."
+        text: "A key product decision was determining how AI values items. Using a web search for every scan increased accuracy, but because it raised API costs by 3-4x and made the user wait longer, I decided to rely on Claude Sonnet 4.6's pre-trained data for most items and only allow a web search when the model had low confidence."
       },
 
             { type: "heading", text: "Designing for Uncertainty" },
