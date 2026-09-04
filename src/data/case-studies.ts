@@ -605,7 +605,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
             {
         type: "text",
-        text: "To display the flow of capital, I added a sector rotation table displaying short term (1 day) and medium term (50 day changes) for 11 primary ETFs. "
+        text: "To display the flow of capital, I added a sector rotation table displaying short term (1 day) and medium term (50 day) changes for 11 primary ETFs. "
       },
 
       {
@@ -671,7 +671,7 @@ export const caseStudies: Record<string, CaseStudy> = {
             { type: "heading", text: "Future Iterations" },
       {
         type: "text",
-        text: "Initial reports were too long so I prioritized what was necessary. Since this website keeps a record of previous reports, it would be interesting to use that data to find sentiment trends. I plan to keep improving the reports and add features I find useful."
+        text: "Since this website keeps a record of previous reports, it would be interesting to use that data to find sentiment trends. I plan to keep improving the reports and add features I find useful."
       },
       // what to write here?
       // how i used ai to build the website
