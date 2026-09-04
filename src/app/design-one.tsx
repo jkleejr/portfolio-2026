@@ -21,31 +21,34 @@ export function DesignOne() {
   // 1.5rem plus the 112px the name, the role and the gap below them took up
   // back when all three were in flow — and the whole page follows it down. It
   // still has to clear the role, which is now pinned in the top left corner.
-  // Only from sm up: on a phone the name holds the top left, level with the
-  // buttons in the opposite corner, and the role stays under it in flow.
+  // Only from sm up: on a phone the name spans the window at the top and the
+  // role stays under it in flow, so there is nothing to clear.
   return (
-    <main className="pb-8 pt-6 sm:pb-28 sm:pt-34">
-      {/* The name, set in Fette Fraktur — see .fraktur in globals.css, which
+    <main className="relative pb-8 pt-6 sm:pb-28 sm:pt-34">
+      {/* The name, set in the blackletter — see .fraktur in globals.css, which
           carries the face and pins the weight. It is the one thing on the page
           that is not in the column: it runs the width of the window and is
           centred in that, rather than lining up with the covers below it.
 
           whitespace-nowrap holds it to a single row. That is the whole reason
-          it had to leave the column — "JOHN LEE" measures 5.6em in this face,
-          so at any display size worth using it is wider than the column's
-          628px and was breaking at the space into two lines.
+          it had to leave the column — "JOHN LEE" is far wider than the
+          column's 628px at any display size worth using, and was breaking at
+          the space into two lines.
 
-          Which makes the window, not the column, what the size has to fit, and
-          15vw is the number that does it: 5.6em of 15vw is 84vw of text, and
-          the 16vw left over clears the 3rem margin at any width down to about
-          300px. Raising it much past 15 starts pushing the line off the page
-          on a phone, where nowrap has no give and the overflow becomes a
-          sideways scroll. The 14rem ceiling stops it growing without bound on
-          a very wide monitor.
+          Which makes the window, not the column, what the size has to fit. The
+          numbers below are cut to Old English Five and do not carry over to
+          another face: "JOHN LEE" measures 7.62em in it, so 11vw of size is
+          84vw of text and the rest clears the 3rem margin down to about a
+          300px window. Raising it starts pushing the line off the page on a
+          phone, where nowrap has no give and the overflow becomes a sideways
+          scroll. Fette UNZ Fraktur, the other face loaded, is 5.60em on the
+          same string and took 15vw with a 14rem ceiling.
 
-          leading-none is the face's own line box almost exactly (1.001em) —
-          safe on one row of capitals, which carry no descender. */}
-      <h1 className="fraktur mb-16 whitespace-nowrap text-center text-[clamp(2rem,15vw,14rem)] leading-none sm:mb-24">
+          leading is 1.15 rather than none because this face's line box is
+          1.841em and its ink spans 1.712em — nearly twice Fette's. Setting it
+          solid would leave the margins below reading against a box far
+          smaller than the letters actually occupy. */}
+      <h1 className="fraktur mb-16 whitespace-nowrap text-center text-[clamp(2rem,11vw,10rem)] leading-[1.15] sm:mb-24">
         {site.name}
       </h1>
 
@@ -173,21 +176,31 @@ export function DesignOne() {
           ))}
         </div>
 
-        {/* What the work was leading to. Set as the intro at the top is, and
-            held to the same left edge as the name — the header and this are
-            the two things on the page speaking rather than listing, and they
-            close the column at the same line the covers are stacked on. The
-            room above it is a project gap, so it reads as the thing after the
-            last row rather than part of it. */}
-        <div className="mt-16 flex flex-col gap-4 sm:flex-row sm:items-baseline sm:justify-between">
+        {/* What the work was leading to, and the way to answer it. From sm up
+            these are not in the column at all: they sit in the page's two
+            bottom corners, closing it the way the role and the buttons open it
+            at the top.
+
+            They are pinned to main rather than to the initial containing
+            block, which is why main is relative. An absolute box with no
+            positioned ancestor resolves bottom against the first viewport, so
+            on a page this long it would land somewhere up in the projects
+            instead of at the end of them. main's box is the whole document,
+            and bottom-6 sits inside its pb-28.
+
+            Still in flow below sm, where pb-8 is not deep enough to hold a
+            pinned line clear of the last project row. The wrapper keeps that
+            phone layout and does nothing else — with both children out of
+            flow from sm up it has no height, so its margin goes too. */}
+        <div className="mt-16 flex flex-col gap-4 sm:mt-0 sm:block">
           {site.closing && (
-            <p className="text-lg font-medium leading-relaxed text-foreground">
+            <p className="text-lg font-medium leading-relaxed text-foreground sm:absolute sm:bottom-6 sm:left-6">
               {site.closing}
             </p>
           )}
           <a
             href={`mailto:${site.email}`}
-            className="self-end text-lg font-medium text-foreground transition-opacity duration-200 ease-out hover:opacity-70 sm:self-auto sm:ml-auto"
+            className="self-end text-lg font-medium text-foreground transition-opacity duration-200 ease-out hover:opacity-70 sm:absolute sm:bottom-6 sm:right-6"
           >
             Contact
           </a>
