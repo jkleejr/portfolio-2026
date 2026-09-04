@@ -140,6 +140,13 @@ export const caseStudies: Record<string, CaseStudy> = {
         text: "I designed for the least amount of steps....",
       },
 
+
+                      { type: "heading", text: "" },
+      {
+        type: "text",
+        text: "",
+      },
+
       
         // designing for speed: the core loop - time to value. remove unnecessary navigation.
         // users are often scanning multiple items at a time to declutter
@@ -148,6 +155,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         // could add 0 click entry - app opens directly to camera view, priotizes the primary action
         // manage system latency - since it takes time to get the result, design a loading state with conversational text to improve the wait
       
+        // would be interesting to display confidence score as a %
     
 
       {
@@ -166,7 +174,6 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       // so i either make this faster or fidn another solution
 
-      
             { type: "heading", text: "Using AI for Price Discovery" },
 
 
@@ -187,9 +194,11 @@ export const caseStudies: Record<string, CaseStudy> = {
         type: "text",
         text: "A key product decision was determining how AI values items. Using a web search for every scan increased accuracy, but because it raised API costs by 3-4x and made the user wait longer, I decided to rely on Claude Sonnet 4.6's pre-trained data for most items and only allow a web search when the model had low confidence."
       },
+
       //  the ui needs to show that its doing a web search and estimated time until done
-      // need to add a loading state
-      // also add high confidence label
+
+      // displays eta till scan is finished
+      // blue labels show for confident scans 
 
             { type: "heading", text: "Designing for AI Uncertainty" },
 
@@ -230,6 +239,9 @@ export const caseStudies: Record<string, CaseStudy> = {
       // if i wanted to get sales data online to make the price estimation more accurate....
       // id have to pay $.01 per search online (Anthropic's rate) so it would be 2-3x more expensive per scan
       // decided not to
+
+
+
       
                 { type: "heading", text: "Result" },
 
@@ -568,6 +580,11 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "text",
         text: "Because LLM's don't have long term memory, the agent calibrates itself by reading reports of the last few days before writing. This creates continuity and prevents the AI from overreacting if a trend only continued."
+      },
+
+      {
+        type: "text",
+        text: "Verifying information."
       },
 
 
