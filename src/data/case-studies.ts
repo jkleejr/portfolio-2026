@@ -510,7 +510,7 @@ export const caseStudies: Record<string, CaseStudy> = {
     href: "https://buy-side-briefings.vercel.app/",
     blocks: [
 
-      // Reports take time to generate, so they are queued at 7:55 AM and 8:00 PM.
+      // Reports take time to generate, so they are queued at 8:00 AM and 8:00 PM.
       // reports can take longer or shorter to generate, so the time on the homepage displays the time the report finished generating.
       // the times are accurate for morning and night reports.
       // can i make a better logo idkk
@@ -530,8 +530,6 @@ export const caseStudies: Record<string, CaseStudy> = {
         alt: "The Today page with the toggle on PM: a live ticker strip under the nav, then the night report of Wednesday, September 2, filed at 8:14 PM ET, its headline on the weakest private hiring since January barely denting the odds of a Fed rate hike, the paragraph that argues it, a link out to the full eight minute read, and the charts panel opening underneath",
       },
 
-
-
             { type: "heading", text: "Keeping up with Market Velocity" },
 
 
@@ -539,10 +537,12 @@ export const caseStudies: Record<string, CaseStudy> = {
         type: "text",
         text: "Stock prices change constantly and it takes time and judgement to find the right information. Tracking the market requires aggregating information from multiple sources: stock exchanges, financial news outlets, SEC filings, and social media. "
       },
+
       {
         type: "text",
-        text: "This is a fragmented workflow due to context switching and information overload. Sometimes it's difficult to separate whats relevant from the noise, leading to missed opportunities."
+        text: "This is a fragmented workflow due to context switching and information overload. Sometimes it's difficult to separate what's relevant from the noise, leading to missed opportunities."
       },
+
        {
         type: "text",
         text: "My solution was having AI assist me with researching tasks so I can quickly understand whats going on and make faster decisions."
@@ -554,6 +554,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       // citations and trust - the report always lists its citations so i can check if somethign seems off
 
       // context switching - constantly jumping between multiple disconnected browser tabs and apps to gather information, which can be mentally exhausting and lead to cognitive fatigue
+
       {
         type: "text",
         text: "I gave Claude clear rules on how to research and structure each report. Instead of running one query, it runs parallel web searches across market feeds and stock watchlists to collect data.",
@@ -576,17 +577,17 @@ export const caseStudies: Record<string, CaseStudy> = {
         type: "text",
         text: "The core design work is in the instructions file in the repository. It took 24 revisions to get the reports to its current state and I am still improving it whenever I notice a problem. The file behaves as a living design system because every adjustment I make changes future reports."
       },
+      // expand on this
+
+      // a separate verdict routine generates the site's content - homepage headline and lede, market snapshot, regime levels, and links in news today
+        // researches stocks with websearch/webfetch
+        // verdict routine generates a report during weekends (Sonnet 4.6)
+        // report routine during weekday (Opus 5)
 
       {
         type: "text",
-        text: "Because LLM's don't have long term memory, the agent calibrates itself by reading reports of the last few days before writing. This creates continuity and prevents the AI from overreacting if a trend only continued."
+        text: "Because LLMs don't have long term memory, the agent calibrates itself by reading reports of the last few days before writing. This creates continuity and prevents the AI from overreacting if a trend only continued."
       },
-
-      {
-        type: "text",
-        text: "Verifying information."
-      },
-
 
       { type: "heading", text: "Designing a Pre-Market vs. After-Hours Workflow" },
 
@@ -616,6 +617,8 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       // delay only applies during the trading session, since outside market hours the last price is the close for most stocks. us stocks and etfs are delayed by ~15 minutes, crypto is closer to current
       // data for chart comes from Yahoo Finance API
+
+      // wall street journal, bloomberg
 
       {
         type: "text",
