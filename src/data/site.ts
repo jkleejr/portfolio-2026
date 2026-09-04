@@ -1,5 +1,12 @@
 export const site = {
+  // The wordmark across the top of the homepage. The capitals are the
+  // typographic choice, and the sizing in design-one.tsx is measured off this
+  // exact string in Old London — read the note on the h1 before changing it.
   name: "JOHN LEE",
+
+  // The same name as prose, for the places the browser and other people's
+  // servers set it rather than the page: the tab, and link previews.
+  titleName: "John Lee",
   role: "Product Designer",
   // Under the role in the header, as the way to get in touch.
   email: "johnkleejr@gmail.com",

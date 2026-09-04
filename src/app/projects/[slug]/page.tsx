@@ -28,7 +28,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   if (!study) return {};
   return {
     // Name first, then the project, joined by a plain hyphen.
-    title: `${site.name} - ${study.title}`,
+    title: `${site.titleName} - ${study.title}`,
     description: study.tagline,
   };
 }
