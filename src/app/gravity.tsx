@@ -55,6 +55,14 @@ const SHOVE = 28;
 // (see below) and not a piece itself.
 const ATOMS = 'a, button, img, [data-gravity="piece"]';
 
+// Text inside this comes apart letter by letter instead of word by word. Words
+// are the right unit almost everywhere — a sentence shedding single characters
+// reads as noise rather than as the page falling apart. It is display type set
+// large that wants the other treatment, where a word is a big enough slab that
+// dropping it whole barely looks like it came apart at all, and where there
+// are few enough letters for each to be worth hovering separately.
+const LETTERS = '[data-gravity="letters"]';
+
 type WordStyle = {
   fontFamily: string;
   fontSize: string;
@@ -202,6 +210,18 @@ function snapshotWords(root: HTMLElement, atoms: HTMLElement[]): Snapshot[] {
     return value;
   };
 
+  // Cached per parent like the styles above: the answer is a walk up the tree,
+  // and a line of text hits the same parent once per text node in it.
+  const split = new Map<Element, boolean>();
+  const byLetter = (el: Element) => {
+    let value = split.get(el);
+    if (value === undefined) {
+      value = el.closest(LETTERS) !== null;
+      split.set(el, value);
+    }
+    return value;
+  };
+
   let node = walker.nextNode() as Text | null;
   while (node) {
     const parent = node.parentElement;
@@ -231,9 +251,11 @@ function snapshotWords(root: HTMLElement, atoms: HTMLElement[]): Snapshot[] {
         styles.set(parent, css);
       }
 
-      // A Range around each word gives its true box even mid-line, which
-      // measuring the element could not.
-      for (const match of text.matchAll(/\S+/g)) {
+      // A Range around each piece gives its true box even mid-line, which
+      // measuring the element could not. One run of non-space per piece
+      // normally; one character per piece where the text is marked to come
+      // apart that way, which is the same walk with a narrower match.
+      for (const match of text.matchAll(byLetter(parent) ? /\S/g : /\S+/g)) {
         const at = match.index ?? 0;
         range.setStart(node, at);
         range.setEnd(node, at + match[0].length);

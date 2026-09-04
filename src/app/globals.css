@@ -85,13 +85,12 @@ body {
    than a bolder drawing. font-synthesis-weight makes that refusal explicit —
    without it a UA is free to embolden anyway.
 
-   Currently on Old English Five. Fette UNZ Fraktur is the other face loaded
-   in layout.tsx — swap --font-old-english below back to --font-fette-fraktur
-   to return to it, and see the note on the name in design-one.tsx, whose size
-   and leading are cut to this face's measurements and want changing back with
-   it. */
+   Currently on Old London. Two faces are loaded in layout.tsx and this is the
+   line that picks one: --font-old-london or --font-fette-fraktur. Changing it is not the whole switch — the name's size
+   and leading in design-one.tsx are cut to whichever face is showing, and the
+   note there carries the measurements each one needs. */
 .fraktur {
-  font-family: var(--font-old-english), var(--font-satoshi), system-ui, sans-serif;
+  font-family: var(--font-old-london), var(--font-satoshi), system-ui, sans-serif;
   font-weight: 400;
   font-synthesis-weight: none;
 }

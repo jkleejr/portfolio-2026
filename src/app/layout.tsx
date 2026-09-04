@@ -53,21 +53,20 @@ const fetteFraktur = localFont({
   ],
 });
 
-// Old English Five: loaded and ready, but not applied to anything yet. To try
-// it, swap --font-fette-fraktur for --font-old-english in the .fraktur rule in
-// globals.css — that one line is the whole switch.
+// Old London, currently the face on the name — see .fraktur in globals.css.
 //
-// Shipped as the .ttf it came as, where Fette Fraktur above is a woff2. That
-// is the licence, not an oversight: 1001fonts' FFC terms are free for
-// commercial use but clause 3 forbids modifying the files, and re-compressing
-// a font to woff2 rewrites them. The cost is about 26KB over what a woff2
-// would weigh, and it only loads at all once something asks for the face.
-const oldEnglish = localFont({
-  variable: "--font-old-english",
+// The 2003 .ttf from the download, shipped as it came rather than converted:
+// the copyright reads "All rights reserved", and the only statement of terms
+// anywhere near it is a "have fun and enjoy" in the sibling .otf's name table,
+// pointing at steffmann.de. That is thin ground for a site that advertises for
+// work, and it is worth pinning the actual terms down before this ships. The
+// download also carries Old London Alternate, a second cut not added here.
+const oldLondon = localFont({
+  variable: "--font-old-london",
   display: "swap",
   src: [
     {
-      path: "./fonts/OldEnglishFive-Regular.ttf",
+      path: "./fonts/OldLondon-Regular.ttf",
       weight: "400",
       style: "normal",
     },
@@ -112,7 +111,7 @@ export default function RootLayout({
   return (
     <html lang="en" data-theme="dark">
       <body
-        className={`${satoshi.variable} ${fetteFraktur.variable} ${oldEnglish.variable} antialiased`}
+        className={`${satoshi.variable} ${fetteFraktur.variable} ${oldLondon.variable} antialiased`}
       >
         {/* Wraps the lot because the gallery switch reaches past its own
             button: it decides whether the ribbons or the photos are the thing

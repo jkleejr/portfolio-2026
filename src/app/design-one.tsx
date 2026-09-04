@@ -30,25 +30,55 @@ export function DesignOne() {
           that is not in the column: it runs the width of the window and is
           centred in that, rather than lining up with the covers below it.
 
-          whitespace-nowrap holds it to a single row. That is the whole reason
-          it had to leave the column — "JOHN LEE" is far wider than the
-          column's 628px at any display size worth using, and was breaking at
-          the space into two lines.
+          It is one row from sm up and two on a phone, which is why every
+          value below is set twice. The reason it had to leave the column is
+          the row: "JOHN LEE" is far wider than the column's 628px at any
+          display size worth using, so in there it always broke in two.
 
-          Which makes the window, not the column, what the size has to fit. The
-          numbers below are cut to Old English Five and do not carry over to
-          another face: "JOHN LEE" measures 7.62em in it, so 11vw of size is
-          84vw of text and the rest clears the 3rem margin down to about a
-          300px window. Raising it starts pushing the line off the page on a
-          phone, where nowrap has no give and the overflow becomes a sideways
-          scroll. Fette UNZ Fraktur, the other face loaded, is 5.60em on the
-          same string and took 15vw with a 14rem ceiling.
+          Which makes the window, not the column, what the size has to fit.
+          These numbers are cut to Old London and do not carry over to another
+          face. It is the narrower and the shorter of the two loaded — on
+          "JOHN LEE" it measures 4.71em against Fette UNZ Fraktur's 5.60em,
+          and its capitals ink 0.80em tall against Fette's 0.96em. Both
+          differences push the same way, so it carries more size: Fette ran
+          15vw/14rem on the row and 24vw/9rem on the phone.
 
-          leading is 1.15 rather than none because this face's line box is
-          1.841em and its ink spans 1.712em — nearly twice Fette's. Setting it
-          solid would leave the margins below reading against a box far
-          smaller than the letters actually occupy. */}
-      <h1 className="fraktur mb-16 whitespace-nowrap text-center text-[clamp(2rem,11vw,10rem)] leading-[1.15] sm:mb-24">
+          The row is 17vw: 4.71em of it is 80vw of text, and the rest clears
+          px-6 down to about a 250px window. Raising it pushes the line off the
+          page, where nowrap has no give and the overflow becomes a sideways
+          scroll.
+
+          Below sm the nowrap comes off and the space is left to break, which
+          can only ever give two lines. That makes "JOHN", at 2.62em, the line
+          that has to fit rather than the whole 4.71em string — room enough to
+          go up to 28vw, so the name reads far larger on a phone than shrinking
+          it to hold one row would have allowed.
+
+          The ceilings, 16.5rem and 10.5rem, are the sizes at which this face's
+          short capitals stand as tall as Fette's did at 14rem and 9rem. Set to
+          the same numbers it would have read smaller.
+
+          px-6 is what the wrap measures against, and it matches the 3rem the
+          sizing above assumes. Without it the break would be computed against
+          the full window and the letters could reach the screen edge.
+
+          One leading, where the face before it needed two: this one can set
+          solid on two lines. Its caps ink from -0.131em to +0.670em, so "LEE"
+          under "JOHN" needs 0.787em between baselines to avoid touching, and a
+          1em box clears that on its own. Fette needed the phone opened out to
+          1.1 to get the same clearance.
+
+          data-gravity="letters" is for when the apple is pressed: the name
+          comes apart a character at a time rather than as "JOHN" and "LEE",
+          so each letter waits for its own hover. It is the only thing on the
+          page marked that way, and the reason is the size — at 16.5rem a word
+          is a slab, and two of them falling barely reads as the page coming
+          apart. Everywhere else the text is small enough that whole words are
+          the finer-grained answer, not the coarser one. */}
+      <h1
+        data-gravity="letters"
+        className="fraktur mb-16 px-6 text-center text-[clamp(2rem,28vw,10.5rem)] leading-none sm:mb-24 sm:whitespace-nowrap sm:text-[clamp(2rem,17vw,16.5rem)]"
+      >
         {site.name}
       </h1>
 
