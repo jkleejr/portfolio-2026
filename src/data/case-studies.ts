@@ -118,7 +118,7 @@ export const caseStudies: Record<string, CaseStudy> = {
     title: "Loot Check",
     appStore: "https://apps.apple.com/us/app/loot-check/id6785767104",
     date: "June 2026",
-    role: "Product Design",
+    role: "Product Design, iOS Development",
     scope: "Live on the App Store",
     blocks: [
 
@@ -137,11 +137,7 @@ export const caseStudies: Record<string, CaseStudy> = {
     
       {
         type: "text",
-        text: "I focused on maximizing the value this app could add for users. Since resellers often scan multiple items at a time, I designed for the least amount of steps.",
-      },
-      {
-        type: "text",
-        text: "The core loop:",
+        text: "I designed for the least amount of steps....",
       },
 
       
@@ -151,21 +147,33 @@ export const caseStudies: Record<string, CaseStudy> = {
         // other ideas:
         // could add 0 click entry - app opens directly to camera view, priotizes the primary action
         // manage system latency - since it takes time to get the result, design a loading state with conversational text to improve the wait
-      {
-        type: "list",
-        ordered: true,
-        items: [
-          "The user takes a photo",
-          "Claude identifies and values the item",
-        ],
-      },
+      
+    
 
       {
         type: "text",
         text: "I used Claude Sonnet 4.6 due to its low costs and high accuracy at ~$0.013 per scan. I considered other AI models but the costs were similar and I wanted the results to be as trustworthy as possible.",
       },
 
+      // latency
+      // most items (w no search) take 6.1-6.9s
+      // the web search adds ~13 seconds
+      // so ab ~20s
+      // so a scan of an original item (w web search) takes 3x longer than a scan w no web search
+      // 20 seconds is a pretty long time and it needs to be quick
+      // worst scan took 27 seconds
+      // the max duration of a scan is 60s in case searches take a long time
+
+      // so i either make this faster or fidn another solution
+
+      
             { type: "heading", text: "Using AI for Price Discovery" },
+
+
+            // show how price is displayed screenshot
+
+            // fix descriptions
+            // need to update the app
 
       {
         type: "text",
@@ -179,13 +187,16 @@ export const caseStudies: Record<string, CaseStudy> = {
         type: "text",
         text: "A key product decision was determining how AI values items. Using a web search for every scan increased accuracy, but because it raised API costs by 3-4x and made the user wait longer, I decided to rely on Claude Sonnet 4.6's pre-trained data for most items and only allow a web search when the model had low confidence."
       },
+      //  the ui needs to show that its doing a web search and estimated time until done
+      // need to add a loading state
+      // also add high confidence label
 
-            { type: "heading", text: "Designing for Uncertainty" },
+            { type: "heading", text: "Designing for AI Uncertainty" },
 
       // designing for uncertainty
       {
         type: "text",
-        text: "Since vision models are not 100% accurate, users can input optional keywords to guide the model before scanning. Results with low confidence are labeled 'best guess'.",
+        text: "Since vision models are not 100% accurate, users can input optional keywords to guide the model before scanning. Results with low confidence are labeled \"best guess\".",
       },
 
       {
@@ -234,7 +245,7 @@ export const caseStudies: Record<string, CaseStudy> = {
   "paper-reader": {
     title: "Paper Reader",
     date: "July 2026",
-    role: "Product Design",
+    role: "Product Design, iOS Development",
     scope: "Prototype",
     // functional prototype integrated with LLMs, dealt with audio streaming, and designed the UI
     blocks: [
