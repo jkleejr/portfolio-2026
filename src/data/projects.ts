@@ -138,8 +138,10 @@ export const entries: Entry[] = [
     platform: "web",
     images: [
       {
-        cover: "/projects/buy-side-briefings-logo-3.png",
-        alt: "The Buy Side Briefings logo, a row of red and green candlesticks",
+        // The candlestick logo is still at buy-side-briefings-logo-3.png if
+        // this one comes back off.
+        cover: "/projects/buy-side-briefings-cash.png",
+        alt: "The Buy Side Briefings logo, three banded stacks of hundred dollar bills",
       },
     ],
   },
