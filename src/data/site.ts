@@ -1,5 +1,5 @@
 export const site = {
-  name: "John Lee",
+  name: "JOHN LEE",
   role: "Product Designer",
   // Under the role in the header, as the way to get in touch.
   email: "johnkleejr@gmail.com",

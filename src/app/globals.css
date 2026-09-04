@@ -76,6 +76,24 @@ body {
   color: var(--background);
 }
 
+/* The name in the header, and the only thing on the page not set in Satoshi.
+   A plain class rather than an arbitrary Tailwind utility so the declaration
+   is unlayered and cannot lose the cascade to anything Tailwind emits.
+
+   font-weight is pinned to 400: the face has one cut, so asking for bold gets
+   the browser's synthetic thickening of an already heavy blackletter rather
+   than a bolder drawing. font-synthesis-weight makes that refusal explicit —
+   without it a UA is free to embolden anyway.
+
+   To try Old English Five instead, swap --font-fette-fraktur below for
+   --font-old-english. Both are loaded in layout.tsx; this is the whole
+   switch. */
+.fraktur {
+  font-family: var(--font-fette-fraktur), var(--font-satoshi), system-ui, sans-serif;
+  font-weight: 400;
+  font-synthesis-weight: none;
+}
+
 /* ---------------------------------------------------------------------------
    Cursor ribbons
    The stylesheet that ships with React Bits' Ribbons, kept verbatim — the

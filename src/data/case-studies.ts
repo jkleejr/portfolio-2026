@@ -579,7 +579,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       // expand on this
 
-      // a separate verdict routine generates the site's content - homepage headline and lede, market snapshot, regime levels, and links in news today
+      // separate routine generates the site's content - homepage headline and lede, market snapshot, regime levels, and links in news today
         // researches stocks with websearch/webfetch
         // verdict routine generates a report during weekends (Sonnet 4.6)
         // report routine during weekday (Opus 5)
@@ -617,8 +617,6 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       // delay only applies during the trading session, since outside market hours the last price is the close for most stocks. us stocks and etfs are delayed by ~15 minutes, crypto is closer to current
       // data for chart comes from Yahoo Finance API
-
-      // wall street journal, bloomberg
 
       {
         type: "text",
@@ -676,7 +674,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
      // current design
       // mobile design
-      { type: "heading", text: "Mobile Designs" },
+      { type: "heading", text: "Mobile Design" },
       {
         type: "text",
         text: "The mobile design keeps the same style as the desktop interface with a few small changes. The headline description is more concise and all other pages were moved into a menu button."
