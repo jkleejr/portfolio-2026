@@ -346,7 +346,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "I added a sample paper so someone can test the app before setting up a key.",
+        text: "I added a sample paper to test the app before setting up a key.",
       },
       {
         type: "image",
