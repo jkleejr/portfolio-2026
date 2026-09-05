@@ -77,7 +77,15 @@ type WordStyle = {
   lineHeight: string;
 };
 
-type Snapshot = { text: string; left: number; top: number; css: WordStyle };
+type Snapshot = {
+  text: string;
+  left: number;
+  top: number;
+  css: WordStyle;
+  // Split off one character at a time, which today means it came out of the
+  // name. Only these are measured down to their ink — see inkBox.
+  letter: boolean;
+};
 
 // Mouse.setElement attaches these handlers and matter-js offers no teardown
 // for them. They exist at runtime but are absent from the type definitions.
@@ -100,8 +108,17 @@ type SetPosition = (
 type Piece = {
   el: HTMLElement;
   body: MatterType.Body;
+  // The body's size, which is the element's own box for everything but a
+  // letter of the name, where it is the ink — see inkBox.
   w: number;
   h: number;
+  // Where that body sits inside the element, from its top left corner. Zero
+  // for a body that is the whole box.
+  ox: number;
+  oy: number;
+  // Cut down to its ink, and so woken by where the pointer is rather than by
+  // the box it entered.
+  inked?: boolean;
   // Where it sits on the PAGE, not in the window. A piece that has not been
   // let go of yet is held at this spot as the page scrolls under it, so it
   // travels with the layout it is standing in for. Once it falls it belongs to
@@ -255,13 +272,14 @@ function snapshotWords(root: HTMLElement, atoms: HTMLElement[]): Snapshot[] {
       // measuring the element could not. One run of non-space per piece
       // normally; one character per piece where the text is marked to come
       // apart that way, which is the same walk with a narrower match.
-      for (const match of text.matchAll(byLetter(parent) ? /\S/g : /\S+/g)) {
+      const letter = byLetter(parent);
+      for (const match of text.matchAll(letter ? /\S/g : /\S+/g)) {
         const at = match.index ?? 0;
         range.setStart(node, at);
         range.setEnd(node, at + match[0].length);
         const r = range.getBoundingClientRect();
         if (!drawn(r)) continue;
-        out.push({ text: match[0], left: r.left, top: r.top, css });
+        out.push({ text: match[0], left: r.left, top: r.top, css, letter });
       }
     }
 
@@ -269,6 +287,58 @@ function snapshotWords(root: HTMLElement, atoms: HTMLElement[]): Snapshot[] {
   }
 
   return out;
+}
+
+/**
+ * Where a piece of text actually puts ink inside its own box, measured from
+ * the box's top left corner.
+ *
+ * A span's box is its line box: as wide as the glyph's advance, side bearings
+ * included, and as tall as the font's ascent and descent together. The drawn
+ * letter is smaller than that on every side, and at the size the name is set
+ * — 18rem, where the capitals of Old London ink 0.80em inside the em — the
+ * difference is not a hair, it is most of a hundred pixels. A body cut to the
+ * box is a letter wearing a coat several sizes too big: nothing can rest
+ * against the glyph, and the pointer wakes it from a long way off.
+ *
+ * So the ink is measured properly. Canvas is the only place the browser will
+ * say where a glyph's ink starts and stops; the text's own origin inside the
+ * box comes from `inset`, the Range rect the placement pass already takes,
+ * and the baseline is that rect's top plus the font's ascent.
+ *
+ * Null when the numbers do not add up — a font the canvas could not match
+ * would give metrics for some other face, and a body cut to those would be
+ * worse than the honest box. The caller falls back to it.
+ */
+function inkBox(
+  ctx: CanvasRenderingContext2D | null,
+  css: WordStyle,
+  text: string,
+  inset: { left: number; top: number },
+  box: { w: number; h: number },
+): { ox: number; oy: number; w: number; h: number } | null {
+  if (!ctx) return null;
+  ctx.font = `${css.fontStyle} ${css.fontWeight} ${css.fontSize} ${css.fontFamily}`;
+  const m = ctx.measureText(text);
+  const { actualBoundingBoxLeft: l, actualBoundingBoxRight: r } = m;
+  const { actualBoundingBoxAscent: a, actualBoundingBoxDescent: d } = m;
+  const { fontBoundingBoxAscent: ascent } = m;
+  if (![l, r, a, d, ascent].every(Number.isFinite)) return null;
+
+  const w = l + r;
+  const h = a + d;
+  // A glyph may ink outside its own advance — a blackletter capital leans out
+  // over its neighbours, and the N of the name is wider drawn than the space
+  // it is given. So the check here is only for numbers that cannot be right
+  // at all, which is what a canvas that matched some other face would give.
+  if (w <= 0 || h <= 0 || w > box.w * 2 || h > box.h * 1.5) return null;
+
+  return {
+    ox: inset.left - l,
+    oy: inset.top + ascent - a,
+    w,
+    h,
+  };
 }
 
 /**
@@ -384,6 +454,8 @@ function run(
       ),
       w: rect.width,
       h: rect.height,
+      ox: 0,
+      oy: 0,
       pageX: rect.left + window.scrollX,
       pageY: rect.top + window.scrollY,
     });
@@ -414,28 +486,63 @@ function run(
   // own glyphs against its own box, which is the offset to take back out,
   // whatever the font and the line height work out to.
   const glyphs = document.createRange();
+  // One canvas for the whole set. Only letters are measured on it — for text
+  // at reading sizes the box and the ink are a pixel or two apart, which is
+  // nothing to a body, and the measurement is not free.
+  const ctx = document.createElement("canvas").getContext("2d");
   const placed = copies.map(({ word, el }) => {
     const text = el.firstChild;
+    const box = { w: el.offsetWidth, h: el.offsetHeight };
     let left = word.left;
     let top = word.top;
+    let ink = null;
     if (text) {
       glyphs.selectNodeContents(text);
-      const inset = glyphs.getBoundingClientRect();
+      const rect = glyphs.getBoundingClientRect();
+      // The copies all sit at the overlay's own origin until they are placed,
+      // so this rect is where the glyphs fall inside the box around them.
+      const inset = { left: rect.left, top: rect.top };
       left -= inset.left;
       top -= inset.top;
+      if (word.letter) ink = inkBox(ctx, word.css, word.text, inset, box);
     }
-    return { el, left, top, w: el.offsetWidth, h: el.offsetHeight };
+    return {
+      el,
+      left,
+      top,
+      ox: ink ? ink.ox : 0,
+      oy: ink ? ink.oy : 0,
+      w: ink ? ink.w : box.w,
+      h: ink ? ink.h : box.h,
+      inked: ink !== null,
+    };
   });
 
-  for (const { el, left, top, w, h } of placed) {
+  for (const { el, left, top, ox, oy, w, h, inked } of placed) {
+    if (inked) {
+      // Nothing is done to how the letter is drawn — it is the same glyph in
+      // the same place, and clipping it to its own ink would have cost the
+      // outermost antialiased pixel of a face that is nearly all edge. What
+      // changes is only what it turns about: the middle of the letter, which
+      // is where its body turns, rather than the middle of the box.
+      el.style.transformOrigin = `${ox + w / 2}px ${oy + h / 2}px`;
+      // And the box no longer takes the pointer. A letter is woken by where
+      // the pointer is rather than by what it entered — see the ink pieces in
+      // the waking pass below.
+      el.style.pointerEvents = "none";
+    }
     el.style.transform = `translate3d(${left}px, ${top}px, 0)`;
     pieces.push({
       el,
-      body: makeBody(left, top, w, h),
+      body: makeBody(left + ox, top + oy, w, h),
       w,
       h,
-      pageX: left + window.scrollX,
-      pageY: top + window.scrollY,
+      ox,
+      oy,
+      inked,
+      // The page position of the BODY, which is what the carrying reads.
+      pageX: left + ox + window.scrollX,
+      pageY: top + oy + window.scrollY,
     });
   }
 
@@ -521,6 +628,11 @@ function run(
   }
 
   const listeners: Array<() => void> = [];
+  // Letters, which are not woken by being entered. Their boxes are far larger
+  // than the glyphs in them and mouseenter knows only boxes, so the pointer
+  // would set one falling from a hand's width away. These are asked instead
+  // whether the pointer is actually on the letter, every time it moves.
+  const inked: Array<{ piece: Piece; wake: () => void }> = [];
   for (const piece of pieces) {
     // will-change is set here rather than in the stylesheet: it promotes the
     // element to its own compositor layer, which costs subpixel text
@@ -531,6 +643,10 @@ function run(
       piece.el.style.willChange = "transform";
       drop(piece);
     };
+    if (piece.inked) {
+      inked.push({ piece, wake });
+      continue;
+    }
     piece.el.addEventListener("mouseenter", wake);
     piece.el.addEventListener("mousedown", wake);
     piece.el.addEventListener("touchstart", wake, { passive: true });
@@ -540,6 +656,22 @@ function run(
       piece.el.removeEventListener("touchstart", wake);
     });
   }
+
+  // A letter still standing sits exactly where its body does — square to the
+  // screen, and carried by the scroll — so the body's own box is the letter,
+  // and the pointer being inside it is the letter being touched.
+  const touchInk = (x: number, y: number) => {
+    for (const { piece, wake } of inked) {
+      const { body, w, h } = piece;
+      if (!body.isStatic) continue;
+      if (
+        Math.abs(x - body.position.x) <= w / 2 &&
+        Math.abs(y - body.position.y) <= h / 2
+      ) {
+        wake();
+      }
+    }
+  };
 
   const mouse = Matter.Mouse.create(overlay) as MouseWithHandlers;
 
@@ -558,6 +690,7 @@ function run(
   const track = (e: { clientX: number; clientY: number }) => {
     mouse.absolute.x = mouse.position.x = e.clientX;
     mouse.absolute.y = mouse.position.y = e.clientY;
+    if (inked.length) touchInk(e.clientX, e.clientY);
   };
   const onMove = (e: MouseEvent) => track(e);
   const onDown = (e: MouseEvent) => {
@@ -613,7 +746,7 @@ function run(
     scrolledY = y;
 
     for (const piece of pieces) {
-      const { el, body, w, h } = piece;
+      const { el, body, w, h, ox, oy } = piece;
       if (moved && body.isStatic) {
         // Moved WITH its velocity, not teleported. A carried piece is solid
         // the whole way — nothing loose may pass through the page — and the
@@ -642,8 +775,9 @@ function run(
         }
       }
       el.style.transform =
-        `translate3d(${body.position.x - w / 2}px, ${body.position.y - h / 2}px, 0)` +
-        ` rotate(${body.angle}rad)`;
+        `translate3d(${body.position.x - w / 2 - ox}px, ${
+          body.position.y - h / 2 - oy
+        }px, 0)` + ` rotate(${body.angle}rad)`;
     }
     frame = requestAnimationFrame(paint);
   });
