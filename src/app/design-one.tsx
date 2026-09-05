@@ -8,6 +8,9 @@
 
 import { site } from "@/data/site";
 import { entries } from "@/data/projects";
+import { caseStudies } from "@/data/case-studies";
+import { StudyBody } from "./case-study";
+import { ProjectList, ProjectSection, StudyFacts } from "./project-study";
 import { ProjectThumbnail } from "./project-thumbnail";
 import { AppStoreBadge, SiteBadge } from "./title-badge";
 
@@ -159,54 +162,78 @@ export function DesignOne() {
             bottom-heavy. A phone fits the row by shrinking the cover and the
             gap rather than by stacking the two; see "The page on a phone" in
             globals.css. */}
-        <div className="mt-16 flex flex-col items-start gap-16">
-          {entries.map((entry) => (
-            <article
-              key={entry.slug}
-              className="flex items-center gap-[var(--cover-gap)]"
-            >
-              {(entry.images ?? []).map((image, i) => (
-                <ProjectThumbnail
-                  key={`${entry.slug}-${i}`}
-                  image={image}
-                  slug={entry.slug}
-                  href={entry.srcHref}
-                />
-              ))}
-              {/* The writing takes whatever the cover leaves on a phone, and
-                  its own measure from sm up, where there is room for it.
-                  min-w-0 is what lets it be narrower than its longest line —
-                  without it a flex item refuses to shrink past its content and
-                  pushes the row off the side of the screen. */}
-              <div className="min-w-0 flex-1 sm:w-[var(--text-width)] sm:flex-none sm:shrink-0">
-                <h2 className="text-xl font-semibold leading-snug">
-                  {entry.title}
-                  {entry.appStore !== undefined && (
-                    <AppStoreBadge href={entry.appStore} label={entry.title} />
-                  )}
-                  {entry.titleHref && (
-                    <SiteBadge href={entry.titleHref} label={entry.title} />
-                  )}
-                </h2>
-                {entry.blurb && (
-                  <p className="mt-3 text-base leading-relaxed">
-                    {entry.blurb}
-                  </p>
-                )}
-                {entry.date && (
-                  <p className="mt-2 text-base leading-relaxed">
-                    Date: {entry.date}
-                  </p>
-                )}
-                {entry.tools && (
-                  <p className="mt-1 text-base leading-relaxed">
-                    Tools: {entry.tools}
-                  </p>
-                )}
-              </div>
-            </article>
-          ))}
-        </div>
+        {/* Each project is its row and, folded under it, everything written
+            about it. Pressing the cover unfolds that study in place; reading
+            to the end of it folds the row back to the picture and the line it
+            was, with the rest of the list under it again. The studies still
+            have their own pages at /projects/[slug] — that is the permalink
+            for one, and where a cover goes from anywhere but this list.
+
+            The study is rendered here, on the server, and handed to the list
+            as markup: what is in the browser's bundle is the switch, not the
+            writing. See project-study.tsx. */}
+        <ProjectList>
+          {entries.map((entry) => {
+            const study = caseStudies[entry.slug];
+            return (
+              <ProjectSection
+                key={entry.slug}
+                slug={entry.slug}
+                study={study ? <StudyBody study={study} inline /> : undefined}
+              >
+                <article className="flex items-center gap-[var(--cover-gap)]">
+                  {(entry.images ?? []).map((image, i) => (
+                    <ProjectThumbnail
+                      key={`${entry.slug}-${i}`}
+                      image={image}
+                      slug={entry.slug}
+                      href={entry.srcHref}
+                    />
+                  ))}
+                  {/* The writing takes whatever the cover leaves on a phone, and
+                      its own measure from sm up, where there is room for it.
+                      min-w-0 is what lets it be narrower than its longest line —
+                      without it a flex item refuses to shrink past its content and
+                      pushes the row off the side of the screen. */}
+                  <div className="min-w-0 flex-1 sm:w-[var(--text-width)] sm:flex-none sm:shrink-0">
+                    <h2 className="text-xl font-semibold leading-snug">
+                      {entry.title}
+                      {entry.appStore !== undefined && (
+                        <AppStoreBadge href={entry.appStore} label={entry.title} />
+                      )}
+                      {entry.titleHref && (
+                        <SiteBadge href={entry.titleHref} label={entry.title} />
+                      )}
+                    </h2>
+                    {entry.blurb && (
+                      <p className="mt-3 text-base leading-relaxed">
+                        {entry.blurb}
+                      </p>
+                    )}
+                    {entry.date && (
+                      <p className="mt-2 text-base leading-relaxed">
+                        Date: {entry.date}
+                      </p>
+                    )}
+                    {entry.tools && (
+                      <p className="mt-1 text-base leading-relaxed">
+                        Tools: {entry.tools}
+                      </p>
+                    )}
+                    {/* Only while the study under this row is open — the closed
+                        list says what a project is in one line and stops. */}
+                    <StudyFacts
+                      date={study?.date}
+                      status={study?.status}
+                      role={study?.role}
+                      scope={study?.scope}
+                    />
+                  </div>
+                </article>
+              </ProjectSection>
+            );
+          })}
+        </ProjectList>
 
         {/* What the work was leading to, and the way to answer it. From sm up
             these are not in the column at all: they sit in the page's two

@@ -4,10 +4,12 @@
 // The cover on the homepage.
 //
 // One picture per project, and the way into what has been written about it:
-// pressing one goes to that project's case study, at a page of its own. An
-// entry with a `srcHref` goes to the live site instead — seeing the real thing
-// is not something a page about it can stand in for — and a project with
-// nothing written about it yet is just the picture.
+// pressing one opens that project's case study under its row — see
+// project-study.tsx, which holds the switch this reads. Off the list, where
+// there is no switch to read, it falls back to the study's own page. An entry
+// with a `srcHref` goes to the live site instead — seeing the real thing is
+// not something a page about it can stand in for — and a project with nothing
+// written about it yet is just the picture.
 // ---------------------------------------------------------------------------
 
 import { useEffect, useRef, useState } from "react";
@@ -16,6 +18,7 @@ import Link from "next/link";
 import { caseStudies } from "@/data/case-studies";
 import type { EntryImage } from "@/data/projects";
 import { usePress } from "./press";
+import { useCoverToggle } from "./project-study";
 
 // ---------------------------------------------------------------------------
 // A dot painted over a cover that drifts toward the pointer, so the mark looks
@@ -153,6 +156,10 @@ export function ProjectThumbnail({
   // A throw of the cover is not a click on it — see press.ts.
   const { onPointerDown, dragged } = usePress();
 
+  // Set on the list, where a press opens the study in place. Null anywhere
+  // else, and for a project with nothing written about it.
+  const toggle = useCoverToggle();
+
   if (href) {
     return (
       <a
@@ -168,6 +175,28 @@ export function ProjectThumbnail({
       >
         {inner}
       </a>
+    );
+  }
+
+  // On the list the picture is a switch, not a way out of the page: it opens
+  // the study under the row and closes it again. aria-expanded is what says so
+  // to anything not looking at the screen, and it is why this is a button
+  // rather than a link — nothing is being navigated to.
+  if (study && toggle) {
+    return (
+      <button
+        type="button"
+        aria-expanded={toggle.open}
+        aria-label={`${toggle.open ? "Close" : "Read"} the ${study.title} case study`}
+        className={lift}
+        onPointerDown={onPointerDown}
+        onClick={(e) => {
+          if (dragged(e)) return;
+          toggle.toggle();
+        }}
+      >
+        {inner}
+      </button>
     );
   }
 
