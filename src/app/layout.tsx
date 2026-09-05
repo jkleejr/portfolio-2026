@@ -80,7 +80,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" data-theme="dark">
+    // suppressHydrationWarning is for the style attribute the script at the
+    // foot of the body writes here: it runs before React hydrates, so by then
+    // the html element carries a --scrollbar the server never rendered, and
+    // React reports the difference. It is the one element that is written to
+    // outside React, and the warning is suppressed one level deep — nothing
+    // inside the page is covered by it.
+    <html lang="en" data-theme="dark" suppressHydrationWarning>
       <body
         className={`${satoshi.variable} ${oldLondon.variable} antialiased`}
       >
@@ -116,6 +122,27 @@ export default function RootLayout({
           {/* <CursorRibbons /> */}
           {children}
         </PhotoGalleryProvider>
+        {/* The scrollbar's width onto :root, for the measures in globals.css
+            that start from 100vw — read the note on --scrollbar there for why
+            they need it.
+
+            At the foot of the body rather than the head on purpose: the
+            difference it is measuring only exists once there is enough page
+            to scroll, and at the top of the body there is none yet, so an
+            early reading is always 0. Here the markup above it has been
+            parsed, which is late enough to be right and still before the
+            first paint.
+
+            innerWidth counts the scrollbar and the documentElement's
+            clientWidth does not, so the gap between them is the scrollbar —
+            0 on a platform drawing an overlay one, which is the answer that
+            leaves every measure exactly as it was. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "(function(){var m=function(){var w=window.innerWidth-document.documentElement.clientWidth;document.documentElement.style.setProperty('--scrollbar',(w>0?w:0)+'px')};m();addEventListener('resize',m)})();",
+          }}
+        />
       </body>
     </html>
   );

@@ -32,24 +32,37 @@
   --text-start: calc(var(--cover) + var(--cover-gap));
   --column: calc(var(--text-start) + var(--text-width));
 
+  /* How wide the scrollbar is, or 0 where the platform draws an overlay one
+     instead. Measured on the client and written here — see the script at the
+     foot of layout.tsx — because CSS has no way to ask.
+
+     Every measure below that starts from 100vw needs it. 100vw is the window
+     including the scrollbar, while everything on the page is laid out in the
+     width the scrollbar leaves behind, and the two are centred on different
+     points. Half a scrollbar is the error, which is why the role at the top
+     left and the note out in the margin under it did not line up on a machine
+     showing scrollbars — and why they did on one drawing them as an overlay,
+     where this is 0 and nothing changes. */
+  --scrollbar: 0px;
+
   /* The strip of window left over beside the column, less the air held at
      each end of it — the room a note set out in the margin has to live in.
      Read by the facts about a project, which move out there while its study
      is open; see StudyFacts in project-study.tsx.
 
      100vw and not 100%, because it is measured against the window rather than
-     against whatever box the note is written in. That counts the scrollbar as
-     window, which is the reason the subtraction is as generous as it is: 3rem
-     covers the 1rem of air wanted at the window's edge, the scrollbar that is
-     not really there, and the 1.5rem the note is held off the cover by. */
-  --margin-note: calc((100vw - var(--column)) / 2 - 3rem);
+     against whatever box the note is written in. The scrollbar comes off it
+     first — see --scrollbar above — so what is left is the width the page is
+     actually laid out in. The 3rem is then only air: 1.5rem at the window's
+     edge, and the 1.5rem the note is held off the cover by. */
+  --margin-note: calc((100vw - var(--scrollbar) - var(--column)) / 2 - 3rem);
 
   /* And where it starts, measured from the left edge of the column it is set
      beside — a negative number, since it is out to the left of it. 1.5rem
      from the window's own edge, which is where the role at the top of the
      page sits, so a note in the margin lines up under it rather than
      floating somewhere between it and the column. */
-  --margin-note-x: calc(1.5rem - (100vw - var(--column)) / 2);
+  --margin-note-x: calc(1.5rem - (100vw - var(--scrollbar) - var(--column)) / 2);
 
   /* How wide a study runs when it is opened under its project. Wider than the
      column the list is set in, and wider on the right only: it starts at the
@@ -63,7 +76,7 @@
      runs long — 1340px gives about a hundred and ten characters, and a line
      that long is hard to come back from at the end of it. If it wants
      holding, a min() against a fixed width here is the place. */
-  --study-width: calc((100vw + var(--column)) / 2 - 3rem);
+  --study-width: calc((100vw - var(--scrollbar) + var(--column)) / 2 - 3rem);
 
   /* The name across the top of the homepage. It sets solid, so its type size
      is also its height — which is what the line beneath it has to clear, and
