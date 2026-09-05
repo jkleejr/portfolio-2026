@@ -181,7 +181,9 @@ export function DesignOne() {
                 slug={entry.slug}
                 study={study ? <StudyBody study={study} inline /> : undefined}
               >
-                <article className="flex items-center gap-[var(--cover-gap)]">
+                {/* relative so the facts about an open project can be set
+                    out in the margin beside the cover — see StudyFacts. */}
+                <article className="relative flex items-center gap-[var(--cover-gap)]">
                   {(entry.images ?? []).map((image, i) => (
                     <ProjectThumbnail
                       key={`${entry.slug}-${i}`}

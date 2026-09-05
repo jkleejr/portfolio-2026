@@ -32,6 +32,18 @@
   --text-start: calc(var(--cover) + var(--cover-gap));
   --column: calc(var(--text-start) + var(--text-width));
 
+  /* The strip of window left over beside the column, less the air held at
+     each end of it — the room a note set out in the margin has to live in.
+     Read by the facts about a project, which move out there while its study
+     is open; see StudyFacts in project-study.tsx.
+
+     100vw and not 100%, because it is measured against the window rather than
+     against whatever box the note is written in. That counts the scrollbar as
+     window, which is the reason the subtraction is as generous as it is: 3rem
+     covers the 1rem of air wanted at the window's edge, the scrollbar that is
+     not really there, and the 1.5rem the note is held off the cover by. */
+  --margin-note: calc((100vw - var(--column)) / 2 - 3rem);
+
   /* The name across the top of the homepage. It sets solid, so its type size
      is also its height — which is what the line beneath it has to clear, and
      the reason the size lives here rather than only in the markup. Where the
