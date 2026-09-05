@@ -117,7 +117,7 @@ export const caseStudies: Record<string, CaseStudy> = {
   "loot-check": {
     title: "Loot Check",
     appStore: "https://apps.apple.com/us/app/loot-check/id6785767104",
-    date: "June 2026",
+    date: "June - September 2026",
     role: "Product Design, iOS Development",
     scope: "Live on the App Store",
     blocks: [
@@ -254,7 +254,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
   "paper-reader": {
     title: "Paper Reader",
-    date: "July 2026",
+    date: "July - August 2026",
     role: "Product Design, iOS Development",
     scope: "Mobile Prototype",
     // functional prototype integrated with LLMs, dealt with audio streaming, and designed the UI
@@ -440,7 +440,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
   "screen-translator": {
     title: "Screen Translator",
-    date: "August 2026",
+    date: "August - September 2026",
     role: "Product Design, viibeee coded",
     scope: "Mobile Prototype",
     blocks: [
@@ -502,7 +502,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
   "buy-side-briefings": {
     title: "Buy Side Briefings",
-    date: "May 2026",
+    date: "May 2026 -",
     role: "Product Design",
     scope: "Concept to live website",
     href: "https://buy-side-briefings.vercel.app/",
@@ -710,7 +710,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
   "time-with-tree": {
     title: "Time with Tree",
-    date: "May 2026",
+    date: "May - September 2026",
     role: "Vibe coded w/ Lovable",
     scope: "Live website",
     href: "https://timewithtree.co.kr/",
