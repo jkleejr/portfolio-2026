@@ -395,9 +395,17 @@ function Block({
           )}
           {/* The column on the other side of the video. Set flush right so it
               ends at the video's left edge, the way the first one starts at
-              its right. */}
+              its right.
+
+              Capped well short of the column it sits in, and pushed to the
+              far end of it. The column is a 1fr of a grid measured off the
+              window, so on a wide screen a line left to fill it starts a long
+              way out to the left and reads as a stray remark rather than a
+              note on the video. Held to 15rem it breaks into a narrow block
+              stacked against the video's edge, which is what the line beside
+              it does on the other side. */}
           {block.captionLeft && (
-            <figcaption className="mt-3 space-y-3 text-base italic leading-relaxed sm:col-start-1 sm:row-start-1 sm:mt-0 sm:-translate-y-8 sm:pr-5 sm:text-right">
+            <figcaption className="mt-3 space-y-3 text-base italic leading-relaxed sm:col-start-1 sm:row-start-1 sm:mt-0 sm:ml-auto sm:max-w-[15rem] sm:-translate-y-8 sm:pr-5 sm:text-right">
               {(Array.isArray(block.captionLeft)
                 ? block.captionLeft
                 : [block.captionLeft]
