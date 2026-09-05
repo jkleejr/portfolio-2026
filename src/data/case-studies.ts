@@ -256,7 +256,7 @@ export const caseStudies: Record<string, CaseStudy> = {
     title: "Paper Reader",
     date: "July 2026",
     role: "Product Design, iOS Development",
-    scope: "Prototype",
+    scope: "Mobile Prototype",
     // functional prototype integrated with LLMs, dealt with audio streaming, and designed the UI
     blocks: [
       {
@@ -442,7 +442,7 @@ export const caseStudies: Record<string, CaseStudy> = {
     title: "Screen Translator",
     date: "August 2026",
     role: "Product Design, viibeee coded",
-    scope: "Prototype",
+    scope: "Mobile Prototype",
     blocks: [
 
       {
