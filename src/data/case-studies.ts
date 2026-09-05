@@ -128,25 +128,25 @@ export const caseStudies: Record<string, CaseStudy> = {
     blocks: [
 
       // frame the problem in terms of user friction and business opportunity. state a clear hypothesis or goal.
-       {
-        type: "text",
-        text: "Finding the resale value of items is a time consuming process. Existing appraisal apps require a subscription and have unnecessary steps. My solution was a fast, accurate, and free iOS app for users to identify and price their items.",
-      },
 
       {
         type: "video",
         src: "/projects/loot-check-shark.mp4",
         caption: "Finding the potential value of my shark painting",
       },
-                  {
-                    type: "heading",
-                    text: "Optimizing User Flow",
-                    note: "",
-                  },
     
       {
+                    type: "heading",
+                    text: "Optimizing User Flow",
+                    note: "Problem & Solution",
+                  },
+      {
         type: "text",
-        text: "I designed for the least amount of steps....",
+        text: "Finding the resale value of items is a time consuming process. Existing appraisal apps require a subscription and have unnecessary steps.",
+      },
+      {
+        type: "text",
+        text: "My solution was a fast, accurate, and free iOS app for users to identify and price their items. I designed for the least amount of steps....",
       },
                       { type: "heading", text: "" },
       {
@@ -184,7 +184,7 @@ export const caseStudies: Record<string, CaseStudy> = {
             {
               type: "heading",
               text: "Using AI for Price Discovery",
-              note: "",
+              note: "Features",
             },
 
 
@@ -218,7 +218,7 @@ export const caseStudies: Record<string, CaseStudy> = {
             {
               type: "heading",
               text: "Designing for AI Uncertainty",
-              note: "",
+              note: "Designs",
             },
 
       // designing for uncertainty
@@ -265,7 +265,7 @@ export const caseStudies: Record<string, CaseStudy> = {
                 {
                   type: "heading",
                   text: "Result",
-                  note: "",
+                  note: "Retrospective",
                 },
 
       {
@@ -285,11 +285,6 @@ export const caseStudies: Record<string, CaseStudy> = {
     // functional prototype integrated with LLMs, dealt with audio streaming, and designed the UI
     blocks: [
       {
-        type: "text",
-        text: "A friend was listening to a research paper while walking and got '[1] et al., pp. 234-256' read aloud in a robot voice. That gave me the idea to build my own solution using Gemini to organize text and generate a natural voice.",
-      },
-
-      {
         type: "video",
         src: "/projects/paper-reader-add-and-listen.mp4",
         controls: true,
@@ -299,32 +294,28 @@ export const caseStudies: Record<string, CaseStudy> = {
           "Audio is generated as the user needs, lowering initial cost and wait time",
         ],
       },
+
+      {
+        type: "heading",
+        text: "Context",
+        note: "Introduction",
+      },
+
+        {
+        type: "text",
+        text: "A friend was listening to a research paper while walking and got '[1] et al., pp. 234-256' read aloud in a robot voice. I tried to build an app to fix that problem.",
+      },
+
       
       {
         type: "text",
-        text: "I designed the app around users paying for their own API usage due to the costs of audio generation at ~$1-3 per paper. To keep things simple, I used one API to identify text and generate audio. Gemini 3.1 flash was the best option because it could clean up text and had TTS with 8 voices.",
-      },
-      {
-        type: "heading",
-        text: "How it works",
-        note: "",
-      },
-
-      {
-        type: "list",
-        ordered: true,
-        items: [
-          "Gemini splits text into groups, filters out citations, captions, etc. and keeps prose the same",
-        // Group sentences ~750 characters, ~45 seconds of speech.",
-          "TTS returns audio for each group",
-        ],
+        text: "I designed the app around a user paying for their own API usage due to the costs of audio generation at ~$1-3 per paper. To keep things simple, I used one API to identify text and generate audio. Gemini 3.1 flash was the best option because it could clean up text and had TTS with 8 voices.",
       },
    
-
             {
               type: "heading",
               text: "Highlighting",
-              note: "",
+              note: "Ideas",
             },
 
       {
@@ -337,12 +328,6 @@ export const caseStudies: Record<string, CaseStudy> = {
         width: 345,
         alt: "A close read of the narration: the sentence being spoken sits in a pale blue block, the lines either side of it in grey",
       },
-
-                        {
-                          type: "heading",
-                          text: "Design decisions",
-                          note: "",
-                        },
 
       {
         type: "text",
@@ -357,23 +342,10 @@ export const caseStudies: Record<string, CaseStudy> = {
             fullOnPhone: true,
             alt: "A close read of the failed row: the paper's name over the Gemini error in red, with a retry button on its right",
           },
-          {
-            src: "/projects/paper-reader-error-detail.png",
-            width: 262,
-            alt: "The failure the row opens onto: a warning triangle over the Gemini error, a line pointing to the API key in Settings, and a Try Again button",
-          },
         ],
       },
-      {
-        type: "text",
-        text: "A sample paper with narration is pre-downloaded so users can experience the app before setting up a key.",
-      },
-      {
-        type: "image",
-        src: "/projects/paper-reader-sample-paper-detail.png",
-        width: 367,
-        alt: "A close read of the sample row: a SAMPLE tag over the paper's title, 77% listened beneath it with a progress bar, and a play button on its right",
-      },
+      // A sample paper with narration is pre-downloaded so users can experience the app before setting up a key.
+
 
       // (total samples / 24,000 = total seconds)
       // (characters in each sentence / group total characters = % of group text)
@@ -461,12 +433,12 @@ export const caseStudies: Record<string, CaseStudy> = {
             {
               type: "heading",
               text: "Lesson learned",
-              note: "",
+              note: "Retrospective",
             },
 
       {
         type: "text",
-        text: "If I continued this project, I would integrate an API key into the app. I realized that asking users to set up their own key creates too much friction and is a bad idea. I should have reasoned through this earlier in the planning stage because I ended up designing the app around that. There are many TTS products like Speechify that address the same problems, so I moved on.",
+        text: "Reflecting on this project, I realized that at certain stages of the project I dont cosnider the user enough. If I continued this project, I would integrate an API key into the app. I realized that asking users to set up their own key creates too much friction and is a bad idea. I should have reasoned through this earlier in the planning stage because I ended up designing the app around that. There are many TTS products like Speechify that address the same problems, so I moved on.",
       },
       // should have considered the user more during planning, so I didn't end up designing the whole app around the user paying for themselves
       // should have thought about this earlier
@@ -482,10 +454,15 @@ export const caseStudies: Record<string, CaseStudy> = {
   "screen-translator": {
     title: "Screen Translator",
     date: "August - September 2026",
-    role: "Product Design,iOS Development",
+    role: "Product Design, iOS Development",
     scope: "Mobile Prototype",
     blocks: [
 
+      {
+          type: "heading",
+          text: "Overview",
+          note: "Intro",
+        },
       {
         
         type: "text",
@@ -502,20 +479,16 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
         {
           type: "heading",
-          text: "How it works",
+          text: "Solution",
           note: "",
         },
       // first, focusing this app on live captions translations, and trying to make that process as seamless as i can.
       // audio later
-      {
-        type: "list",
-        ordered: true,
-        items: [
-          "Apple Vision reads the screen",
-          "Apple Speech transcribes audio",
-          "DeepL translates the text",
-        ],
-      },
+ 
+          //"Apple Vision reads the screen",
+          //"Apple Speech transcribes audio",
+          //"DeepL translates the text",
+
       {
         type: "text",
         text: ""
