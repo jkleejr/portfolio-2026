@@ -344,7 +344,16 @@ export const caseStudies: Record<string, CaseStudy> = {
           },
         ],
       },
-      // A sample paper with narration is pre-downloaded so users can experience the app before setting up a key.
+      {
+        type: "text",
+        text: "A sample paper with narration is pre-downloaded so users can experience the app before setting up a key.",
+      },
+      {
+        type: "image",
+        src: "/projects/paper-reader-sample-paper-detail.png",
+        width: 367,
+        alt: "A close read of the sample row: a SAMPLE tag over the paper's title, 77% listened beneath it with a progress bar, and a play button on its right",
+      },
 
 
       // (total samples / 24,000 = total seconds)
