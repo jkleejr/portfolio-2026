@@ -418,7 +418,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "Reflecting on this project, I realized that I didn't consider the user enough. If I continued this project, I would integrate an API key into the app. I realized that asking users to set up their own key creates too much friction and is a bad idea especially because its the first step. I should have reasoned through this earlier in the planning stage because I ended up designing the app around that. There are many TTS products like Speechify that address the same problems, so I moved on.",
+        text: "Reflecting on this project, I realized that I didn't consider the user enough. If I continued this project, I would integrate an API key into the app. Asking users to set up their own key creates too much friction and is a bad idea especially because its the first step. I should have reasoned through this earlier in the planning stage because I ended up designing the app around that. There are many TTS products like Speechify that address the same problems, so I moved on.",
       },
     ],
   },
