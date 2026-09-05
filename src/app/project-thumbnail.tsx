@@ -116,6 +116,29 @@ export function ProjectThumbnail({
   // still the shot itself. `crop` frames that shot, so a cover ignores it.
   const shown = image.cover ?? image.src;
 
+  // The film under the pointer, for a cover that has one.
+  const film = useRef<HTMLVideoElement>(null);
+  const [rolling, setRolling] = useState(false);
+  const enter = () => {
+    const el = film.current;
+    if (!el) return;
+    // The promise rejects if the pointer leaves before it starts, which is
+    // not a failure and not worth hearing about.
+    void el.play().then(
+      () => setRolling(true),
+      () => {},
+    );
+  };
+  const leave = () => {
+    setRolling(false);
+    const el = film.current;
+    if (!el) return;
+    el.pause();
+    // Back to the frame the still is, so the next hover starts where the
+    // picture left off rather than mid-shower.
+    el.currentTime = 0;
+  };
+
   // The screenshots are ~1200px wide, so letting the browser squeeze one into a
   // box this size is a ~6x downscale that its cheap filter turns to mush.
   // next/image resamples them properly and ships a 2x variant for retina
@@ -125,7 +148,16 @@ export function ProjectThumbnail({
     // Marked for gravity: with no button around it any more, the box is the
     // outermost thing here, and without the marker the image inside would fall
     // out of its own frame and leave the dot painted on it behind.
-    <div data-gravity="piece" className={`${box} relative overflow-hidden`}>
+    //
+    // The film, where there is one, is started and stopped from here rather
+    // than left to autoplay: a loop running behind a pointer that is nowhere
+    // near it is work nobody asked for, and five of them would be five.
+    <div
+      data-gravity="piece"
+      className={`${box} relative overflow-hidden`}
+      onMouseEnter={image.coverVideo ? enter : undefined}
+      onMouseLeave={image.coverVideo ? leave : undefined}
+    >
       <Image
         src={shown}
         alt={image.alt}
@@ -143,6 +175,26 @@ export function ProjectThumbnail({
               : undefined
         }
       />
+      {/* Over the still rather than instead of it. Until the first frame is
+          decoded a video paints nothing, so what shows through is the cover —
+          no hole where the picture was on the first hover, and no second
+          picture to load for anyone who never hovers. It is only faded in
+          once it is running, so a slow first start shows the still and not a
+          black square. */}
+      {image.coverVideo && (
+        <video
+          ref={film}
+          src={image.coverVideo}
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          aria-hidden
+          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-200 ease-out ${
+            rolling ? "opacity-100" : "opacity-0"
+          }`}
+        />
+      )}
       {image.coverDot && <CoverDot dot={image.coverDot} />}
     </div>
   ) : (

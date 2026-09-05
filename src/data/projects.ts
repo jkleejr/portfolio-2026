@@ -13,6 +13,12 @@ export type EntryImage = {
   // loses something to the middle crop. CSS object-position, "left" or
   // "50% 20%". Centred when unset.
   coverCrop?: string;
+  // A few seconds of film that plays under the pointer, on loop, in place of
+  // the cover — for a project whose picture is a frame of something moving.
+  // The still is what loads and what is drawn until then, so this costs
+  // nothing to anyone who does not hover it, and nothing at all on a touch
+  // screen, where there is no hovering to do.
+  coverVideo?: string;
   // A dot painted over the cover that drifts toward the pointer. The cover
   // image has to have it erased — see screen-translator-logo-4-base.png. All
   // lengths are percentages of the thumbnail, so they hold at any size.
@@ -157,6 +163,7 @@ export const entries: Entry[] = [
         // is a square, so what shows is the middle of it — coverCrop moves
         // that if the middle is not the part worth showing.
         cover: "/projects/time-with-tree-rain.png",
+        coverVideo: "/projects/time-with-tree-rain.mp4",
         alt: "Rain on a branch: pale green leaves along a stem, each rimmed with water, against a dark window and a lit wall behind",
         // spacing from the last project to the bottom of the page is 112 px on desktop, 32 px on phone
   },
