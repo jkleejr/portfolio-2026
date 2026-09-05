@@ -138,7 +138,11 @@ export const caseStudies: Record<string, CaseStudy> = {
         src: "/projects/loot-check-shark.mp4",
         caption: "Finding the potential value of my shark painting",
       },
-                  { type: "heading", text: "Optimizing User Flow" },
+                  {
+                    type: "heading",
+                    text: "Optimizing User Flow",
+                    note: "",
+                  },
     
       {
         type: "text",
@@ -177,7 +181,11 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       // so i either make this faster or fidn another solution
 
-            { type: "heading", text: "Using AI for Price Discovery" },
+            {
+              type: "heading",
+              text: "Using AI for Price Discovery",
+              note: "",
+            },
 
 
             // show how price is displayed screenshot
@@ -191,7 +199,11 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
 
 
-            { type: "heading", text: "Balancing Accuracy and API Costs" },
+            {
+              type: "heading",
+              text: "Balancing Accuracy and API Costs",
+              note: "",
+            },
 
       {
         type: "text",
@@ -203,7 +215,11 @@ export const caseStudies: Record<string, CaseStudy> = {
       // displays eta till scan is finished
       // blue labels show for confident scans 
 
-            { type: "heading", text: "Designing for AI Uncertainty" },
+            {
+              type: "heading",
+              text: "Designing for AI Uncertainty",
+              note: "",
+            },
 
       // designing for uncertainty
       {
@@ -246,7 +262,11 @@ export const caseStudies: Record<string, CaseStudy> = {
 
 
       
-                { type: "heading", text: "Result" },
+                {
+                  type: "heading",
+                  text: "Result",
+                  note: "",
+                },
 
       {
         type: "text",
@@ -284,7 +304,11 @@ export const caseStudies: Record<string, CaseStudy> = {
         type: "text",
         text: "I designed the app around users paying for their own API usage due to the costs of audio generation at ~$1-3 per paper. To keep things simple, I used one API to identify text and generate audio. Gemini 3.1 flash was the best option because it could clean up text and had TTS with 8 voices.",
       },
-      { type: "heading", text: "How it works" },
+      {
+        type: "heading",
+        text: "How it works",
+        note: "",
+      },
 
       {
         type: "list",
@@ -297,7 +321,11 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
    
 
-            { type: "heading", text: "Highlighting" },
+            {
+              type: "heading",
+              text: "Highlighting",
+              note: "",
+            },
 
       {
         type: "text",
@@ -310,7 +338,11 @@ export const caseStudies: Record<string, CaseStudy> = {
         alt: "A close read of the narration: the sentence being spoken sits in a pale blue block, the lines either side of it in grey",
       },
 
-                        { type: "heading", text: "Design decisions" },
+                        {
+                          type: "heading",
+                          text: "Design decisions",
+                          note: "",
+                        },
 
       {
         type: "text",
@@ -426,7 +458,11 @@ export const caseStudies: Record<string, CaseStudy> = {
 
      // write to the level of my understanding
       
-            { type: "heading", text: "Lesson learned" },
+            {
+              type: "heading",
+              text: "Lesson learned",
+              note: "",
+            },
 
       {
         type: "text",
@@ -446,7 +482,7 @@ export const caseStudies: Record<string, CaseStudy> = {
   "screen-translator": {
     title: "Screen Translator",
     date: "August - September 2026",
-    role: "Product Design, viibeee coded",
+    role: "Product Design,iOS Development",
     scope: "Mobile Prototype",
     blocks: [
 
@@ -464,7 +500,11 @@ export const caseStudies: Record<string, CaseStudy> = {
         text: "My first idea was to generate text over the current display, but iOS does not allow an app to draw over another app. To get around this, I used a ReplayKit broadcast extension to receive pixels of what's on screen, and showed the translation using the dynamic island and floating window."
 
       },
-        { type: "heading", text: "How it works" },
+        {
+          type: "heading",
+          text: "How it works",
+          note: "",
+        },
       // first, focusing this app on live captions translations, and trying to make that process as seamless as i can.
       // audio later
       {
@@ -536,7 +576,7 @@ export const caseStudies: Record<string, CaseStudy> = {
             {
               type: "heading",
               text: "Keeping up with Market Velocity",
-              note: "Problem",
+              note: "Problem", // title text on the left side
             },
 
 
@@ -603,7 +643,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "heading",
         text: "Designing a Pre-Market vs. After-Hours Workflow",
-        note: "",
+        note: "Designs",
       },
 
 
@@ -723,7 +763,7 @@ export const caseStudies: Record<string, CaseStudy> = {
             {
               type: "heading",
               text: "Future Iterations",
-              note: "",
+              note: "Retrospective",
             },
       {
         type: "text",
