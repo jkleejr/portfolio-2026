@@ -144,6 +144,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         type: "text",
         text: "Finding the resale value of items is a time consuming process. Existing appraisal apps require a subscription and have unnecessary steps.",
       },
+ 
       {
         type: "text",
         text: "My solution was a fast, accurate, and free iOS app for users to identify and price their items. I designed for the least amount of steps....",
@@ -184,7 +185,7 @@ export const caseStudies: Record<string, CaseStudy> = {
             {
               type: "heading",
               text: "Using AI for Price Discovery",
-              note: "Features",
+              note: "Decisions",
             },
 
 
@@ -218,7 +219,7 @@ export const caseStudies: Record<string, CaseStudy> = {
             {
               type: "heading",
               text: "Designing for AI Uncertainty",
-              note: "Designs",
+              note: "",
             },
 
       // designing for uncertainty
