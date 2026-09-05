@@ -152,8 +152,12 @@ export const entries: Entry[] = [
     platform: "web",
     images: [
       {
-        cover: "/projects/time-with-tree-logo-3.png",
-        alt: "The Time with Tree logo, green leaves growing from a curved base",
+        // The leaf logo is still at time-with-tree-logo-3.png if this one
+        // comes back off. This frame is wider than it is tall and the cover
+        // is a square, so what shows is the middle of it — coverCrop moves
+        // that if the middle is not the part worth showing.
+        cover: "/projects/time-with-tree-rain.png",
+        alt: "Rain on a branch: pale green leaves along a stem, each rimmed with water, against a dark window and a lit wall behind",
         // spacing from the last project to the bottom of the page is 112 px on desktop, 32 px on phone
   },
     ],
