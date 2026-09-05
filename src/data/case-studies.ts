@@ -181,8 +181,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
             // show how price is displayed screenshot
 
-            // fix descriptions
-            // need to update the app
+          // explain prices for original stuff
 
       {
         type: "text",
@@ -200,8 +199,6 @@ export const caseStudies: Record<string, CaseStudy> = {
         type: "text",
         text: "A key product decision was determining how AI values items. Using a web search for every scan increased accuracy, but because it raised API costs by 3-4x and made the user wait longer, I decided to rely on Claude Sonnet 4.6's pre-trained data for most items and only allow a web search when the model had low confidence."
       },
-
-      //  the ui needs to show that its doing a web search and estimated time until done
 
       // displays eta till scan is finished
       // blue labels show for confident scans 
@@ -739,7 +736,7 @@ export const caseStudies: Record<string, CaseStudy> = {
             },
       {
         type: "text",
-        text: "Since this website keeps a record of previous reports, it would be interesting to use that data to find sentiment trends. I plan to keep improving the reports and add features I find useful."
+        text: "This project has changed many times since the start. I initially used AI to predict the market and send me buy/sell signals based on its market research, but I realized that a strictly informational website would help me more. Buy Side used to display a lot more data when I was learning the market but I cut it down to the most important resources. Since this website keeps a record of previous reports, it would be interesting to use that data to find sentiment trends. I plan to keep improving the reports and add features I find useful."
       },
       // what to write here?
       // how i used ai to build the website
