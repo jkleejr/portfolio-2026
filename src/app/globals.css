@@ -51,6 +51,23 @@
      floating somewhere between it and the column. */
   --margin-note-x: calc(1.5rem - (100vw - var(--column)) / 2);
 
+  /* How wide a study runs when it is opened under its project. Wider than the
+     column the list is set in, and wider on the right only: it starts at the
+     column's left edge, where the covers are, and runs on into the room on
+     that side. The left edge of the page is spoken for — the facts are set
+     out there — and the right is empty.
+
+     12rem is what it grows by, which at the size the writing is set puts a
+     line at about ninety characters. The second half of the min is the room
+     that is actually there: the column plus the margin at its right, less
+     1.5rem of air at the window's edge and the 1.5rem the note on the other
+     side is held off by. Whichever is smaller wins, so the study never runs
+     off the side of the window. */
+  --study-width: min(
+    calc(var(--column) + 12rem),
+    calc((100vw + var(--column)) / 2 - 3rem)
+  );
+
   /* The name across the top of the homepage. It sets solid, so its type size
      is also its height — which is what the line beneath it has to clear, and
      the reason the size lives here rather than only in the markup. Where the

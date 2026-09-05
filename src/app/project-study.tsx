@@ -103,10 +103,14 @@ export function ProjectSection({
         {children}
       </ToggleContext.Provider>
       {open && (
-        // The study runs the width of the whole column rather than the writing
-        // half of the row: a shot in it is the size it is at
-        // /projects/[slug], and the prose keeps the measure it was written to.
-        <div className="mt-10">
+        // The study runs wider than the column the list is set in, and wider
+        // on the right only — it keeps the left edge the covers hold and runs
+        // on into the empty half of the window. See --study-width, which is
+        // also what stops it running off the side.
+        //
+        // Only from the width where there is a right side worth having. Under
+        // that it takes the column, which on a phone is the screen.
+        <div className="mt-10 w-full min-[1000px]:w-[var(--study-width)]">
           {study}
         </div>
       )}
