@@ -189,15 +189,36 @@ function Block({
       // edge with nothing under it, and the same number reads as a hole. The
       // homepage settles the same argument the same way — see the gap above
       // its first project row.
-      return (
-        <h2
-          className={`${
-            after && PICTURES.has(after) ? "pt-2" : "pt-4"
-          } mb-2 text-xl font-bold leading-snug`}
-        >
-          {block.text}
-        </h2>
-      );
+      {
+        const lead = after && PICTURES.has(after) ? "pt-2" : "pt-4";
+        return (
+          <h2
+            className={`${lead} relative mb-2 text-xl font-bold leading-snug`}
+          >
+            {/* A line about the section, out in the margin at the left of the
+                window rather than in the column — the same margin the project
+                above it puts its dates in, so the whole left edge of the page
+                is one voice talking about what is beside it.
+
+                Level with the heading, which means level with the words and
+                not with the box around them: the padding that opens the
+                section sits above the text, so the note starts where the
+                heading's own line does. Hence the same number twice.
+
+                Only from 1000px, the width at which there is a margin at all
+                — see the note on --margin-note in globals.css. Under that the
+                heading stands on its own. */}
+            {block.note && (
+              <span
+                className={`absolute ${lead.replace("pt-", "top-")} left-[var(--margin-note-x)] hidden w-[var(--margin-note)] text-base font-normal leading-relaxed min-[1000px]:block`}
+              >
+                {block.note}
+              </span>
+            )}
+            {block.text}
+          </h2>
+        );
+      }
 
     case "text":
       return <p className="text-base leading-relaxed">{block.text}</p>;

@@ -1,5 +1,10 @@
 export type CaseStudyBlock =
-  | { type: "heading"; text: string }
+  // `note` is set out in the margin at the left of the window, level with the
+  // heading — a line about the section beside the section, rather than in it.
+  // Shown only where there is a margin to hold it, which is from 1000px up;
+  // under that the heading stands alone. Leave it out, or empty, for a
+  // heading that has nothing to say out there.
+  | { type: "heading"; text: string; note?: string }
   | { type: "text"; text: string }
   | { type: "list"; items: string[]; ordered?: boolean }
   | { type: "quote"; text: string; attribution?: string }
@@ -528,7 +533,11 @@ export const caseStudies: Record<string, CaseStudy> = {
         alt: "The Today page with the toggle on PM: a live ticker strip under the nav, then the night report of Wednesday, September 2, filed at 8:14 PM ET, its headline on the weakest private hiring since January barely denting the odds of a Fed rate hike, the paragraph that argues it, a link out to the full eight minute read, and the charts panel opening underneath",
       },
 
-            { type: "heading", text: "Keeping up with Market Velocity" },
+            {
+              type: "heading",
+              text: "Keeping up with Market Velocity",
+              note: "",
+            },
 
 
       {
@@ -546,7 +555,11 @@ export const caseStudies: Record<string, CaseStudy> = {
         text: "My solution was having AI assist me with researching tasks so I can quickly understand whats going on and make faster decisions."
       },
 
-            { type: "heading", text: "Curating Market Context with AI" },
+            {
+              type: "heading",
+              text: "Curating Market Context with AI",
+              note: "",
+            },
       // turning hours of research into minutes
       // how did i format the AI output
       // citations and trust - the report always lists its citations so i can check if somethign seems off
@@ -587,7 +600,11 @@ export const caseStudies: Record<string, CaseStudy> = {
         text: "Because LLMs don't have long term memory, the agent calibrates itself by reading reports of the last few days before writing. This creates continuity and prevents the AI from overreacting if a trend only continued."
       },
 
-      { type: "heading", text: "Designing a Pre-Market vs. After-Hours Workflow" },
+      {
+        type: "heading",
+        text: "Designing a Pre-Market vs. After-Hours Workflow",
+        note: "",
+      },
 
 
       {
@@ -607,7 +624,11 @@ export const caseStudies: Record<string, CaseStudy> = {
         text: "I added an AM/PM toggle to visually accommodate different mental states. Switching to another report restructures the page with the right information."
       },
 
-            { type: "heading", text: "Data Visualization" },
+            {
+              type: "heading",
+              text: "Data Visualization",
+              note: "",
+            },
 
             {
         type: "text",
@@ -672,7 +693,11 @@ export const caseStudies: Record<string, CaseStudy> = {
 
      // current design
       // mobile design
-      { type: "heading", text: "Mobile Design" },
+      {
+        type: "heading",
+        text: "Mobile Design",
+        note: "",
+      },
       {
         type: "text",
         text: "The mobile design keeps the same style as the desktop interface with a few small changes. The headline description is more concise and all other pages were moved into a menu button."
@@ -695,7 +720,11 @@ export const caseStudies: Record<string, CaseStudy> = {
         ],
       },
 
-            { type: "heading", text: "Future Iterations" },
+            {
+              type: "heading",
+              text: "Future Iterations",
+              note: "",
+            },
       {
         type: "text",
         text: "Since this website keeps a record of previous reports, it would be interesting to use that data to find sentiment trends. I plan to keep improving the reports and add features I find useful."
