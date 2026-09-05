@@ -412,12 +412,6 @@ export const caseStudies: Record<string, CaseStudy> = {
         type: "text",
         text: "Reflecting on this project, I realized that at certain stages of the project I dont consider the user enough. If I continued this project, I would integrate an API key into the app. I realized that asking users to set up their own key creates too much friction and is a bad idea. I should have reasoned through this earlier in the planning stage because I ended up designing the app around that. There are many TTS products like Speechify that address the same problems, so I moved on.",
       },
-
-      // Gemini 3.1 flash
-      // costs about $0.03 per minute of audio, about $1-3 per paper.
-            //iteration, choices, tradeoffs
-          // decided not to cover the cost for this app and make audio listens free for all users 
-          // users pay for their own audio
     ],
   },
 
