@@ -185,7 +185,7 @@ export const caseStudies: Record<string, CaseStudy> = {
             {
               type: "heading",
               text: "Using AI for Price Discovery",
-              note: "Decisions",
+              note: "Design Decisions",
             },
 
 
@@ -316,7 +316,7 @@ export const caseStudies: Record<string, CaseStudy> = {
             {
               type: "heading",
               text: "Highlighting",
-              note: "Decisions",
+              note: "Design Decisions",
             },
 
       {
@@ -572,7 +572,7 @@ export const caseStudies: Record<string, CaseStudy> = {
             {
               type: "heading",
               text: "Curating Market Context with AI",
-              note: "Designs",
+              note: "Design Decisions",
             },
       // turning hours of research into minutes
       // how did i format the AI output
