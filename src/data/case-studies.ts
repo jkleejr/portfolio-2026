@@ -723,6 +723,11 @@ export const caseStudies: Record<string, CaseStudy> = {
         text: "Time with Tree is a birch tree farm in South Korea. They had trees but no way for customers to find them, so I built their online store. "
       },
       {
+        type: "image",
+        src: "/projects/time-with-tree-species-page.png",
+        alt: "A species page on the store: photographs of Betula Jacquemontii saplings standing in rows of black pots out at the farm, and beside them the facts a buyer asks for first — the scientific name, the sun it wants, how it winters, when to water — over the section on what the variety is and how to keep it",
+      },
+      {
         type: "text",
         text: "",
       },
