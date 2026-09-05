@@ -550,7 +550,7 @@ export const caseStudies: Record<string, CaseStudy> = {
             {
               type: "heading",
               text: "Keeping up with Market Velocity",
-              note: "Problem", // title text on the left side
+              note: "Problem & Solution", // title text on the left side
             },
 
 
@@ -572,7 +572,7 @@ export const caseStudies: Record<string, CaseStudy> = {
             {
               type: "heading",
               text: "Curating Market Context with AI",
-              note: "Solution",
+              note: "Designs",
             },
       // turning hours of research into minutes
       // how did i format the AI output
@@ -617,7 +617,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "heading",
         text: "Designing a Pre-Market vs. After-Hours Workflow",
-        note: "Designs",
+        note: "",
       },
 
 
