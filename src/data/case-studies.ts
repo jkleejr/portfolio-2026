@@ -200,16 +200,12 @@ export const caseStudies: Record<string, CaseStudy> = {
         text: "A key product decision was determining how AI values items. Using a web search for every scan increased accuracy, but because it raised API costs by 3-4x and made the user wait longer, I decided to rely on Claude Sonnet 4.6's pre-trained data for most items and only allow a web search when the model had low confidence."
       },
 
-      // displays eta till scan is finished
-      // blue labels show for confident scans 
-
             {
               type: "heading",
               text: "Designing for AI Uncertainty",
               note: "",
             },
 
-      // designing for uncertainty
       {
         type: "text",
         text: "Since vision models are not 100% accurate, users can input optional keywords to guide the model before scanning. Results with low confidence are labeled \"best guess\".",
@@ -227,28 +223,9 @@ export const caseStudies: Record<string, CaseStudy> = {
         ],
       },
 
-      // 2 key decisions....
       // claude sonnet 4.6 because its cheap enough to run per scan and still accurate.
       // costs me about $0.013 per scan.
       // thought about the users and making a subscription too but decided i would make it free to use since the cost is low
-
-      // BACKEND
-      // photo -> Claude -> result
-      // When I tap identify, my phone sends the photo, hits Claude, and it sends back title, price, marketplace, description.
-      // prompted to find resale vale and base it on item type, brand, and condition
-      // 60 scans per day limit
-      // key is stored
-
-      // HOW IS LOOT CHECK VALUING ITEMS? (8.29.26)
-      // It's a well informed guess from Claude, no lookup
-      // 1 API call is being made per scan, not per photo.
-      // more photos costs more, capped at 4.
-      // if i wanted to get sales data online to make the price estimation more accurate....
-      // id have to pay $.01 per search online (Anthropic's rate) so it would be 2-3x more expensive per scan
-      // decided not to
-
-
-
       
                 {
                   type: "heading",
@@ -260,7 +237,6 @@ export const caseStudies: Record<string, CaseStudy> = {
         type: "text",
         text: "Loot Check is live on the App Store. I wanted to automate the listing process but most marketplaces don't have a public listing API, so the app creates a title and description for copy and paste. The next steps are finding users and marketing on social media.",
       },
-      // Loot Check is the first app I put on the app store so I learned a lot about iOS and mobile development from this project.
     ],
   },
 
@@ -434,11 +410,9 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "Reflecting on this project, I realized that at certain stages of the project I dont cosnider the user enough. If I continued this project, I would integrate an API key into the app. I realized that asking users to set up their own key creates too much friction and is a bad idea. I should have reasoned through this earlier in the planning stage because I ended up designing the app around that. There are many TTS products like Speechify that address the same problems, so I moved on.",
+        text: "Reflecting on this project, I realized that at certain stages of the project I dont consider the user enough. If I continued this project, I would integrate an API key into the app. I realized that asking users to set up their own key creates too much friction and is a bad idea. I should have reasoned through this earlier in the planning stage because I ended up designing the app around that. There are many TTS products like Speechify that address the same problems, so I moved on.",
       },
-      // should have considered the user more during planning, so I didn't end up designing the whole app around the user paying for themselves
-      // should have thought about this earlier
-    
+
       // Gemini 3.1 flash
       // costs about $0.03 per minute of audio, about $1-3 per paper.
             //iteration, choices, tradeoffs
@@ -523,13 +497,6 @@ export const caseStudies: Record<string, CaseStudy> = {
     blocks: [
 
       // Reports take time to generate, so they are queued at 8:00 AM and 8:00 PM.
-      // reports can take longer or shorter to generate, so the time on the homepage displays the time the report finished generating.
-      // the times are accurate for morning and night reports.
-      // can i make a better logo idkk
-      // i built this for 1 user
-      // working with ai builder
-      // interface design changed, started as bloomberg terminal and now like a newspaper
-      // some design work was removing things, lot sof pages, paper trading desk, track record page, books page, sectors page
 
       {
         type: "text",
@@ -587,9 +554,6 @@ export const caseStudies: Record<string, CaseStudy> = {
         // no buy, sell, or hold recommendations. the read is purely informational and analytical, not advisory
         // calibration - it checks the last few days of output and if the only news is a trend that continued, it says so rather than escalating the language. 
 
-        // revised instructions 24 times
-        // the system prompt is in charge of ux bc every change i make changes future reports
-        
         // LLM doesnt remember the last report so it reads previous reports on github 
       },
 
@@ -619,8 +583,6 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "text",
         text: "An investor's mental state changes fundamentally depending on the time of day."
-        // explain why this improves ux
-        // traders have a different mindset in the morning than at night
       },
 
       {
@@ -650,7 +612,6 @@ export const caseStudies: Record<string, CaseStudy> = {
         type: "text",
         text: "The interactive chart allows a quick inspection of tickers with candlestick ranges and some technical tools like volume, RSI, EMA, support/resistance and fibonacci levels."
       },
-      // screen recording of using the chart?
 
       {
         type: "image",
@@ -676,9 +637,6 @@ export const caseStudies: Record<string, CaseStudy> = {
         type: "text",
         text: "Instead of using a calendar list, I designed a timeline for upcoming earnings calls up to 90 days out. Solid dots represent confirmed dates and hollow dots are unconfirmed.",
       },
-      // earnings calendar data comes from yahoo finance
-      // the earnings calendar is a Gantt chart and a dot for a company's earnings date, filled is confirmed, hollow is estimated
-      // 90 days out
 
       {
         type: "image",
@@ -699,9 +657,6 @@ export const caseStudies: Record<string, CaseStudy> = {
         alt: "The macro indicators grid: tiles grouped into Interest Rates & Monetary Policy, Inflation & Purchasing Power, Economic Growth & Activity, and Unemployment & Labor, with warning and alert threshold color highlights on key metrics",
       },
 
-
-     // current design
-      // mobile design
       {
         type: "heading",
         text: "Mobile Design",
@@ -738,11 +693,6 @@ export const caseStudies: Record<string, CaseStudy> = {
         type: "text",
         text: "This project has changed many times since the start. Initially I used AI to predict the market and send me buy/sell signals based on its market research, but I realized that a strictly informational website would help me more. Buy Side used to display a lot more data when I was learning the market but I cut it down to the most important resources. Since this website keeps a record of previous reports, it would be interesting to use that data to find sentiment trends. I plan to keep improving the reports and add features I find useful."
       },
-      // what to write here?
-      // how i used ai to build the website
-
-        // create a logo for the website later
-
     ],
   },
 
