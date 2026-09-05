@@ -246,8 +246,22 @@ export function DesignOne() {
                         <SiteBadge href={entry.titleHref} label={entry.title} />
                       )}
                     </h2>
+                    {/* One line, running off the end of the column into the
+                        room at the right of the window rather than breaking
+                        at the measure. The measure belongs to the study under
+                        it, which is a page of writing and needs a line length
+                        it can be read at; a blurb is one line about one
+                        project, and reads better as one line.
+
+                        It overflows its box to do that, which is only safe
+                        where there is window to overflow into: at 1000px
+                        there are around 580px to the right of where the
+                        writing starts and the longest blurb wants 470, and
+                        under that it would push the page sideways. So it
+                        breaks at the measure there, as it always did — the
+                        same width the facts in the margin appear at. */}
                     {entry.blurb && (
-                      <p className="mt-3 text-base leading-relaxed">
+                      <p className="mt-3 text-base leading-relaxed min-[1000px]:whitespace-nowrap">
                         {entry.blurb}
                       </p>
                     )}
