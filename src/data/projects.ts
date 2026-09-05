@@ -85,7 +85,7 @@ export const entries: Entry[] = [
   {
     title: "Paper Reader",
     blurb:
-      "Upload a PDF and hear it read aloud in a natural voice, citations and formatting filtered out",
+      "Upload a PDF to hear it in a natural voice, citations filtered out",
     slug: "paper-reader",
     platform: "mobile",
     images: [
@@ -138,8 +138,6 @@ export const entries: Entry[] = [
     platform: "web",
     images: [
       {
-        // The candlestick logo is still at buy-side-briefings-logo-3.png if
-        // this one comes back off.
         cover: "/projects/buy-side-briefings-cash.png",
         alt: "The Buy Side Briefings logo, three banded stacks of hundred dollar bills",
       },

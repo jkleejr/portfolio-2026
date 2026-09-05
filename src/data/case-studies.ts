@@ -738,6 +738,8 @@ export const caseStudies: Record<string, CaseStudy> = {
       // following expectations from client, so less ideation 
       // looked at other true farm websites in Korea 
       // used lovable
+
+      // create new logo
     ],
   },
 };
