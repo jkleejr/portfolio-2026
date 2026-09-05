@@ -139,8 +139,6 @@ export const caseStudies: Record<string, CaseStudy> = {
         type: "text",
         text: "I designed for the least amount of steps....",
       },
-
-
                       { type: "heading", text: "" },
       {
         type: "text",
@@ -713,7 +711,7 @@ export const caseStudies: Record<string, CaseStudy> = {
   "time-with-tree": {
     title: "Time with Tree",
     date: "May 2026",
-    role: "",
+    role: "Vibe coded",
     scope: "Live website",
     href: "https://timewithtree.co.kr/",
     blocks: [
