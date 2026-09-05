@@ -8,11 +8,52 @@
 
 import { site } from "@/data/site";
 import { entries } from "@/data/projects";
-import { caseStudies } from "@/data/case-studies";
+import { caseStudies, type CaseStudy } from "@/data/case-studies";
 import { StudyBody } from "./case-study";
-import { ProjectList, ProjectSection, StudyFacts } from "./project-study";
+import { ProjectList, ProjectSection } from "./project-study";
 import { ProjectThumbnail } from "./project-thumbnail";
 import { AppStoreBadge, SiteBadge } from "./title-badge";
+
+/**
+ * When a project was made, what the role was, and how far it went.
+ *
+ * Out in the margin at the left of the window, on the line the role at the top
+ * of the page holds — so everything the page says about itself in the margin
+ * is ranged off one edge. Nothing else leaves the column. These are notes
+ * about the project rather than part of it, and the study under the row, when
+ * it is opened, does not have to carry them.
+ *
+ * They are here whether that study is open or not: a reader deciding which
+ * project to open wants to know when it was and what it was before pressing
+ * anything.
+ *
+ * Only where there is a margin to put them in. Under 1000px the window has
+ * nothing to spare and they come back into the column, under the line saying
+ * what the project is. --margin-note is the room out there, --margin-note-x
+ * is where it starts; both are in globals.css.
+ */
+function StudyFacts({ study }: { study?: CaseStudy }) {
+  if (!study) return null;
+  const lines = [study.date, study.status, study.role, study.scope].filter(
+    Boolean,
+  );
+  if (!lines.length) return null;
+
+  const set = lines.map((line, i) => (
+    <p key={i} className={`text-base leading-relaxed ${i ? "mt-1" : ""}`}>
+      {line}
+    </p>
+  ));
+
+  return (
+    <>
+      <div className="absolute left-[var(--margin-note-x)] top-1/2 hidden w-[var(--margin-note)] -translate-y-1/2 min-[1000px]:block">
+        {set}
+      </div>
+      <div className="mt-3 min-[1000px]:hidden">{set}</div>
+    </>
+  );
+}
 
 export function DesignOne() {
   // The bottom padding is trimmed on a phone so the page fits the screen. That
@@ -181,8 +222,8 @@ export function DesignOne() {
                 slug={entry.slug}
                 study={study ? <StudyBody study={study} inline /> : undefined}
               >
-                {/* relative so the facts about an open project can be set
-                    out in the margin beside the cover — see StudyFacts. */}
+                {/* relative so the facts about the project can be set out
+                    in the margin beside the cover — see StudyFacts. */}
                 <article className="relative flex items-center gap-[var(--cover-gap)]">
                   {(entry.images ?? []).map((image, i) => (
                     <ProjectThumbnail
@@ -222,14 +263,7 @@ export function DesignOne() {
                         Tools: {entry.tools}
                       </p>
                     )}
-                    {/* Only while the study under this row is open — the closed
-                        list says what a project is in one line and stops. */}
-                    <StudyFacts
-                      date={study?.date}
-                      status={study?.status}
-                      role={study?.role}
-                      scope={study?.scope}
-                    />
+                    <StudyFacts study={study} />
                   </div>
                 </article>
               </ProjectSection>

@@ -44,6 +44,13 @@
      not really there, and the 1.5rem the note is held off the cover by. */
   --margin-note: calc((100vw - var(--column)) / 2 - 3rem);
 
+  /* And where it starts, measured from the left edge of the column it is set
+     beside — a negative number, since it is out to the left of it. 1.5rem
+     from the window's own edge, which is where the role at the top of the
+     page sits, so a note in the margin lines up under it rather than
+     floating somewhere between it and the column. */
+  --margin-note-x: calc(1.5rem - (100vw - var(--column)) / 2);
+
   /* The name across the top of the homepage. It sets solid, so its type size
      is also its height — which is what the line beneath it has to clear, and
      the reason the size lives here rather than only in the markup. Where the
