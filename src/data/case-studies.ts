@@ -471,9 +471,10 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "images",
-        // Three phones across, held to the width they come out at on a laptop
-        // so a full-screen monitor does not blow each one up past it.
-        max: 1050,
+        // Three phones across. The row is what is held rather than each shot,
+        // so they keep sharing it evenly: 900 across, less the two gaps, puts
+        // each phone at 289px whatever the window is doing.
+        max: 900,
         items: [
           {
             src: "/projects/screen-translator-2.png",
