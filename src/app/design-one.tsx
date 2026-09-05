@@ -15,45 +15,37 @@ import { ProjectThumbnail } from "./project-thumbnail";
 import { AppStoreBadge, SiteBadge } from "./title-badge";
 
 /**
- * The project's name, and under it when it was made, what the role was, and
- * how far it went.
+ * When a project was made, what the role was, and how far it went.
  *
  * Out in the margin at the left of the window, on the line the role at the top
  * of the page holds — so everything the page says about itself in the margin
- * is ranged off one edge. What is left beside the cover is the one line saying
- * what the thing is, and the study under it when it is opened.
+ * is ranged off one edge. Nothing else leaves the column. These are notes
+ * about the project rather than part of it, and the study under the row, when
+ * it is opened, does not have to carry them.
  *
- * The facts are here whether that study is open or not: a reader deciding
- * which project to open wants to know when it was and how far it went before
- * pressing anything.
+ * They are here whether that study is open or not: a reader deciding which
+ * project to open wants to know when it was and what it was before pressing
+ * anything.
  *
- * Under 1000px there is no margin to put any of this in. The facts are then
- * not shown at all — they are the smallest thing the page has to say, and the
- * narrower the window the truer that is; the study's own page still carries
- * them. The name is not the smallest thing the page has to say, so it goes
- * back beside the cover instead, which is where the caller keeps its second
- * copy. --margin-note is the room out there, --margin-note-x is where it
- * starts; both are in globals.css.
+ * Only where there is a margin to put them in. Under 1000px the window has
+ * nothing to spare, and rather than fold them into the column — where they
+ * turn every row from a picture and a line into a stack of five — they are
+ * not shown at all. They are the smallest thing the page has to say, and the
+ * narrower the window the truer that is; the study itself still carries them
+ * on its own page. --margin-note is the room out there, --margin-note-x is
+ * where it starts; both are in globals.css.
  */
-function StudyFacts({
-  title,
-  study,
-}: {
-  title: React.ReactNode;
-  study?: CaseStudy;
-}) {
-  const lines = study
-    ? [study.date, study.status, study.role, study.scope].filter(Boolean)
-    : [];
+function StudyFacts({ study }: { study?: CaseStudy }) {
+  if (!study) return null;
+  const lines = [study.date, study.status, study.role, study.scope].filter(
+    Boolean,
+  );
+  if (!lines.length) return null;
 
   return (
     <div className="absolute left-[var(--margin-note-x)] top-1/2 hidden w-[var(--margin-note)] -translate-y-1/2 min-[1000px]:block">
-      {title}
       {lines.map((line, i) => (
-        <p
-          key={i}
-          className={`text-base leading-relaxed ${i ? "mt-1" : "mt-3"}`}
-        >
+        <p key={i} className={`text-base leading-relaxed ${i ? "mt-1" : ""}`}>
           {line}
         </p>
       ))}
@@ -222,20 +214,6 @@ export function DesignOne() {
         <ProjectList>
           {entries.map((entry) => {
             const study = caseStudies[entry.slug];
-            // Built once and set twice — out in the margin where there is a
-            // margin, in the column where there is not. Two copies of one
-            // heading, and only ever one of them drawn.
-            const title = (
-              <h2 className="text-xl font-semibold leading-snug">
-                {entry.title}
-                {entry.appStore !== undefined && (
-                  <AppStoreBadge href={entry.appStore} label={entry.title} />
-                )}
-                {entry.titleHref && (
-                  <SiteBadge href={entry.titleHref} label={entry.title} />
-                )}
-              </h2>
-            );
             return (
               <ProjectSection
                 key={entry.slug}
@@ -259,7 +237,15 @@ export function DesignOne() {
                       without it a flex item refuses to shrink past its content and
                       pushes the row off the side of the screen. */}
                   <div className="min-w-0 flex-1 sm:w-[var(--text-width)] sm:flex-none sm:shrink-0">
-                    <div className="min-[1000px]:hidden">{title}</div>
+                    <h2 className="text-xl font-semibold leading-snug">
+                      {entry.title}
+                      {entry.appStore !== undefined && (
+                        <AppStoreBadge href={entry.appStore} label={entry.title} />
+                      )}
+                      {entry.titleHref && (
+                        <SiteBadge href={entry.titleHref} label={entry.title} />
+                      )}
+                    </h2>
                     {/* One line, running off the end of the column into the
                         room at the right of the window rather than breaking
                         at the measure. The measure belongs to the study under
@@ -275,7 +261,7 @@ export function DesignOne() {
                         breaks at the measure there, as it always did — the
                         same width the facts in the margin appear at. */}
                     {entry.blurb && (
-                      <p className="mt-3 text-base leading-relaxed min-[1000px]:mt-0 min-[1000px]:whitespace-nowrap">
+                      <p className="mt-3 text-base leading-relaxed min-[1000px]:whitespace-nowrap">
                         {entry.blurb}
                       </p>
                     )}
@@ -289,7 +275,7 @@ export function DesignOne() {
                         Tools: {entry.tools}
                       </p>
                     )}
-                    <StudyFacts title={title} study={study} />
+                    <StudyFacts study={study} />
                   </div>
                 </article>
               </ProjectSection>
