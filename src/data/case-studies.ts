@@ -129,30 +129,26 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       // frame the problem in terms of user friction and business opportunity. state a clear hypothesis or goal.
 
+      
       {
         type: "video",
         src: "/projects/loot-check-shark.mp4",
         caption: "Finding the potential value of my shark painting",
       },
-    
-      {
+
+            {
                     type: "heading",
-                    text: "Optimizing User Flow",
-                    note: "Problem & Solution",
+                    text: "Context",
+                    note: "Intro",
                   },
       {
         type: "text",
-        text: "Finding the resale value of items is a time consuming process. Existing appraisal apps require a subscription and have unnecessary steps.",
+        text: "Finding the resale value of items is a time consuming process. Existing appraisal apps require a subscription and have unnecessary steps. My solution was a fast, accurate, and free iOS app for users to identify and price their items.",
       },
- 
+
       {
         type: "text",
-        text: "My solution was a fast, accurate, and free iOS app for users to identify and price their items. I designed for the least amount of steps....",
-      },
-                      { type: "heading", text: "" },
-      {
-        type: "text",
-        text: "",
+        text: "I designed for the least amount of steps....",
       },
 
       
