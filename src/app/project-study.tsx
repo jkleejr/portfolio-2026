@@ -4,9 +4,10 @@
 // Opening a study on the homepage.
 //
 // A cover is the switch: press one and that project's study unfolds under its
-// row, press it again — or read to the end of it — and the row folds back to
-// the picture and the line it was. The list is never left behind, and no page
-// is ever loaded to read one.
+// row, press it again and the row folds back to the picture and the line it
+// was. A study stays open for as long as it is wanted — nothing but another
+// press closes it. The list is never left behind, and no page is ever loaded
+// to read one.
 //
 // One at a time. The state is a single slug held for the whole list rather
 // than a flag on each project, so opening the second closes the first: two
@@ -17,14 +18,7 @@
 // on the page. See the note at the top of case-study.tsx.
 // ---------------------------------------------------------------------------
 
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { createContext, useCallback, useContext, useRef, useState } from "react";
 
 // --- the switch, read by the cover ----------------------------------------
 
@@ -62,21 +56,6 @@ export function ProjectList({ children }: { children: React.ReactNode }) {
 
 // --- one project ----------------------------------------------------------
 
-/**
- * How far up the window the end of a study has to come before it counts as
- * read, as a share of the window's height.
- *
- * At the bottom edge (1) the end has only appeared and a whole screenful is
- * still ahead of the reader — folding there closes the study out from under
- * the last of it. At the top edge (0) the study is gone off the screen
- * entirely and what fills it is the next project, which is too late to be
- * folding the one before it away. A quarter of the way down leaves the last
- * lines still in sight, above whatever follows, and takes about half a
- * screenful more scrolling to reach than the bottom edge does. This is the
- * one number to move if the fold still comes too early or too late.
- */
-const READ_TO = 0.25;
-
 export function ProjectSection({
   slug,
   study,
@@ -92,28 +71,16 @@ export function ProjectSection({
   const open = !!study && list?.openSlug === slug;
 
   const sectionRef = useRef<HTMLElement>(null);
-  const studyRef = useRef<HTMLDivElement>(null);
-
-  // Folding up moves everything below the study a screen or more up the page,
-  // and the reader is at the bottom of it when that happens — so the scroll
-  // has to be put back deliberately or they land somewhere they never went.
-  // The row is where they started, and where the picture they pressed is, so
-  // that is where they are put down: its top, with a little air above it.
-  const close = useCallback(() => {
-    const el = sectionRef.current;
-    const top = el ? el.getBoundingClientRect().top + window.scrollY : null;
-    list?.setOpenSlug(null);
-    if (top === null) return;
-    // After the paint that takes the study off the page — before it, the
-    // document is still its old height and the browser clamps the scroll.
-    requestAnimationFrame(() => {
-      window.scrollTo({ top: Math.max(top - 32, 0), behavior: "auto" });
-    });
-  }, [list]);
 
   const toggle = useCallback(() => {
     if (!study) return;
-    if (open) return close();
+    if (open) {
+      // Closing takes away only what is under the row, and the cover was just
+      // pressed, so the row is on the screen and stays exactly where it is.
+      // Nothing to put back.
+      list?.setOpenSlug(null);
+      return;
+    }
     // Opening this one closes whatever was open, and if that was a project
     // above this row, the row is about to jump up the window by the whole
     // height of a study — under the finger that just pressed it. So hold it
@@ -128,54 +95,7 @@ export function ProjectSection({
         window.scrollBy(0, after - before);
       }
     });
-  }, [study, open, close, list, slug]);
-
-  // Reading to the end closes it. The alternative is a reader who finishes a
-  // study and has to find their way back up to the picture to put it away.
-  useEffect(() => {
-    if (!open) return;
-    const body = studyRef.current;
-    if (!body) return;
-
-    // A study shorter than the window is wholly on screen the moment it
-    // opens: its end cannot be reached, only seen, and folding it up the
-    // instant a reader nudged the page would be a trapdoor. Those wait for
-    // the cover to be pressed again.
-    if (body.offsetHeight < window.innerHeight) return;
-
-    // Not until the reader has moved. The press that opened the study is not
-    // a scroll, but the layout shift under it can be, and an unarmed handler
-    // would fold the study up before a word of it was read.
-    let armed = false;
-    let frame = 0;
-
-    const onScroll = () => {
-      if (!armed) {
-        armed = true;
-        return;
-      }
-      if (frame) return;
-      frame = requestAnimationFrame(() => {
-        frame = 0;
-        const el = studyRef.current;
-        if (!el) return;
-        const end = el.getBoundingClientRect().bottom;
-        // The foot of the page counts as the end however far up the window it
-        // is: for the last project there may be nothing below the study to
-        // scroll, and a study that cannot be finished cannot be closed.
-        const atFoot =
-          window.scrollY + window.innerHeight >=
-          document.documentElement.scrollHeight - 2;
-        if (end <= window.innerHeight * READ_TO || atFoot) close();
-      });
-    };
-
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      if (frame) cancelAnimationFrame(frame);
-    };
-  }, [open, close]);
+  }, [study, open, list, slug]);
 
   return (
     <section ref={sectionRef} className="w-full">
@@ -186,7 +106,7 @@ export function ProjectSection({
         // The study runs the width of the whole column rather than the writing
         // half of the row: a shot in it is the size it is at
         // /projects/[slug], and the prose keeps the measure it was written to.
-        <div ref={studyRef} className="mt-10">
+        <div className="mt-10">
           {study}
         </div>
       )}
