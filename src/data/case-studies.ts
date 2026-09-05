@@ -522,7 +522,7 @@ export const caseStudies: Record<string, CaseStudy> = {
   "buy-side-briefings": {
     title: "Buy Side Briefings",
     date: "May 2026 -",
-    role: "Product Design",
+    role: "Product Design, Web Design",
     scope: "Concept to live website",
     href: "https://buy-side-briefings.vercel.app/",
     blocks: [
