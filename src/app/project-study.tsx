@@ -64,11 +64,18 @@ export function ProjectList({ children }: { children: React.ReactNode }) {
 
 /**
  * How far up the window the end of a study has to come before it counts as
- * read. At the very bottom edge it has only appeared — the last screenful is
- * still ahead of the reader — so the fold waits until that end has risen into
- * the top three quarters of the window.
+ * read, as a share of the window's height.
+ *
+ * At the bottom edge (1) the end has only appeared and a whole screenful is
+ * still ahead of the reader — folding there closes the study out from under
+ * the last of it. At the top edge (0) the study is gone off the screen
+ * entirely and what fills it is the next project, which is too late to be
+ * folding the one before it away. A quarter of the way down leaves the last
+ * lines still in sight, above whatever follows, and takes about half a
+ * screenful more scrolling to reach than the bottom edge does. This is the
+ * one number to move if the fold still comes too early or too late.
  */
-const READ_TO = 0.75;
+const READ_TO = 0.25;
 
 export function ProjectSection({
   slug,
