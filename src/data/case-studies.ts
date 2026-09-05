@@ -12,6 +12,11 @@ export type CaseStudyBlock =
   // many pixels and centres it — for a crop taken off a retina screen, where
   // the file is twice the size the thing was on screen and blowing it up to
   // the column would show it at twice life size.
+  // max is the other way round from width: the shot still takes the column
+  // and still grows with the window, but stops growing at that many pixels.
+  // For a wide shot that is readable long before the column runs out, and on
+  // a large monitor at full screen would otherwise be blown up past the point
+  // where the extra size tells you anything.
   | {
       type: "image";
       src: string;
@@ -19,6 +24,7 @@ export type CaseStudyBlock =
       caption?: string;
       crop?: string;
       width?: number;
+      max?: number;
     }
   // Three across from sm up, or two where the shots are wider than they are
   // tall and three would leave them too small to read.
@@ -52,6 +58,9 @@ export type CaseStudyBlock =
       }[];
       caption?: string;
       columns?: 2;
+      // A ceiling on the row, not on a shot in it: the shots keep sharing it
+      // in the same proportions and stop growing together.
+      max?: number;
     }
   // Autoplays muted and looping. Set controls where the sound is part of
   // what the recording shows — a viewer needs a way to unmute it.
@@ -495,6 +504,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "image",
         src: "/projects/buy-side-site-today.png",
+        max: 800,
         alt: "The Today page with the toggle on PM: a live ticker strip under the nav, then the night report of Wednesday, September 2, filed at 8:14 PM ET, its headline on the weakest private hiring since January barely denting the odds of a Fed rate hike, the paragraph that argues it, a link out to the full eight minute read, and the charts panel opening underneath",
       },
 
@@ -605,6 +615,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "image",
         src: "/projects/buy-side-chart.png",
+        max: 800,
         alt: "The charts panel: a row of tickers with Nvidia selected, range and bar controls under it, and a three month candlestick chart with a hover card on the June 10 bar showing its open, high, low, and volume, over a footer crediting Yahoo Finance and noting quotes are delayed about fifteen minutes",
       },
 
@@ -617,6 +628,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "image",
         src: "/projects/buy-side-sector-rotation.png",
+        max: 800,
         alt: "The sector rotation table: eleven sectors from Energy down to Consumer Discretionary, each with its ETF ticker, today's move, and the fifty day move, the gains in green and the losses in red, with a source line under it noting the quotes are delayed",
       },
 
@@ -628,6 +640,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "image",
         src: "/projects/buy-side-earnings-timeline.png",
+        max: 800,
         alt: "The earnings timeline: nineteen tickers from MU down to WMT, each with a dot placed along a line running from today past sixty days out and a count of days until it reports, filled dots for confirmed dates and hollow ones for estimates",
       },
 
@@ -639,6 +652,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "image",
         src: "/projects/buy-side-macro-grid.png",
+        max: 800,
         alt: "The macro indicators grid: tiles grouped into Interest Rates & Monetary Policy, Inflation & Purchasing Power, Economic Growth & Activity, and Unemployment & Labor, with warning and alert threshold color highlights on key metrics",
       },
 
@@ -655,6 +669,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "images",
         columns: 2,
+        max: 700,
         items: [
           {
             src: "/projects/buy-side-mobile-today.png",

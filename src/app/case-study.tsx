@@ -266,6 +266,7 @@ function Block({
             className="mx-auto w-full max-w-full rounded-xl border border-foreground/10"
             style={{
               ...(block.width ? { width: block.width } : null),
+              ...(block.max ? { maxWidth: block.max } : null),
               ...(block.crop ? { objectPosition: block.crop } : null),
             }}
           />
@@ -287,7 +288,10 @@ function Block({
               shots that are not all the same shape would otherwise pull the
               short ones to the height of the tallest and squash what is in
               them. */}
-          <div className="flex flex-wrap items-start justify-center gap-4">
+          <div
+            className="mx-auto flex flex-wrap items-start justify-center gap-4"
+            style={block.max ? { maxWidth: block.max } : undefined}
+          >
             {block.items.map((item, i) => (
               // Each shot in a figure of its own that carries the width, so a
               // caption under one shot sits under that shot and not the row.
