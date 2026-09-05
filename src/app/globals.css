@@ -26,7 +26,7 @@
      width at which the blurbs fill the line they are given, so the ragged
      edge sits close to the box edge and the block reads centred under the
      name. Any widening of it brings the lean back. */
-  --cover: 168px;
+  --cover: 192px;
   --cover-gap: 3rem;
   --text-width: 36ch;
   --text-start: calc(var(--cover) + var(--cover-gap));
@@ -229,7 +229,9 @@ body {
    A project is a cover with its writing beside it at every width, which on a
    narrow screen only works if the cover gives way: 104px and a 1rem gap leave
    the writing something like 220px on the narrowest phone, where the desktop
-   168px and 3rem would leave it 120px and force the row wider than the screen.
+   192px and 3rem would leave it 96px and force the row wider than the screen.
+   The cover grew on the desktop and this did not follow it, for that reason:
+   there is nothing here to spend.
 
    The corner stack sits in the top-right corner here as it does on a laptop,
    as a row rather than a column — so it clears the name at the top left and

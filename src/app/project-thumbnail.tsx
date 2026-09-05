@@ -130,7 +130,7 @@ export function ProjectThumbnail({
         src={shown}
         alt={image.alt}
         fill
-        sizes="(width < 40rem) 104px, 168px"
+        sizes="(width < 40rem) 104px, 192px"
         quality={90}
         className="object-cover"
         style={
