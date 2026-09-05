@@ -162,8 +162,13 @@ export const entries: Entry[] = [
         // comes back off. The still is the film's own first frame, cut from
         // it and square like it, so hovering the cover starts the rain from
         // exactly the picture that was standing there.
-        cover: "/projects/time-with-tree-rain.png",
-        coverVideo: "/projects/time-with-tree-rain.mp4",
+        //
+        // Named for the recording rather than kept at the old name. A cover
+        // swapped under a name that has already been served is a cover that
+        // goes on being the old one — the browser has it, and so does the
+        // image optimiser, and neither is asked again. A new name is fetched.
+        cover: "/projects/time-with-tree-water.png",
+        coverVideo: "/projects/time-with-tree-water.mp4",
         alt: "Rain on a branch: pale green leaves along a stem, each rimmed with water, against a dark window and a lit wall behind",
         // spacing from the last project to the bottom of the page is 112 px on desktop, 32 px on phone
   },
