@@ -159,9 +159,9 @@ export const entries: Entry[] = [
     images: [
       {
         // The leaf logo is still at time-with-tree-logo-3.png if this one
-        // comes back off. This frame is wider than it is tall and the cover
-        // is a square, so what shows is the middle of it — coverCrop moves
-        // that if the middle is not the part worth showing.
+        // comes back off. The still is the film's own first frame, cut from
+        // it and square like it, so hovering the cover starts the rain from
+        // exactly the picture that was standing there.
         cover: "/projects/time-with-tree-rain.png",
         coverVideo: "/projects/time-with-tree-rain.mp4",
         alt: "Rain on a branch: pale green leaves along a stem, each rimmed with water, against a dark window and a lit wall behind",
