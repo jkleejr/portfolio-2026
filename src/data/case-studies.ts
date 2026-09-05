@@ -297,15 +297,10 @@ export const caseStudies: Record<string, CaseStudy> = {
         text: "When processing fails, the paper enters an error state and shows the exact error message.",
       },
       {
-        type: "images",
-        columns: 2,
-        items: [
-          {
-            src: "/projects/paper-reader-library-error-detail.png",
-            fullOnPhone: true,
-            alt: "A close read of the failed row: the paper's name over the Gemini error in red, with a retry button on its right",
-          },
-        ],
+        type: "image",
+        src: "/projects/paper-reader-library-error-detail.png",
+        width: 367,
+        alt: "A close read of the failed row: the paper's name over the Gemini error in red, with a retry button on its right",
       },
       {
         type: "text",
@@ -700,7 +695,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "Time with Tree is a birch tree farm in South Korea. They had trees but no way for customers to find them, so I built their online store. "
+        text: "Time with Tree is a birch tree farm in South Korea. They had trees but no way for customers to find them, so I built their website. "
       },
 
       {
