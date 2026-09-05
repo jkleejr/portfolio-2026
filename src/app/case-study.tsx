@@ -362,6 +362,11 @@ function Block({
         // Centred in the column rather than filling it: the recordings are
         // shot on a phone, so a full-width one would stand a screen and a half
         // tall. Capped at a phone's width and put in the middle of the page.
+        // 320px, against files that are 498px wide — room to go on if one
+        // wants it, and short of the width where the picture would soften.
+        // The number is here twice on purpose: the middle grid column is the
+        // video's width, so the two beside it stay equal only if both move
+        // together.
         //
         // Three columns rather than a caption set out of the flow: the middle
         // one is the video's width, so the two beside it are equal and the
@@ -370,7 +375,7 @@ function Block({
         // page sets everything else in. The caption is an ordinary line in
         // that space — it breaks where a paragraph breaks, so its right edge
         // is the one every other line on the page ends at.
-        <figure className="sm:grid sm:grid-cols-[1fr_280px_1fr] sm:items-center">
+        <figure className="sm:grid sm:grid-cols-[1fr_320px_1fr] sm:items-center">
           <video
             src={block.src}
             autoPlay
@@ -382,7 +387,7 @@ function Block({
             // rest of what the browser puts there is not.
             controlsList="nodownload noplaybackrate"
             disablePictureInPicture
-            className="mx-auto w-full max-w-[280px] rounded-xl border border-foreground/10 sm:col-start-2"
+            className="mx-auto w-full max-w-[320px] rounded-xl border border-foreground/10 sm:col-start-2"
           />
           {/* A little above the middle of the video, and under it below sm,
               where there is no room beside it. */}
