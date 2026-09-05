@@ -7,13 +7,13 @@ export const site = {
   // The same name as prose, for the places the browser and other people's
   // servers set it rather than the page: the tab, and link previews.
   titleName: "John Lee",
-  role: "Product Designer",
+  role: "Design Engineer",
   // Under the role in the header, as the way to get in touch.
   email: "johnkleejr@gmail.com",
 
   // The last line of the homepage, under the work. Left out entirely when it
   // is empty, rather than leaving a gap at the foot of the page.
-  closing: "Open to product design roles.",
+  closing: "Open to product design and design engineer roles.",
 
   // One entry per line: each is set as a paragraph of its own rather than run
   // into the one before it.
