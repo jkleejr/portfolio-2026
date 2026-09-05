@@ -511,7 +511,11 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "image",
         src: "/projects/buy-side-site-today.png",
-        max: 800,
+        // The shot that opens the study, and the only one that has a whole
+        // website in it rather than one panel of it, so it is given more room
+        // than the rest. 1167px of file is the ceiling on how far it can go
+        // before it softens; 1000 keeps it clear of that.
+        max: 1000,
         alt: "The Today page with the toggle on PM: a live ticker strip under the nav, then the night report of Wednesday, September 2, filed at 8:14 PM ET, its headline on the weakest private hiring since January barely denting the odds of a Fed rate hike, the paragraph that argues it, a link out to the full eight minute read, and the charts panel opening underneath",
       },
 
