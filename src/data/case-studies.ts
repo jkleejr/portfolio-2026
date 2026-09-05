@@ -605,7 +605,6 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "image",
         src: "/projects/buy-side-chart.png",
-        width: 620,
         alt: "The charts panel: a row of tickers with Nvidia selected, range and bar controls under it, and a three month candlestick chart with a hover card on the June 10 bar showing its open, high, low, and volume, over a footer crediting Yahoo Finance and noting quotes are delayed about fifteen minutes",
       },
 
@@ -618,7 +617,6 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "image",
         src: "/projects/buy-side-sector-rotation.png",
-        width: 620,
         alt: "The sector rotation table: eleven sectors from Energy down to Consumer Discretionary, each with its ETF ticker, today's move, and the fifty day move, the gains in green and the losses in red, with a source line under it noting the quotes are delayed",
       },
 
@@ -630,7 +628,6 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "image",
         src: "/projects/buy-side-earnings-timeline.png",
-        width: 620,
         alt: "The earnings timeline: nineteen tickers from MU down to WMT, each with a dot placed along a line running from today past sixty days out and a count of days until it reports, filled dots for confirmed dates and hollow ones for estimates",
       },
 
@@ -642,7 +639,6 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "image",
         src: "/projects/buy-side-macro-grid.png",
-        width: 620,
         alt: "The macro indicators grid: tiles grouped into Interest Rates & Monetary Policy, Inflation & Purchasing Power, Economic Growth & Activity, and Unemployment & Labor, with warning and alert threshold color highlights on key metrics",
       },
 
@@ -662,12 +658,10 @@ export const caseStudies: Record<string, CaseStudy> = {
         items: [
           {
             src: "/projects/buy-side-mobile-today.png",
-            width: 290,
             alt: "The Today page on a phone: the ticker strip under the nav, the date with an AM/PM toggle set to AM, the morning report's headline on a government bond selloff turning global as Japan's 10-year hits a level unseen since 1996, its opening paragraph, a link to the seven minute read, and the charts panel starting below",
           },
           {
             src: "/projects/buy-side-mobile-full-read.png",
-            width: 290,
             alt: "The full read on a phone: a back link to all reports, the date as a heading, the time the report was generated, the headline, then three bulleted takeaways on the Japanese 10-year, the US Treasury yield and the split in September hike odds, with the body and its source citations below",
           },
         ],
