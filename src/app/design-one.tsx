@@ -8,6 +8,8 @@
 
 import { site } from "@/data/site";
 import { entries } from "@/data/projects";
+import { caseStudies } from "@/data/case-studies";
+import { StudyBody } from "./case-study";
 import { ProjectThumbnail } from "./project-thumbnail";
 import { AppStoreBadge, SiteBadge } from "./title-badge";
 
@@ -159,53 +161,106 @@ export function DesignOne() {
             bottom-heavy. A phone fits the row by shrinking the cover and the
             gap rather than by stacking the two; see "The page on a phone" in
             globals.css. */}
-        <div className="mt-16 flex flex-col items-start gap-16">
-          {entries.map((entry) => (
-            <article
-              key={entry.slug}
-              className="flex items-center gap-[var(--cover-gap)]"
-            >
-              {(entry.images ?? []).map((image, i) => (
-                <ProjectThumbnail
-                  key={`${entry.slug}-${i}`}
-                  image={image}
-                  slug={entry.slug}
-                  href={entry.srcHref}
-                />
-              ))}
-              {/* The writing takes whatever the cover leaves on a phone, and
-                  its own measure from sm up, where there is room for it.
-                  min-w-0 is what lets it be narrower than its longest line —
-                  without it a flex item refuses to shrink past its content and
-                  pushes the row off the side of the screen. */}
-              <div className="min-w-0 flex-1 sm:w-[var(--text-width)] sm:flex-none sm:shrink-0">
-                <h2 className="text-xl font-semibold leading-snug">
-                  {entry.title}
-                  {entry.appStore !== undefined && (
-                    <AppStoreBadge href={entry.appStore} label={entry.title} />
-                  )}
-                  {entry.titleHref && (
-                    <SiteBadge href={entry.titleHref} label={entry.title} />
-                  )}
-                </h2>
-                {entry.blurb && (
-                  <p className="mt-3 text-base leading-relaxed">
-                    {entry.blurb}
-                  </p>
+        {/* Each project is its row and, under it, everything written about
+            it. The studies used to sit one link away at /projects/[slug];
+            the page now reads straight through them instead, and a reader
+            gets the work by scrolling rather than by leaving and coming
+            back. Those pages are still there and still the permalink for a
+            study — this is the same markup, told to leave out the two lines
+            the row above it already carries. See `inline` in case-study.tsx.
+
+            The gap between projects is what a row alone used to take between
+            covers, and then some: with a study closing every project, 4rem
+            no longer reads as the end of one and the start of the next. The
+            study sits nearer its own row than the next project does, which
+            is what makes the two read as one thing. */}
+        <div className="mt-16 flex flex-col items-start gap-32">
+          {entries.map((entry) => {
+            const study = caseStudies[entry.slug];
+            return (
+              <section key={entry.slug} className="w-full">
+                <article className="flex items-center gap-[var(--cover-gap)]">
+                  {(entry.images ?? []).map((image, i) => (
+                    <ProjectThumbnail
+                      key={`${entry.slug}-${i}`}
+                      image={image}
+                      slug={entry.slug}
+                      href={entry.srcHref}
+                    />
+                  ))}
+                  {/* The writing takes whatever the cover leaves on a phone, and
+                      its own measure from sm up, where there is room for it.
+                      min-w-0 is what lets it be narrower than its longest line —
+                      without it a flex item refuses to shrink past its content and
+                      pushes the row off the side of the screen. */}
+                  <div className="min-w-0 flex-1 sm:w-[var(--text-width)] sm:flex-none sm:shrink-0">
+                    {/* The heading of everything under it, now that the study
+                        follows the row rather than sitting a link away — so it
+                        takes the size and weight the study page gives its title,
+                        which is a step above the headings inside the study. At
+                        text-xl it was level with them and the page read flat. */}
+                    <h2 className="text-2xl font-bold leading-snug">
+                      {entry.title}
+                      {entry.appStore !== undefined && (
+                        <AppStoreBadge href={entry.appStore} label={entry.title} />
+                      )}
+                      {entry.titleHref && (
+                        <SiteBadge href={entry.titleHref} label={entry.title} />
+                      )}
+                    </h2>
+                    {entry.blurb && (
+                      <p className="mt-3 text-base leading-relaxed">
+                        {entry.blurb}
+                      </p>
+                    )}
+                    {entry.date && (
+                      <p className="mt-2 text-base leading-relaxed">
+                        Date: {entry.date}
+                      </p>
+                    )}
+                    {entry.tools && (
+                      <p className="mt-1 text-base leading-relaxed">
+                        Tools: {entry.tools}
+                      </p>
+                    )}
+                    {/* When the project has a study, the three lines of fact it
+                        opens with are set here rather than at the top of the
+                        study — beside the cover, under the title they describe.
+                        Left of the column they read as a stray block belonging to
+                        nothing. Printed as written, the way the study page prints
+                        them; see the note on them in case-studies.ts. */}
+                    {study?.date && (
+                      <p className="mt-3 text-base leading-relaxed">{study.date}</p>
+                    )}
+                    {study?.status && (
+                      <p className="mt-1 text-base leading-relaxed">
+                        {study.status}
+                      </p>
+                    )}
+                    {study?.role && (
+                      <p className="mt-1 text-base leading-relaxed">{study.role}</p>
+                    )}
+                    {study?.scope && (
+                      <p className="mt-1 text-base leading-relaxed">
+                        {study.scope}
+                      </p>
+                    )}
+                  </div>
+                </article>
+                {/* The study itself, set the width of the whole column rather
+                    than the writing half of the row: a shot in it is the size
+                    it is on the page at /projects/[slug], and the prose keeps
+                    the measure it was written to. It starts nearer the row
+                    than the row does to the project above, so a study reads
+                    as belonging to the project it sits under. */}
+                {study && (
+                  <div className="mt-10">
+                    <StudyBody study={study} inline />
+                  </div>
                 )}
-                {entry.date && (
-                  <p className="mt-2 text-base leading-relaxed">
-                    Date: {entry.date}
-                  </p>
-                )}
-                {entry.tools && (
-                  <p className="mt-1 text-base leading-relaxed">
-                    Tools: {entry.tools}
-                  </p>
-                )}
-              </div>
-            </article>
-          ))}
+              </section>
+            );
+          })}
         </div>
 
         {/* What the work was leading to, and the way to answer it. From sm up
