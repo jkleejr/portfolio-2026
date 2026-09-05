@@ -223,6 +223,10 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "images",
         columns: 2,
+        // A crop off a retina screen, so 776px of file is 388px of screen.
+        // Half the row plus the gap between the two halves holds it there,
+        // rather than letting a wide window blow it up past life size.
+        max: 792,
         items: [
           {
             src: "/projects/loot-check-detail-input.png",
@@ -467,6 +471,9 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "images",
+        // Three phones across, held to the width they come out at on a laptop
+        // so a full-screen monitor does not blow each one up past it.
+        max: 1050,
         items: [
           {
             src: "/projects/screen-translator-2.png",
