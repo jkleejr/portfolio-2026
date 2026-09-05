@@ -145,12 +145,6 @@ export const caseStudies: Record<string, CaseStudy> = {
         type: "text",
         text: "Finding the resale value of items is a time consuming process. Existing appraisal apps require a subscription and have unnecessary steps. My solution was a fast, accurate, and free iOS app for users to identify and price their items.",
       },
-
-      {
-        type: "text",
-        text: "I designed for the least amount of steps....",
-      },
-
       
         // designing for speed: the core loop - time to value. remove unnecessary navigation.
         // users are often scanning multiple items at a time to declutter
