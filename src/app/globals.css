@@ -57,16 +57,13 @@
      that side. The left edge of the page is spoken for — the facts are set
      out there — and the right is empty.
 
-     12rem is what it grows by, which at the size the writing is set puts a
-     line at about ninety characters. The second half of the min is the room
-     that is actually there: the column plus the margin at its right, less
-     1.5rem of air at the window's edge and the 1.5rem the note on the other
-     side is held off by. Whichever is smaller wins, so the study never runs
-     off the side of the window. */
-  --study-width: min(
-    calc(var(--column) + 12rem),
-    calc((100vw + var(--column)) / 2 - 3rem)
-  );
+     All of it: the column plus the whole margin at its right, less 1.5rem of
+     air at the window's edge and the 1.5rem the note on the other side is
+     held off by. Nothing caps it but the window, so on a wide screen a line
+     runs long — 1340px gives about a hundred and ten characters, and a line
+     that long is hard to come back from at the end of it. If it wants
+     holding, a min() against a fixed width here is the place. */
+  --study-width: calc((100vw + var(--column)) / 2 - 3rem);
 
   /* The name across the top of the homepage. It sets solid, so its type size
      is also its height — which is what the line beneath it has to clear, and
