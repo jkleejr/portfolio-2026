@@ -28,9 +28,12 @@ import { AppStoreBadge, SiteBadge } from "./title-badge";
  * anything.
  *
  * Only where there is a margin to put them in. Under 1000px the window has
- * nothing to spare and they come back into the column, under the line saying
- * what the project is. --margin-note is the room out there, --margin-note-x
- * is where it starts; both are in globals.css.
+ * nothing to spare, and rather than fold them into the column — where they
+ * turn every row from a picture and a line into a stack of five — they are
+ * not shown at all. They are the smallest thing the page has to say, and the
+ * narrower the window the truer that is; the study itself still carries them
+ * on its own page. --margin-note is the room out there, --margin-note-x is
+ * where it starts; both are in globals.css.
  */
 function StudyFacts({ study }: { study?: CaseStudy }) {
   if (!study) return null;
@@ -39,19 +42,14 @@ function StudyFacts({ study }: { study?: CaseStudy }) {
   );
   if (!lines.length) return null;
 
-  const set = lines.map((line, i) => (
-    <p key={i} className={`text-base leading-relaxed ${i ? "mt-1" : ""}`}>
-      {line}
-    </p>
-  ));
-
   return (
-    <>
-      <div className="absolute left-[var(--margin-note-x)] top-1/2 hidden w-[var(--margin-note)] -translate-y-1/2 min-[1000px]:block">
-        {set}
-      </div>
-      <div className="mt-3 min-[1000px]:hidden">{set}</div>
-    </>
+    <div className="absolute left-[var(--margin-note-x)] top-1/2 hidden w-[var(--margin-note)] -translate-y-1/2 min-[1000px]:block">
+      {lines.map((line, i) => (
+        <p key={i} className={`text-base leading-relaxed ${i ? "mt-1" : ""}`}>
+          {line}
+        </p>
+      ))}
+    </div>
   );
 }
 
