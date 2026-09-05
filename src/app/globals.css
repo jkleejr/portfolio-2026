@@ -16,10 +16,19 @@
      has to say, and so the block that is centred in the window. Widening the
      writing widens that block, and a centred block grows both ways — the
      covers move out to the left as the last word of a line moves out to the
-     right. */
+     right.
+
+     The measure is set by where the writing stops, not by where its box does.
+     A centred box whose lines end well short of its right edge does not read
+     as centred — the ink is all to the left of centre and the page leans that
+     way, however exactly the box is placed. At 49ch every line on the
+     homepage broke with 60px to 270px of the box still to run. 36ch is the
+     width at which the blurbs fill the line they are given, so the ragged
+     edge sits close to the box edge and the block reads centred under the
+     name. Any widening of it brings the lean back. */
   --cover: 168px;
   --cover-gap: 3rem;
-  --text-width: 49ch;
+  --text-width: 36ch;
   --text-start: calc(var(--cover) + var(--cover-gap));
   --column: calc(var(--text-start) + var(--text-width));
 
