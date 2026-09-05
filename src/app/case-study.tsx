@@ -210,7 +210,7 @@ function Block({
                 heading stands on its own. */}
             {block.note && (
               <span
-                className={`absolute ${lead.replace("pt-", "top-")} left-[var(--margin-note-x)] hidden w-[var(--margin-note)] text-base font-normal leading-relaxed min-[1000px]:block`}
+                className={`absolute ${lead.replace("pt-", "top-")} left-[var(--margin-note-x)] hidden w-[var(--margin-note)] text-base font-bold leading-relaxed min-[1000px]:block`}
               >
                 {block.note}
               </span>
