@@ -711,7 +711,7 @@ export const caseStudies: Record<string, CaseStudy> = {
   "time-with-tree": {
     title: "Time with Tree",
     date: "May 2026",
-    role: "Lovable",
+    role: "Vibe coded w/ Lovable",
     scope: "Live website",
     href: "https://timewithtree.co.kr/",
     blocks: [
