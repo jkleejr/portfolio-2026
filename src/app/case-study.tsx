@@ -8,118 +8,96 @@
 // puts it in is the same one every line on the homepage breaks at, so a study
 // reads as another page of the site and not a document dropped into it.
 //
-// Rendered in two places, and the same markup in both: the page at
-// /projects/[slug], and the homepage, which now sets every study out under the
-// project it belongs to rather than behind a link to it. `inline` is the
-// difference between the two — see the prop. It is plain markup with no state
-// of its own, so it stays on the server; the client bundle carries none of it.
+// Rendered by the page at /projects/[slug] and nothing else. It is plain
+// markup with no state of its own, so it stays on the server — the client
+// bundle carries none of it.
 // ---------------------------------------------------------------------------
 
 import { type CaseStudy, type CaseStudyBlock } from "@/data/case-studies";
 import { SiteLink } from "./site-link";
 import { AppStoreBadge, AppStoreMark } from "./title-badge";
-export function StudyBody({
-  study,
-  inline,
-}: {
-  study: CaseStudy;
-  /**
-   * Set when the study is being read on the homepage, under the row for its
-   * project. There the row is the header: it carries the title, the line
-   * saying what the thing is, and — beside the cover, where they belong with
-   * the title rather than stranded under it — the date, the role and the
-   * scope. So the study starts at its first block, and what is left here is
-   * the writing itself.
-   *
-   * The space at the foot goes too. It belongs to /projects/[slug], where the
-   * study is the last thing on the page; on the homepage the gap to the next
-   * project sets that distance.
-   */
-  inline?: boolean;
-}) {
+export function StudyBody({ study }: { study: CaseStudy }) {
   return (
     // No margins of its own: the page around it puts it in the same column the
     // homepage sets everything else in, and starts it at the height the name
     // starts at there.
-    <article className={inline ? undefined : "pb-20"}>
-      {!inline && (
-        <header>
-          {/* The title is the way to the live site when there is one — a link
-              mark after it says so. A button under the title said the same
-              thing at more cost. With no site but a listing on the App Store,
-              the title goes there instead, and the App Store mark rides inside
-              the same link so the two light up as one. */}
-          <h1 className="text-2xl font-bold">
-            {study.href ? (
-              <SiteLink href={study.href}>{study.title}</SiteLink>
-            ) : study.appStore ? (
-              <SiteLink
-                href={study.appStore}
-                // Sat on the middle of the title's caps rather than the middle
-                // of its line box, the way the chain is.
-                mark={<AppStoreMark className="shrink-0 translate-y-[0.06em]" />}
+    <article className="pb-20">
+      <header>
+        {/* The title is the way to the live site when there is one — a link
+            mark after it says so. A button under the title said the same
+            thing at more cost. With no site but a listing on the App Store,
+            the title goes there instead, and the App Store mark rides inside
+            the same link so the two light up as one. */}
+        <h1 className="text-2xl font-bold">
+          {study.href ? (
+            <SiteLink href={study.href}>{study.title}</SiteLink>
+          ) : study.appStore ? (
+            <SiteLink
+              href={study.appStore}
+              // Sat on the middle of the title's caps rather than the middle
+              // of its line box, the way the chain is.
+              mark={<AppStoreMark className="shrink-0 translate-y-[0.06em]" />}
+            >
+              {study.title}
+            </SiteLink>
+          ) : (
+            study.title
+          )}
+          {/* Its own link after the title's when the two go to different
+              places, or a plain mark when there is no listing to go to yet.
+              A title that already opens the listing carries the mark itself. */}
+          {study.appStore !== undefined && (study.href || !study.appStore) && (
+            <AppStoreBadge href={study.appStore} label={study.title} />
+          )}
+        </h1>
+        {study.tagline && (
+          <p className="mt-1 text-lg font-medium">{study.tagline}</p>
+        )}
+        {study.date && (
+          <p className="mt-2 text-base leading-relaxed">{study.date}</p>
+        )}
+        {/* Where the project stands, on the line under the date it belongs to
+            — so the two read as one small block of facts about the work. */}
+        {study.status && (
+          <p className="mt-1 text-base leading-relaxed">{study.status}</p>
+        )}
+        {/* Role and Scope, each on its own line under the date. Printed as
+            written with no label of their own, so the three lines read as one
+            small block of facts rather than a form. */}
+        {study.role && (
+          <p className="mt-1 text-base leading-relaxed">{study.role}</p>
+        )}
+        {study.scope && (
+          <p className="mt-1 text-base leading-relaxed">{study.scope}</p>
+        )}
+
+        {study.links && study.links.length > 0 && (
+          <div className="mt-6 flex flex-wrap gap-3">
+            {study.links.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                target="_blank"
+                rel="noreferrer"
+                className="rounded-lg border border-foreground/15 bg-foreground/[0.04] px-4 py-2 text-base font-semibold text-foreground transition duration-200 ease-out hover:scale-105 hover:opacity-80"
               >
-                {study.title}
-              </SiteLink>
-            ) : (
-              study.title
-            )}
-            {/* Its own link after the title's when the two go to different
-                places, or a plain mark when there is no listing to go to yet.
-                A title that already opens the listing carries the mark itself. */}
-            {study.appStore !== undefined && (study.href || !study.appStore) && (
-              <AppStoreBadge href={study.appStore} label={study.title} />
-            )}
-          </h1>
-          {study.tagline && (
-            <p className="mt-1 text-lg font-medium">{study.tagline}</p>
-          )}
-          {study.date && (
-            <p className="mt-2 text-base leading-relaxed">{study.date}</p>
-          )}
-          {/* Where the project stands, on the line under the date it belongs to
-              — so the two read as one small block of facts about the work. */}
-          {study.status && (
-            <p className="mt-1 text-base leading-relaxed">{study.status}</p>
-          )}
-          {/* Role and Scope, each on its own line under the date. Printed as
-              written with no label of their own, so the three lines read as one
-              small block of facts rather than a form. */}
-          {study.role && (
-            <p className="mt-1 text-base leading-relaxed">{study.role}</p>
-          )}
-          {study.scope && (
-            <p className="mt-1 text-base leading-relaxed">{study.scope}</p>
-          )}
+                {link.label}
+              </a>
+            ))}
+          </div>
+        )}
 
-          {study.links && study.links.length > 0 && (
-            <div className="mt-6 flex flex-wrap gap-3">
-              {study.links.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="rounded-lg border border-foreground/15 bg-foreground/[0.04] px-4 py-2 text-base font-semibold text-foreground transition duration-200 ease-out hover:scale-105 hover:opacity-80"
-                >
-                  {link.label}
-                </a>
-              ))}
-            </div>
-          )}
-
-          {study.facts && study.facts.length > 0 && (
-            <dl className="mt-8 flex flex-wrap gap-x-10 gap-y-4 border-y border-foreground/10 py-5">
-              {study.facts.map((fact) => (
-                <div key={fact.label}>
-                  <dt className="text-base font-semibold">{fact.label}</dt>
-                  <dd className="mt-1 text-base leading-relaxed">{fact.value}</dd>
-                </div>
-              ))}
-            </dl>
-          )}
-        </header>
-      )}
+        {study.facts && study.facts.length > 0 && (
+          <dl className="mt-8 flex flex-wrap gap-x-10 gap-y-4 border-y border-foreground/10 py-5">
+            {study.facts.map((fact) => (
+              <div key={fact.label}>
+                <dt className="text-base font-semibold">{fact.label}</dt>
+                <dd className="mt-1 text-base leading-relaxed">{fact.value}</dd>
+              </div>
+            ))}
+          </dl>
+        )}
+      </header>
 
       {study.cover && (
         // eslint-disable-next-line @next/next/no-img-element
@@ -133,7 +111,7 @@ export function StudyBody({
         />
       )}
 
-      <div className={`${inline ? "" : "mt-8 "}space-y-4`}>
+      <div className="mt-8 space-y-4">
         {study.blocks.map((block, i) => (
           <Block key={i} block={block} after={study.blocks[i - 1]?.type} />
         ))}
