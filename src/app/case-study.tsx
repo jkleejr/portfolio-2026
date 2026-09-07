@@ -50,7 +50,7 @@ export function StudyBody({
               thing at more cost. With no site but a listing on the App Store,
               the title goes there instead, and the App Store mark rides inside
               the same link so the two light up as one. */}
-          <h1 className="text-2xl font-bold">
+          <h1 className="text-2xl font-bold tracking-[-0.02em]">
             {study.href ? (
               <SiteLink href={study.href}>{study.title}</SiteLink>
             ) : study.appStore ? (
@@ -193,7 +193,7 @@ function Block({
         const lead = after && PICTURES.has(after) ? "pt-2" : "pt-4";
         return (
           <h2
-            className={`${lead} relative mb-2 text-xl font-bold leading-snug`}
+            className={`${lead} relative mb-2 text-xl font-bold leading-snug tracking-[-0.02em]`}
           >
             {/* A line about the section, out in the margin at the left of the
                 window rather than in the column — the same margin the project

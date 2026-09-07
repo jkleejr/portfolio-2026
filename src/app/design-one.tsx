@@ -252,7 +252,7 @@ export function DesignOne() {
                     {/* The name is the same switch the cover is — see
                         project-title.tsx. The marks after it are not: they
                         leave the page, and stay outside the press. */}
-                    <h2 className="text-xl font-semibold leading-snug">
+                    <h2 className="text-xl font-semibold leading-snug tracking-[-0.02em]">
                       <ProjectTitle slug={entry.slug}>{entry.title}</ProjectTitle>
                       {entry.appStore !== undefined && (
                         <AppStoreBadge href={entry.appStore} label={entry.title} />
