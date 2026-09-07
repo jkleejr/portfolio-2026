@@ -150,7 +150,7 @@ export const entries: Entry[] = [
         // fetches a variant too small for it). The site's front page is still
         // at buy-side-briefings-today.png and the cash logo at
         // buy-side-briefings-cash.png, if either reads better.
-        cover: "/projects/buy-side-briefings-peak.png",
+        cover: "/projects/buy-side-briefings-swing.png",
         alt: "A candlestick chart on a dark ground: green candles climbing to a peak, then red ones falling away from it",
       },
     ],
