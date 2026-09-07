@@ -9,6 +9,9 @@
 // press closes it. The list is never left behind, and no page is ever loaded
 // to read one.
 //
+// The open study is in the address — "/" plus its slug — so it can be shared
+// and comes back on reload, and the back button closes it. See ProjectList.
+//
 // One at a time. The state is a single slug held for the whole list rather
 // than a flag on each project, so opening the second closes the first: two
 // studies open at once is a page with no list left in it.
@@ -18,7 +21,15 @@
 // on the page. See the note at the top of case-study.tsx.
 // ---------------------------------------------------------------------------
 
-import { createContext, useCallback, useContext, useRef, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import { usePathname } from "next/navigation";
 import { usePress } from "./press";
 
 // --- the switch, read by the cover and the title ---------------------------
@@ -43,8 +54,45 @@ const OpenContext = createContext<{
   setOpenSlug: (slug: string | null) => void;
 } | null>(null);
 
+/**
+ * The open project, read off the address. The homepage is "/", and a project
+ * open on it is "/" plus its slug — johnkleejr.com/loot-check — which is also
+ * a page of its own (see app/[slug]/page.tsx), so the address can be shared
+ * and lands on the list with that study open.
+ */
+function slugFromPath(pathname: string): string | null {
+  const slug = pathname.replace(/^\/+|\/+$/g, "");
+  return slug || null;
+}
+
 export function ProjectList({ children }: { children: React.ReactNode }) {
-  const [openSlug, setOpenSlug] = useState<string | null>(null);
+  // The address is the record of which study is open, and the state here is
+  // what the page draws from. Two copies rather than one because opening a
+  // study has to be instant — the row is measured on the very next frame to
+  // hold it still, see ProjectSection — and a change that went through the
+  // router first would land a beat later than that. So the state is set
+  // directly and the address is written to match; and when the address moves
+  // on its own, under the back and forward buttons, the state follows it —
+  // set during the render that sees the new address rather than in an effect
+  // after it, so the page never draws a frame of the old one.
+  const pathname = usePathname();
+  const fromUrl = slugFromPath(pathname);
+  const [openSlug, setOpen] = useState<string | null>(fromUrl);
+  const [seenUrl, setSeenUrl] = useState(fromUrl);
+  if (fromUrl !== seenUrl) {
+    setSeenUrl(fromUrl);
+    setOpen(fromUrl);
+  }
+
+  const setOpenSlug = useCallback((slug: string | null) => {
+    setOpen(slug);
+    // The native call rather than the router's: Next folds it into its own
+    // history and keeps usePathname in step, and nothing is fetched or
+    // re-rendered for it — the study is already on the page. A new entry each
+    // time, so the back button undoes the last open or close.
+    window.history.pushState(null, "", slug ? `/${slug}` : "/");
+  }, []);
+
   return (
     <OpenContext.Provider value={{ openSlug, setOpenSlug }}>
       {/* The spacing of the closed list, unchanged: a study brings its own
@@ -73,6 +121,19 @@ export function ProjectSection({
 
   const sectionRef = useRef<HTMLElement>(null);
 
+  // Arriving at an address with a study in it — johnkleejr.com/loot-check —
+  // lands on the list with that study open, and the page should start at it
+  // rather than at the top with the study somewhere below. Once, on the first
+  // paint: a study opened by a press is under the finger already and is held
+  // still by the toggle below, and a back or forward that opens one is a
+  // return to where the reader was.
+  const first = useRef(true);
+  useEffect(() => {
+    if (!first.current) return;
+    first.current = false;
+    if (open) sectionRef.current?.scrollIntoView({ block: "start" });
+  }, [open]);
+
   const toggle = useCallback(() => {
     if (!study) return;
     if (open) {
@@ -99,7 +160,8 @@ export function ProjectSection({
   }, [study, open, list, slug]);
 
   return (
-    <section ref={sectionRef} className="w-full">
+    // scroll-mt is the room left over the row when the page starts at it.
+    <section ref={sectionRef} className="w-full scroll-mt-6">
       <ToggleContext.Provider value={study ? { open, toggle } : null}>
         {children}
       </ToggleContext.Provider>
