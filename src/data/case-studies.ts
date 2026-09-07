@@ -738,3 +738,25 @@ export const caseStudies: Record<string, CaseStudy> = {
     ],
   },
 };
+
+/**
+ * The pictures in a study, in the order they appear — for the cards behind
+ * a project's cover on the homepage. Films are left out: a card is a still.
+ */
+export function studyShots(
+  slug: string,
+): { src: string; alt: string; crop?: string }[] {
+  const study = caseStudies[slug];
+  if (!study) return [];
+  const out: { src: string; alt: string; crop?: string }[] = [];
+  for (const block of study.blocks) {
+    if (block.type === "image") {
+      out.push({ src: block.src, alt: block.alt, crop: block.crop });
+    } else if (block.type === "images") {
+      for (const item of block.items) {
+        out.push({ src: item.src, alt: item.alt, crop: item.crop });
+      }
+    }
+  }
+  return out;
+}

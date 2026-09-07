@@ -3,7 +3,9 @@
 // ---------------------------------------------------------------------------
 // The cover on the homepage.
 //
-// One picture per project, and the way into what has been written about it:
+// One picture per project, on top of a stack of the study's shots — drag it
+// aside and the next is under it, see stack.tsx — and the way into what has
+// been written about it:
 // pressing one opens that project's case study under its row — see
 // project-study.tsx, which holds the switch this reads. Off the list, where
 // there is no switch to read, it falls back to the study's own page. An entry
@@ -15,10 +17,11 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { caseStudies } from "@/data/case-studies";
+import { caseStudies, studyShots } from "@/data/case-studies";
 import type { EntryImage } from "@/data/projects";
 import { usePress } from "./press";
 import { useCoverToggle } from "./project-study";
+import { Stack, type StackCard } from "./stack";
 
 // ---------------------------------------------------------------------------
 // A dot painted over a cover that drifts toward the pointer, so the mark looks
@@ -108,9 +111,11 @@ export function ProjectThumbnail({
   // narrowest phone. The size itself is --cover in globals.css, which the
   // writing beside it is placed off.
   const size = "h-[var(--cover)] w-[var(--cover)]";
-  const box = image.cover
-    ? `${size} rounded-lg`
-    : `${size} rounded-lg border border-foreground/10`;
+  // Each card in the stack is its own rounded box; the frame around the whole
+  // thing has no edge of its own any more, since the cards behind fan out
+  // past it.
+  const cardBox = "h-full w-full overflow-hidden rounded-lg";
+  const shotBox = `${cardBox} border border-foreground/10`;
 
   // A cover stands in for the screenshot on the homepage only — image.src is
   // still the shot itself. `crop` frames that shot, so a cover ignores it.
@@ -147,62 +152,108 @@ export function ProjectThumbnail({
   // and have to be kept in step with it. Undersize the hint and the browser
   // asks for a variant smaller than the box, then stretches it, which is a
   // soft cover on every retina screen.
+  const sizes = "(width < 40rem) 104px, 200px";
+
+  // The cover is the top of a stack, and the cards under it are the study's
+  // shots — or whatever the entry says instead. Drag the cover aside and the
+  // next one is there; see stack.tsx. The film and the dot ride on the cover's
+  // card, so they go to the back with it.
+  //
+  // Three behind at most when they are taken from the study: each card back
+  // is turned another four degrees and drawn a little smaller, and past four
+  // the pile is a fan, wider than the row it is in.
+  const behind =
+    image.stack ??
+    studyShots(slug)
+      .filter((s) => s.src !== shown)
+      .slice(0, 3);
+  const cards: StackCard[] = shown
+    ? [
+        ...behind.map((shot) => ({
+          id: shot.src,
+          content: (
+            <div className={`${shotBox} relative`}>
+              <Image
+                src={shot.src}
+                alt={shot.alt}
+                fill
+                sizes={sizes}
+                quality={90}
+                className="pointer-events-none select-none object-cover"
+                style={shot.crop ? { objectPosition: shot.crop } : undefined}
+              />
+            </div>
+          ),
+        })),
+        {
+          id: shown,
+          content: (
+            <div className={`${image.cover ? cardBox : shotBox} relative`}>
+              <Image
+                src={shown}
+                alt={image.alt}
+                fill
+                sizes={sizes}
+                quality={90}
+                className="pointer-events-none select-none object-cover"
+                style={
+                  image.cover
+                    ? image.coverCrop
+                      ? { objectPosition: image.coverCrop }
+                      : undefined
+                    : image.crop
+                      ? { objectPosition: image.crop }
+                      : undefined
+                }
+              />
+              {/* Over the still rather than instead of it. Until the first
+                  frame is decoded a video paints nothing, so what shows
+                  through is the cover — no hole where the picture was on the
+                  first hover, and no second picture to load for anyone who
+                  never hovers. It is only faded in once it is running, so a
+                  slow first start shows the still and not a black square. */}
+              {image.coverVideo && (
+                <video
+                  ref={film}
+                  src={image.coverVideo}
+                  muted
+                  loop
+                  playsInline
+                  preload="metadata"
+                  aria-hidden
+                  className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-200 ease-out ${
+                    rolling ? "opacity-100" : "opacity-0"
+                  }`}
+                />
+              )}
+              {image.coverDot && <CoverDot dot={image.coverDot} />}
+            </div>
+          ),
+        },
+      ]
+    : [];
+
   const inner = shown ? (
     // Marked for gravity: with no button around it any more, the box is the
-    // outermost thing here, and without the marker the image inside would fall
-    // out of its own frame and leave the dot painted on it behind.
+    // outermost thing here, and without the marker the cards inside would fall
+    // out of their own frame and leave the dot painted on one behind.
     //
     // The film, where there is one, is started and stopped from here rather
     // than left to autoplay: a loop running behind a pointer that is nowhere
     // near it is work nobody asked for, and five of them would be five.
-    <div
+    <Stack
       data-gravity="piece"
-      className={`${box} relative overflow-hidden`}
+      className={size}
+      cards={cards}
       onMouseEnter={image.coverVideo ? enter : undefined}
       onMouseLeave={image.coverVideo ? leave : undefined}
-    >
-      <Image
-        src={shown}
-        alt={image.alt}
-        fill
-        sizes="(width < 40rem) 104px, 200px"
-        quality={90}
-        className="object-cover"
-        style={
-          image.cover
-            ? image.coverCrop
-              ? { objectPosition: image.coverCrop }
-              : undefined
-            : image.crop
-              ? { objectPosition: image.crop }
-              : undefined
-        }
-      />
-      {/* Over the still rather than instead of it. Until the first frame is
-          decoded a video paints nothing, so what shows through is the cover —
-          no hole where the picture was on the first hover, and no second
-          picture to load for anyone who never hovers. It is only faded in
-          once it is running, so a slow first start shows the still and not a
-          black square. */}
-      {image.coverVideo && (
-        <video
-          ref={film}
-          src={image.coverVideo}
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          aria-hidden
-          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-200 ease-out ${
-            rolling ? "opacity-100" : "opacity-0"
-          }`}
-        />
-      )}
-      {image.coverDot && <CoverDot dot={image.coverDot} />}
-    </div>
+    />
   ) : (
     // A project whose cover has not been taken yet still holds its row.
-    <div className={`${box} bg-foreground/[0.02]`} aria-label={image.alt} />
+    <div
+      className={`${size} rounded-lg border border-foreground/10 bg-foreground/[0.02]`}
+      aria-label={image.alt}
+    />
   );
 
   // The lift under the pointer. On the list the whole row is the switch and

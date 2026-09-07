@@ -32,6 +32,12 @@ export type EntryImage = {
     // radius minus the dot's radius.
     travel: number;
   };
+  // The cards behind the cover on the homepage, front to back. Every cover
+  // is the top of a stack — drag it aside and the next card is under it. Left
+  // unset, the stack is the study's own shots, in the order they appear in
+  // it; set it to choose them, or to give a project whose study has no
+  // pictures something to show.
+  stack?: { src: string; alt: string; crop?: string }[];
   // A screenshot with a title of its own gets its own page in the overlay —
   // the shot, its title, and its description — instead of opening the whole
   // case study for the project it belongs to.
