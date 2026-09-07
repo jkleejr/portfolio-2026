@@ -147,9 +147,7 @@ export const entries: Entry[] = [
         // A candlestick chart from the site, cut square from the middle of a
         // wider export so the size hint on the homepage holds (a wide picture
         // in a square box is drawn wider than the box, and the browser
-        // fetches a variant too small for it). The site's front page is still
-        // at buy-side-briefings-today.png and the cash logo at
-        // buy-side-briefings-cash.png, if either reads better.
+        // fetches a variant too small for it).
         cover: "/projects/buy-side-briefings-swing.png",
         alt: "A candlestick chart on a dark ground: green candles climbing to a peak, then red ones falling away from it",
       },
@@ -164,10 +162,9 @@ export const entries: Entry[] = [
     platform: "web",
     images: [
       {
-        // The leaf logo is still at time-with-tree-logo-3.png if this one
-        // comes back off. The still is the film's own first frame, cut from
-        // it and square like it, so hovering the cover starts the rain from
-        // exactly the picture that was standing there.
+        // The still is the film's own first frame, cut from it and square
+        // like it, so hovering the cover starts the rain from exactly the
+        // picture that was standing there.
         //
         // Named for the recording rather than kept at the old name. A cover
         // swapped under a name that has already been served is a cover that
