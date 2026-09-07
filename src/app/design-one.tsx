@@ -46,7 +46,7 @@ function StudyFacts({ study }: { study?: CaseStudy }) {
   return (
     <div className="absolute left-[var(--margin-note-x)] top-1/2 hidden w-[var(--margin-note)] -translate-y-1/2 min-[1000px]:block">
       {lines.map((line, i) => (
-        <p key={i} className={`text-base leading-relaxed text-tertiary ${i ? "mt-1" : ""}`}>
+        <p key={i} className={`text-base leading-relaxed ${i ? "mt-1" : ""}`}>
           {line}
         </p>
       ))}
