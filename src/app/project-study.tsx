@@ -3,9 +3,9 @@
 // ---------------------------------------------------------------------------
 // Opening a study on the homepage.
 //
-// A cover is the switch: press one and that project's study unfolds under its
-// row, press it again and the row folds back to the picture and the line it
-// was. A study stays open for as long as it is wanted — nothing but another
+// A cover is the switch, and so is the name beside it: press either and that
+// project's study unfolds under its row, press either again and the row folds
+// back to the picture and the line it was. A study stays open for as long as it is wanted — nothing but another
 // press closes it. The list is never left behind, and no page is ever loaded
 // to read one.
 //
@@ -20,16 +20,16 @@
 
 import { createContext, useCallback, useContext, useRef, useState } from "react";
 
-// --- the switch, read by the cover ----------------------------------------
+// --- the switch, read by the cover and the title ---------------------------
 
 type Toggle = { open: boolean; toggle: () => void };
 
 const ToggleContext = createContext<Toggle | null>(null);
 
 /**
- * The cover reads this to know whether it is a switch and which way it is
- * set. Null for a project with nothing written about it, and on any page that
- * is not the list — the cover falls back to its link there.
+ * The cover and the title read this to know whether they are a switch and
+ * which way it is set. Null for a project with nothing written about it, and
+ * on any page that is not the list — both fall back to their link there.
  */
 export function useCoverToggle() {
   return useContext(ToggleContext);

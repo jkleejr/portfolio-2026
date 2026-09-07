@@ -12,6 +12,7 @@ import { caseStudies, type CaseStudy } from "@/data/case-studies";
 import { StudyBody } from "./case-study";
 import { ProjectList, ProjectSection } from "./project-study";
 import { ProjectThumbnail } from "./project-thumbnail";
+import { ProjectTitle } from "./project-title";
 import { AppStoreBadge, SiteBadge } from "./title-badge";
 
 /**
@@ -237,8 +238,11 @@ export function DesignOne() {
                       without it a flex item refuses to shrink past its content and
                       pushes the row off the side of the screen. */}
                   <div className="min-w-0 flex-1 sm:w-[var(--text-width)] sm:flex-none sm:shrink-0">
+                    {/* The name is the same switch the cover is — see
+                        project-title.tsx. The marks after it are not: they
+                        leave the page, and stay outside the press. */}
                     <h2 className="text-xl font-semibold leading-snug">
-                      {entry.title}
+                      <ProjectTitle slug={entry.slug}>{entry.title}</ProjectTitle>
                       {entry.appStore !== undefined && (
                         <AppStoreBadge href={entry.appStore} label={entry.title} />
                       )}
