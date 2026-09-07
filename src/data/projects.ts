@@ -144,8 +144,13 @@ export const entries: Entry[] = [
     platform: "web",
     images: [
       {
-        cover: "/projects/buy-side-briefings-cash.png",
-        alt: "The Buy Side Briefings logo, three banded stacks of hundred dollar bills",
+        // The site's front page on a Sunday night, in place of the cash logo
+        // (still at buy-side-briefings-cash.png if this reads worse). The shot
+        // is wider than it is tall, so the square takes its middle; the
+        // headline sits a little left of centre, and 20% brings it in.
+        cover: "/projects/buy-side-briefings-today.png",
+        coverCrop: "20% 50%",
+        alt: "The Buy Side Briefings front page: a night report headline in large serif over a dark ground, a market ticker across the top and a candlestick chart below",
       },
     ],
   },
