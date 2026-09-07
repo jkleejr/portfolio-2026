@@ -27,8 +27,9 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const study = caseStudies[slug];
   if (!study) return {};
   return {
-    // Name first, then the project, joined by a plain hyphen.
-    title: `${site.titleName} - ${study.title}`,
+    // The project first, then the name, joined by a plain hyphen — the tab
+    // is read from the left, and the project is what this page is about.
+    title: `${study.title} - ${site.titleName}`,
     description: study.tagline,
   };
 }

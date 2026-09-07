@@ -30,6 +30,8 @@ import {
   useState,
 } from "react";
 import { usePathname } from "next/navigation";
+import { caseStudies } from "@/data/case-studies";
+import { site } from "@/data/site";
 import { usePress } from "./press";
 
 // --- the switch, read by the cover and the title ---------------------------
@@ -83,6 +85,18 @@ export function ProjectList({ children }: { children: React.ReactNode }) {
     setSeenUrl(fromUrl);
     setOpen(fromUrl);
   }
+
+  // The tab follows the study: "Loot Check - John Lee" while one is open,
+  // the name alone when none is. A visit straight to /loot-check arrives
+  // with that title already set by the route's metadata; this keeps it in
+  // step from then on, across presses and the back button alike, which
+  // move the address without asking the router for a new head.
+  useEffect(() => {
+    const study = openSlug ? caseStudies[openSlug] : undefined;
+    document.title = study
+      ? `${study.title} - ${site.titleName}`
+      : site.titleName;
+  }, [openSlug]);
 
   const setOpenSlug = useCallback((slug: string | null) => {
     setOpen(slug);
