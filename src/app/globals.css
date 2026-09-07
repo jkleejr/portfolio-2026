@@ -3,14 +3,12 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-  /* Four steps of text. --foreground is the headings and whatever leads;
-     --text-body is a paragraph, a shade gentler than a heading so a page of
-     it does not glare; --muted is a description beside something else —
-     the line under a project's name; --text-tertiary is what is about the
-     writing rather than of it — dates, roles, the notes in the margin. */
+  /* Three steps of text. --foreground is the headings, the facts and notes
+     beside them, and whatever else leads; --text-body is a paragraph, a
+     shade gentler than a heading so a page of it does not glare; --muted is
+     a description beside something else — the line under a project's name. */
   --text-body: #404040;
   --muted: #525252;
-  --text-tertiary: #737373;
 
   /* The two columns the page is set in: a cover, and the writing beside it.
      One place to say how wide a cover is, how far the writing sits off it, and
@@ -114,7 +112,6 @@
   --foreground: #ededed;
   --text-body: #d4d4d8;
   --muted: #a1a1aa;
-  --text-tertiary: #71717a;
   color-scheme: dark;
 }
 
@@ -123,7 +120,6 @@
   --color-foreground: var(--foreground);
   --color-muted: var(--muted);
   --color-body: var(--text-body);
-  --color-tertiary: var(--text-tertiary);
   --font-sans: var(--font-satoshi);
 }
 

@@ -281,12 +281,12 @@ export function DesignOne() {
                       </p>
                     )}
                     {entry.date && (
-                      <p className="mt-2 text-base leading-relaxed text-tertiary">
+                      <p className="mt-2 text-base leading-relaxed">
                         Date: {entry.date}
                       </p>
                     )}
                     {entry.tools && (
-                      <p className="mt-1 text-base leading-relaxed text-tertiary">
+                      <p className="mt-1 text-base leading-relaxed">
                         Tools: {entry.tools}
                       </p>
                     )}
