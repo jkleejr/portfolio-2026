@@ -511,7 +511,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "image",
-        src: "/projects/buy-side-site-today-2.png",
+        src: "/projects/buy-side-site-today-3.png",
         // The shot that opens the study, and the only one that has a whole
         // website in it rather than one panel of it, so it is given more room
         // than the rest. 1169px of file is the ceiling on how far it can go
