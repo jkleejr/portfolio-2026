@@ -68,7 +68,7 @@ export type Entry = {
   images?: EntryImage[];
 };
 
-// gallery of screenshots and each one has text
+
 
 export const entries: Entry[] = [
   {
@@ -117,15 +117,11 @@ export const entries: Entry[] = [
       {
         src: "/projects/screen-translator-2.png",
         cover: "/projects/screen-translator-logo-4-base.png",
-        // Measured off the artwork the dot was erased from.
         coverDot: {
           x: 56.93,
           y: 56.45,
           size: 26.66,
           color: "#ff3b30",
-          // 263px inner radius - 136.5px dot radius = 126.5px, which is 12.35%
-          // of the 1024px artwork and has the dot flush against the ring. A
-          // hair under that, so it stops just before contact.
           travel: 12.1,
         },
         alt: "A Korean headline translated to English in the Dynamic Island, over a live news feed",
@@ -144,10 +140,6 @@ export const entries: Entry[] = [
     platform: "web",
     images: [
       {
-        // A candlestick chart from the site, cut square from the middle of a
-        // wider export so the size hint on the homepage holds (a wide picture
-        // in a square box is drawn wider than the box, and the browser
-        // fetches a variant too small for it).
         cover: "/projects/buy-side-briefings-swing.png",
         alt: "A candlestick chart on a dark ground: green candles climbing to a peak, then red ones falling away from it",
       },
@@ -162,20 +154,11 @@ export const entries: Entry[] = [
     platform: "web",
     images: [
       {
-        // The still is the film's own first frame, cut from it and square
-        // like it, so hovering the cover starts the rain from exactly the
-        // picture that was standing there.
-        //
-        // Named for the recording rather than kept at the old name. A cover
-        // swapped under a name that has already been served is a cover that
-        // goes on being the old one — the browser has it, and so does the
-        // image optimiser, and neither is asked again. A new name is fetched.
         cover: "/projects/time-with-tree-water.png",
         coverVideo: "/projects/time-with-tree-water.mp4",
         alt: "Rain on a branch: pale green leaves along a stem, each rimmed with water, against a dark window and a lit wall behind",
         // spacing from the last project to the bottom of the page is 112 px on desktop, 32 px on phone
   },
     ],
-    // spacing from the last project to the bottom of the page is 112 px on desktop, 32 px on phone
   },
 ];
