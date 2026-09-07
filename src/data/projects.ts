@@ -144,17 +144,14 @@ export const entries: Entry[] = [
     platform: "web",
     images: [
       {
-        // The site's front page on a Sunday night, in place of the cash logo
-        // (still at buy-side-briefings-cash.png if this reads worse). Captured
-        // from the live site in a headless browser at 2x, in a 1159px window,
-        // rather than taken from a screenshot: a 1x capture of a whole page
-        // squeezed into 200px is soft however it is served, and a retina one
-        // is not. Cut square in the file itself rather than framed with
-        // coverCrop: a wide picture in a square box is drawn wider than
-        // the box, so the browser needs a bigger file than the size hint
-        // asks for and stretches the one it gets. Square, the hint is right.
-        cover: "/projects/buy-side-briefings-today.png",
-        alt: "The Buy Side Briefings front page: a night report headline in large serif over a dark ground, a market ticker across the top and a candlestick chart below",
+        // A candlestick chart from the site, cut square from the middle of a
+        // wider export so the size hint on the homepage holds (a wide picture
+        // in a square box is drawn wider than the box, and the browser
+        // fetches a variant too small for it). The site's front page is still
+        // at buy-side-briefings-today.png and the cash logo at
+        // buy-side-briefings-cash.png, if either reads better.
+        cover: "/projects/buy-side-briefings-candles.png",
+        alt: "A candlestick chart on a dark ground: green and red candles dipping, then climbing steeply to the upper right",
       },
     ],
   },
