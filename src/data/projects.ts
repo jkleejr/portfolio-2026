@@ -145,11 +145,12 @@ export const entries: Entry[] = [
     images: [
       {
         // The site's front page on a Sunday night, in place of the cash logo
-        // (still at buy-side-briefings-cash.png if this reads worse). The shot
-        // is wider than it is tall, so the square takes its middle; the
-        // headline sits a little left of centre, and 20% brings it in.
+        // (still at buy-side-briefings-cash.png if this reads worse). Cut
+        // square from the screenshot in the file itself rather than framed
+        // with coverCrop: a wide picture in a square box is drawn wider than
+        // the box, so the browser needs a bigger file than the size hint
+        // asks for and stretches the one it gets. Square, the hint is right.
         cover: "/projects/buy-side-briefings-today.png",
-        coverCrop: "20% 50%",
         alt: "The Buy Side Briefings front page: a night report headline in large serif over a dark ground, a market ticker across the top and a candlestick chart below",
       },
     ],

@@ -143,7 +143,10 @@ export function ProjectThumbnail({
   // box this size is a ~6x downscale that its cheap filter turns to mush.
   // next/image resamples them properly and ships a 2x variant for retina
   // screens instead. The hint has to be plain lengths, so this is the one place
-  // --cover and the phone's smaller value are written out rather than read.
+  // --cover and the phone's smaller value are written out rather than read —
+  // and have to be kept in step with it. Undersize the hint and the browser
+  // asks for a variant smaller than the box, then stretches it, which is a
+  // soft cover on every retina screen.
   const inner = shown ? (
     // Marked for gravity: with no button around it any more, the box is the
     // outermost thing here, and without the marker the image inside would fall
@@ -162,7 +165,7 @@ export function ProjectThumbnail({
         src={shown}
         alt={image.alt}
         fill
-        sizes="(width < 40rem) 104px, 192px"
+        sizes="(width < 40rem) 104px, 200px"
         quality={90}
         className="object-cover"
         style={
