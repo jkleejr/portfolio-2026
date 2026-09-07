@@ -143,6 +143,44 @@ export function StudyBody({
   );
 }
 
+// ---------------------------------------------------------------------------
+// A link inside a sentence.
+//
+// The writing is plain strings, and nearly all of it should stay that way. But
+// a sentence sometimes names a place the reader can go — "live on the App
+// Store" — and the name should take them there. So a text block or a list
+// item may carry a link written the way Markdown writes one, [label](url),
+// and this turns each into an anchor, underlined so it reads as a link inside
+// the prose, and opening in a tab of its own so the study is still there to
+// come back to. Everything else in the string passes through untouched.
+// ---------------------------------------------------------------------------
+
+const INLINE_LINK = /\[([^\]]+)\]\(([^)\s]+)\)/g;
+
+function Inline({ text }: { text: string }) {
+  const parts: React.ReactNode[] = [];
+  let last = 0;
+  for (const match of text.matchAll(INLINE_LINK)) {
+    const [whole, label, href] = match;
+    const at = match.index ?? 0;
+    if (at > last) parts.push(text.slice(last, at));
+    parts.push(
+      <a
+        key={at}
+        href={href}
+        target="_blank"
+        rel="noreferrer"
+        className="underline decoration-foreground/40 underline-offset-4 transition-colors duration-200 ease-out hover:decoration-foreground"
+      >
+        {label}
+      </a>,
+    );
+    last = at + whole.length;
+  }
+  if (last < text.length) parts.push(text.slice(last));
+  return <>{parts}</>;
+}
+
 function Caption({
   text,
   center,
@@ -221,7 +259,11 @@ function Block({
       }
 
     case "text":
-      return <p className="text-base leading-relaxed text-body">{block.text}</p>;
+      return (
+        <p className="text-base leading-relaxed text-body">
+          <Inline text={block.text} />
+        </p>
+      );
 
     case "list": {
       // Same list either way — the tag is the only thing that changes, so a
@@ -237,7 +279,7 @@ function Block({
                 block.ordered ? "list-decimal" : "list-disc"
               }`}
             >
-              {item}
+              <Inline text={item} />
             </li>
           ))}
         </List>

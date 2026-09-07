@@ -248,7 +248,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "Loot Check is live on the App Store. I wanted to automate the listing process but most marketplaces don't have a public listing API, so the app creates a title and description for copy and paste. The next steps are finding users and marketing on social media.",
+        text: "Loot Check is live on the [App Store](https://apps.apple.com/us/app/loot-check/id6785767104). I wanted to automate the listing process but most marketplaces don't have a public listing API, so the app creates a title and description for copy and paste. The next steps are finding users and marketing on social media.",
       },
     ],
   },
