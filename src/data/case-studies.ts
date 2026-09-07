@@ -628,7 +628,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         type: "image",
         src: "/projects/buy-side-chart-2.png",
         max: 800,
-        alt: "The charts panel: a row of tickers with Nvidia selected, range and bar controls under it, and a three month candlestick chart with a hover card on the June 10 bar showing its open, high, low, and volume, over a footer crediting Yahoo Finance and noting quotes are delayed about fifteen minutes",
+        alt: "The charts panel: Nvidia selected, range and bar controls under it, and a daily candlestick chart zoomed to ninety bars with a hover card on the March 27 bar showing its open, high, low, and volume, over a footer crediting Yahoo Finance and noting quotes are delayed about fifteen minutes",
       },
 
 
