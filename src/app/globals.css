@@ -103,7 +103,7 @@
    before CSS arrives — are dark too, rather than a white bar down the side of
    a black page. */
 [data-theme="dark"] {
-  --background: #000000;
+  --background: #0a0a0a;
   --foreground: #ffffff;
   --muted: #a3a3a3;
   color-scheme: dark;

@@ -45,7 +45,9 @@ const oldLondon = localFont({
 });
 
 export const viewport: Viewport = {
-  themeColor: "#000000",
+  // The dark palette's --background in globals.css, kept in step with it, so
+  // the browser's own bars are the page's shade and not a darker one.
+  themeColor: "#0a0a0a",
 };
 
 export const metadata: Metadata = {
