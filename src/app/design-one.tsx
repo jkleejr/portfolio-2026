@@ -63,13 +63,13 @@ export function DesignOne() {
   // The top padding is what sets the room between the role, pinned across the
   // top of the page, and the name; the whole page follows the name down. The
   // number is chosen by the ink, not the boxes: the blackletter starts its
-  // capitals ~27px below the top of its line box at full size, so 7rem puts
-  // ~90px of black between the bottom of the role and the top of the name —
+  // capitals ~27px below the top of its line box at full size, so 6.25rem puts
+  // ~80px of black between the bottom of the role and the top of the name —
   // the same room the name's bottom margin leaves under it, see the h1. Only
   // from sm up: a phone keeps the small padding, and the name clears that row
   // with a margin of its own instead.
   return (
-    <main data-home className="relative pb-8 pt-6 sm:pb-28 sm:pt-28">
+    <main data-home className="relative pb-8 pt-6 sm:pb-28 sm:pt-25">
       {/* The name, set in the blackletter — see .fraktur in globals.css, which
           carries the face and pins the weight. It is the one thing on the page
           that is not in the column: it runs the width of the window and is
@@ -78,7 +78,7 @@ export function DesignOne() {
           The top margin is what keeps it under the row pinned across the top
           of the page — the role at the left, the buttons at the right. That
           row is the fixed thing; the name is what moves. From sm up main's own
-          7rem of padding already clears it and the margin comes off, but a
+          6.25rem of padding already clears it and the margin comes off, but a
           phone keeps main's padding small, so the name takes --top-row plus a
           gap of its own. Reading the row's height from the variable rather
           than writing 44px here means the two cannot fall out of step.
@@ -121,7 +121,7 @@ export function DesignOne() {
           it — the intro's own margin collapses into this one, so this is the
           whole of it. Measured from the ink again: the capitals stop ~16px
           short of the box's bottom at full size and the intro's ink starts
-          ~8px into its line, so 4.25rem is ~90px of black, the same as the
+          ~8px into its line, so 3.5rem is ~80px of black, the same as the
           room above the name. A phone shows less of both, in step with its
           smaller name.
 
@@ -134,7 +134,7 @@ export function DesignOne() {
           the finer-grained answer, not the coarser one. */}
       <h1
         data-gravity="letters"
-        className="fraktur mb-12 mt-[calc(var(--top-row)+1.5rem)] whitespace-nowrap px-4 text-center text-[length:var(--name-size)] leading-none sm:mb-17 sm:mt-0 sm:px-6"
+        className="fraktur mb-12 mt-[calc(var(--top-row)+1.5rem)] whitespace-nowrap px-4 text-center text-[length:var(--name-size)] leading-none sm:mb-14 sm:mt-0 sm:px-6"
       >
         {site.name}
       </h1>
