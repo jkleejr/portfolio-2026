@@ -38,5 +38,23 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
 export default async function OpenProjectPage({ params }: Params) {
   const { slug } = await params;
   if (!caseStudies[slug]) notFound();
-  return <DesignOne />;
+  return (
+    <>
+      {/* This page starts at the study's row — see the first-paint scroll in
+          ProjectSection. On a reload the browser wants to put the page back
+          where it was scrolled to, and it does that at its own moment around
+          load, sometimes after the row has been scrolled to and sometimes
+          before, so the page landed on the row one time and mid-study the
+          next. Told not to, here, inline and before anything else runs,
+          because by the time a component's effect could say it the browser
+          may already have done it. Only on this route: the homepage at "/"
+          keeps the browser's restoration, and so do the studies' own pages. */}
+      <script
+        dangerouslySetInnerHTML={{
+          __html: 'history.scrollRestoration="manual"',
+        }}
+      />
+      <DesignOne />
+    </>
+  );
 }

@@ -137,10 +137,12 @@ export function ProjectSection({
 
   // Arriving at an address with a study in it — johnkleejr.com/loot-check —
   // lands on the list with that study open, and the page should start at it
-  // rather than at the top with the study somewhere below. Once, on the first
-  // paint: a study opened by a press is under the finger already and is held
-  // still by the toggle below, and a back or forward that opens one is a
-  // return to where the reader was.
+  // rather than at the top with the study somewhere below, or wherever the
+  // page was scrolled to before a reload (the route switches the browser's
+  // own restoration off for that — see app/[slug]/page.tsx). Once, on the
+  // first paint: a study opened by a press is under the finger already and
+  // is held still by the toggle below, and a back or forward that opens one
+  // is a return to where the reader was.
   const first = useRef(true);
   useEffect(() => {
     if (!first.current) return;
