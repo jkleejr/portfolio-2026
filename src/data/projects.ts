@@ -145,9 +145,12 @@ export const entries: Entry[] = [
     images: [
       {
         // The site's front page on a Sunday night, in place of the cash logo
-        // (still at buy-side-briefings-cash.png if this reads worse). Cut
-        // square from the screenshot in the file itself rather than framed
-        // with coverCrop: a wide picture in a square box is drawn wider than
+        // (still at buy-side-briefings-cash.png if this reads worse). Captured
+        // from the live site in a headless browser at 2x, in a 1159px window,
+        // rather than taken from a screenshot: a 1x capture of a whole page
+        // squeezed into 200px is soft however it is served, and a retina one
+        // is not. Cut square in the file itself rather than framed with
+        // coverCrop: a wide picture in a square box is drawn wider than
         // the box, so the browser needs a bigger file than the size hint
         // asks for and stretches the one it gets. Square, the hint is right.
         cover: "/projects/buy-side-briefings-today.png",
