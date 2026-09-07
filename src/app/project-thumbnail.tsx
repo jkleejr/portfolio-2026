@@ -205,8 +205,13 @@ export function ProjectThumbnail({
     <div className={`${box} bg-foreground/[0.02]`} aria-label={image.alt} />
   );
 
+  // The lift under the pointer. On the list the whole row is the switch and
+  // the cover answers a hover anywhere in it (group-hover, from ProjectRow);
+  // a cover that leaves the page answers only its own.
   const lift =
-    "block cursor-pointer rounded-lg transition-transform duration-200 ease-out hover:scale-105";
+    "block cursor-pointer rounded-lg transition-transform duration-200 ease-out";
+  const ownLift = ` hover:scale-105`;
+  const rowLift = ` hover:scale-105 group-hover:scale-105`;
 
   // A throw of the cover is not a click on it — see press.ts.
   const { onPointerDown, dragged } = usePress();
@@ -222,7 +227,7 @@ export function ProjectThumbnail({
         target="_blank"
         rel="noreferrer"
         aria-label={`Visit ${label ?? image.alt}`}
-        className={lift}
+        className={ownLift}
         onPointerDown={onPointerDown}
         onClick={(e) => {
           if (dragged(e)) e.preventDefault();
@@ -243,7 +248,7 @@ export function ProjectThumbnail({
         type="button"
         aria-expanded={toggle.open}
         aria-label={`${toggle.open ? "Close" : "Read"} the ${study.title} case study`}
-        className={lift}
+        className={rowLift}
         onPointerDown={onPointerDown}
         onClick={(e) => {
           if (dragged(e)) return;
@@ -260,7 +265,7 @@ export function ProjectThumbnail({
       <Link
         href={`/projects/${slug}`}
         aria-label={`Read the ${study.title} case study`}
-        className={lift}
+        className={rowLift}
         onPointerDown={onPointerDown}
         onClick={(e) => {
           if (dragged(e)) e.preventDefault();

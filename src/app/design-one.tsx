@@ -10,7 +10,7 @@ import { site } from "@/data/site";
 import { entries } from "@/data/projects";
 import { caseStudies, type CaseStudy } from "@/data/case-studies";
 import { StudyBody } from "./case-study";
-import { ProjectList, ProjectSection } from "./project-study";
+import { ProjectList, ProjectRow, ProjectSection } from "./project-study";
 import { ProjectThumbnail } from "./project-thumbnail";
 import { ProjectTitle } from "./project-title";
 import { AppStoreBadge, SiteBadge } from "./title-badge";
@@ -231,9 +231,10 @@ export function DesignOne() {
                 slug={entry.slug}
                 study={study ? <StudyBody study={study} inline /> : undefined}
               >
-                {/* relative so the facts about the project can be set out
-                    in the margin beside the cover — see StudyFacts. */}
-                <article className="relative flex items-center gap-[var(--cover-gap)]">
+                {/* The row is the switch that opens the study — see ProjectRow.
+                    relative so the facts about the project can be set out in
+                    the margin beside the cover — see StudyFacts. */}
+                <ProjectRow className="relative flex items-center gap-[var(--cover-gap)]">
                   {(entry.images ?? []).map((image, i) => (
                     <ProjectThumbnail
                       key={`${entry.slug}-${i}`}
@@ -291,7 +292,7 @@ export function DesignOne() {
                     )}
                     <StudyFacts study={study} />
                   </div>
-                </article>
+                </ProjectRow>
               </ProjectSection>
             );
           })}

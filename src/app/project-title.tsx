@@ -36,9 +36,11 @@ export function ProjectTitle({
 
   // Dimmed under the pointer the way the title of a study that links out is,
   // so the name reads as something that can be pressed without being dressed
-  // as a link — nothing is being navigated to.
+  // as a link — nothing is being navigated to. On the list the whole row is
+  // the switch, so the name answers a hover anywhere in it (group-hover, from
+  // ProjectRow) and not only on its own letters.
   const press =
-    "cursor-pointer text-left transition-opacity duration-200 ease-out hover:opacity-70";
+    "cursor-pointer text-left transition-opacity duration-200 ease-out hover:opacity-70 group-hover:opacity-70";
 
   if (study && toggle) {
     return (

@@ -3,9 +3,9 @@
 // ---------------------------------------------------------------------------
 // Opening a study on the homepage.
 //
-// A cover is the switch, and so is the name beside it: press either and that
-// project's study unfolds under its row, press either again and the row folds
-// back to the picture and the line it was. A study stays open for as long as it is wanted — nothing but another
+// A project's row is the switch — its cover, its name, and the room around
+// them: press it and that project's study unfolds under it, press it again
+// and the row folds back to the picture and the line it was. A study stays open for as long as it is wanted — nothing but another
 // press closes it. The list is never left behind, and no page is ever loaded
 // to read one.
 //
@@ -19,6 +19,7 @@
 // ---------------------------------------------------------------------------
 
 import { createContext, useCallback, useContext, useRef, useState } from "react";
+import { usePress } from "./press";
 
 // --- the switch, read by the cover and the title ---------------------------
 
@@ -115,5 +116,57 @@ export function ProjectSection({
         </div>
       )}
     </section>
+  );
+}
+
+// --- the row ----------------------------------------------------------------
+
+/**
+ * The whole row as the switch: the cover, the name, the line under it, and
+ * the room between and around them. Someone who wants to read about a project
+ * presses at it rather than aiming at one thing in it, and a press that lands
+ * in the gap between the picture and the name should not be a press on
+ * nothing.
+ *
+ * The cover and the name stay buttons of their own. They are what the
+ * keyboard and a screen reader reach, and the row is not made a button around
+ * them — a button inside a button is not a thing the browser will have. So the
+ * row listens for clicks instead, and steps aside for any that started on a
+ * link or button inside it: the cover and the name have already switched the
+ * study, and the marks after the name leave the page, which a press on them
+ * should do without also opening something behind it.
+ *
+ * `group` is for the cover and the name, which take their hover from the row
+ * rather than from themselves — see project-thumbnail.tsx and
+ * project-title.tsx — so the whole row lights when any of it is under the
+ * pointer, the way it all answers when any of it is pressed.
+ */
+export function ProjectRow({
+  className = "",
+  children,
+}: {
+  className?: string;
+  children: React.ReactNode;
+}) {
+  const toggle = useCoverToggle();
+  // A throw of the row is not a click on it — see press.ts.
+  const { onPointerDown, dragged } = usePress();
+
+  if (!toggle) {
+    return <article className={className}>{children}</article>;
+  }
+
+  return (
+    <article
+      className={`group cursor-pointer ${className}`}
+      onPointerDown={onPointerDown}
+      onClick={(e) => {
+        if ((e.target as Element).closest("a, button")) return;
+        if (dragged(e)) return;
+        toggle.toggle();
+      }}
+    >
+      {children}
+    </article>
   );
 }
