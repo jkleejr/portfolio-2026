@@ -39,11 +39,6 @@ portfolio architecture + shell ux - 5/10
 case stydy storytelling + depth - 4/10
 
 
-
---
-present mobile screens in a iphone frame?
-add border to the screen recordings?
-
 loot check (live app) - strong foundation, deeper design process
 - show ui
 - appraising unlisted unique items - expand
@@ -75,5 +70,7 @@ usually nav links go on the right
 prompting is 90%, design engineering is the 10%
 systems over linear prompts
 intuition for layouts
+
+the name shrinks while the cover image and rest of the text stays the same which makes it awk
 
 */
