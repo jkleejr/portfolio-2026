@@ -46,7 +46,7 @@ function StudyFacts({ study }: { study?: CaseStudy }) {
   return (
     <div className="absolute left-[var(--margin-note-x)] top-1/2 hidden w-[var(--margin-note)] -translate-y-1/2 min-[1000px]:block">
       {lines.map((line, i) => (
-        <p key={i} className={`text-base leading-relaxed ${i ? "mt-1" : ""}`}>
+        <p key={i} className={`text-base leading-relaxed text-tertiary ${i ? "mt-1" : ""}`}>
           {line}
         </p>
       ))}
@@ -276,17 +276,17 @@ export function DesignOne() {
                         breaks at the measure there, as it always did — the
                         same width the facts in the margin appear at. */}
                     {entry.blurb && (
-                      <p className="mt-3 text-base leading-relaxed min-[1000px]:whitespace-nowrap">
+                      <p className="mt-3 text-base leading-relaxed text-muted min-[1000px]:whitespace-nowrap">
                         {entry.blurb}
                       </p>
                     )}
                     {entry.date && (
-                      <p className="mt-2 text-base leading-relaxed">
+                      <p className="mt-2 text-base leading-relaxed text-tertiary">
                         Date: {entry.date}
                       </p>
                     )}
                     {entry.tools && (
-                      <p className="mt-1 text-base leading-relaxed">
+                      <p className="mt-1 text-base leading-relaxed text-tertiary">
                         Tools: {entry.tools}
                       </p>
                     )}

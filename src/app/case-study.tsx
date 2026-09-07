@@ -76,21 +76,21 @@ export function StudyBody({
             <p className="mt-1 text-lg font-medium">{study.tagline}</p>
           )}
           {study.date && (
-            <p className="mt-2 text-base leading-relaxed">{study.date}</p>
+            <p className="mt-2 text-base leading-relaxed text-tertiary">{study.date}</p>
           )}
           {/* Where the project stands, on the line under the date it belongs to
               — so the two read as one small block of facts about the work. */}
           {study.status && (
-            <p className="mt-1 text-base leading-relaxed">{study.status}</p>
+            <p className="mt-1 text-base leading-relaxed text-tertiary">{study.status}</p>
           )}
           {/* Role and Scope, each on its own line under the date. Printed as
               written with no label of their own, so the three lines read as one
               small block of facts rather than a form. */}
           {study.role && (
-            <p className="mt-1 text-base leading-relaxed">{study.role}</p>
+            <p className="mt-1 text-base leading-relaxed text-tertiary">{study.role}</p>
           )}
           {study.scope && (
-            <p className="mt-1 text-base leading-relaxed">{study.scope}</p>
+            <p className="mt-1 text-base leading-relaxed text-tertiary">{study.scope}</p>
           )}
 
           {study.links && study.links.length > 0 && (
@@ -114,7 +114,7 @@ export function StudyBody({
               {study.facts.map((fact) => (
                 <div key={fact.label}>
                   <dt className="text-base font-semibold">{fact.label}</dt>
-                  <dd className="mt-1 text-base leading-relaxed">{fact.value}</dd>
+                  <dd className="mt-1 text-base leading-relaxed text-tertiary">{fact.value}</dd>
                 </div>
               ))}
             </dl>
@@ -210,7 +210,7 @@ function Block({
                 heading stands on its own. */}
             {block.note && (
               <span
-                className={`absolute ${lead.replace("pt-", "top-")} left-[var(--margin-note-x)] hidden w-[var(--margin-note)] text-base font-bold leading-relaxed min-[1000px]:block`}
+                className={`absolute ${lead.replace("pt-", "top-")} left-[var(--margin-note-x)] hidden w-[var(--margin-note)] text-base font-bold leading-relaxed text-tertiary min-[1000px]:block`}
               >
                 {block.note}
               </span>
@@ -221,7 +221,7 @@ function Block({
       }
 
     case "text":
-      return <p className="text-base leading-relaxed">{block.text}</p>;
+      return <p className="text-base leading-relaxed text-body">{block.text}</p>;
 
     case "list": {
       // Same list either way — the tag is the only thing that changes, so a
@@ -247,7 +247,7 @@ function Block({
     case "quote":
       return (
         <blockquote className="border-l-2 border-foreground/25 pl-6">
-          <p className="text-lg font-medium leading-relaxed">{block.text}</p>
+          <p className="text-lg font-medium leading-relaxed text-body">{block.text}</p>
           {block.attribution && (
             <cite className="mt-3 block text-base not-italic">
               — {block.attribution}
