@@ -514,10 +514,10 @@ export const caseStudies: Record<string, CaseStudy> = {
         src: "/projects/buy-side-site-today-3.png",
         // The shot that opens the study, and the only one that has a whole
         // website in it rather than one panel of it, so it is given more room
-        // than the rest. 1169px of file is the ceiling on how far it can go
+        // than the rest. 1173px of file is the ceiling on how far it can go
         // before it softens; 1000 keeps it clear of that.
         max: 1000,
-        alt: "The Today page with the toggle on PM: a live ticker strip under the nav, then the night report of Sunday, September 6, filed at 8:52 PM ET, its headline on weekend Hormuz strikes lifting oil risk ahead of inflation data and the rate decision, the paragraph that argues it, a link out to the full ten minute read, and the charts panel opening underneath",
+        alt: "The Today page with the toggle on AM: a live ticker strip under the nav, then the morning report of Monday, September 7, filed at 8:27 AM ET, its headline on Asia repricing the AI memory trade on a record inventory squeeze while US markets were shut, the paragraph that argues it, a link out to the full nine minute read, and the charts panel opening underneath",
       },
 
             {
