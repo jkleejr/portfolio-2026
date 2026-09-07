@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import { site } from "@/data/site";
-import { PhotoGalleryButton, PhotoGalleryProvider } from "./photo-gallery";
 import { AppleButton } from "./apple-button";
 import "./globals.css";
 
@@ -92,38 +91,27 @@ export default function RootLayout({
       <body
         className={`${satoshi.variable} ${oldLondon.variable} antialiased`}
       >
-        {/* Wraps the lot because the gallery switch reaches past its own
-            button: it decides whether the ribbons or the photos are the thing
-            following the cursor. */}
-        <PhotoGalleryProvider>
-          {/* One container places every button, so their spacing is a gap
-              rather than a sum each of them has to know. The top-right corner,
-              as a row, at every width — no breakpoint, so the pair reads the
-              same on a laptop as on a phone. The apple is last, which puts it
-              hard against the right edge with the gallery on its left.
+        {/* One container places every button, so their spacing is a gap
+            rather than a sum each of them has to know. The top-right corner,
+            as a row, at every width — no breakpoint. The apple is last, which
+            puts it hard against the right edge.
 
-              items-center is not decoration: the apple's box is 44px where the
-              gallery's is 40, and a flex row leaves boxes of different sizes
-              standing on the same top edge, which put the apple's icon two
-              pixels below its neighbour's. Centred, the icons line up whatever
-              their boxes measure. It is also what --top-row on the homepage
-              measures against: the row is the apple's height, and the name is
-              dropped under it on a phone. */}
-          <div
-            data-gravity="atom"
-            className="corner-stack absolute right-6 top-6 z-20 flex flex-row items-center gap-2"
-          >
-            <PhotoGalleryButton />
-            <AppleButton />
-          </div>
-          {/* The drawn cursor is switched off for now — uncomment to bring it
-              back. */}
-          {/* <SiteCursor /> */}
-          {/* Cursor ribbons are switched off for now. The effect is still
-              here — re-enable it by uncommenting this line. */}
-          {/* <CursorRibbons /> */}
-          {children}
-        </PhotoGalleryProvider>
+            items-center is what --top-row on the homepage measures against:
+            the row is the apple's height, and the name is dropped under it on
+            a phone. */}
+        <div
+          data-gravity="atom"
+          className="corner-stack absolute right-6 top-6 z-20 flex flex-row items-center gap-2"
+        >
+          <AppleButton />
+        </div>
+        {/* The drawn cursor is switched off for now — uncomment to bring it
+            back. */}
+        {/* <SiteCursor /> */}
+        {/* Cursor ribbons are switched off for now. The effect is still
+            here — re-enable it by uncommenting this line. */}
+        {/* <CursorRibbons /> */}
+        {children}
         {/* The scrollbar's width onto :root, for the measures in globals.css
             that start from 100vw — read the note on --scrollbar there for why
             they need it.
