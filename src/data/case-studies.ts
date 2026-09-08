@@ -182,6 +182,7 @@ export const caseStudies: Record<string, CaseStudy> = {
               note: "Design Decisions",
             },
 
+            // mermaid diagram
 
             // show how price is displayed screenshot
 
@@ -420,7 +421,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "Reflecting on this project, I realized that I didn't consider the user enough over my own self interests (not wanting to cover initial costs). Asking users to set up their own key created unnacceptable onboarding friction and quality audio generation required a sustainable business model. This was a bad idea especially because it's the first step.",
+        text: "Reflecting on this project, I realized that I didn't consider the user enough over my own self interests (not wanting to cover initial costs). Asking users to set up their own key created unnacceptable onboarding friction and quality audio generation required a sustainable business model. This was a bad idea especially because having a key was the first step to using the app.",
       },
 
       {
