@@ -420,10 +420,17 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "Reflecting on this project, I realized that I didn't consider the user enough over my own self interests (not wanting to cover initial costs). Asking users to set up their own key created unnacceptable onboarding friction and quality audio generation requires a sustainable business model. This was a bad idea especially because it's the first step. If I continued this idea, I would definitely integrate an API key into the app and set up subscriptions. In the end, I didn't see a business opportunity for this app due to an oversaturated market of established TTS products like Speechify that solve the same problem, so I moved on.",
+        text: "Reflecting on this project, I realized that I didn't consider the user enough over my own self interests (not wanting to cover initial costs). Asking users to set up their own key created unnacceptable onboarding friction and quality audio generation required a sustainable business model. This was a bad idea especially because it's the first step.",
       },
+
+      {
+        type: "text",
+        text: "If I continued this idea, I would definitely integrate an API key into the app and set up subscriptions or have users pay per paper. In the end, I didn't see a business opportunity for this app due to an oversaturated market of established TTS products like Speechify that solve the same problems, so I moved on.",
+      },
+
     ],
   },
+
 
 
   "screen-translator": {
