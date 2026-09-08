@@ -223,7 +223,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "Adding a web search for low confidence items tripled total latency, increasing response times from ~6s to ~19s. To manage the delay, I implemented a 60s timeout to prevent long scans and added a wait time estimate to the loading screen.",
+        text: "Adding a web search for low confidence items tripled total latency, increasing response times from ~6s to ~19s. I implemented a 60s timeout to prevent long scans and added a wait time estimate to the loading screen.",
       },
 
       // claude sonnet 4.6 because its cheap enough to run per scan and still accurate.
@@ -411,7 +411,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "If I continued this idea, I would definitely integrate an API key into the app and have users pay per paper, or find a cheaper TTS model. In the end, I didn't see a business opportunity for this app due to established and well designed products like Speechify that solve the same problems, so I moved on.",
+        text: "If I continued this idea, I would definitely integrate an API key into the app and either cover the initial costs, charge per paper, or find a cheaper TTS model. In the end, I didn't see a business opportunity for this app due to established and well designed products like Speechify that solve the same problems, so I moved on.",
       },
 
     ],
@@ -709,7 +709,7 @@ export const caseStudies: Record<string, CaseStudy> = {
             },
       {
         type: "text",
-        text: "This project has changed many times since the start. Initially I used AI to predict the market and send me buy/sell signals based on its research, but I realized that a strictly informational website would help me more. Buy Side used to display a lot more data when I was learning the market but I cut it down to the most important resources. Since this website keeps a record of previous reports, it would be interesting to use that data to find sentiment trends. I plan to keep improving the reports and add features I find useful."
+        text: "This project has changed many times since the start. Initially I used AI to predict the market and send me buy/sell signals based on its research, but I realized that a strictly informational website would help me more. [Buy Side](https://buy-side-briefings.vercel.app/) used to display a lot more data when I was learning the market but I cut it down to the most important resources. Since this website keeps a record of previous reports, it would be interesting to use that data to find sentiment trends. I plan to keep improving the reports and add features I find useful."
       },
     ],
   },
