@@ -421,7 +421,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "Reflecting on this project, I realized that I didn't consider the user enough over my own self interests (not wanting to cover initial costs). Asking users to set up their own key created unnacceptable onboarding friction especially because it was the first step. It was a difficult decision because audio generation required a sustainable business model to cover the costs.",
+        text: "Reflecting on this project, I realized that I didn't consider the user enough over my own self interests (not wanting to cover initial costs). Asking users to set up their own key created unnacceptable onboarding friction especially because it was the first step. It was a critical decision because audio generation required a sustainable business model to cover the costs.",
       },
 
       {
