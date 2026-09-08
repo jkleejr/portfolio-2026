@@ -156,25 +156,12 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       
         // designing for speed: the core loop - time to value. remove unnecessary navigation.
-        // users are often scanning multiple items at a time to declutter
         // interface needed to be simple
         // other ideas:
         // could add 0 click entry - app opens directly to camera view, priotizes the primary action
         // manage system latency - since it takes time to get the result, design a loading state with conversational text to improve the wait
-      
         // would be interesting to display confidence score as a %
     
-
-      // latency
-      // most items (w no search) take 6.1-6.9s
-      // the web search adds ~13 seconds
-      // so ab ~20s
-      // so a scan of an original item (w web search) takes 3x longer than a scan w no web search
-      // 20 seconds is a pretty long time and it needs to be quick
-      // worst scan took 27 seconds
-      // the max duration of a scan is 60s in case searches take a long time
-
-      // so i either make this faster or fidn another solution
 
             {
               type: "heading",
@@ -237,6 +224,11 @@ export const caseStudies: Record<string, CaseStudy> = {
             alt: "The optional detail field under a photo of an OP-1 in its case, with \"keyboard and synth\" typed in and a tip to include a close-up of the brand logo",
           },
         ],
+      },
+
+      {
+        type: "text",
+        text: "Adding a web search for low confidence items increased latency by 2x. Most items took ~6s for a result and a web search increased time by ~13s from testing. I set a limit of 60s in case a scan took too long.",
       },
 
       // claude sonnet 4.6 because its cheap enough to run per scan and still accurate.
@@ -476,7 +468,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
           type: "heading",
           text: "System Constraints",
-          note: "",
+          note: "Design Decisions",
         },
 
 
