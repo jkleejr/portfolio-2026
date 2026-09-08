@@ -426,7 +426,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "If I continued this idea, I would definitely integrate an API key into the app and set up subscriptions or have users pay per paper. In the end, I didn't see a business opportunity for this app due to an oversaturated market of established TTS products like Speechify that solve the same problems, so I moved on.",
+        text: "If I continued this idea, I would definitely integrate an API key into the app and set up subscriptions or have users pay per paper. In the end, I didn't see a business opportunity for this app due to established and well designed TTS products like Speechify that solve the same problems, so I moved on.",
       },
 
     ],
