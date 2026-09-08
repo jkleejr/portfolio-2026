@@ -152,7 +152,7 @@ export const caseStudies: Record<string, CaseStudy> = {
                   },
       {
         type: "text",
-        text: "When I was moving places, I wanted an easy way to value my old stuff to decide what to sell. I tried existing appraisal apps but they required a subscription after a few scans and had unnecessary steps, so I decided to build my own app. My solution was an accurate and free iOS app for users to identify and price their items.",
+        text: "When I was moving places, I wanted an easy way to value my old stuff and decide what to sell. I tried existing appraisal apps but they required a subscription after a few scans and had unnecessary steps, so I decided to build my own app. My solution was an accurate and free iOS app for users to identify and price their items.",
       },
       
         // designing for speed: the core loop - time to value. remove unnecessary navigation.
@@ -178,7 +178,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
             {
               type: "heading",
-              text: "Using AI for Price Discovery",
+              text: "Using LLMs for Price Discovery",
               note: "Design Decisions",
             },
 
