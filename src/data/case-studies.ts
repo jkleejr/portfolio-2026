@@ -472,14 +472,31 @@ export const caseStudies: Record<string, CaseStudy> = {
           //"Apple Speech transcribes audio",
           //"DeepL translates the text",
 
+
+      {
+          type: "heading",
+          text: "System Constraints",
+          note: "",
+        },
+
+
       {
         type: "text",
-        text: ""
+        text: "iOS prohibits third party overlay windows, which makes language learning more difficult since a user experiences constant context switching between an app and Google Translate. I used ReplayKit to broadcast video frames, Apple Vision OCR to extract Korean text, translated it using DeepL API, and updated the dynamic island and floating window through ActivityKit."
       },
+
+      {
+          type: "heading",
+          text: "Region Selector",
+          note: "",
+        },
+
       {
         type: "text",
-        text: ""
+        text: "Translating the whole screen didn't work well because there was too much information to fit into the small dynamic island and floating window. To improve accuracy and reduce information overload, I designed an interactive crop box so a user can select a specific part of the screen to translate. Allowing the user to choose is a way the app can understand the intentions of the user and provide a better experience."
       },
+
+      
       {
         type: "images",
         // Three phones across. The row is what is held rather than each shot,
@@ -500,6 +517,18 @@ export const caseStudies: Record<string, CaseStudy> = {
             alt: "The translation region picker: a phone outline with a blue box dragged over the top third of the screen, and a resize handle at its corner",
           },
         ],
+      },
+
+
+      {
+          type: "heading",
+          text: "Result",
+          note: "Retrospective",
+        },
+
+      {
+        type: "text",
+        text: ""
       },
     ],
   },
