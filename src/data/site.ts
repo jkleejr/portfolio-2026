@@ -44,9 +44,9 @@ loot check (live app) - strong foundation, deeper design process
 - appraising unlisted unique items - expand
 
 
-paper reader (ios prototype) - reframe conclusion
 screen translator (ios prototype) - unfinished but good project for Apple design engineer
-buy side briefings (live web) - technical project needs new logo
+buy side briefings (live web) - systems design then done
+
 time with tree (live web) - finish or remove
 
 
@@ -61,6 +61,9 @@ visual craft
 punk / avant garde
 ios / fintech
 high / counter culture
+
+brutalism
+neobrutlism
 
 homepage needs work
 use top left space? keep everything center?

@@ -152,14 +152,9 @@ export const caseStudies: Record<string, CaseStudy> = {
                   },
       {
         type: "text",
-        text: "When I was moving places, I wanted an easy way to value my old stuff and decide what to sell. I tried existing appraisal apps but they required a subscription after a few scans and had unnecessary steps, so I decided to build my own app. My solution was an accurate and free iOS app for users to identify and price their items.",
+        text: "When I was moving places, I wanted an easy way to value my old stuff and decide what to sell. I tried existing appraisal apps but they required a subscription after a few scans and had unnecessary steps, so I decided to build my own app. My solution was an accurate and free app for users to identify and price their items.",
       },
       
-        // designing for speed: the core loop - time to value. remove unnecessary navigation.
-        // interface needed to be simple
-        // other ideas:
-        // could add 0 click entry - app opens directly to camera view, priotizes the primary action
-        // manage system latency - since it takes time to get the result, design a loading state with conversational text to improve the wait
         // would be interesting to display confidence score as a %
     
 
@@ -169,11 +164,11 @@ export const caseStudies: Record<string, CaseStudy> = {
               note: "Design Decisions",
             },
 
-            // mermaid diagram
+            // architecture and data flow diagrams 
+              // photo captured to the result and estimated price range
+            
 
             // show how price is displayed screenshot
-
-          // explain prices for original stuff
 
       
       {
@@ -254,7 +249,6 @@ export const caseStudies: Record<string, CaseStudy> = {
     date: "July - August 2026",
     role: "Product Design, iOS Development",
     scope: "Mobile Prototype",
-    // functional prototype integrated with LLMs, dealt with audio streaming, and designed the UI
     blocks: [
       {
         type: "video",
@@ -282,7 +276,6 @@ export const caseStudies: Record<string, CaseStudy> = {
         text: "I designed the app around a user paying for their own API usage due to the costs of audio generation at ~$1-3 per paper. To keep things simple, I used one API to identify text and generate audio. Gemini 3.1 flash was the best option because it could clean up text and had TTS with 8 voices.",
       },
 
-   
             {
               type: "heading",
               text: "Highlighting",
@@ -443,13 +436,15 @@ export const caseStudies: Record<string, CaseStudy> = {
         type: "text",
         text: "Constantly switching apps while learning a language is annoying and time consuming. I created an app that translates the Korean text on screen to English in real time.",
       },
-      // had to use the dynamic island iOS does not allow you to render anything over an existing app
-      // had 2 choices, use the dynamic island or a floating window
-      // both are included, but focusing on dynamic island and floating window to test
-      // 
+  
       {
         type: "text",
         text: "My first idea was to generate text over the current display, but iOS does not allow an app to draw over another app. To get around this, I used a ReplayKit broadcast extension to receive pixels of what's on screen, and showed the translation using the dynamic island and floating window."
+
+                    // architecture and data flow diagrams
+                // active app / news feed to dynamic island / live activity overlay
+
+
 
       },
         {
@@ -457,8 +452,7 @@ export const caseStudies: Record<string, CaseStudy> = {
           text: "Solution",
           note: "",
         },
-      // first, focusing this app on live captions translations, and trying to make that process as seamless as i can.
-      // audio later
+        // live captions only
  
           //"Apple Vision reads the screen",
           //"Apple Speech transcribes audio",
@@ -485,7 +479,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "Translating the whole screen didn't work well because there was too much information to fit into the small dynamic island and floating window. To improve accuracy and reduce information overload, I designed an interactive crop box so a user can select a specific part of the screen to translate. Allowing the user to choose is a way the app can understand the intentions of the user and provide a better experience."
+        text: "Translating the entire screen was impractical because of the limited space in the dynamic island and floating window. To improve accuracy and prevent clutter, I added an interactive crop box for selecting a specific area of the screen to align the app with the user's intent."
       },
 
       
@@ -544,10 +538,6 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "image",
         src: "/projects/buy-side-site-today-5.png",
-        // The shot that opens the study, and the only one that has a whole
-        // website in it rather than one panel of it, so it is given more room
-        // than the rest. 1181px of file is the ceiling on how far it can go
-        // before it softens; 1000 keeps it clear of that.
         max: 1000,
         alt: "The Today page with the toggle on AM: a live ticker strip under the nav, then the morning report of Monday, September 7, filed at 8:27 AM ET, its headline on Asia repricing the AI memory trade on a record inventory squeeze while US markets were shut, the paragraph that argues it, a link out to the full nine minute read, and the charts panel opening underneath",
       },
@@ -579,30 +569,16 @@ export const caseStudies: Record<string, CaseStudy> = {
               text: "Curating Market Context with AI",
               note: "Design Decisions",
             },
-      // turning hours of research into minutes
-      // how did i format the AI output
-      // citations and trust - the report always lists its citations so i can check if somethign seems off
-
-      // context switching - constantly jumping between multiple disconnected browser tabs and apps to gather information, which can be mentally exhausting and lead to cognitive fatigue
-
+      
       {
         type: "text",
         text: "I gave Claude clear rules on how to research and structure each report. Instead of running one query, it runs parallel web searches across market feeds and stock watchlists to collect data.",
         
-        // market data, a stock list, sentiment, news. runs these as parallel web searches. contuinity - the agent reads the most recent prior report so today's read connects to yesterday's, and the night run reads that morning's report so it can say in one sentence whether the morning read held up. 
-        // before writing anything it must decide the single thing a reader who saw nothing today needs to know... that gets the headline and the main read.
-        // evidence is important. the read must be supported by data and numbers, no unsourced claims
-        // plain language rule - no filler and be direct to save the reader time
-        // a hard word budget - roughly 900 - 1200 words for the morning, 1200 to 1600 at night
-        // no buy, sell, or hold recommendations. the read is purely informational and analytical, not advisory
-        // calibration - it checks the last few days of output and if the only news is a trend that continued, it says so rather than escalating the language. 
-
-        // LLM doesnt remember the last report so it reads previous reports on github 
       },
 
       {
         type: "text",
-        text: "The core design work is in the instructions file in the repository. It took 24 revisions to get the reports to its current state and I am still improving it whenever I notice a problem. The file behaves as a living design system because every adjustment I make changes future reports."
+        text: "The core design work is in the instructions file in the repository. The file behaves as a living design system because every adjustment changes future reports."
       },
       // expand on this
 
