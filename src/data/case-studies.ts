@@ -228,7 +228,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "Adding a web search for low confidence items increased latency by 2x. Most items took ~6s for a result and a web search increased time by ~13s from testing. I set a limit of 60s in case a scan took too long.",
+        text: "Adding a web search for low confidence items tripled total latency, increasing response times from ~6s to ~19s. To manage the delay, I implemented a 60s timeout to prevent long scans and added a wait time estimate to the loading screen.",
       },
 
       // claude sonnet 4.6 because its cheap enough to run per scan and still accurate.
