@@ -152,7 +152,7 @@ export const caseStudies: Record<string, CaseStudy> = {
                   },
       {
         type: "text",
-        text: "Finding the resale value of items is a time consuming process. Existing appraisal apps require a subscription and have unnecessary steps. My solution was a fast, accurate, and free iOS app for users to identify and price their items.",
+        text: "When I was moving places, I wanted an easy way to value my old stuff to decide what to sell. I tried existing appraisal apps but they required a subscription after a few scans and had unnecessary steps, so I decided to build my own app. My solution was an accurate and free iOS app for users to identify and price their items.",
       },
       
         // designing for speed: the core loop - time to value. remove unnecessary navigation.
@@ -164,11 +164,6 @@ export const caseStudies: Record<string, CaseStudy> = {
       
         // would be interesting to display confidence score as a %
     
-
-      {
-        type: "text",
-        text: "I used Claude Sonnet 4.6 due to its low costs and high accuracy at ~$0.013 per scan. I considered other AI models but the costs were similar and I wanted the results to be as trustworthy as possible.",
-      },
 
       // latency
       // most items (w no search) take 6.1-6.9s
@@ -192,6 +187,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
           // explain prices for original stuff
 
+      
       {
         type: "text",
         text: "I built the app for resale, but the most interesting use case was showing it something original like a painting. I wanted to know the potential value of a painting that never had a listing. That grew the idea into a price discovery tool for both used and original items.",
@@ -204,14 +200,20 @@ export const caseStudies: Record<string, CaseStudy> = {
               note: "",
             },
 
+
       {
         type: "text",
-        text: "A key product decision was determining how AI values items. Using a web search for every scan increased accuracy, but because it raised API costs by 3-4x and made the user wait longer, I decided to rely on Claude Sonnet 4.6's pre-trained data for most items and only allow a web search when the model had low confidence."
+        text: "I used Claude Sonnet 4.6 due to its low costs and high accuracy at ~$0.013 per scan. I considered other AI models but the costs were similar and I wanted the results to be as trustworthy as possible.",
+      },
+
+      {
+        type: "text",
+        text: "A key product decision was determining how AI values items. Using a web search for every scan increased accuracy, but because it raised API costs by 3-4x and made the user wait longer, I chose to rely on Sonnet 4.6's pre-trained data for most items and only allowed a web search when the model had low confidence."
       },
 
             {
               type: "heading",
-              text: "Designing for AI Uncertainty",
+              text: "Designing for LLM Uncertainty",
               note: "",
             },
 
@@ -418,10 +420,11 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "Reflecting on this project, I realized that I didn't consider the user enough. If I continued this project, I would integrate an API key into the app. Asking users to set up their own key creates too much friction and is a bad idea especially because its the first step. I should have reasoned through this earlier in the planning stage because I ended up designing the app around that. There are many TTS products like Speechify that address the same problems, so I moved on.",
+        text: "Reflecting on this project, I realized that I didn't consider the user enough over my own self interests (not wanting to cover initial costs). Asking users to set up their own key creates too much friction and was a bad idea especially because it's the first step. If I continued this idea, I would definitely integrate an API key into the app. Because I didn't see the business potential for this app due to an oversaturated market of well designed TTS products like Speechify, I moved on.",
       },
     ],
   },
+
 
   "screen-translator": {
     title: "Screen Translator",

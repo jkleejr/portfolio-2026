@@ -62,7 +62,6 @@ punk / avant garde
 ios / fintech
 high / counter culture
 
-
 homepage needs work
 use top left space? keep everything center?
 usually nav links go on the right
@@ -73,4 +72,5 @@ intuition for layouts
 
 the name shrinks while the cover image and rest of the text stays the same which makes it awk
 
+more like LLMs than AI
 */
