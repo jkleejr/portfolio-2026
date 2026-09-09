@@ -228,7 +228,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "This required two separate pricing strategies. Since handmade and original items lack past transaction data, the search workflow finds asking prices for visually comparable work.",
+        text: "This required two separate pricing strategies. Since handmade and original items lack past transaction data, the search workflow finds the asking prices of visually comparable work.",
       },
 
       // why not add a button that a user can press if its original
