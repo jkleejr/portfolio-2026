@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="396"  viewBox="0 0 900 396" font-family="IBM Plex Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" role="img" aria-label="Architecture. The Expo app submits a photo to a single analyze endpoint on Vercel. That endpoint talks to Claude Sonnet 4.6 for identification and pricing, and to Upstash Redis for daily scan limits and counters. One JSON result returns to the app, where the fee comparison runs on the device and the user gets an estimated item value and payouts from marketplaces.">
+          <defs>
+            <marker id="m2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+              <path d="M 0 0 L 10 5 L 0 10 z" fill="#a3b8e8"></path>
+            </marker>
+          </defs>
+  <!-- Background plate. Delete this one line for a transparent SVG. -->
+  <rect x="0" y="0" width="900" height="396" fill="#0a0a0a"></rect>
+          <rect x="395" y="20" width="210" height="40" rx="2" fill="#3a3a3a" stroke="#8a8a8a" stroke-width="1"></rect>
+          <text x="500" y="45" fill="#ededed" font-size="13" font-weight="500" text-anchor="middle">Submit a photo</text>
+
+          <line x1="500" y1="60" x2="500" y2="96" fill="none" stroke="#c9c9c9" stroke-width="1.1" marker-end="url(#m2)"></line>
+
+          <rect x="395" y="102" width="210" height="54" rx="2" fill="#3a3a3a" stroke="#8a8a8a" stroke-width="1"></rect>
+          <text x="500" y="124" fill="#ededed" font-size="13" font-weight="500" text-anchor="middle">/api/analyze</text>
+          <text x="500" y="142" fill="#b6b6b6" font-size="10.5" text-anchor="middle">runs the scan, 30 second ceiling</text>
+
+          <polyline points="440,156 440,190 300,190 300,210" fill="none" stroke="#c9c9c9" stroke-width="1.1" marker-start="url(#m2)" marker-end="url(#m2)"></polyline>
+          <text x="370" y="182" fill="#9b9b9b" font-size="10.5" text-anchor="middle">photos + a JSON schema</text>
+
+          <polyline points="560,156 560,190 700,190 700,210" fill="none" stroke="#c9c9c9" stroke-width="1.1" marker-start="url(#m2)" marker-end="url(#m2)"></polyline>
+          <text x="630" y="182" fill="#9b9b9b" font-size="10.5" text-anchor="middle">scan counts and limits</text>
+
+          <rect x="195" y="216" width="210" height="54" rx="2" fill="#3a3a3a" stroke="#8a8a8a" stroke-width="1"></rect>
+          <text x="300" y="238" fill="#ededed" font-size="13" font-weight="500" text-anchor="middle">Claude Sonnet 4.6</text>
+          <text x="300" y="256" fill="#b6b6b6" font-size="10.5" text-anchor="middle">identifies and prices the item</text>
+
+          <rect x="595" y="216" width="210" height="54" rx="2" fill="#3a3a3a" stroke="#8a8a8a" stroke-width="1"></rect>
+          <text x="700" y="238" fill="#ededed" font-size="13" font-weight="500" text-anchor="middle">Upstash Redis</text>
+          <text x="700" y="256" fill="#b6b6b6" font-size="10.5" text-anchor="middle">daily caps, search allowances</text>
+
+          <polyline points="605,129 860,129 860,349 611,349" fill="none" stroke="#c9c9c9" stroke-width="1.1" marker-end="url(#m2)"></polyline>
+          <text x="732" y="120" fill="#9b9b9b" font-size="10.5" text-anchor="middle">one JSON result</text>
+
+          <rect x="395" y="322" width="210" height="54" rx="2" fill="#3a3a3a" stroke="#8a8a8a" stroke-width="1"></rect>
+          <text x="500" y="344" fill="#ededed" font-size="13" font-weight="500" text-anchor="middle">Estimated item value</text>
+          <text x="500" y="362" fill="#b6b6b6" font-size="10.5" text-anchor="middle">payouts from marketplaces</text>
+        </svg>

@@ -156,7 +156,12 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       
         // would be interesting to display confidence score as a %
-    
+
+      {
+        type: "image",
+        src: "/projects/loot-check-architecture.svg",
+        alt: "Architecture diagram. The app submits a photo to a single analyze endpoint on Vercel, which calls Claude Sonnet 4.6 to identify and price the item and Upstash Redis for daily caps and search allowances. One JSON result returns to the app as an estimated item value with payouts from marketplaces.",
+      },
 
             {
               type: "heading",
@@ -168,7 +173,20 @@ export const caseStudies: Record<string, CaseStudy> = {
               // photo captured to the result and estimated price range
             
 
+
+            // api key lives in Vercel's environment variables - so its never in app, sent to phone, or git
+            // upstash redis - stores numbers: 100 scans a day per phone cap, 1000 global daily cap, all time number of scans, 25 paid web searches a day per user cap - to limit costs and a worst case scenario 
+            // at rougly $0.013-$0.02 per scan - 100 scans would cost me ~$2 a day per user, or ~$20 a day if the global daily cap is reached
+            // 9.8.26 - deleted the verification cache since it didn't help much
+            // anthropic monthly spend limit is another real backstop
+
+
             // show how price is displayed screenshot
+
+
+            // PRICE_VERIFY - original items worth $40+ get a web searched price, costs ~$0.01 per search, capped at 25 per device a day, scans take ~8-20 seconds
+              // web search scan is not too common
+              // 30s ceiling - if it takes too long it returns the model's own estimate 
 
       
       {
@@ -186,12 +204,12 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "I used Claude Sonnet 4.6 due to its low costs and high accuracy at ~$0.013 per scan. I considered other AI models but the costs were similar and I wanted the results to be as trustworthy as possible.",
+        text: "I used Claude Sonnet 4.6 due to its low costs and high accuracy at ~$0.013 per scan. I considered other models but the costs were similar and I wanted the results to be as trustworthy as possible.",
       },
 
       {
         type: "text",
-        text: "A key product decision was determining how AI values items. Using a web search for every scan increased accuracy, but because it raised API costs by 3-4x and made the user wait longer, I chose to rely on Sonnet 4.6's pre-trained data for most items and only allowed a web search when the model had low confidence."
+        text: "A key product decision was determining how the app values items. Using a web search for every scan increased accuracy, but because it raised API costs by 3-4x and made the user wait longer, I chose to rely on Sonnet 4.6's pre-trained data for most items and only allowed a web search when the model had low confidence."
       },
 
             {
