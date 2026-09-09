@@ -170,7 +170,7 @@ function Inline({ text }: { text: string }) {
         href={href}
         target="_blank"
         rel="noreferrer"
-        className="underline decoration-foreground/40 underline-offset-4 transition-colors duration-200 ease-out hover:decoration-foreground"
+        className="underline decoration-foreground/40 underline-offset-4 transition-colors duration-200 ease-out hover:text-accent hover:decoration-accent"
       >
         {label}
       </a>,
