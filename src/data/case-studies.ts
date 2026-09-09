@@ -152,7 +152,7 @@ export const caseStudies: Record<string, CaseStudy> = {
                   },
       {
         type: "text",
-        text: "When I was moving places, I wanted an easy way to value my old stuff and decide what to sell. I tried existing appraisal apps but they required a subscription after a few scans and had unnecessary steps. My solution was an accurate and free app for users to identify and price their items.",
+        text: "When I was moving places, I wanted an easy way to value my old stuff and decide what to sell. I tried existing appraisal apps but they had unnecessary steps and required a subscription after a few scans. My solution was an accurate and free app for users to identify and price their items.",
       },
       
         // would be interesting to display confidence score as a %
@@ -245,7 +245,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
             {
               type: "heading",
-              text: "Designing for Uncertainty",
+              text: "Designing for LLM Uncertainty",
               note: "",
             },
 
