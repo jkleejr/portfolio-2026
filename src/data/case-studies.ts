@@ -651,10 +651,14 @@ export const caseStudies: Record<string, CaseStudy> = {
         
       },
 
+
+    
       {
         type: "text",
-        text: "The core design work is in the instructions file in the repository. The file behaves as a living design system because every adjustment changes future reports."
+        text: "The core design work is in the instructions file in the repository. The file behaves as a living design system because every adjustment changes future reports. The agent writes the report, but it does not decide what a report is because it executes the rules and schema I gave it. It's instructed to never fabricate information and always cite sources."
       },
+
+
       // expand on this
 
       // separate routine generates the site's content - homepage headline and lede, market snapshot, regime levels, and links in news today
@@ -662,6 +666,8 @@ export const caseStudies: Record<string, CaseStudy> = {
         // verdict routine generates a report during weekends (Sonnet 4.6)
         // report routine during weekday (Opus 5)
 
+
+    
       {
         type: "text",
         text: "Because LLMs don't have long term memory, the agent calibrates itself by reading reports of the last few days before writing. This creates continuity and prevents the AI from overreacting if a trend only continued."
