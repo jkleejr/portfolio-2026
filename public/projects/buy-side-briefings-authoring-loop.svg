@@ -40,7 +40,7 @@
 
   <rect x="240" y="372" width="270" height="54" rx="2" fill="#3a3a3a" stroke="#8a8a8a" stroke-width="1"></rect>
   <text x="375" y="394" fill="#ededed" font-size="13" font-weight="500" text-anchor="middle">Timestamp by script</text>
-  <text x="375" y="412" fill="#b6b6b6" font-size="10.5" text-anchor="middle">taken from the clock, not from the model</text>
+  <text x="375" y="412" fill="#b6b6b6" font-size="10.5" text-anchor="middle">the real time the report finished</text>
 
   <line x1="375" y1="426" x2="375" y2="462" fill="none" stroke="#c9c9c9" stroke-width="1.1" marker-end="url(#a2)"></line>
 
