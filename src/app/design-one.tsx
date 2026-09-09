@@ -322,7 +322,7 @@ export function DesignOne() {
           )}
           <a
             href={`mailto:${site.email}`}
-            className="self-end text-lg font-medium text-foreground transition-opacity duration-200 ease-out hover:opacity-70 sm:absolute sm:bottom-6 sm:right-6"
+            className="self-end text-lg font-medium text-foreground transition-colors duration-200 ease-out hover:text-accent sm:absolute sm:bottom-6 sm:right-6"
           >
             Contact
           </a>
