@@ -176,7 +176,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         type: "image",
         src: "/projects/loot-check-architecture.svg",
         max: 700,
-        alt: "Architecture diagram. The app submits a photo to a single analyze endpoint on Vercel, which calls Claude Sonnet 4.6 to identify and price the item and Upstash Redis for daily caps and search allowances. One JSON result returns to the app as an estimated item value with payouts from marketplaces.",
+        alt: "Architecture diagram. The iOS app uploads a photo to a single analyze endpoint on Vercel, which calls Claude Sonnet 4.6 to identify and price the item and Upstash Redis for daily caps and search allowances. A JSON response returns to the app as an item valuation with payouts from marketplaces.",
       },
 
           
