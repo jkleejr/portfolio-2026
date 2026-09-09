@@ -668,6 +668,13 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
 
       {
+        type: "image",
+        src: "/projects/buy-side-briefings-authoring-loop.svg",
+        max: 700,
+        alt: "Authoring loop. A cron trigger starts the agent, which researches the session on the web and then writes two files: a structured verdict JSON and a written report. The JSON is parsed and checked against the schema. If it fails, the agent rewrites it. If it passes, a script stamps the generated-at timestamp from the clock, and the files are committed and pushed.",
+      },
+
+      {
         type: "heading",
         text: "Designing a Pre-Market vs. After-Hours Workflow",
         note: "",
