@@ -172,6 +172,8 @@ export const caseStudies: Record<string, CaseStudy> = {
       
       // system architecture and data flow diagrams
       // photo captured to the result and estimated price range
+
+      // native client, serverless orchestrator, AI inference, rate limiting, returned payload
       {
         type: "image",
         src: "/projects/loot-check-architecture.svg",
@@ -217,7 +219,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
               type: "heading",
-              text: "Using LLMs for Price Discovery",
+              text: "Using Claude for Price Discovery",
               note: "",
             },
       
