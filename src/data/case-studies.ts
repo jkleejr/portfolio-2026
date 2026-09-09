@@ -165,6 +165,8 @@ export const caseStudies: Record<string, CaseStudy> = {
               note: "Design Decisions",
             },
       
+      // system architecture and data flow diagrams
+      // photo captured to the result and estimated price range
       {
         type: "image",
         src: "/projects/loot-check-architecture.svg",
@@ -172,16 +174,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         alt: "Architecture diagram. The app submits a photo to a single analyze endpoint on Vercel, which calls Claude Sonnet 4.6 to identify and price the item and Upstash Redis for daily caps and search allowances. One JSON result returns to the app as an estimated item value with payouts from marketplaces.",
       },
 
-            {
-              type: "heading",
-              text: "Using LLMs for Price Discovery",
-              note: "",
-            },
-
-            // architecture and data flow diagrams 
-              // photo captured to the result and estimated price range
-            
-
+          
 
             // api key lives in Vercel's environment variables - so its never in app, sent to phone, or git
             // upstash redis - stores numbers: 100 scans a day per phone cap, 1000 global daily cap, all time number of scans, 25 paid web searches a day per user cap - to limit costs and a worst case scenario 
@@ -196,12 +189,7 @@ export const caseStudies: Record<string, CaseStudy> = {
             // PRICE_VERIFY - original items worth $40+ get a web searched price, costs ~$0.01 per search, capped at 25 per device a day, scans take ~8-20 seconds
               // web search scan is not too common
               // 30s ceiling - if it takes too long it returns the model's own estimate 
-
-      
-      {
-        type: "text",
-        text: "I built the app for resale, but the most interesting use case was showing it something original like a painting. I wanted to know the potential value of a painting that never had a listing. That grew the idea into a price discovery tool for both used and original items.",
-      },
+            
 
 
             {
@@ -220,6 +208,19 @@ export const caseStudies: Record<string, CaseStudy> = {
         type: "text",
         text: "A key product decision was determining how the app values items. Using a web search for every scan increased accuracy, but because it raised API costs by 3-4x and made the user wait longer, I chose to rely on Sonnet 4.6's pre-trained data for most items and only allowed a web search when the model had low confidence."
       },
+
+
+      {
+              type: "heading",
+              text: "Using LLMs for Price Discovery",
+              note: "",
+            },
+      
+      {
+        type: "text",
+        text: "I built the app for resale, but the most interesting use case was showing it something original like a painting. I wanted to know the potential value of a painting that never had a listing. That grew the idea into a price discovery tool for both used and original items.",
+      },
+      
 
             {
               type: "heading",
