@@ -655,7 +655,7 @@ export const caseStudies: Record<string, CaseStudy> = {
     
       {
         type: "text",
-        text: "The core design work is in the instructions file in the repository. The file behaves as a living design system because every adjustment changes future reports. The agent writes the report, but it does not decide what a report is because it executes the rules and schema I gave it. It's instructed to never fabricate information and always cite sources."
+        text: "The core design work is in the instructions file in the repository. The file behaves as a living design system because every adjustment changes future reports. The agent writes the report, but it does not decide what it is about because it executes the rules and schema I gave it. It's instructed to never fabricate information and always cite sources."
       },
 
 
