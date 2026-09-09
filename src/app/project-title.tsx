@@ -47,7 +47,10 @@ export function ProjectTitle({
       <button
         type="button"
         aria-expanded={toggle.open}
-        className={press}
+        // Held in the accent colour for as long as its study is open, so the
+        // name says which project the page is showing after the pointer has
+        // moved on. Closing the study lets it go.
+        className={`${press} ${toggle.open ? "text-accent" : ""}`}
         onPointerDown={onPointerDown}
         onClick={(e) => {
           if (dragged(e)) return;
