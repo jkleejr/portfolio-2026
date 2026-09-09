@@ -238,7 +238,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         type: "image",
         src: "/projects/loot-check-pricing-fork.svg",
         max: 700,
-        alt: "The pricing fork. After a photo is submitted, the app asks whether the item was made by the person selling it. If no, it is resale and priced from the model's training data. If yes, it is an original with no going rate, so one web search finds the asking price of comparable work. Both paths end in an estimated item value.",
+        alt: "The pricing fork. After the iOS app uploads a photo, the scan asks whether the item is a handmade or original piece. If no, it is resale and priced from training data. If yes, there is no fixed secondhand catalog, so one web search finds the asking price of comparable work. Both paths end in an item valuation.",
       },
 
             {
