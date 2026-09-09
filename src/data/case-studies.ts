@@ -257,9 +257,9 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "images",
         columns: 2,
-        // A crop off a retina screen, so 776px of file is 388px of screen.
-        // Half the row plus the gap between the two halves holds it there,
-        // rather than letting a wide window blow it up past life size.
+        // Crops off a retina screen, so 776px of file is 388px of screen.
+        // Half the row plus the gap between the two halves holds the first
+        // there, rather than letting a wide window blow it up past life size.
         max: 792,
         items: [
           {
@@ -267,7 +267,18 @@ export const caseStudies: Record<string, CaseStudy> = {
             fullOnPhone: true,
             alt: "The optional detail field under a photo of an OP-1 in its case, with \"keyboard and synth\" typed in and a tip to include a close-up of the brand logo",
           },
+          {
+            src: "/projects/loot-check-generic-match.png",
+            fullOnPhone: true,
+            alt: "A warning card on a result titled \"Not sure of the exact product\". It says this looks like a generic match, suggests adding a close-up of the brand logo or typing the brand in the detail field, and offers an \"Add a photo & retry\" button",
+          },
         ],
+      },
+
+
+      {
+        type: "text",
+        text: "Since vision models are not 100% accurate, users can input optional keywords to guide the model before scanning. Results with low confidence are labeled \"best guess\".",
       },
 
       // Adding a web search for scans tripled total latency, increasing response times from ~6s to ~19s. I implemented a 30s timeout to prevent long scans and displayed the estimated wait time on the loading screen."
