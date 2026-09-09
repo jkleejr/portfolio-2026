@@ -76,4 +76,6 @@ intuition for layouts
 the name shrinks while the cover image and rest of the text stays the same which makes it awk
 
 more like LLMs than AI
+
+probably include smt about me
 */
