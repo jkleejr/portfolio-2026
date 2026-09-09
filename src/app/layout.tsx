@@ -25,18 +25,23 @@ const satoshi = localFont({
 
 // Old London, currently the face on the name — see .fraktur in globals.css.
 //
-// The 2003 .ttf from the download, shipped as it came rather than converted:
-// the copyright reads "All rights reserved", and the only statement of terms
-// anywhere near it is a "have fun and enjoy" in the sibling .otf's name table,
-// pointing at steffmann.de. That is thin ground for a site that advertises for
-// work, and it is worth pinning the actual terms down before this ships. The
-// download also carries Old London Alternate, a second cut not added here.
+// The file is the 2003 .ttf from the download with the curled terminals taken
+// off the letters. Its metrics are the original's — "JOHN LEE" is 4.713em
+// wide and the capitals ink 0.80em tall in both — so the name's sizing, which
+// design-one.tsx notes was cut to the original, holds as it is.
+//
+// Shipped as it came rather than converted: the copyright reads "All rights
+// reserved", and the only statement of terms anywhere near it is a "have fun
+// and enjoy" in the sibling .otf's name table, pointing at steffmann.de. That
+// is thin ground for a site that advertises for work, and it is worth pinning
+// the actual terms down before this ships. The download also carries Old
+// London Alternate, a second cut not added here.
 const oldLondon = localFont({
   variable: "--font-old-london",
   display: "swap",
   src: [
     {
-      path: "./fonts/OldLondon-Regular.ttf",
+      path: "./fonts/OldLondon-NoCurls.ttf",
       weight: "400",
       style: "normal",
     },
