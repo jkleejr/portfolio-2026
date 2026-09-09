@@ -61,9 +61,7 @@ high / counter culture
 brutalism
 neobrutlism
 
-homepage needs work
-use top left space? keep everything center?
-usually nav links go on the right
+
 
 prompting is 90%, design engineering is the 10%
 systems over linear prompts
