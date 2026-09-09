@@ -228,9 +228,11 @@ export const caseStudies: Record<string, CaseStudy> = {
         text: "The project started with resale pricing, but the most interesting use case was showing it something original like a painting. I wanted to know the potential value of a painting that never had a listing. That grew the idea into a price discovery tool for both used and original items.",
       },
 
+
+
       {
         type: "text",
-        text: "This required two separate pricing strategies. Since handmade and original items lack past transaction data, the search workflow finds the asking prices of visually comparable work.",
+        text: "This required two separate pricing strategies. Since handmade and original items lack past transaction data, the search workflow finds the asking prices of visually comparable items.",
       },
 
       // why not add a button that a user can press if its original
@@ -254,6 +256,8 @@ export const caseStudies: Record<string, CaseStudy> = {
         text: "Since vision models are not 100% accurate, users can input optional keywords to guide the model before scanning. Results with low confidence are labeled \"best guess\".",
       },
 
+
+
       {
         type: "images",
         columns: 2,
@@ -268,6 +272,19 @@ export const caseStudies: Record<string, CaseStudy> = {
             alt: "The optional detail field under a photo of an OP-1 in its case, with \"keyboard and synth\" typed in and a tip to include a close-up of the brand logo",
           },
           {
+            src: "/projects/loot-check-detail-result.png",
+            fullOnPhone: true,
+            alt: "The result for that photo: Teenage Engineering OP-1 Portable Synthesizer & Sampler with Case, tagged Electronics and Good, with the brand and a line of search keywords under it",
+          },
+        ],
+      },
+
+      {
+        type: "images",
+        columns: 2,
+        max: 792,
+        items: [
+          {
             src: "/projects/loot-check-generic-match.png",
             fullOnPhone: true,
             alt: "A warning card on a result titled \"Not sure of the exact product\". It says this looks like a generic match, suggests adding a close-up of the brand logo or typing the brand in the detail field, and offers an \"Add a photo & retry\" button",
@@ -276,10 +293,6 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
 
 
-      {
-        type: "text",
-        text: "Since vision models are not 100% accurate, users can input optional keywords to guide the model before scanning. Results with low confidence are labeled \"best guess\".",
-      },
 
       // Adding a web search for scans tripled total latency, increasing response times from ~6s to ~19s. I implemented a 30s timeout to prevent long scans and displayed the estimated wait time on the loading screen."
 
