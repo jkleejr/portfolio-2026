@@ -226,6 +226,11 @@ export const caseStudies: Record<string, CaseStudy> = {
         text: "The project started with resale pricing, but the most interesting use case was showing it something original like a painting. I wanted to know the potential value of a painting that never had a listing. That grew the idea into a price discovery tool for both used and original items.",
       },
 
+      {
+        type: "text",
+        text: "This required two separate pricing strategies. Since handmade and original items lack past transaction data, the search workflow finds asking prices for visually comparable work.",
+      },
+
       // why not add a button that a user can press if its original
         // temporary solution
 
