@@ -253,7 +253,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "Since vision models are not 100% accurate, users can input optional keywords to guide the model before scanning. Results with low confidence are labeled \"best guess\".",
+        text: "Since vision models are not 100% accurate, users can input optional keywords to guide the model before scanning.",
       },
 
 
@@ -277,6 +277,12 @@ export const caseStudies: Record<string, CaseStudy> = {
             alt: "The result for that photo: Teenage Engineering OP-1 Portable Synthesizer & Sampler with Case, tagged Electronics and Good, with the brand and a line of search keywords under it",
           },
         ],
+      },
+
+
+      {
+        type: "text",
+        text: "Results with low confidence are labeled \"best guess\".",
       },
 
       {

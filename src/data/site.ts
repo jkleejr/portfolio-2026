@@ -39,10 +39,6 @@ portfolio architecture + shell ux - 5/10
 case stydy storytelling + depth - 4/10
 
 
-loot check (live app) - strong foundation, deeper design process
-- show ui
-- appraising unlisted unique items - expand
-
 
 screen translator (ios prototype) - unfinished but good project for Apple design engineer
 buy side briefings (live web) - systems design then done
