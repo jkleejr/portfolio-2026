@@ -157,17 +157,25 @@ export const caseStudies: Record<string, CaseStudy> = {
       
         // would be interesting to display confidence score as a %
 
+
+      
+            {
+              type: "heading",
+              text: "System Architecture",
+              note: "Design Decisions",
+            },
+      
       {
         type: "image",
         src: "/projects/loot-check-architecture.svg",
-        max: 560,
+        max: 500,
         alt: "Architecture diagram. The app submits a photo to a single analyze endpoint on Vercel, which calls Claude Sonnet 4.6 to identify and price the item and Upstash Redis for daily caps and search allowances. One JSON result returns to the app as an estimated item value with payouts from marketplaces.",
       },
 
             {
               type: "heading",
               text: "Using LLMs for Price Discovery",
-              note: "Design Decisions",
+              note: "",
             },
 
             // architecture and data flow diagrams 
