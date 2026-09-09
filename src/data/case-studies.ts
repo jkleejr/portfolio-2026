@@ -190,7 +190,6 @@ export const caseStudies: Record<string, CaseStudy> = {
             // anthropic monthly spend limit is another real backstop
 
 
-            // show how price is displayed screenshot
 
 
             // PRICE_VERIFY - original items worth $40+ get a web searched price, costs ~$0.01 per search, capped at 25 per device a day, scans take ~8-20 seconds

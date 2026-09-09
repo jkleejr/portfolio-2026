@@ -9,6 +9,9 @@
      a description beside something else — the line under a project's name. */
   --text-body: #404040;
   --muted: #525252;
+  /* The colour a project's name turns under the pointer. The same in both
+     themes: it sits between the two backgrounds and reads on either. */
+  --accent: #93a9e2;
 
   /* The two columns the page is set in: a cover, and the writing beside it.
      One place to say how wide a cover is, how far the writing sits off it, and
@@ -120,6 +123,7 @@
   --color-foreground: var(--foreground);
   --color-muted: var(--muted);
   --color-body: var(--text-body);
+  --color-accent: var(--accent);
   --font-sans: var(--font-satoshi);
 }
 

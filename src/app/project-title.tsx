@@ -34,13 +34,13 @@ export function ProjectTitle({
   const { onPointerDown, dragged } = usePress();
   const toggle = useCoverToggle();
 
-  // Dimmed under the pointer the way the title of a study that links out is,
-  // so the name reads as something that can be pressed without being dressed
-  // as a link — nothing is being navigated to. On the list the whole row is
-  // the switch, so the name answers a hover anywhere in it (group-hover, from
-  // ProjectRow) and not only on its own letters.
+  // Turns the accent colour under the pointer, so the name reads as something
+  // that can be pressed without being dressed as a link — nothing is being
+  // navigated to. On the list the whole row is the switch, so the name
+  // answers a hover anywhere in it (group-hover, from ProjectRow) and not
+  // only on its own letters.
   const press =
-    "cursor-pointer text-left transition-opacity duration-200 ease-out hover:opacity-70 group-hover:opacity-70";
+    "cursor-pointer text-left transition-colors duration-200 ease-out hover:text-accent group-hover:text-accent";
 
   if (study && toggle) {
     return (
