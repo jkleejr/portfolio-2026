@@ -96,6 +96,31 @@ export default function RootLayout({
       <body
         className={`${satoshi.variable} ${oldLondon.variable} antialiased`}
       >
+        {/* The homepage with a study open — "/" plus a slug, see
+            [slug]/page.tsx — starts at that study's row, scrolled to on first
+            paint. On a reload the browser wants to put the page back where it
+            was scrolled to, and does so at its own moment around load,
+            sometimes after the row has been scrolled to and sometimes before,
+            so the page landed on the row one time and mid-study the next.
+            Told not to here, inline and first in the body, because by the
+            time a component's effect could say it the browser may already
+            have done it.
+
+            It is here rather than on that page because a plain <script> in a
+            page never runs on a client-side render, and React warns about
+            exactly that whenever the page is reached by navigation. The root
+            layout is rendered once, on the server, so this one is parsed and
+            run by the browser on every hard load and never re-rendered — the
+            same footing as the scrollbar script at the foot of the body. It
+            checks the address itself: one segment and no more is the
+            open-study route. The homepage at "/" keeps the browser's
+            restoration, and so do the studies' own pages under /projects/. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              'if(location.pathname.split("/").filter(Boolean).length===1)history.scrollRestoration="manual"',
+          }}
+        />
         {/* One container places every button, so their spacing is a gap
             rather than a sum each of them has to know. The top-right corner,
             as a row, at every width — no breakpoint. The apple is last, which
