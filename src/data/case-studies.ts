@@ -164,6 +164,11 @@ export const caseStudies: Record<string, CaseStudy> = {
               text: "System Architecture",
               note: "Design Decisions",
             },
+
+      {
+        type: "text",
+        text: "The app sends photos to a single endpoint. The server makes the AI call, enforces spending limits, and holds the API keys.",
+      },
       
       // system architecture and data flow diagrams
       // photo captured to the result and estimated price range
@@ -220,7 +225,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         type: "text",
         text: "I built the app for resale, but the most interesting use case was showing it something original like a painting. I wanted to know the potential value of a painting that never had a listing. That grew the idea into a price discovery tool for both used and original items.",
       },
-      
+
 
             {
               type: "heading",
