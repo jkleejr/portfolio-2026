@@ -245,7 +245,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
             {
               type: "heading",
-              text: "Designing for LLM Uncertainty",
+              text: "Designing for Uncertainty",
               note: "",
             },
 
