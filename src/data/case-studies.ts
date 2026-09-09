@@ -219,7 +219,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
               type: "heading",
-              text: "Using Claude for Price Discovery",
+              text: "Price Discovery",
               note: "",
             },
       
