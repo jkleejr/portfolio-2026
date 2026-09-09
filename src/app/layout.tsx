@@ -31,12 +31,17 @@ const satoshi = localFont({
 // pointing at steffmann.de. That is thin ground for a site that advertises for
 // work, and it is worth pinning the actual terms down before this ships. The
 // download also carries Old London Alternate, a second cut not added here.
+//
+// The file on the name is OldLondon-NoSpikes, the same face with the spikes
+// taken off the letters. Its metrics are the Regular's to the thousandth —
+// "JOHN LEE" is 4.713em wide in both — so the name's sizing did not move.
+// The Regular stays beside it for switching back.
 const oldLondon = localFont({
   variable: "--font-old-london",
   display: "swap",
   src: [
     {
-      path: "./fonts/OldLondon-Regular.ttf",
+      path: "./fonts/OldLondon-NoSpikes.ttf",
       weight: "400",
       style: "normal",
     },
