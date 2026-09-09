@@ -152,7 +152,7 @@ export const caseStudies: Record<string, CaseStudy> = {
                   },
       {
         type: "text",
-        text: "When I was moving places, I wanted an easy way to value my old stuff and decide what to sell. I tried existing appraisal apps but they required a subscription after a few scans and had unnecessary steps, so I decided to build my own app. My solution was an accurate and free app for users to identify and price their items.",
+        text: "When I was moving places, I wanted an easy way to value my old stuff and decide what to sell. I tried existing appraisal apps but they required a subscription after a few scans and had unnecessary steps. My solution was an accurate and free app for users to identify and price their items.",
       },
       
         // would be interesting to display confidence score as a %
@@ -167,7 +167,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "The app sends photos to a single endpoint. The server makes the AI call, enforces spending limits, and holds the API keys.",
+        text: "The app sends photos to a single endpoint. The server makes the API call, enforces spending limits, and holds the API keys.",
       },
       
       // system architecture and data flow diagrams
@@ -211,7 +211,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "A key product decision was determining how the app values items. Using a web search for every scan increased accuracy, but because it raised API costs by 3-4x and made the user wait longer, I chose to rely on Sonnet 4.6's pre-trained data for most items and only allowed a web search when the model had low confidence."
+        text: "A key product decision was determining how items were valued. Using a web search for every scan increased accuracy, but because it raised API costs by 3-4x and tripled the total latency from ~6-19s, I chose to rely on Sonnet 4.6's pre-trained data for most items."
       },
 
 
@@ -223,9 +223,11 @@ export const caseStudies: Record<string, CaseStudy> = {
       
       {
         type: "text",
-        text: "I built the app for resale, but the most interesting use case was showing it something original like a painting. I wanted to know the potential value of a painting that never had a listing. That grew the idea into a price discovery tool for both used and original items.",
+        text: "The project started with resale pricing, but the most interesting use case was showing it something original like a painting. I wanted to know the potential value of a painting that never had a listing. That grew the idea into a price discovery tool for both used and original items.",
       },
 
+      // why not add a button that a user can press if its original
+        // temporary solution
 
       {
         type: "image",
@@ -261,10 +263,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         ],
       },
 
-      {
-        type: "text",
-        text: "Adding a web search for low confidence items tripled total latency, increasing response times from ~6s to ~19s. I implemented a 60s timeout to prevent long scans and added a wait time estimate to the loading screen.",
-      },
+      // Adding a web search for scans tripled total latency, increasing response times from ~6s to ~19s. I implemented a 30s timeout to prevent long scans and displayed the estimated wait time on the loading screen."
 
       // claude sonnet 4.6 because its cheap enough to run per scan and still accurate.
       // costs me about $0.013 per scan.
