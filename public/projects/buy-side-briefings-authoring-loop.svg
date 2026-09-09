@@ -10,19 +10,19 @@
   <!-- Background plate. Delete this one line for a transparent SVG. -->
   <rect x="0" y="0" width="750" height="520" fill="#0a0a0a"></rect>
 
-  <rect x="285" y="16" width="180" height="40" rx="2" fill="#3a3a3a" stroke="#8a8a8a" stroke-width="1"></rect>
+  <rect x="300" y="16" width="150" height="40" rx="2" fill="#3a3a3a" stroke="#8a8a8a" stroke-width="1"></rect>
   <text x="375" y="41" fill="#ededed" font-size="13" font-weight="500" text-anchor="middle">Cron fires</text>
 
   <line x1="375" y1="56" x2="375" y2="92" fill="none" stroke="#c9c9c9" stroke-width="1.1" marker-end="url(#a2)"></line>
   <text x="470" y="79" fill="#9b9b9b" font-size="10.5" text-anchor="middle">8AM and 8PM ET</text>
 
-  <rect x="250" y="98" width="250" height="54" rx="2" fill="#3a3a3a" stroke="#8a8a8a" stroke-width="1"></rect>
+  <rect x="265" y="98" width="220" height="54" rx="2" fill="#3a3a3a" stroke="#8a8a8a" stroke-width="1"></rect>
   <text x="375" y="120" fill="#ededed" font-size="13" font-weight="500" text-anchor="middle">Agent researches</text>
   <text x="375" y="138" fill="#b6b6b6" font-size="10.5" text-anchor="middle">reads the session, gathers sources</text>
 
   <line x1="375" y1="152" x2="375" y2="188" fill="none" stroke="#c9c9c9" stroke-width="1.1" marker-end="url(#a2)"></line>
 
-  <rect x="250" y="194" width="250" height="54" rx="2" fill="#3a3a3a" stroke="#8a8a8a" stroke-width="1"></rect>
+  <rect x="270" y="194" width="210" height="54" rx="2" fill="#3a3a3a" stroke="#8a8a8a" stroke-width="1"></rect>
   <text x="375" y="216" fill="#ededed" font-size="13" font-weight="500" text-anchor="middle">Writes two files</text>
   <text x="375" y="234" fill="#b6b6b6" font-size="10.5" text-anchor="middle">structured facts, then the report</text>
 
@@ -31,7 +31,7 @@
   <rect x="245" y="290" width="260" height="40" rx="2" fill="#3a3a3a" stroke="#8a8a8a" stroke-width="1"></rect>
   <text x="375" y="315" fill="#ededed" font-size="13" font-weight="500" text-anchor="middle">Parses and matches the schema?</text>
 
-  <polyline points="245,310 130,310 130,221 244,221" fill="none" stroke="#c9c9c9" stroke-width="1.1" marker-end="url(#a2)"></polyline>
+  <polyline points="245,310 130,310 130,221 264,221" fill="none" stroke="#c9c9c9" stroke-width="1.1" marker-end="url(#a2)"></polyline>
   <text x="122" y="272" fill="#9b9b9b" font-size="10.5" text-anchor="end">no</text>
   <text x="122" y="286" fill="#9b9b9b" font-size="10.5" text-anchor="end">rewrite it</text>
 
