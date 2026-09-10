@@ -22,6 +22,8 @@ export type CaseStudyBlock =
       src: string;
       alt: string;
       caption?: string;
+      // Centred under the shot rather than set against the left edge.
+      captionCenter?: boolean;
       crop?: string;
       width?: number;
       max?: number;
@@ -652,10 +654,9 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
 
 
-    
       {
         type: "text",
-        text: "The core design work is in the instructions file in the repository. The file behaves as a living design system because every adjustment changes future reports. The agent writes the report following the rules and schema I gave it. It never fabricates information and always cites sources."
+        text: "The core design work is in the [instructions file](https://github.com/jkleejr/buy-side-briefings/blob/main/prompts/markets-website.md) in the repository. The file behaves as a living design system because every adjustment changes future reports. The agent writes the report following the rules and schema I gave it. It never fabricates information and always cites sources."
       },
 
 
@@ -694,7 +695,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "The morning report is forward looking and focuses on preparation for pre-market open. The night report is analytical and reflects on the day's performance."
+        text: "The [morning report](https://buy-side-briefings.vercel.app/briefings/markets/2026-09-07-morning) is forward looking and focuses on preparation for pre-market open. The [night report](https://buy-side-briefings.vercel.app/briefings/markets/2026-09-07-night) is analytical and reflects on the day's performance."
       },
 
       {
@@ -819,6 +820,11 @@ export const caseStudies: Record<string, CaseStudy> = {
         type: "text",
         text: "Time with Tree is a birch tree farm in South Korea. They had trees but no way for customers to find them, so I built their website. "
       },
+
+      // agricultural products rely on trust and visual inspection, customers want to know how it was grown
+      // calming nature aesthetic
+      // website handles orders
+
 
       {
         type: "text",

@@ -41,7 +41,6 @@ case stydy storytelling + depth - 4/10
 
 
 screen translator (ios prototype) - unfinished but good project for Apple design engineer
-buy side briefings (live web) - systems design then done
 
 time with tree (live web) - finish or remove
 

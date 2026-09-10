@@ -152,7 +152,8 @@ export function StudyBody({
 // item may carry a link written the way Markdown writes one, [label](url),
 // and this turns each into an anchor, underlined so it reads as a link inside
 // the prose, and opening in a tab of its own so the study is still there to
-// come back to. Everything else in the string passes through untouched.
+// come back to. A caption under a picture takes one the same way. Everything
+// else in the string passes through untouched.
 // ---------------------------------------------------------------------------
 
 const INLINE_LINK = /\[([^\]]+)\]\(([^)\s]+)\)/g;
@@ -198,7 +199,7 @@ function Caption({
         hang ? "absolute inset-x-0 top-full" : ""
       }`}
     >
-      {text}
+      <Inline text={text} />
     </figcaption>
   );
 }
@@ -312,7 +313,7 @@ function Block({
               ...(block.crop ? { objectPosition: block.crop } : null),
             }}
           />
-          <Caption text={block.caption} />
+          <Caption text={block.caption} center={block.captionCenter} />
         </figure>
       );
 
