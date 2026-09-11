@@ -549,6 +549,19 @@ export const caseStudies: Record<string, CaseStudy> = {
         text: "I had to design elements in the dynamic island around the physical user facing camera on the top-center area of the screen."
       },
 
+      {
+        type: "text",
+        text: "Due to iOS limitations, I designed for three different dynamic island states - minimal, compact, and expanded. Because iOS decides which Island state is showing, I could not keep the larger display on screen so the user has to long press the dynamic island to expand it."
+      },
+
+
+      // 3 different dynamic island states
+      // minimal (if another system activity takes over)
+      // compact (active overlay, limited by iOS)
+      // expanded (long press)
+      // iOS collapses it on its own again
+      
+      
 
       {
         type: "image",
