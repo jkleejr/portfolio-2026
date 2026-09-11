@@ -609,6 +609,22 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
 
       {
+        type: "images",
+        columns: 2,
+        max: 650,
+        items: [
+          {
+            src: "/projects/screen-translator-recording.png",
+            alt: "The Translate tab while recording: the Dynamic Island holding a red recording dot, the card retitled Recording with a note that captions follow you between apps, a red to blue glow around it, and two Korean sentences from a court ruling with their English under each",
+          },
+          {
+            src: "/projects/screen-translator-captions-idle.png",
+            alt: "The Translate tab after a session: thirteen live captions, the newest a highlighted Korean headline with its English translation, then shorter ones for a union notice, a news section label and a lifestyle and science category",
+          },
+        ],
+      },
+
+      {
           type: "heading",
           text: "Saving Translations",
           note: "",
@@ -617,9 +633,12 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "images",
-        columns: 2,
-        max: 650,
+        max: 900,
         items: [
+          {
+            src: "/projects/screen-translator-captions-sheet.png",
+            alt: "The Live captions sheet: a count of thirteen and a Done button, then each caption as a card with its Korean line, its English under it and a pin at the corner, the first one pinned in blue and the rest hollow",
+          },
           {
             src: "/projects/screen-translator-learn.png",
             alt: "The Learn tab: pinned Korean headlines saved from live captions, each word set in its own tappable chip, with the English translation and the source and time under it",
