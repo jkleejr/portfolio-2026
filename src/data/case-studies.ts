@@ -554,7 +554,12 @@ export const caseStudies: Record<string, CaseStudy> = {
         type: "text",
         text: "Translating the entire screen was impractical because of the limited space in the dynamic island and floating window. To improve accuracy and prevent clutter, I added an interactive crop box for selecting a specific area of the screen to align the app with the user's intent."
       },
-      
+
+      {
+          type: "heading",
+          text: "First Design",
+          note: "",
+        },
       
       {
         type: "images",
@@ -579,6 +584,12 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
 
       {
+          type: "heading",
+          text: "Current Design",
+          note: "",
+        },
+
+      {
         type: "images",
         max: 900,
         items: [
@@ -597,6 +608,13 @@ export const caseStudies: Record<string, CaseStudy> = {
         ],
       },
 
+      {
+          type: "heading",
+          text: "Saving Translations",
+          note: "",
+        },
+
+        
       {
         type: "images",
         columns: 2,
