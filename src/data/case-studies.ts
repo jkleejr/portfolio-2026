@@ -583,83 +583,18 @@ export const caseStudies: Record<string, CaseStudy> = {
         ],
       },
 
+      
+
       {
           type: "heading",
           text: "Current UI Design",
           note: "",
         },
-
-      {
-        type: "images",
-        max: 900,
-        items: [
-          {
-            src: "/projects/screen-translator-translate-home.png",
-            alt: "The Translate tab: a Tap the circle to start screen recording card over a live captions list of Korean news lines with their English under each, then rows for Select display set to Island, Translation region set to Custom, and an API Keys section showing DeepL in use for sentences",
-          },
-          {
-            src: "/projects/screen-translator-region-picker.png",
-            alt: "The Translation region row expanded: a note that only text inside the box is translated, a phone outline with a blue box dragged over the top of the screen and a resize handle at its corner, and Subtitle band and Full screen presets under it",
-          },
-          {
-            src: "/projects/screen-translator-api-keys-debug-log.png",
-            alt: "The API Keys and Debug log sections: DeepL for translating sentences and Anthropic for word definitions, each with a green dot and a Change link, then a monospaced log of the broadcast starting, the Live Activity starting, scene phases and the first OCR pass",
-          },
-        ],
-      },
-
-      {
-        type: "images",
-        columns: 2,
-        max: 650,
-        items: [
-          {
-            src: "/projects/screen-translator-recording.png",
-            alt: "The Translate tab while recording: the Dynamic Island holding a red recording dot, the card retitled Recording with a note that captions follow you between apps, a red to blue glow around it, and two Korean sentences from a court ruling with their English under each",
-          },
-          {
-            src: "/projects/screen-translator-captions-idle.png",
-            alt: "The Translate tab after a session: thirteen live captions, the newest a highlighted Korean headline with its English translation, then shorter ones for a union notice, a news section label and a lifestyle and science category",
-          },
-        ],
-      },
-
-      {
-          type: "heading",
-          text: "Saving Translations",
-          note: "",
-        },
-
-
-      {
-        type: "images",
-        max: 900,
-        items: [
-          {
-            src: "/projects/screen-translator-captions-sheet.png",
-            alt: "The Live captions sheet: a count of thirteen and a Done button, then each caption as a card with its Korean line, its English under it and a pin at the corner, the first one pinned in blue and the rest hollow",
-          },
-          {
-            src: "/projects/screen-translator-learn.png",
-            alt: "The Learn tab: pinned Korean headlines saved from live captions, each word set in its own tappable chip, with the English translation and the source and time under it",
-          },
-          {
-            src: "/projects/screen-translator-word-lookup.png",
-            alt: "A word lookup sheet over the Learn tab: the tapped word in large type with its English meaning under it, and a Done button in the corner",
-          },
-        ],
-      },
-
-      {
-          type: "heading",
-          text: "Dynamic Island",
-          note: "",
-        },
-
+      
       {
         type: "image",
         src: "/projects/screen-translator-island-compact.jpg",
-        max: 700,
+        max: 325,
         alt: "The compact Dynamic Island on the home screen above the FaceTime, Calendar, Photos and Camera icons: a Korean flag, an arrow and a US flag at the left, and the start of the Korean line being read at the right",
       },
 
@@ -673,8 +608,61 @@ export const caseStudies: Record<string, CaseStudy> = {
             alt: "The Dynamic Island expanded over a Naver news article: a KOR to ENG label, the Korean sentence it read from the paragraph below, its English translation in grey under it, and a pin at the corner",
           },
           {
-            src: "/projects/screen-translator-island-expanded-2.png",
-            alt: "The same article a moment earlier, with the Dynamic Island holding the Korean sentence and the first lines of its English translation still filling in",
+            src: "/projects/screen-translator-floating-window.png",
+            alt: "The floating window over the Naver news front page: a red recording dot in the Dynamic Island, the Politics tab's headline list, and a dark caption panel at the bottom holding the first headline in Korean, its English translation, and the start of the next one",
+          },
+        ],
+      },
+
+      {
+        type: "images",
+        max: 900,
+        items: [
+        
+          {
+            src: "/projects/screen-translator-captions-idle.png",
+            alt: "The Translate tab after a session: thirteen live captions, the newest a highlighted Korean headline with its English translation, then shorter ones for a union notice, a news section label and a lifestyle and science category",
+          },
+          {
+            src: "/projects/screen-translator-recording.png",
+            alt: "The Translate tab while recording: the Dynamic Island holding a red recording dot, the card retitled Recording with a note that captions follow you between apps, a red to blue glow around it, and two Korean sentences from a court ruling with their English under each",
+          },
+          {
+            src: "/projects/screen-translator-captions-sheet.png",
+            alt: "The Live captions sheet: a count of thirteen and a Done button, then each caption as a card with its Korean line, its English under it and a pin at the corner, the first one pinned in blue and the rest hollow",
+          },
+          
+          {
+            src: "/projects/screen-translator-region-picker.png",
+            alt: "The Translation region row expanded: a note that only text inside the box is translated, a phone outline with a blue box dragged over the top of the screen and a resize handle at its corner, and Subtitle band and Full screen presets under it",
+          },
+          {
+            src: "/projects/screen-translator-api-keys-debug-log.png",
+            alt: "The API Keys and Debug log sections: DeepL for translating sentences and Anthropic for word definitions, each with a green dot and a Change link, then a monospaced log of the broadcast starting, the Live Activity starting, scene phases and the first OCR pass",
+          },
+        ],
+      },
+
+
+      {
+          type: "heading",
+          text: "Saving Translations",
+          note: "",
+        },
+
+
+      {
+        type: "images",
+        max: 900,
+        items: [
+       
+          {
+            src: "/projects/screen-translator-learn.png",
+            alt: "The Learn tab: pinned Korean headlines saved from live captions, each word set in its own tappable chip, with the English translation and the source and time under it",
+          },
+          {
+            src: "/projects/screen-translator-word-lookup.png",
+            alt: "A word lookup sheet over the Learn tab: the tapped word in large type with its English meaning under it, and a Done button in the corner",
           },
         ],
       },
