@@ -568,12 +568,14 @@ export const caseStudies: Record<string, CaseStudy> = {
         src: "/projects/screen-translator-island-compact.jpg",
         max: 485,
         alt: "The compact Dynamic Island on the home screen above the FaceTime, Calendar, Photos and Camera icons: a Korean flag, an arrow and a US flag at the left, and the start of the Korean line being read at the right",
+        caption: "compact state (active overlay)",
+        captionCenter: true,
       },
 
 
       {
           type: "heading",
-          text: "Region Selector",
+          text: "Translation Region",
           note: "",
         },
 
