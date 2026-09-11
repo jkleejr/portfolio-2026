@@ -557,7 +557,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
           type: "heading",
-          text: "First Design",
+          text: "First UI Design",
           note: "",
         },
       
@@ -585,7 +585,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
           type: "heading",
-          text: "Current Design",
+          text: "Current UI Design",
           note: "",
         },
 
@@ -614,7 +614,7 @@ export const caseStudies: Record<string, CaseStudy> = {
           note: "",
         },
 
-        
+
       {
         type: "images",
         columns: 2,
@@ -627,6 +627,35 @@ export const caseStudies: Record<string, CaseStudy> = {
           {
             src: "/projects/screen-translator-word-lookup.png",
             alt: "A word lookup sheet over the Learn tab: the tapped word in large type with its English meaning under it, and a Done button in the corner",
+          },
+        ],
+      },
+
+      {
+          type: "heading",
+          text: "Dynamic Island",
+          note: "",
+        },
+
+      {
+        type: "image",
+        src: "/projects/screen-translator-island-compact.jpg",
+        max: 700,
+        alt: "The compact Dynamic Island on the home screen above the FaceTime, Calendar, Photos and Camera icons: a Korean flag, an arrow and a US flag at the left, and the start of the Korean line being read at the right",
+      },
+
+      {
+        type: "images",
+        columns: 2,
+        max: 650,
+        items: [
+          {
+            src: "/projects/screen-translator-island-expanded.png",
+            alt: "The Dynamic Island expanded over a Naver news article: a KOR to ENG label, the Korean sentence it read from the paragraph below, its English translation in grey under it, and a pin at the corner",
+          },
+          {
+            src: "/projects/screen-translator-island-expanded-2.png",
+            alt: "The same article a moment earlier, with the Dynamic Island holding the Korean sentence and the first lines of its English translation still filling in",
           },
         ],
       },
