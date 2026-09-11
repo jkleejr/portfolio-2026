@@ -545,6 +545,20 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
 
       {
+        type: "text",
+        text: "I had to design elements in the dynamic island around the physical user facing camera on the top-center area of the screen."
+      },
+
+
+      {
+        type: "image",
+        src: "/projects/screen-translator-island-compact.jpg",
+        max: 485,
+        alt: "The compact Dynamic Island on the home screen above the FaceTime, Calendar, Photos and Camera icons: a Korean flag, an arrow and a US flag at the left, and the start of the Korean line being read at the right",
+      },
+
+
+      {
           type: "heading",
           text: "Region Selector",
           note: "",
@@ -591,12 +605,7 @@ export const caseStudies: Record<string, CaseStudy> = {
           note: "",
         },
       
-      {
-        type: "image",
-        src: "/projects/screen-translator-island-compact.jpg",
-        max: 325,
-        alt: "The compact Dynamic Island on the home screen above the FaceTime, Calendar, Photos and Camera icons: a Korean flag, an arrow and a US flag at the left, and the start of the Korean line being read at the right",
-      },
+     
 
       {
         type: "images",
