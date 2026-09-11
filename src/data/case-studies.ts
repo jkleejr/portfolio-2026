@@ -133,7 +133,7 @@ export const caseStudies: Record<string, CaseStudy> = {
   "loot-check": {
     title: "Loot Check",
     appStore: "https://apps.apple.com/us/app/loot-check/id6785767104",
-    date: "June 2026 - ",
+    date: "June - September 2026",
     role: "Product Design, iOS Development",
     scope: "Live on the App Store",
     blocks: [
@@ -324,7 +324,7 @@ export const caseStudies: Record<string, CaseStudy> = {
     title: "Paper Reader",
     date: "July - August 2026",
     role: "Product Design, iOS Development",
-    scope: "Mobile Prototype",
+    scope: "Prototype",
     blocks: [
       {
         type: "video",
@@ -499,7 +499,7 @@ export const caseStudies: Record<string, CaseStudy> = {
     title: "Screen Translator",
     date: "August - September 2026",
     role: "Product Design, iOS Development",
-    scope: "Mobile Prototype",
+    scope: "Prototype",
     blocks: [
 
       {
@@ -515,7 +515,7 @@ export const caseStudies: Record<string, CaseStudy> = {
   
       {
         type: "text",
-        text: "My first idea was to generate text over the current display, but iOS does not allow an app to draw over another app. To get around this, I used a ReplayKit broadcast extension to receive pixels of what's on screen, and showed the translation using the dynamic island and floating window."
+        text: "My first idea was to generate text over the current display, but iOS does not allow an app to draw over another app. To get around this, I used a ReplayKit broadcast extension to receive pixels of what's on screen, and showed the translation using the dynamic island."
 
                     // architecture and data flow diagrams
                 // active app / news feed to dynamic island / live activity overlay
@@ -528,6 +528,8 @@ export const caseStudies: Record<string, CaseStudy> = {
  
           //"Apple Vision reads the screen",
           //"DeepL translates the text",
+
+          // floating window didnt rly work well. focused on dynamic island
 
 
       {
@@ -552,7 +554,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         type: "text",
         text: "Translating the entire screen was impractical because of the limited space in the dynamic island and floating window. To improve accuracy and prevent clutter, I added an interactive crop box for selecting a specific area of the screen to align the app with the user's intent."
       },
-
+      
       
       {
         type: "images",
@@ -576,6 +578,41 @@ export const caseStudies: Record<string, CaseStudy> = {
         ],
       },
 
+      {
+        type: "images",
+        max: 900,
+        items: [
+          {
+            src: "/projects/screen-translator-translate-home.png",
+            alt: "The Translate tab: a Tap the circle to start screen recording card over a live captions list of Korean news lines with their English under each, then rows for Select display set to Island, Translation region set to Custom, and an API Keys section showing DeepL in use for sentences",
+          },
+          {
+            src: "/projects/screen-translator-region-picker.png",
+            alt: "The Translation region row expanded: a note that only text inside the box is translated, a phone outline with a blue box dragged over the top of the screen and a resize handle at its corner, and Subtitle band and Full screen presets under it",
+          },
+          {
+            src: "/projects/screen-translator-api-keys-debug-log.png",
+            alt: "The API Keys and Debug log sections: DeepL for translating sentences and Anthropic for word definitions, each with a green dot and a Change link, then a monospaced log of the broadcast starting, the Live Activity starting, scene phases and the first OCR pass",
+          },
+        ],
+      },
+
+      {
+        type: "images",
+        columns: 2,
+        max: 650,
+        items: [
+          {
+            src: "/projects/screen-translator-learn.png",
+            alt: "The Learn tab: pinned Korean headlines saved from live captions, each word set in its own tappable chip, with the English translation and the source and time under it",
+          },
+          {
+            src: "/projects/screen-translator-word-lookup.png",
+            alt: "A word lookup sheet over the Learn tab: the tapped word in large type with its English meaning under it, and a Done button in the corner",
+          },
+        ],
+      },
+
 
       {
           type: "heading",
@@ -593,7 +630,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
   "buy-side-briefings": {
     title: "Buy Side Briefings",
-    date: "May 2026 -",
+    date: "May 2026 - Current",
     role: "Product Design, Web Design",
     scope: "Concept to live website",
     href: "https://buy-side-briefings.vercel.app/",
