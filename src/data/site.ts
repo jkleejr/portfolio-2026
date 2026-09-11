@@ -23,26 +23,10 @@ export const site = {
 };
 
 /* 9.6.26
-no self intro
-nothing signals the cover image is a button
-clicking project title does nothing, only clicking the small square image shows the case study
-blackletter + clean font creates dissonance
-spacing feels awkward
-using #000 for background and #ffff causes visual halation?
-
-thumbnails dont show the product
-someone should be able to tell what they are from a glance
-
 
 project substance + raw ability - 8.5/10
 portfolio architecture + shell ux - 5/10
 case stydy storytelling + depth - 4/10
-
-
-
-screen translator (ios prototype) - unfinished but good project for Apple design engineer
-
-time with tree (live web) - finish or remove
 
 
 
@@ -61,12 +45,9 @@ brutalism
 neobrutlism
 
 
-
-prompting is 90%, design engineering is the 10%
 systems over linear prompts
 intuition for layouts
 
-the name shrinks while the cover image and rest of the text stays the same which makes it awk
 
 more like LLMs than AI
 

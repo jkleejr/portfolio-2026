@@ -133,7 +133,7 @@ export const caseStudies: Record<string, CaseStudy> = {
   "loot-check": {
     title: "Loot Check",
     appStore: "https://apps.apple.com/us/app/loot-check/id6785767104",
-    date: "June - September 2026",
+    date: "June 2026 - ",
     role: "Product Design, iOS Development",
     scope: "Live on the App Store",
     blocks: [
@@ -298,7 +298,6 @@ export const caseStudies: Record<string, CaseStudy> = {
           },
         ],
       },
-
 
 
       // Adding a web search for scans tripled total latency, increasing response times from ~6s to ~19s. I implemented a 30s timeout to prevent long scans and displayed the estimated wait time on the loading screen."
@@ -524,15 +523,10 @@ export const caseStudies: Record<string, CaseStudy> = {
 
 
       },
-        {
-          type: "heading",
-          text: "Solution",
-          note: "",
-        },
+  
         // live captions only
  
           //"Apple Vision reads the screen",
-          //"Apple Speech transcribes audio",
           //"DeepL translates the text",
 
 
@@ -656,7 +650,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "The core design work is in the [instructions file](https://github.com/jkleejr/buy-side-briefings/blob/main/prompts/markets-website.md) in the repository. The file behaves as a living design system because every adjustment changes future reports. The agent writes the report following the rules and schema I gave it. It never fabricates information and always cites sources."
+        text: "The core design work is in the [instructions file](https://github.com/jkleejr/buy-side-briefings/blob/deploy/prompts/markets-website.md) in the repository. The file behaves as a living design system because every adjustment changes future reports. The agent writes the report following the rules and schema I gave it. It never fabricates information and always cites sources."
       },
 
 
@@ -778,15 +772,31 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "images",
         columns: 2,
-        max: 700,
+        max: 650,
         items: [
           {
             src: "/projects/buy-side-mobile-today.png",
-            alt: "The Today page on a phone: the ticker strip under the nav, the date with an AM/PM toggle set to AM, the morning report's headline on a government bond selloff turning global as Japan's 10-year hits a level unseen since 1996, its opening paragraph, a link to the seven minute read, and the charts panel starting below",
+            alt: "The Today page on a phone: the ticker strip under the nav, the date with an AM/PM toggle set to AM, the morning report's headline on US strikes on Iranian tankers pushing oil to a two-month high while only short rates move, its opening paragraph, a link to the six minute read, and the charts panel starting below",
           },
           {
             src: "/projects/buy-side-mobile-full-read.png",
-            alt: "The full read on a phone: a back link to all reports, the date as a heading, the time the report was generated, the headline, then three bulleted takeaways on the Japanese 10-year, the US Treasury yield and the split in September hike odds, with the body and its source citations below",
+            alt: "The full read on a phone: a back link to all reports, the date and Morning label, the headline, the time the report was generated, then bulleted takeaways on Brent breaching $100, US Central Command destroying five Iranian tankers, the two-year Treasury yield rising two basis points, and the Treasury's doubled long-end buybacks",
+          },
+        ],
+      },
+
+      {
+        type: "images",
+        columns: 2,
+        max: 650,
+        items: [
+          {
+            src: "/projects/buy-side-mobile-full-read-body.png",
+            alt: "Further down the full read on a phone: a CNBC source link, a collapsed row for three more sourced points, the Full Read label with a six minute estimate, an italic methodology note, then the first section heading on Brent clearing $100 with its body paragraph and underlined sourced bullets below",
+          },
+          {
+            src: "/projects/buy-side-mobile-pre-open-table.png",
+            alt: "The pre-open table on a phone for September 9, 2026: rows for Brent, WTI, the 2-year, 10-year and 30-year Treasuries, S&P 500, Nasdaq 100, Dow and Russell 2000 futures, gold, the dollar index, the VIX and bitcoin, each with its level, change and a short note, with the rows the report keys on highlighted in blue",
           },
         ],
       },
