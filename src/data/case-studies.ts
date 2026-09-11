@@ -631,7 +631,10 @@ export const caseStudies: Record<string, CaseStudy> = {
             src: "/projects/screen-translator-captions-sheet.png",
             alt: "The Live captions sheet: a count of thirteen and a Done button, then each caption as a card with its Korean line, its English under it and a pin at the corner, the first one pinned in blue and the rest hollow",
           },
-          
+          {
+            src: "/projects/screen-translator-select-display.png",
+            alt: "The Select display row expanded on the Ready screen: an Island and Window toggle with Island chosen, a Dynamic Island card noting you hold the island to read more lines, and a greyed caption window preview labelled as floating when you leave the app",
+          },
           {
             src: "/projects/screen-translator-region-picker.png",
             alt: "The Translation region row expanded: a note that only text inside the box is translated, a phone outline with a blue box dragged over the top of the screen and a resize handle at its corner, and Subtitle band and Full screen presets under it",
