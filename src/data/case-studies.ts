@@ -516,7 +516,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
   "screen-translator": {
     title: "Screen Translator",
-    date: "August - September 2026",
+    date: "September 2026",
     role: "Product Design, iOS Development",
     scope: "Prototype",
     blocks: [
@@ -695,6 +695,11 @@ export const caseStudies: Record<string, CaseStudy> = {
           text: "Current UI Design",
           note: "",
         },
+
+        {
+        type: "text",
+        text: "The home screen centers on a circle that starts the recording. Settings are shown in a list of rows, so nothing is hidden behind a separate menu. Once recording starts, the user can leave the app and open whatever they want to read. Screen Translator stays active in the background and translates text from the selected region of the screen."
+      },
 
 
       {
