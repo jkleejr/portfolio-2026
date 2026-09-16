@@ -74,7 +74,7 @@ export const entries: Entry[] = [
   {
     title: "Loot Check",
     blurb:
-      "Photograph any item to find its name, value, and where to sell it",
+      "Photograph any item to find its name, potential value, and where to sell it",
     slug: "loot-check",
     appStore: "https://apps.apple.com/us/app/loot-check/id6785767104",
     platform: "mobile",
@@ -91,7 +91,7 @@ export const entries: Entry[] = [
   {
     title: "Paper Reader",
     blurb:
-      "Upload a PDF to hear it in a natural voice, citations filtered out",
+      "Upload a PDF and hear it in a natural voice with citations filtered out",
     slug: "paper-reader",
     platform: "mobile",
     images: [
@@ -107,7 +107,7 @@ export const entries: Entry[] = [
   {
     title: "Screen Translator",
     blurb:
-      "Translate the text on screen without having to switch apps",
+      "Translate the text on screen without having to switch apps by using the Dynamic Island",
       //Live translation of whatever is on screen, running in the background from the Dynamic Island.
       // translate text on screen without having to switch apps.
       // Live translation of whatever is on screen without having to switch apps
@@ -134,7 +134,7 @@ export const entries: Entry[] = [
   {
     title: "Buy Side Briefings",
     blurb:
-      "Automated daily stock market reports",
+      "Automated, daily stock market research and reports",
     slug: "buy-side-briefings",
     titleHref: "https://buy-side-briefings.vercel.app/",
     platform: "web",

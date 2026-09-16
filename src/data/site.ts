@@ -21,6 +21,8 @@ export const site = {
     "Hi, I design and build in code...",
   ],
 };
+// systems first design and rapid ai assisted prototyping
+
 
 /* 9.6.26
 
@@ -29,27 +31,21 @@ portfolio architecture + shell ux - 5/10
 case stydy storytelling + depth - 4/10
 
 
-
-
 focus on:
 product strategy
 design engineering
 visual craft
 
 
-punk / avant garde
-ios / fintech
-high / counter culture
-
-brutalism
-neobrutlism
-
-
 systems over linear prompts
-intuition for layouts
 
 
-more like LLMs than AI
+homepage - projects
+about page
 
-probably include smt about me
+
+structure / information architecture
+
+clean codebase
+
 */

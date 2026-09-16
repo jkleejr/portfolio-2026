@@ -311,6 +311,8 @@ function Block({
               ...(block.width ? { width: block.width } : null),
               ...(block.max ? { maxWidth: block.max } : null),
               ...(block.crop ? { objectPosition: block.crop } : null),
+              ...(block.height ? { height: block.height, objectFit: "cover" } : null),
+              ...(block.radius ? { borderRadius: block.radius } : null),
             }}
           />
           <Caption text={block.caption} center={block.captionCenter} />

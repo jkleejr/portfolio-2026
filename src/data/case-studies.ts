@@ -27,6 +27,15 @@ export type CaseStudyBlock =
       crop?: string;
       width?: number;
       max?: number;
+      // A fixed height in CSS pixels. The shot is scaled to fill its width
+      // and cropped to this, with crop saying which part is kept, so shots
+      // of different proportions can sit in a run at one size.
+      height?: number;
+      // The corner radius in CSS pixels, for a shot whose own corners are
+      // rounder than the page's default: the page clips and borders every shot
+      // at rounded-xl, and a card cut out with a larger radius would show the
+      // page through the gap between the two curves.
+      radius?: number;
     }
   // Three across from sm up, or two where the shots are wider than they are
   // tall and three would leave them too small to read.
@@ -108,12 +117,9 @@ export type CaseStudy = {
   blocks: CaseStudyBlock[];
 };
 
-// overview
-// background
-// redesign / design
-// final thoughts
 
-// outcome + reflection - i wont have team metrics and thats fine. outcomes should show direction, learning, or real world impact. "shipped to app store", downloads, honestly what i'd do differently. or what i'd do from here.
+
+// outcome + reflection - i wont have team metrics and thats fine. outcomes should show direction, learning, or real world impact. 
 
 // note on figma: when good designers show process artifacts, they present them beautifully, cleaned up, on consistent backgrounds, annotated
 // dont show raw uncropped screenshots w mismatchced sizes
@@ -128,6 +134,14 @@ export type CaseStudy = {
 // visual design
 // fingla design
 // retrospective
+
+
+// hook, conflict, resolution
+// thinking process, execution quality, problem solving
+
+
+// design thinking -empathise, define, ideate, prototype, test
+
 
 export const caseStudies: Record<string, CaseStudy> = {
   "loot-check": {
@@ -154,11 +168,8 @@ export const caseStudies: Record<string, CaseStudy> = {
                   },
       {
         type: "text",
-        text: "When I was moving places, I wanted an easy way to value my old stuff and decide what to sell. I tried existing appraisal apps but they had unnecessary steps and required a subscription after a few scans. My solution was an accurate and free app for users to identify and price their items.",
+        text: "When I was moving places, I had a room full of clothes, electronics, and other things to sell. I downloaded existing appraisal apps, but they had unnecessary steps and required a subscription after a few scans. I saw an opportunity to create Loot Check, a free solution that used AI to identify an item, find its value, and marketplaces to sell it.",
       },
-      
-        // would be interesting to display confidence score as a %
-
 
       
             {
@@ -226,14 +237,14 @@ export const caseStudies: Record<string, CaseStudy> = {
       
       {
         type: "text",
-        text: "The project started with resale pricing, but the most interesting use case was showing it something original like a painting. I wanted to know the potential value of a painting that never had a listing. That grew the idea into a price discovery tool for both used and original items.",
+        text: "The project started with resale pricing, but the most interesting use case was showing it something original like a painting that wasn't listed before. That grew the idea into a price discovery tool for both used and original items.",
       },
 
 
 
       {
         type: "text",
-        text: "This required two separate pricing strategies. Since handmade and original items lack past transaction data, the search workflow finds the asking prices of visually comparable items.",
+        text: "This required two separate pricing strategies. Since handmade and original items lack past transaction data, the search workflow finds the asking prices of visually comparable items to estimate the value.",
       },
 
       // why not add a button that a user can press if its original
@@ -254,7 +265,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "Since vision models are not 100% accurate, users can input optional keywords to guide the model before scanning.",
+        text: "Since vision models are not 100% accurate, users can input optional keywords to guide the model before submitting a photo.",
       },
 
 
@@ -283,7 +294,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "Results with low confidence are labeled \"best guess\".",
+        text: "Results with low confidence are labeled \"best guess\", and users have the option to add another photo and retry.",
       },
 
       {
@@ -510,12 +521,12 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         
         type: "text",
-        text: "Constantly switching apps while learning a language is annoying and time consuming. I created an app that translates the Korean text on screen to English in real time.",
+        text: "Constantly switching apps while learning a language is annoying and time consuming, so I created an app that translates the Korean text on screen to English in real time.",
       },
   
       {
         type: "text",
-        text: "My first idea was to generate text over the current display, but iOS does not allow an app to draw over another app. To get around this, I used a ReplayKit broadcast extension to receive pixels of what's on screen, and showed the translation using the dynamic island."
+        text: "My first idea was to generate text over the current display, but iOS does not allow an app to draw over another app. To get around this, I used ReplayKit to broadcast video frames, Apple Vision OCR to extract Korean text, translated it using DeepL API, and updated the dynamic island through ActivityKit."
 
                     // architecture and data flow diagrams
                 // active app / news feed to dynamic island / live activity overlay
@@ -531,6 +542,8 @@ export const caseStudies: Record<string, CaseStudy> = {
 
           // floating window didnt rly work well. focused on dynamic island
 
+          // deepL for sentence translations, claude for individual word definitions bc it can understand the sentence context
+
 
       {
           type: "heading",
@@ -541,34 +554,61 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "iOS prohibits third party overlay windows, which makes language learning more difficult since a user experiences constant context switching between an app and Google Translate. I used ReplayKit to broadcast video frames, Apple Vision OCR to extract Korean text, translated it using DeepL API, and updated the dynamic island and floating window through ActivityKit."
+        text: "iOS prohibits third party overlay windows, which makes language learning more difficult since a user experiences constant context switching between an app and Google Translate."
       },
 
       {
         type: "text",
-        text: "I had to design elements in the dynamic island around the physical user facing camera on the top-center area of the screen."
-      },
-
-      {
-        type: "text",
-        text: "Due to iOS limitations, I designed for three different dynamic island states - minimal, compact, and expanded. Because iOS decides which Island state is showing, I could not keep the larger display on screen so the user has to long press the dynamic island to expand it."
+        text: "Due to iOS limitations, I designed for three different dynamic island states - minimal, compact, and expanded. Because iOS decides which state is showing, I could not keep the larger display on screen so the user has to long press the island to expand it. I also had to design UI elements around the physical user facing camera on the top-center area of the screen."
       },
 
 
       // 3 different dynamic island states
-      // minimal (if another system activity takes over)
-      // compact (active overlay, limited by iOS)
-      // expanded (long press)
+      // minimal (active overlay, default state)
+      // compact (limited by iOS, since we r recording the screen, appears for 6 seconds after recording stops)
+      // expanded (during recording, long press, full caption card)
       // iOS collapses it on its own again
       
+      // island shows at most 2 live activities at once - screen recording indicator and the app
       
 
       {
         type: "image",
+        src: "/projects/screen-translator-island-minimal.png",
+        // The three island shots share one size so they read as a set. 455
+        // is 1:1 for this 2x capture, 910px across; 204 is the compact shot's
+        // natural height at that width, and the crop keeps the island at the
+        // top and gives up the bottom of the news nav.
+        max: 455,
+        height: 204,
+        crop: "top",
+        alt: "The minimal Dynamic Island over the top of the Naver News site: the island shrunk to a Korean flag, a red recording dot in its own circle beside it, and the blue news header with its section tabs under the status bar",
+        caption: "minimal state (active while recording)",
+        captionCenter: true,
+      },
+
+      {
+        type: "image",
         src: "/projects/screen-translator-island-compact.jpg",
-        max: 485,
+        // The one the other two are sized to: 455 across is 204 tall at its
+        // own proportions, so nothing is cropped here.
+        max: 455,
+        height: 204,
         alt: "The compact Dynamic Island on the home screen above the FaceTime, Calendar, Photos and Camera icons: a Korean flag, an arrow and a US flag at the left, and the start of the Korean line being read at the right",
-        caption: "compact state (active overlay)",
+        caption: "compact state (after recording stops)",
+        captionCenter: true,
+      },
+
+      {
+        type: "image",
+        src: "/projects/screen-translator-island-expanded-news.png",
+        // The top of a full-screen capture, cut to 1206 by 541 — the compact
+        // shot's exact proportions — so it lands at the same size with no
+        // crop in the browser.
+        max: 455,
+        height: 204,
+        alt: "The expanded Dynamic Island over the top of a Korean news article: a Korean-to-US flag pair and a pin at the top, a two-line Korean headline about a Samsung employee's internal loan sending home prices soaring in Suwon Yeongtong, and its English translation under it in grey",
+        caption: "expanded state (long press for full translation)",
         captionCenter: true,
       },
 
@@ -581,14 +621,44 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "Translating the entire screen was impractical because of the limited space in the dynamic island and floating window. To improve accuracy and prevent clutter, I added an interactive crop box for selecting a specific area of the screen to align the app with the user's intent."
+        text: "Translating the entire screen was impractical because of the limited space to display the text. To improve accuracy and prevent clutter, I added an interactive crop box for selecting a specific area of the screen to align the app with the user's intent."
       },
+
+      {
+        type: "image",
+        src: "/projects/screen-translator-region-card.png",
+        // A step under the card's own size: the shot is a 2x capture cropped
+        // to the card's edges, 837px across, so 418 would show it 1:1 on a
+        // Retina screen. 360 keeps it clearly a card rather than a screen.
+        max: 360,
+        // The card's own corners, measured off the alpha channel: ~72px at
+        // the file's 2x scale, which is 36 at 1:1 and 31 at 360 across.
+        radius: 31,
+        alt: "The Translation region card: a crop icon and title with a Custom dropdown at the right, a note that only text inside the box is translated, a phone outline with a blue box dragged over the top of its screen and a resize handle at the corner, and Subtitle band and Full screen presets along the bottom",
+      },
+
+      {
+          type: "heading",
+          text: "Translation Models",
+          note: "",
+        },
+
+      {
+        type: "text",
+        text: "I used DeepL for sentence translations and Claude Opus 5 for word definitions. DeepL was excellent for full sentences, but unreliable for individual words. Claude was more accurate for words because it could define each word as it's used in context of the sentence."
+      },
+
 
       {
           type: "heading",
           text: "First UI Design",
           note: "",
         },
+
+        {
+        type: "text",
+        text: "I tested the island and floating window in the first prototype to see which display felt better to use. Because I didn't need to see the translation of every sentence, I focused on the dynamic island and making it feel as seamless as possible."
+      },
       
       {
         type: "images",
@@ -602,12 +672,12 @@ export const caseStudies: Record<string, CaseStudy> = {
             alt: "The Dynamic Island expanded over a Korean news feed, holding the headline and its English translation",
           },
           {
-            src: "/projects/screen-translator-1.png",
-            alt: "The recording screen: a red Recording card over a running list of live captions, each Korean line with its English under it",
+            src: "/projects/screen-translator-floating-window.png",
+            alt: "The floating window over the Naver news front page: a red recording dot in the Dynamic Island, the Politics tab's headline list, and a dark caption panel at the bottom holding the first headline in Korean, its English translation, and the start of the next one",
           },
           {
-            src: "/projects/screen-translator-3.png",
-            alt: "The translation region picker: a phone outline with a blue box dragged over the top third of the screen, and a resize handle at its corner",
+            src: "/projects/screen-translator-1.png",
+            alt: "The recording screen: a red Recording card over a running list of live captions, each Korean line with its English under it",
           },
         ],
       },
@@ -619,26 +689,7 @@ export const caseStudies: Record<string, CaseStudy> = {
           text: "Current UI Design",
           note: "",
         },
-      
-     
 
-      {
-        type: "images",
-        columns: 2,
-        // Two phones across at the same width as the three-across rows: 900
-        // less two gaps is 289px a phone, so 595 less one gap is the same.
-        max: 595,
-        items: [
-          {
-            src: "/projects/screen-translator-island-expanded.png",
-            alt: "The Dynamic Island expanded over a Naver news article: a KOR to ENG label, the Korean sentence it read from the paragraph below, its English translation in grey under it, and a pin at the corner",
-          },
-          {
-            src: "/projects/screen-translator-floating-window.png",
-            alt: "The floating window over the Naver news front page: a red recording dot in the Dynamic Island, the Politics tab's headline list, and a dark caption panel at the bottom holding the first headline in Korean, its English translation, and the start of the next one",
-          },
-        ],
-      },
 
       {
         type: "images",
@@ -672,9 +723,14 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
           type: "heading",
-          text: "Saving Translations",
+          text: "Saving Translations for Learning",
           note: "",
         },
+
+      {
+        type: "text",
+        text: "Pinning a sentence saves it to the \"Learn\" page and breaks it into individual words. Tapping a word shows its correct defintion."
+      },
 
 
       {
@@ -716,23 +772,17 @@ export const caseStudies: Record<string, CaseStudy> = {
     href: "https://buy-side-briefings.vercel.app/",
     blocks: [
 
-      // Reports take time to generate, so they are queued at 8:00 AM and 8:00 PM.
-
-      {
-        type: "text",
-        text: "Buy Side is an automated market reporting website that tracks price movements, macro events, and generates daily briefings. I built it for myself to save time and reduce decision fatigue."
-      },
 
       {
         type: "image",
         src: "/projects/buy-side-site-today-5.png",
         max: 1000,
-        alt: "The Today page with the toggle on AM: a live ticker strip under the nav, then the morning report of Monday, September 7, filed at 8:27 AM ET, its headline on Asia repricing the AI memory trade on a record inventory squeeze while US markets were shut, the paragraph that argues it, a link out to the full nine minute read, and the charts panel opening underneath",
+        alt: "The Today page with the toggle on AM: a live ticker strip under the nav, then the morning report of Monday, September 14, filed at 8:21 AM ET, its headline on frontier AI labs calling for a slowdown and chip stocks dropping before the open, the paragraph that argues it, a link out to the full six minute read, and the charts panel opening underneath",
       },
 
             {
               type: "heading",
-              text: "Keeping up with Market Velocity",
+              text: "Context",
               note: "Problem & Solution", // title text on the left side
             },
 
@@ -749,7 +799,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
        {
         type: "text",
-        text: "My solution was having AI assist me with researching tasks so I can quickly understand whats going on and make faster decisions."
+        text: "My solution was an automated market reporting website that generates daily reports so I can quickly understand whats going on and make faster decisions."
       },
 
             {
@@ -769,15 +819,6 @@ export const caseStudies: Record<string, CaseStudy> = {
         type: "text",
         text: "The core design work is in the [instructions file](https://github.com/jkleejr/buy-side-briefings/blob/deploy/prompts/markets-website.md) in the repository. The file behaves as a living design system because every adjustment changes future reports. The agent writes the report following the rules and schema I gave it. It never fabricates information and always cites sources."
       },
-
-
-      // expand on this
-
-      // separate routine generates the site's content - homepage headline and lede, market snapshot, regime levels, and links in news today
-        // researches stocks with websearch/webfetch
-        // verdict routine generates a report during weekends (Sonnet 4.6)
-        // report routine during weekday (Opus 5)
-
 
     
       {
@@ -806,7 +847,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "The [morning report](https://buy-side-briefings.vercel.app/briefings/markets/2026-09-07-morning) is forward looking and focuses on preparation for pre-market open. The [night report](https://buy-side-briefings.vercel.app/briefings/markets/2026-09-07-night) is analytical and reflects on the day's performance."
+        text: "The [morning report](https://buy-side-briefings.vercel.app/briefings/markets/2026-09-14-morning) is forward looking and focuses on preparation for pre-market open. The [night report](https://buy-side-briefings.vercel.app/briefings/markets/2026-09-14-night) is analytical and reflects on the day's performance."
       },
 
       {
@@ -822,7 +863,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
             {
         type: "text",
-        text: "I used Claude Code to build data visualizations from real time market data (delayed quotes).",
+        text: "I used real time market data from Yahoo Finance (delayed quotes) and FRED to visualize price action.",
       },
       // delay only applies during the trading session, since outside market hours the last price is the close for most stocks. us stocks and etfs are delayed by ~15 minutes, crypto is closer to current
       // data for chart comes from Yahoo Finance API
