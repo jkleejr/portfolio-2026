@@ -29,7 +29,10 @@ export type CaseStudyBlock =
       max?: number;
       // A fixed height in CSS pixels. The shot is scaled to fill its width
       // and cropped to this, with crop saying which part is kept, so shots
-      // of different proportions can sit in a run at one size.
+      // of different proportions can sit in a run at one size. With max set
+      // it is the height at that width, and the shot keeps the proportion
+      // when the column is narrower than the max — on a phone — rather than
+      // holding the height and cropping the sides to fill it.
       height?: number;
       // The corner radius in CSS pixels, for a shot whose own corners are
       // rounder than the page's default: the page clips and borders every shot

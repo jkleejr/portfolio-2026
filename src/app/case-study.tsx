@@ -311,7 +311,15 @@ function Block({
               ...(block.width ? { width: block.width } : null),
               ...(block.max ? { maxWidth: block.max } : null),
               ...(block.crop ? { objectPosition: block.crop } : null),
-              ...(block.height ? { height: block.height, objectFit: "cover" } : null),
+              // With a max, the height is the height at that width and the
+              // shot keeps the proportion below it: a phone's column is
+              // narrower than the max, and a fixed height there would zoom
+              // the shot to fill it and crop the sides away.
+              ...(block.height
+                ? block.max
+                  ? { aspectRatio: `${block.max} / ${block.height}`, objectFit: "cover" }
+                  : { height: block.height, objectFit: "cover" }
+                : null),
               ...(block.radius ? { borderRadius: block.radius } : null),
             }}
           />
