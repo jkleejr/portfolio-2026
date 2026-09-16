@@ -39,6 +39,11 @@ export type CaseStudyBlock =
       // at rounded-xl, and a card cut out with a larger radius would show the
       // page through the gap between the two curves.
       radius?: number;
+      // Pixels to nudge the shot right of centre (negative for left) from sm
+      // up, where the shot is narrower than the column. For one that is
+      // centred to the pixel but reads as off it, the way a picture with a
+      // heavy edge does. On a phone the shot fills the column and stays put.
+      shift?: number;
     }
   // Three across from sm up, or two where the shots are wider than they are
   // tall and three would leave them too small to read.
@@ -379,7 +384,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "image",
         src: "/projects/paper-reader-highlight-detail.png",
-        width: 345,
+        width: 420,
         alt: "A close read of the narration: the sentence being spoken sits in a pale blue block, the lines either side of it in grey",
       },
 
@@ -390,7 +395,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "image",
         src: "/projects/paper-reader-library-error-detail.png",
-        width: 367,
+        width: 420,
         alt: "A close read of the failed row: the paper's name over the Gemini error in red, with a retry button on its right",
       },
       {
@@ -400,7 +405,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "image",
         src: "/projects/paper-reader-sample-paper-detail.png",
-        width: 367,
+        width: 420,
         alt: "A close read of the sample row: a SAMPLE tag over the paper's title, 77% listened beneath it with a progress bar, and a play button on its right",
       },
 
@@ -535,18 +540,7 @@ export const caseStudies: Record<string, CaseStudy> = {
                 // active app / news feed to dynamic island / live activity overlay
 
 
-
       },
-  
-        // live captions only
- 
-          //"Apple Vision reads the screen",
-          //"DeepL translates the text",
-
-          // floating window didnt rly work well. focused on dynamic island
-
-          // deepL for sentence translations, claude for individual word definitions bc it can understand the sentence context
-
 
       {
           type: "heading",
@@ -562,7 +556,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "Due to iOS limitations, I designed for three different dynamic island states - minimal, compact, and expanded. Because iOS decides which state is showing, I could not keep the larger display on screen so the user has to long press the island to expand it. I also had to design UI elements around the physical user facing camera on the top-center area of the screen."
+        text: "Due to iOS limitations, I designed for three different dynamic island states - minimal, compact, and expanded. Because iOS decides which state is showing, I could not keep the larger display on screen so the user has to long press the island to expand it. I also had to design UI elements around the physical user facing camera in the top-center area of the screen."
       },
 
 
@@ -573,6 +567,12 @@ export const caseStudies: Record<string, CaseStudy> = {
       // iOS collapses it on its own again
       
       // island shows at most 2 live activities at once - screen recording indicator and the app
+      
+
+      // had claude do a benchmark test with claude and deepl
+      // using claude for sentence translations had higher latency and was more expensive than deepl
+      // cost is $0.0006 per sentence DeepL
+      // $0.0031 Claude Opus 5
       
 
       {
@@ -607,9 +607,10 @@ export const caseStudies: Record<string, CaseStudy> = {
         src: "/projects/screen-translator-island-expanded-news.png",
         // The top of a full-screen capture, cut to 1206 by 541 — the compact
         // shot's exact proportions — so it lands at the same size with no
-        // crop in the browser.
-        max: 455,
-        height: 204,
+        // crop in the browser. A step wider than the two above it, at the
+        // same proportions.
+        max: 480,
+        height: 215,
         alt: "The expanded Dynamic Island over the top of a Korean news article: a Korean-to-US flag pair and a pin at the top, a two-line Korean headline about a Samsung employee's internal loan sending home prices soaring in Suwon Yeongtong, and its English translation under it in grey",
         caption: "expanded state (long press for full translation)",
         captionCenter: true,
@@ -632,11 +633,13 @@ export const caseStudies: Record<string, CaseStudy> = {
         src: "/projects/screen-translator-region-card.png",
         // A step under the card's own size: the shot is a 2x capture cropped
         // to the card's edges, 837px across, so 418 would show it 1:1 on a
-        // Retina screen. 360 keeps it clearly a card rather than a screen.
-        max: 360,
+        // Retina screen. 380 keeps it clearly a card rather than a screen.
+        max: 380,
         // The card's own corners, measured off the alpha channel: ~72px at
-        // the file's 2x scale, which is 36 at 1:1 and 31 at 360 across.
-        radius: 31,
+        // the file's 2x scale, which is 36 at 1:1 and 33 at 380 across.
+        radius: 33,
+        // Centred to the pixel it read as sitting a touch left.
+        shift: 6,
         alt: "The Translation region card: a crop icon and title with a Custom dropdown at the right, a note that only text inside the box is translated, a phone outline with a blue box dragged over the top of its screen and a resize handle at the corner, and Subtitle band and Full screen presets along the bottom",
       },
 
@@ -648,9 +651,9 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "I used DeepL for sentence translations and Claude Opus 5 for word definitions. DeepL was excellent for full sentences, but unreliable for individual words. Claude was more accurate for words because it could define each word as it's used in context of the sentence."
+        text: "I used DeepL for sentence translations and Claude Opus 5 for word definitions. DeepL was excellent for full sentences, but unreliable for individual words. Claude was more accurate for words because it could define each word as it's used in context of the sentence. "
       },
-
+      
 
       {
           type: "heading",
@@ -701,7 +704,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         
           {
             src: "/projects/screen-translator-captions-idle.png",
-            alt: "The Translate tab after a session: thirteen live captions, the newest a highlighted Korean headline with its English translation, then shorter ones for a union notice, a news section label and a lifestyle and science category",
+            alt: "The Translate tab before a session: a card with a grey circle and the words Tap the circle to start screen recording, then rows for Select display set to Island, Translation region set to Custom, API Keys and Debug log",
           },
           {
             src: "/projects/screen-translator-recording.png",
@@ -710,15 +713,6 @@ export const caseStudies: Record<string, CaseStudy> = {
           {
             src: "/projects/screen-translator-captions-sheet.png",
             alt: "The Live captions sheet: a count of thirteen and a Done button, then each caption as a card with its Korean line, its English under it and a pin at the corner, the first one pinned in blue and the rest hollow",
-          },
-        
-          {
-            src: "/projects/screen-translator-region-picker.png",
-            alt: "The Translation region row expanded: a note that only text inside the box is translated, a phone outline with a blue box dragged over the top of the screen and a resize handle at its corner, and Subtitle band and Full screen presets under it",
-          },
-          {
-            src: "/projects/screen-translator-api-keys-debug-log.png",
-            alt: "The API Keys and Debug log sections: DeepL for translating sentences and Anthropic for word definitions, each with a green dot and a Change link, then a monospaced log of the broadcast starting, the Live Activity starting, scene phases and the first OCR pass",
           },
         ],
       },
@@ -729,33 +723,16 @@ export const caseStudies: Record<string, CaseStudy> = {
           text: "Saving Translations for Learning",
           note: "",
         },
-      {
-        type: "video",
-        src: "/projects/screen-translator-pin-and-learn.mp4",
-        caption: "Looking up a word from a pinned sentence",
-      },
-
 
       {
         type: "text",
         text: "Pinning a sentence saves it to the \"Learn\" page and breaks it into individual words. Tapping a word shows its correct defintion."
       },
 
-
       {
-        type: "images",
-        max: 900,
-        items: [
-       
-          {
-            src: "/projects/screen-translator-learn.png",
-            alt: "The Learn tab: pinned Korean headlines saved from live captions, each word set in its own tappable chip, with the English translation and the source and time under it",
-          },
-          {
-            src: "/projects/screen-translator-word-lookup.png",
-            alt: "A word lookup sheet over the Learn tab: the tapped word in large type with its English meaning under it, and a Done button in the corner",
-          },
-        ],
+        type: "video",
+        src: "/projects/screen-translator-pin-and-learn.mp4",
+        caption: "",
       },
 
 
@@ -892,7 +869,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
             {
         type: "text",
-        text: "To display the flow of capital, I added a sector rotation table displaying short term (1 day) and medium term (50 day) changes for 11 primary ETFs. "
+        text: "To display the flow of capital, I added a table for short term (1 day) and medium term (50 day) changes of 11 ETFs. "
       },
 
       {

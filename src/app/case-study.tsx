@@ -306,8 +306,13 @@ function Block({
           <img
             src={block.src}
             alt={block.alt}
-            className="mx-auto w-full max-w-full rounded-xl border border-foreground/10"
+            className={`mx-auto w-full max-w-full rounded-xl border border-foreground/10 ${
+              block.shift ? "sm:translate-x-(--shift)" : ""
+            }`}
             style={{
+              ...(block.shift
+                ? ({ "--shift": `${block.shift}px` } as React.CSSProperties)
+                : null),
               ...(block.width ? { width: block.width } : null),
               ...(block.max ? { maxWidth: block.max } : null),
               ...(block.crop ? { objectPosition: block.crop } : null),
@@ -415,7 +420,7 @@ function Block({
         // Centred in the column rather than filling it: the recordings are
         // shot on a phone, so a full-width one would stand a screen and a half
         // tall. Capped at a phone's width and put in the middle of the page.
-        // 320px, against files that are 498px wide — room to go on if one
+        // 340px, against files that are 498px wide — room to go on if one
         // wants it, and short of the width where the picture would soften.
         // The number is here twice on purpose: the middle grid column is the
         // video's width, so the two beside it stay equal only if both move
@@ -428,7 +433,13 @@ function Block({
         // page sets everything else in. The caption is an ordinary line in
         // that space — it breaks where a paragraph breaks, so its right edge
         // is the one every other line on the page ends at.
-        <figure className="sm:grid sm:grid-cols-[1fr_320px_1fr] sm:items-center">
+        //
+        // Nudged a few pixels left of true centre from sm up. The video is
+        // centred to the pixel on the shots under it, but the caption hangs
+        // off its right edge, so the pair read as sitting right of a shot
+        // centred on its own. Shifted as a whole so the captions keep their
+        // place against the video's edges.
+        <figure className="sm:grid sm:grid-cols-[1fr_340px_1fr] sm:items-center sm:-translate-x-1.5">
           <video
             src={block.src}
             autoPlay
@@ -440,7 +451,7 @@ function Block({
             // rest of what the browser puts there is not.
             controlsList="nodownload noplaybackrate"
             disablePictureInPicture
-            className="mx-auto w-full max-w-[320px] rounded-xl border border-foreground/10 sm:col-start-2"
+            className="mx-auto w-full max-w-[340px] rounded-xl border border-foreground/10 sm:col-start-2"
           />
           {/* A little above the middle of the video, and under it below sm,
               where there is no room beside it. */}

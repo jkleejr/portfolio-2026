@@ -21,7 +21,6 @@ export const site = {
     "Hi, I design and build in code...",
   ],
 };
-// systems first design and rapid ai assisted prototyping
 
 
 /* 9.6.26
@@ -35,13 +34,6 @@ focus on:
 product strategy
 design engineering
 visual craft
-
-
-systems over linear prompts
-
-
-homepage - projects
-about page
 
 
 structure / information architecture
