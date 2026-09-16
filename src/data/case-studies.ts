@@ -729,6 +729,12 @@ export const caseStudies: Record<string, CaseStudy> = {
           text: "Saving Translations for Learning",
           note: "",
         },
+      {
+        type: "video",
+        src: "/projects/screen-translator-pin-and-learn.mp4",
+        caption: "Looking up a word from a pinned sentence",
+      },
+
 
       {
         type: "text",
