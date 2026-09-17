@@ -520,6 +520,11 @@ export const caseStudies: Record<string, CaseStudy> = {
     role: "Product Design, iOS Development",
     scope: "Prototype",
     blocks: [
+      {
+        type: "video",
+        src: "/projects/screen-translator-demo.mp4",
+        controls: true,
+      },
 
       {
           type: "heading",
@@ -527,7 +532,7 @@ export const caseStudies: Record<string, CaseStudy> = {
           note: "Problem & Solution",
         },
       {
-        
+
         type: "text",
         text: "Constantly switching apps while learning a language is annoying and time consuming, so I created an app that translates the Korean text on screen to English in real time.",
       },
