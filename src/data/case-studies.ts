@@ -94,8 +94,9 @@ export type CaseStudyBlock =
       captionLeft?: string | string[];
       controls?: boolean;
       // Where the caption sits beside the video. Middle by default; high for
-      // one that reads better up nearer the top of the frame.
-      captionAlign?: "middle" | "high";
+      // one that reads better up nearer the top of the frame, higher for one
+      // that wants to go a step further still.
+      captionAlign?: "middle" | "high" | "higher";
     }
   | { type: "divider" };
 
@@ -527,6 +528,8 @@ export const caseStudies: Record<string, CaseStudy> = {
         type: "video",
         src: "/projects/screen-translator-demo.mp4",
         controls: true,
+        captionAlign: "higher",
+        caption: "long press the dynamic island to see translations",
       },
 
       {
@@ -564,8 +567,16 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "Due to iOS limitations, I designed for three different dynamic island states - minimal, compact, and expanded. Because iOS decides which state is showing, I could not keep the larger display on screen so the user has to long press the island to expand it. I also had to design UI elements around the physical user facing camera in the top-center area of the screen."
+        text: "Due to iOS limitations, I designed for three different dynamic island states - minimal, compact, and expanded. Because iOS treats live activities as an occasional status update and not a live display, I could not keep the expanded state on screen so the user has to long press the island to see the translation. I also had to design UI elements around the physical user facing camera in the top-center area of the screen."
       },
+
+
+      // dynamic island has no published refresh rate, and iOS silently limits background updates
+      // designed the island so it only shows text from the translation region (selected by the user)
+      // dynamic island can't refresh on its own, it only updates when the app calls activity.update
+      
+      // the app uses a Live Activity (ActivityKit) to display translations in the island
+      // because the system (not my app) controls how and when the dynamic island displays the activity, I designed for states I couldn’t choose and updates I couldn’t guarantee 
 
 
       // 3 different dynamic island states
@@ -575,6 +586,8 @@ export const caseStudies: Record<string, CaseStudy> = {
       // iOS collapses it on its own again
       
       // island shows at most 2 live activities at once - screen recording indicator and the app
+      // which is why the minimal state is showing most of the time
+      // though Apple's default is compact state
       
 
       // had claude do a benchmark test with claude and deepl
@@ -757,10 +770,17 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: ""
+        text: "The biggest lesson from this project was learning to design with system constraints. Every decision considered iOS limitations which pushed me to find different solutions. The hardest part was making the user experience feel seamless when there was so much out of my control, like the dynamic island's current state and updating live activities."
       },
+
+      {
+        type: "text",
+        text: "If I continued this project, I would keep improving the UI/UX so it seamlessly translates text and visual diagrams from any app. Currently only Korean is translated but I could add more languages in the future and see if other people find this prototype helpful for learning."
+      },
+
     ],
   },
+
 
 
   "buy-side-briefings": {

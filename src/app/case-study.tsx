@@ -458,9 +458,11 @@ function Block({
           {block.caption && (
             <figcaption
               className={`mt-3 text-base italic leading-relaxed sm:col-start-3 sm:mt-0 sm:pl-5 ${
-                block.captionAlign === "high"
-                  ? "sm:-translate-y-24"
-                  : "sm:-translate-y-14"
+                block.captionAlign === "higher"
+                  ? "sm:-translate-y-32"
+                  : block.captionAlign === "high"
+                    ? "sm:-translate-y-24"
+                    : "sm:-translate-y-14"
               }`}
             >
               {block.caption}
