@@ -81,8 +81,10 @@ export type CaseStudyBlock =
       // in the same proportions and stop growing together.
       max?: number;
     }
-  // Autoplays muted and looping. Set controls where the sound is part of
-  // what the recording shows — a viewer needs a way to unmute it.
+  // Autoplays muted and looping. Set controls to let a viewer pause and scrub
+  // it, and unmute it where the sound is part of what the recording shows.
+  // A browser leaves the volume button off a file with no audio track, so a
+  // silent recording is saved without one rather than with an empty one.
   | {
       type: "video";
       src: string;
@@ -166,6 +168,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "video",
         src: "/projects/loot-check-shark.mp4",
+        controls: true,
         caption: "Finding the potential value of my shark painting",
       },
 
