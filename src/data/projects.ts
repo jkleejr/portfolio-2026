@@ -124,8 +124,11 @@ export const entries: Entry[] = [
         cover: "/projects/screen-translator-watching.png",
         // A tall phone screen in a square: held just under the Dynamic Island
         // so the title, the glowing recording card and the first two settings
-        // rows fill it, and the empty space under them stays out.
-        coverCrop: "50% 12%",
+        // rows fill it, and the empty space under them stays out. Enlarged a
+        // touch so the card takes more of the square; the title and the
+        // Translation region row still clear the top and bottom edges.
+        coverCrop: "50% 11%",
+        coverZoom: 1.06,
         alt: "Screen Translator just after recording starts: the recording card with a red to blue glow around it, watching for Korean text, over the display and translation region rows",
         crop: "50% 2%",
         title: "Screen Translator",
