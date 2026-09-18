@@ -13,6 +13,11 @@ export type EntryImage = {
   // loses something to the middle crop. CSS object-position, "left" or
   // "50% 20%". Centred when unset.
   coverCrop?: string;
+  // Enlarge the cover in its square, about the middle of the square — for one
+  // whose edges hold something the thumbnail should not show. 1 is the cover
+  // as it is; 1.1 crops about a twentieth off every side. Applied over
+  // `coverCrop`, so the framing it sets is what gets enlarged.
+  coverZoom?: number;
   // A few seconds of film that plays under the pointer, on loop, in place of
   // the cover — for a project whose picture is a frame of something moving.
   // The still is what loads and what is drawn until then, so this costs
@@ -118,9 +123,13 @@ export const entries: Entry[] = [
         src: "/projects/screen-translator-2.png",
         cover: "/projects/screen-translator-recording.png",
         // A tall phone screen in a square: held on the recording card, which
-        // is very nearly a square itself, so the card and its glow fill the
-        // thumbnail edge to edge.
+        // is very nearly a square itself, then enlarged just enough to put
+        // the card's rim and the glow around it outside the thumbnail. The
+        // inside of the card is a little taller than it is wide, so this is
+        // the most zoom that keeps the grey circle and the last caption line
+        // in — they touch the top and bottom edges.
         coverCrop: "50% 24%",
+        coverZoom: 1.105,
         alt: "The Screen Translator recording card: a red to blue glow around it, live captions counted at twelve, and two Korean sentences with their English under each",
         crop: "50% 2%",
         title: "Screen Translator",

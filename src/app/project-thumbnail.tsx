@@ -170,9 +170,14 @@ export function ProjectThumbnail({
         className="object-cover"
         style={
           image.cover
-            ? image.coverCrop
-              ? { objectPosition: image.coverCrop }
-              : undefined
+            ? {
+                objectPosition: image.coverCrop,
+                // Scaled about the middle of the square, so the framing
+                // `coverCrop` set stays put and every edge draws in equally.
+                transform: image.coverZoom
+                  ? `scale(${image.coverZoom})`
+                  : undefined,
+              }
             : image.crop
               ? { objectPosition: image.crop }
               : undefined
