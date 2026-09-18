@@ -181,7 +181,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "The app routes requests through a Vercel endpoint so API keys aren't stored on the device. To keep the app free without risking runway costs, I used Upstash Redis to cap usage at 100 scans per device and 1,000 scans globally per day. At ~$0.013 per scan, this limited my total cost to ~$20 a day.",
+        text: "The app routes requests through a Vercel endpoint so API keys aren't stored on the device. To keep the app free without risking runway costs, I used Upstash Redis to cap usage at 100 scans per device and 1,000 scans globally per day.",
         // risks using claude api and making the app free: my api keys need to be secure, and i need to create spending limits to minimize the cost and plan for a worst case scenario. 
       },
       
@@ -241,12 +241,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "I used Claude Sonnet 4.6 due to its low costs and high accuracy at ~$0.013 per scan. I considered other models but the costs were similar and I wanted the results to be as trustworthy as possible.",
-      },
-
-      {
-        type: "text",
-        text: "A key product decision was determining how items were valued. Using a web search for every scan increased accuracy, but because it raised API costs by 3-4x and quadrupled the total latency from ~6-25 seconds, I chose to rely on Sonnet's pre-trained data for most items."
+        text: "I used Claude Sonnet 4.6 due to its low costs and high accuracy at ~$0.013 per scan. I considered other models but the costs were similar and I wanted the results to be as trustworthy as possible. A key product decision was determining how items were valued. Using a web search for every scan increased accuracy, but because it raised API costs by 3-4x and quadrupled the total latency from ~6-25 seconds, I chose to rely on Sonnet's pre-trained data for most items.",
       },
 
 
@@ -390,10 +385,26 @@ export const caseStudies: Record<string, CaseStudy> = {
         text: "I designed the app around a user paying for their own API usage due to the costs of audio generation at ~$1-3 per paper. To keep things simple, I used one API to identify text and generate audio. Gemini 3.1 Flash was the best option because it could clean up text and had TTS with eight voices.",
       },
 
+      {
+              type: "heading",
+              text: "Generating Audio in Groups",
+              note: "Design Decisions",
+            },
+
+        // network lag - more API requests can cause delays, or hit Gemini's rate limit
+        // Gemini - Free Tier so thats 15 requests per minute
+        // TTS takes time - 50 seconds of audio, ~20 seconds for Gemini to process and return
+        // so initial wait is 20 seconds
+      {
+        type: "text",
+        text: "Generating audio for the entire paper was unnecessary if someone only wanted to listen briefly, so the app generates it as the user listens. I organized text from a paper into groups of about 750 characters, which made ~50 seconds of audio. Making groups shorter would require more API requests and increase the risk of reaching Gemini's rate limit, while making groups longer increases the initial wait time. At 50 seconds, the first group takes ~20 seconds to generate and the next group loads in the background.",
+      },
+
+
             {
               type: "heading",
               text: "Highlighting",
-              note: "Design Decisions",
+              note: "",
             },
 
       {
