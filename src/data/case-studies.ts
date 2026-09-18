@@ -980,7 +980,7 @@ export const caseStudies: Record<string, CaseStudy> = {
             },
       {
         type: "text",
-        text: "This project has changed many times since the start. Initially I used AI to predict the market and send me buy/sell signals based on its research, but I realized that a strictly informational website would help me more. Buy Side used to display a lot more data when I was learning the market but I cut it down to the most important resources."
+        text: "This project has changed many times since the start. Initially I used AI to predict the market and send me buy/sell signals based on its research, but I realized that a strictly informational website would help me more. [Buy Side](https://buy-side-briefings.vercel.app/) used to display a lot more data when I was learning the market but I cut it down to the most important resources."
       },
 
       {
@@ -991,47 +991,48 @@ export const caseStudies: Record<string, CaseStudy> = {
   },
 
 
-  "time-with-tree": {
-    title: "Time with Tree",
-    date: "May - September 2026",
-    role: "Web Design",
-    scope: "Live website",
-    href: "https://timewithtree.co.kr/",
-    blocks: [
+  // Time with Tree: hidden until the case study is finished
+  // "time-with-tree": {
+  //   title: "Time with Tree",
+  //   date: "May - September 2026",
+  //   role: "Web Design",
+  //   scope: "Live website",
+  //   href: "https://timewithtree.co.kr/",
+  //   blocks: [
 
-      {
-        type: "text",
-        text: "Time with Tree is a birch tree farm in South Korea. They had trees but no way for customers to find them, so I built their website. "
-      },
+  //     {
+  //       type: "text",
+  //       text: "Time with Tree is a birch tree farm in South Korea. They had trees but no way for customers to find them, so I built their website. "
+  //     },
 
-      // agricultural products rely on trust and visual inspection, customers want to know how it was grown
-      // calming nature aesthetic
-      // website handles orders
+  //     // agricultural products rely on trust and visual inspection, customers want to know how it was grown
+  //     // calming nature aesthetic
+  //     // website handles orders
 
 
-      {
-        type: "text",
-        text: "",
-      },
+  //     {
+  //       type: "text",
+  //       text: "",
+  //     },
 
-      {
-        type: "text",
-        text: "",
-      },
+  //     {
+  //       type: "text",
+  //       text: "",
+  //     },
 
-      // following expectations from client, so less ideation 
-      // looked at other true farm websites in Korea 
-      // used lovable
+  //     // following expectations from client, so less ideation
+  //     // looked at other true farm websites in Korea
+  //     // used lovable
 
-      // create new logo
-      // redesign the site
+  //     // create new logo
+  //     // redesign the site
 
-      // optimize for seo
+  //     // optimize for seo
 
-      // sending order confirmation/status emails
-      // authentication - customer and admin sign in
+  //     // sending order confirmation/status emails
+  //     // authentication - customer and admin sign in
       
 
-    ],
-  },
+  //   ],
+  // },
 };
