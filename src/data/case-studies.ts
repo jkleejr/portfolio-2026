@@ -383,7 +383,7 @@ export const caseStudies: Record<string, CaseStudy> = {
        {
         type: "text",
         text: "I designed the app around a user paying for their own API usage due to the costs of audio generation at ~$1-3 per paper. To keep things simple, I used one API to identify text and generate audio. Gemini 3.1 Flash was the best option because it could clean up text and had TTS with eight voices.",
-      },
+      },      
 
       {
               type: "heading",
@@ -395,9 +395,17 @@ export const caseStudies: Record<string, CaseStudy> = {
         // Gemini - Free Tier so thats 15 requests per minute
         // TTS takes time - 50 seconds of audio, ~20 seconds for Gemini to process and return
         // so initial wait is 20 seconds
+
+        // 50 second groups - 1 API request per minute
+
+        // the app works on Google's free tier - 10-15 mins of free audio generation a day
+        // a user could be using the free tier so i had to consider rate limits
+        
+        // typical academic paper is 30 - 45 mins of audio
+
       {
         type: "text",
-        text: "Generating audio for the entire paper was unnecessary if someone only wanted to listen briefly, so the app generates it as the user listens. I organized text from a paper into groups of about 750 characters, which made ~50 seconds of audio. Making groups shorter would require more API requests and increase the risk of reaching Gemini's rate limit, while making groups longer increases the initial wait time. At 50 seconds, the first group takes ~20 seconds to generate and the next group loads in the background.",
+        text: "Generating audio for the entire paper was unnecessary if someone only wanted to listen briefly. I organized text from a paper into groups of about 750 characters, which made ~50 seconds of audio. Making groups shorter would require more API requests and could reach Gemini's Free Tier rate limit, while making groups longer would increase the initial wait time. At 50 seconds, the first group takes ~20 seconds to generate and the next group loads in the background.",
       },
 
 
@@ -406,11 +414,14 @@ export const caseStudies: Record<string, CaseStudy> = {
               text: "Highlighting",
               note: "",
             },
-
+        
+        // Apple PDFKit extracts the text from the paper
+        // Apple NLTokenizer splits text
       {
         type: "text",
-        text: "Because Gemini only returns audio and no timestamps, the app has to estimate when each sentence is being narrated. It splits a group's audio proportionally by character count, so a sentence with 5% of a group's characters is assumed to take 5% of the audio. As audio plays, the app tracks the time passed and highlights a sentence based on its estimate. However, this is not always accurate. Highlighted sentences are re-synced at the start of every group to minimize errors.",
+        text: "Because Gemini only returns audio and no timestamps, the app has to estimate which sentence is being spoken to highlight it. I used Apple's NLTokenizer to find the end of each sentence instead of splitting text on periods to prevent abbreviations like 'et al.' or 'Fig. 1' from breaking sentences. The app groups the sentences, sends them to Gemini TTS, and receives an audio clip. Since the app knows the duration of the clip, it divides a group's audio proportionally by character count, so a sentence with 5% of a group's characters is assumed to take 5% of the audio. As audio plays, the app tracks the time passed and highlights a sentence based on its estimate. This is not always accurate so sentences are re-synced at the start of every group to minimize errors.",
       },
+
       {
         type: "image",
         src: "/projects/paper-reader-highlight-detail.png",
