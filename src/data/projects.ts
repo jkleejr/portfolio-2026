@@ -121,16 +121,12 @@ export const entries: Entry[] = [
     images: [
       {
         src: "/projects/screen-translator-2.png",
-        cover: "/projects/screen-translator-recording.png",
-        // A tall phone screen in a square: held on the recording card, which
-        // is very nearly a square itself, then enlarged just enough to put
-        // the card's rim and the glow around it outside the thumbnail. The
-        // inside of the card is a little taller than it is wide, so this is
-        // the most zoom that keeps the grey circle and the last caption line
-        // in — they touch the top and bottom edges.
-        coverCrop: "50% 24%",
-        coverZoom: 1.105,
-        alt: "The Screen Translator recording card: a red to blue glow around it, live captions counted at twelve, and two Korean sentences with their English under each",
+        cover: "/projects/screen-translator-watching.png",
+        // A tall phone screen in a square: held just under the Dynamic Island
+        // so the title, the glowing recording card and the first two settings
+        // rows fill it, and the empty space under them stays out.
+        coverCrop: "50% 12%",
+        alt: "Screen Translator just after recording starts: the recording card with a red to blue glow around it, watching for Korean text, over the display and translation region rows",
         crop: "50% 2%",
         title: "Screen Translator",
         description: "",
