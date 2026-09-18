@@ -116,12 +116,12 @@ export const entries: Entry[] = [
     images: [
       {
         src: "/projects/screen-translator-2.png",
-        cover: "/projects/screen-translator-captions-idle.png",
-        // A tall phone screen in a square: held near the top so the title,
-        // the record button and the settings rows fill it rather than the
-        // empty space under them.
-        coverCrop: "50% 10%",
-        alt: "The Screen Translator home screen: a circle to start screen recording over rows for display, translation region and API keys",
+        cover: "/projects/screen-translator-recording.png",
+        // A tall phone screen in a square: held on the recording card, which
+        // is very nearly a square itself, so the card and its glow fill the
+        // thumbnail edge to edge.
+        coverCrop: "50% 24%",
+        alt: "The Screen Translator recording card: a red to blue glow around it, live captions counted at twelve, and two Korean sentences with their English under each",
         crop: "50% 2%",
         title: "Screen Translator",
         description: "",
