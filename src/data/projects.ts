@@ -25,8 +25,8 @@ export type EntryImage = {
   // screen, where there is no hovering to do.
   coverVideo?: string;
   // A dot painted over the cover that drifts toward the pointer. The cover
-  // image has to have it erased — see screen-translator-logo-4-base.png. All
-  // lengths are percentages of the thumbnail, so they hold at any size.
+  // image has to have it erased. All lengths are percentages of the
+  // thumbnail, so they hold at any size.
   coverDot?: {
     x: number; // centre, % from the left
     y: number; // centre, % from the top
