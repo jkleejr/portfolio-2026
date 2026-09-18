@@ -764,6 +764,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "video",
         src: "/projects/screen-translator-pin-and-learn.mp4",
+        controls: true,
         caption: "",
       },
 
@@ -1035,6 +1036,13 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       // create new logo
       // redesign the site
+
+      // optimize for seo
+
+      // sending order confirmation/status emails
+      // authentication - customer and admin sign in
+      
+
     ],
   },
 };
