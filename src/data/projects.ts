@@ -116,15 +116,12 @@ export const entries: Entry[] = [
     images: [
       {
         src: "/projects/screen-translator-2.png",
-        cover: "/projects/screen-translator-logo-4-base.png",
-        coverDot: {
-          x: 56.93,
-          y: 56.45,
-          size: 26.66,
-          color: "#ff3b30",
-          travel: 12.1,
-        },
-        alt: "A Korean headline translated to English in the Dynamic Island, over a live news feed",
+        cover: "/projects/screen-translator-captions-idle.png",
+        // A tall phone screen in a square: held near the top so the title,
+        // the record button and the settings rows fill it rather than the
+        // empty space under them.
+        coverCrop: "50% 10%",
+        alt: "The Screen Translator home screen: a circle to start screen recording over rows for display, translation region and API keys",
         crop: "50% 2%",
         title: "Screen Translator",
         description: "",
