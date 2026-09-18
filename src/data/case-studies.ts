@@ -92,11 +92,14 @@ export type CaseStudyBlock =
       // A second caption, in the space on the other side of the video. An
       // array for one that runs to more than a line, each set under the last.
       captionLeft?: string | string[];
+      // Low sets the left caption's first line a step under where it sits by
+      // default, for one that reads better nearer the middle of the frame.
+      captionLeftAlign?: "low";
       controls?: boolean;
       // Where the caption sits beside the video. Middle by default; high for
-      // one that reads better up nearer the top of the frame, higher for one
-      // that wants to go a step further still.
-      captionAlign?: "middle" | "high" | "higher";
+      // one that reads better up nearer the top of the frame, then higher and
+      // highest, each a step further up again.
+      captionAlign?: "middle" | "high" | "higher" | "highest";
     }
   | { type: "divider" };
 
@@ -353,7 +356,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         type: "video",
         src: "/projects/paper-reader-add-and-listen.mp4",
         controls: true,
-        captionAlign: "high",
+        captionAlign: "highest",
         caption: "Add a new paper from files",
         captionLeft: [
           "Audio is generated as the user needs, lowering initial cost and wait time",
@@ -529,7 +532,10 @@ export const caseStudies: Record<string, CaseStudy> = {
         src: "/projects/screen-translator-demo.mp4",
         controls: true,
         captionAlign: "higher",
-        caption: "long press the dynamic island to see translations",
+        // A no-break space keeps "see translations" together on the second line.
+        caption: "long press the dynamic island to see translations",
+        captionLeft: "choose a section of the screen to translate",
+        captionLeftAlign: "low",
       },
 
       {

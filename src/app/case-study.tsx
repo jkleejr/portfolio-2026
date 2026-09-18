@@ -458,8 +458,10 @@ function Block({
           {block.caption && (
             <figcaption
               className={`mt-3 text-base italic leading-relaxed sm:col-start-3 sm:mt-0 sm:pl-5 ${
-                block.captionAlign === "higher"
-                  ? "sm:-translate-y-32"
+                block.captionAlign === "highest"
+                  ? "sm:-translate-y-[293px]"
+                  : block.captionAlign === "higher"
+                  ? "sm:-translate-y-[290px]"
                   : block.captionAlign === "high"
                     ? "sm:-translate-y-24"
                     : "sm:-translate-y-14"
@@ -489,7 +491,13 @@ function Block({
                 // translates, which leaves the ones under them where they are.
                 <p
                   key={line}
-                  className={i === 0 ? "sm:-translate-y-10" : "sm:translate-y-6"}
+                  className={
+                    i > 0
+                      ? "sm:translate-y-6"
+                      : block.captionLeftAlign === "low"
+                        ? "sm:translate-y-[44px]"
+                        : "sm:-translate-y-10"
+                  }
                 >
                   {line}
                 </p>
