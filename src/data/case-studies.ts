@@ -777,12 +777,12 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "The biggest lesson from this project was learning to design with system constraints. Every decision considered iOS limitations which pushed me to find different solutions. The hardest part was making the user experience feel seamless when there was so much out of my control, like the dynamic island's current state and updating live activities."
+        text: "The biggest lesson from this project was learning to design with system constraints. Every decision considered iOS limitations which pushed me to find different solutions. It was difficult to make the user experience feel seamless when there was so much out of my control, like the dynamic island's current state and updating live activities."
       },
 
       {
         type: "text",
-        text: "If I continued this project, I would keep improving the UI/UX so it seamlessly translates text and visual diagrams from any app. Currently only Korean is translated but I could add more languages in the future and see if other people find this prototype helpful for learning."
+        text: "If I continued this project, I would keep improving the UI/UX so the island feels more responsive and aligned with the users intent. I would also improve translations for visual diagrams and make it work with any app. Currently only Korean is translated but I could add more languages in the future and see if other people find this prototype helpful for learning."
       },
 
     ],
