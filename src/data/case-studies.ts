@@ -138,21 +138,7 @@ export type CaseStudy = {
 // note on figma: when good designers show process artifacts, they present them beautifully, cleaned up, on consistent backgrounds, annotated
 // dont show raw uncropped screenshots w mismatchced sizes
 
-// overview
-// highlights
-// context
-// the problem
-// update flow
-// layout
-// interactions
-// visual design
-// fingla design
-// retrospective
-
-
-// hook, conflict, resolution
 // thinking process, execution quality, problem solving
-
 
 // design thinking -empathise, define, ideate, prototype, test
 
@@ -183,7 +169,7 @@ export const caseStudies: Record<string, CaseStudy> = {
                   },
       {
         type: "text",
-        text: "When I was moving places, I had a room full of clothes, electronics, and other things to sell. I downloaded existing appraisal apps, but they had unnecessary steps and required a subscription after a few scans. I saw an opportunity to create Loot Check, a free solution that used AI to identify an item, find its value, and marketplaces to sell it.",
+        text: "When I was moving places, I had a room full of clothes, electronics, and other things to sell. It took me too much time to research the fair selling price and write listings for every single item. I tried existing appraisal apps to speed up the process, but they had unnecessary steps, ads, or asked me to subscribe after a few scans. I saw an opportunity to create Loot Check, a free solution that uses AI to identify an item, estimate its value range, and recommend where to sell it.",
       },
 
       
@@ -195,7 +181,8 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "The app sends photos to a single endpoint. The server makes the API call, enforces spending limits, and holds the API keys.",
+        text: "The app routes requests through a Vercel endpoint so API keys aren't stored on the device. To keep the app free without risking runway costs, I used Upstash Redis to cap usage at 100 scans per device and 1,000 scans globally per day. At ~$0.013 per scan, this limited my total cost to ~$20 a day.",
+        // risks using claude api and making the app free: my api keys need to be secure, and i need to create spending limits to minimize the cost and plan for a worst case scenario. 
       },
       
       // system architecture and data flow diagrams
@@ -209,8 +196,6 @@ export const caseStudies: Record<string, CaseStudy> = {
         alt: "Architecture diagram. The iOS app uploads a photo to a single analyze endpoint on Vercel, which calls Claude Sonnet 4.6 to identify and price the item and Upstash Redis for daily caps and search allowances. A JSON response returns to the app as an item valuation with payouts from marketplaces.",
       },
 
-          
-
             // api key lives in Vercel's environment variables - so its never in app, sent to phone, or git
             // upstash redis - stores numbers: 100 scans a day per phone cap, 1000 global daily cap, all time number of scans, 25 paid web searches a day per user cap - to limit costs and a worst case scenario 
             // at rougly $0.013-$0.02 per scan - 100 scans would cost me ~$2 a day per user, or ~$20 a day if the global daily cap is reached
@@ -219,11 +204,32 @@ export const caseStudies: Record<string, CaseStudy> = {
 
 
 
+            // PRICE_VERIFY - original items worth $40+ get a web searched price, costs ~$0.01 per search, capped at 25 per device a day, scans take ~6-27 seconds (ON - 9.8.26)
+              // web search scan is not too common            
 
-            // PRICE_VERIFY - original items worth $40+ get a web searched price, costs ~$0.01 per search, capped at 25 per device a day, scans take ~8-20 seconds
-              // web search scan is not too common
-              // 30s ceiling - if it takes too long it returns the model's own estimate 
-            
+
+            // 9.18.26
+            // vercel - 60s ceiling
+            // iOS default request timeout - 60s
+            // loot check app - 45s ceiling - from testing the longest scan took ~27s
+            // the app's deadline is always hit first 
+            // after the first call (sonnet), if the item passes the checks i set, a web search can use whatever is left of the time - if it takes too long the user still gets Sonnet 4.6's own price
+            // if the first call times out, it tries again with the remaining time
+            // if both attempts time out, no price estimate is returned, and the user sees "That took longer than expected. Please try again."
+            // both failed another way - like API being overloaded or a bad request - "Analysis failed" (502).
+            // in both cases the user can see a try again button which reuses the same photos and hint, and a start over button
+            // this is the only way to end up with no price - if just the web search fails, the user sees Sonnet's estimate
+            // verified scan is scan with web search
+
+
+            // loading state shows ~6 seconds, switches to ~25s at 10s
+            // 0-10 s - "identifying ... ~6 seconds"
+            // 10-25s - "checking recent listings... ~25 seconds"
+            // after 25s - "checking recent listings... taking longer than usual..."
+
+
+            // from testing web searches the range was 14-27s for verified scans 
+            // results say where the estimate is from, "based on ..."
 
 
             {
@@ -240,7 +246,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "A key product decision was determining how items were valued. Using a web search for every scan increased accuracy, but because it raised API costs by 3-4x and tripled the total latency from ~6-19s, I chose to rely on Sonnet 4.6's pre-trained data for most items."
+        text: "A key product decision was determining how items were valued. Using a web search for every scan increased accuracy, but because it raised API costs by 3-4x and quadrupled the total latency from ~6-25 seconds, I chose to rely on Sonnet's pre-trained data for most items."
       },
 
 
@@ -270,6 +276,19 @@ export const caseStudies: Record<string, CaseStudy> = {
         src: "/projects/loot-check-pricing-fork.svg",
         max: 700,
         alt: "The pricing fork. After the iOS app uploads a photo, the scan asks whether the item is a handmade or original piece. If no, it is resale and priced from training data. If yes, there is no fixed secondhand catalog, so one web search finds the asking price of comparable work. Both paths end in an item valuation.",
+      },
+
+
+      {
+              type: "heading",
+              text: "Managing Inference Latency",
+              note: "",
+            },
+
+              // managing inference latency - time budgeted fallback, trying to reduce errors
+      {
+        type: "text",
+        text: "Scans with web searches took ~14-27 seconds from testing, so I capped searches at 45s and the loading state displays an estimated wait time. If the first API call times out, it automatically tries again with the remaining time. If both attempts fail, no price estimate is shown and the user can retry or start over.",
       },
 
             {
@@ -324,13 +343,6 @@ export const caseStudies: Record<string, CaseStudy> = {
           },
         ],
       },
-
-
-      // Adding a web search for scans tripled total latency, increasing response times from ~6s to ~19s. I implemented a 30s timeout to prevent long scans and displayed the estimated wait time on the loading screen."
-
-      // claude sonnet 4.6 because its cheap enough to run per scan and still accurate.
-      // costs me about $0.013 per scan.
-      // thought about the users and making a subscription too but decided i would make it free to use since the cost is low
       
                 {
                   type: "heading",
