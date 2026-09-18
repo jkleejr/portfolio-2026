@@ -536,13 +536,13 @@ export const caseStudies: Record<string, CaseStudy> = {
       
             {
               type: "heading",
-              text: "Lessons learned",
+              text: "Result",
               note: "Retrospective",
             },
 
       {
         type: "text",
-        text: "Reflecting on this project, I realized that I didn't consider the user enough over my own self interests (not wanting to cover initial costs). Asking users to set up their own key created unnacceptable onboarding friction especially because it was the first step. It was a critical decision because audio generation required a sustainable business model to cover the costs.",
+        text: "Reflecting on this project, I realized that I didn't consider the user enough over my own self interests (not wanting to cover initial costs). Asking users to set up their own key created unacceptable onboarding friction especially because it was the first step. It was a critical decision because audio generation required a sustainable business model to cover the costs.",
       },
 
       {
@@ -792,7 +792,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "Pinning a sentence saves it to the \"Learn\" page and breaks it into individual words. Tapping a word shows its correct defintion."
+        text: "Pinning a sentence saves it to the \"Learn\" page and breaks it into individual words. Tapping a word shows its correct definition."
       },
 
       {
@@ -849,17 +849,17 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "Stock prices change constantly and it takes time and judgement to find the right information. Tracking the market requires aggregating information from multiple sources: stock exchanges, financial news outlets, SEC filings, and social media. "
+        text: "Stock prices change constantly, and it takes time and judgement to find the right information. Tracking the market requires aggregating data from multiple sources: stock exchanges, financial news outlets, SEC filings, and social media. "
       },
 
       {
         type: "text",
-        text: "This is a fragmented workflow due to context switching and information overload. Sometimes it's difficult to separate what's relevant from the noise, leading to missed opportunities."
+        text: "This is a fragmented workflow due to context switching and information overload. It can be difficult to separate what's relevant from the noise, which leads to uncertainty and missed opportunities."
       },
 
        {
         type: "text",
-        text: "My solution was an automated market reporting website that generates daily reports so I can quickly understand whats going on and make faster decisions."
+        text: "My solution was an automated market reporting website that aggregates this information and generates daily reports so I can make faster decisions."
       },
 
             {
@@ -1009,7 +1009,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
             {
               type: "heading",
-              text: "Future Iterations",
+              text: "Result",
               note: "Retrospective",
             },
       {
@@ -1023,7 +1023,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
     ],
   },
-
+};
 
   // Time with Tree: hidden until the case study is finished
   // "time-with-tree": {
@@ -1069,4 +1069,3 @@ export const caseStudies: Record<string, CaseStudy> = {
 
   //   ],
   // },
-};
