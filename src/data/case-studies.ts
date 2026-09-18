@@ -782,7 +782,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "If I continued this project, I would keep improving the UI/UX so the island feels more responsive and aligned with the users intent. I would also improve translations for visual diagrams and make it work with any app. Currently only Korean is translated but I could add more languages in the future and see if other people find this prototype helpful for learning."
+        text: "If I continued this project, I would keep improving the UI/UX so the island feels more responsive and aligned with the user's intent. I would also improve translations for visual diagrams and make it work with any app. Currently only Korean is translated but I could add more languages and see if other people find this prototype helpful for learning."  
       },
 
     ],
@@ -873,7 +873,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "The [morning report](https://buy-side-briefings.vercel.app/briefings/markets/2026-09-14-morning) is forward looking and focuses on preparation for pre-market open. The [night report](https://buy-side-briefings.vercel.app/briefings/markets/2026-09-14-night) is analytical and reflects on the day's performance."
+        text: "The morning report is forward looking and focuses on preparation for pre-market open. The night report is analytical and reflects on the day's performance."
       },
 
       {
@@ -931,18 +931,6 @@ export const caseStudies: Record<string, CaseStudy> = {
         alt: "The earnings timeline: nineteen tickers from MU down to WMT, each with a dot placed along a line running from today past sixty days out and a count of days until it reports, filled dots for confirmed dates and hollow ones for estimates",
       },
 
-       {
-        type: "text",
-        text: "For macro indicators, I added a grid and tiles that highlight so I can see when a metric crosses a key level."
-      },
-
-      {
-        type: "image",
-        src: "/projects/buy-side-macro-grid.png",
-        max: 800,
-        alt: "The macro indicators grid: tiles grouped into Interest Rates & Monetary Policy, Inflation & Purchasing Power, Economic Growth & Activity, and Unemployment & Labor, with warning and alert threshold color highlights on key metrics",
-      },
-
       {
         type: "heading",
         text: "Mobile Design",
@@ -992,15 +980,16 @@ export const caseStudies: Record<string, CaseStudy> = {
             },
       {
         type: "text",
-        text: "This project has changed many times since the start. Initially I used AI to predict the market and send me buy/sell signals based on its research, but I realized that a strictly informational website would help me more. [Buy Side](https://buy-side-briefings.vercel.app/) used to display a lot more data when I was learning the market but I cut it down to the most important resources."
+        text: "This project has changed many times since the start. Initially I used AI to predict the market and send me buy/sell signals based on its research, but I realized that a strictly informational website would help me more. Buy Side used to display a lot more data when I was learning the market but I cut it down to the most important resources."
       },
 
       {
         type: "text",
-        text: "Since this website keeps a record of previous reports, it would be interesting to use that data to find sentiment trends. I plan to keep improving the reports and add features I find useful."
+        text: "Since the website keeps a record of previous reports, it would be interesting to use that data to find sentiment trends. I plan to keep improving the reports and add features I find useful."
       },
     ],
   },
+
 
   "time-with-tree": {
     title: "Time with Tree",
