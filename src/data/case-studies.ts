@@ -650,12 +650,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       // each Live Activity has an update budget - which delays or drops updates that are too often
       // call activity.update 
       // need to keep the app running in the background - Apple keeps screen broadcast extensions / screen recording running
-      
-
-      // had claude do a benchmark test with claude and deepl
-      // using claude for sentence translations had higher latency and was more expensive than deepl
-      // cost is $0.0006 per sentence DeepL
-      // $0.0031 Claude Opus 5
+ 
       
 
       {
@@ -734,8 +729,18 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "I used DeepL for sentence translations and Claude Opus 5 for word definitions. DeepL was excellent for full sentences, but unreliable for individual words. Claude was more accurate for words because it could define each word as it's used in context of the sentence. "
+        text: "I used DeepL for sentence translations and Claude Opus 5 for word definitions. DeepL was excellent for full sentences, but unreliable for individual words. Claude was more accurate for words because it could define each word as it's used in context of the sentence."
       },
+
+       {
+        type: "text",
+        text: "I had Claude do a benchmark test with Opus 5 and DeepL and found that using Claude for sentence translations had higher latency. It was also more expensive, costing $0.0031 vs. $0.0006 per sentence using DeepL."
+      },
+      
+       // had claude do a benchmark test with claude and deepl
+      // using claude for sentence translations had higher latency and was more expensive than deepl
+      // cost is $0.0006 per sentence DeepL
+      // $0.0031 Claude Opus 5
       
 
       {
@@ -894,13 +899,9 @@ export const caseStudies: Record<string, CaseStudy> = {
       
       {
         type: "text",
-        text: "I designed an automated research pipeline that runs parallel web queries across market feeds, economic calendars, and stock watchlists to collect data.",
+        text: "I designed an automated research pipeline that runs parallel web queries across market data, sentiment indicators, economic calendars, and a fixed set of stocks. The core of the project is the [instructions file](https://github.com/jkleejr/buy-side-briefings/blob/deploy/prompts/markets-website.md), which controls how each report is researched and written and defines the JSON schema the website renders from.", //
       },
 
-      {
-        type: "text",
-        text: "A core part of the project was the [instructions file](https://github.com/jkleejr/buy-side-briefings/blob/deploy/prompts/markets-website.md)." // finish
-      },
     
       {
         type: "text",
