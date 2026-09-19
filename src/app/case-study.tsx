@@ -17,6 +17,7 @@
 // ---------------------------------------------------------------------------
 
 import { type CaseStudy, type CaseStudyBlock } from "@/data/case-studies";
+import { ShotStack } from "./shot-stack";
 import { SiteLink } from "./site-link";
 import { AppStoreBadge, AppStoreMark } from "./title-badge";
 export function StudyBody({
@@ -333,6 +334,19 @@ function Block({
       );
 
     case "images":
+      // A row that is a pile on a phone — see shot-stack.tsx, which sets the
+      // same row from sm up and is the one client component in a study.
+      if (block.stackOnPhone) {
+        return (
+          <figure>
+            <ShotStack
+              items={block.items.map(({ src, alt }) => ({ src, alt }))}
+              max={block.max}
+            />
+            <Caption text={block.caption} />
+          </figure>
+        );
+      }
       return (
         <figure>
           {/* A wrapping row with each shot sized to a column of the grid it

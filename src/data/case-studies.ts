@@ -77,6 +77,13 @@ export type CaseStudyBlock =
       }[];
       caption?: string;
       columns?: 2;
+      // Under sm the shots are piled on one another, each turned a few
+      // degrees so the ones behind show, and swiped through one at a time —
+      // for three phones across, which a phone can only show too small or as
+      // three screens of scrolling. The row from sm up is unchanged. It is for
+      // plain shots all the same shape: a pile draws each item's `src` and
+      // `alt` and nothing else of it, so no `caption`, `scale` or `width`.
+      stackOnPhone?: boolean;
       // A ceiling on the row, not on a shot in it: the shots keep sharing it
       // in the same proportions and stop growing together.
       max?: number;
@@ -733,6 +740,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         // so they keep sharing it evenly: 900 across, less the two gaps, puts
         // each phone at 289px whatever the window is doing.
         max: 900,
+        stackOnPhone: true,
         items: [
           {
             src: "/projects/screen-translator-2.png",
@@ -766,6 +774,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "images",
         max: 900,
+        stackOnPhone: true,
         items: [
         
           {
