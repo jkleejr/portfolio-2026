@@ -883,12 +883,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "This is a fragmented workflow due to context switching and information overload. It can be difficult to separate what's relevant from the noise, which leads to uncertainty and missed opportunities."
-      },
-
-       {
-        type: "text",
-        text: "My solution was an automated market reporting website that aggregates this information and generates daily reports so I can make faster decisions."
+        text: "This is a fragmented workflow due to context switching and information overload. It can be difficult to separate what's relevant from the noise, which leads to uncertainty and missed opportunities. My solution was an automated market reporting website that aggregates this information and generates daily reports so I can make faster decisions."
       },
 
             {
@@ -924,12 +919,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "An investor's mental state changes fundamentally depending on the time of day."
-      },
-
-      {
-        type: "text",
-        text: "The morning report is forward looking and focuses on preparation for pre-market open. The night report is analytical and reflects on the day's performance."
+        text: "An investor's mental state changes fundamentally depending on the time of day. The morning report is forward looking and focuses on preparation for pre-market open. The night report is analytical and reflects on the day's performance."
       },
 
       {

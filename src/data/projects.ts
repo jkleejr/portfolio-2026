@@ -77,6 +77,33 @@ export type Entry = {
 
 export const entries: Entry[] = [
   {
+    title: "Screen Translator",
+    blurb:
+      "Translate the text on screen without having to switch apps by using the Dynamic Island",
+      //Live translation of whatever is on screen, running in the background from the Dynamic Island.
+      // translate text on screen without having to switch apps.
+      // Live translation of whatever is on screen without having to switch apps
+    slug: "screen-translator",
+    platform: "mobile",
+    images: [
+      {
+        src: "/projects/screen-translator-2.png",
+        cover: "/projects/screen-translator-watching.png",
+        // A tall phone screen in a square: held just under the Dynamic Island
+        // so the title, the glowing recording card and the first two settings
+        // rows fill it, and the empty space under them stays out. Enlarged a
+        // touch so the card takes more of the square; the title and the
+        // Translation region row still clear the top and bottom edges.
+        coverCrop: "50% 11%",
+        coverZoom: 1.06,
+        alt: "Screen Translator just after recording starts: the recording card with a red to blue glow around it, watching for Korean text, over the display and translation region rows",
+        crop: "50% 2%",
+        title: "Screen Translator",
+        description: "",
+      },
+    ],
+  },
+  {
     title: "Loot Check",
     blurb:
       "Photograph any item to find its name, potential value, and where to sell it",
@@ -105,33 +132,6 @@ export const entries: Entry[] = [
         coverCrop: "left",
         alt: "Reader view with the sentence being read aloud highlighted",
         title: "Paper Reader",
-        description: "",
-      },
-    ],
-  },
-  {
-    title: "Screen Translator",
-    blurb:
-      "Translate the text on screen without having to switch apps by using the Dynamic Island",
-      //Live translation of whatever is on screen, running in the background from the Dynamic Island.
-      // translate text on screen without having to switch apps.
-      // Live translation of whatever is on screen without having to switch apps
-    slug: "screen-translator",
-    platform: "mobile",
-    images: [
-      {
-        src: "/projects/screen-translator-2.png",
-        cover: "/projects/screen-translator-watching.png",
-        // A tall phone screen in a square: held just under the Dynamic Island
-        // so the title, the glowing recording card and the first two settings
-        // rows fill it, and the empty space under them stays out. Enlarged a
-        // touch so the card takes more of the square; the title and the
-        // Translation region row still clear the top and bottom edges.
-        coverCrop: "50% 11%",
-        coverZoom: 1.06,
-        alt: "Screen Translator just after recording starts: the recording card with a red to blue glow around it, watching for Korean text, over the display and translation region rows",
-        crop: "50% 2%",
-        title: "Screen Translator",
         description: "",
       },
     ],
