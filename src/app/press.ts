@@ -16,6 +16,18 @@
 
 import { useRef } from "react";
 
+/**
+ * A click that was meant for the browser rather than the page: held with
+ * cmd or ctrl for a new tab, shift for a new window, alt to download. A link
+ * that does something of its own on a plain click — the cover and the name on
+ * the list open a study in place — leaves these alone, so the address behind
+ * it opens the way the reader asked for it to. The middle button and "open in
+ * new tab" never arrive as a click at all and need nothing.
+ */
+export function modified(e: React.MouseEvent): boolean {
+  return e.metaKey || e.ctrlKey || e.shiftKey || e.altKey;
+}
+
 // How far a press may travel and still count as a click, in px. Below a hand's
 // natural slip; above it the pointer was going somewhere.
 const SLOP = 5;

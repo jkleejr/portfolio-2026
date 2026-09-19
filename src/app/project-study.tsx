@@ -206,13 +206,14 @@ export function ProjectSection({
  * in the gap between the picture and the name should not be a press on
  * nothing.
  *
- * The cover and the name stay buttons of their own. They are what the
- * keyboard and a screen reader reach, and the row is not made a button around
- * them — a button inside a button is not a thing the browser will have. So the
- * row listens for clicks instead, and steps aside for any that started on a
- * link or button inside it: the cover and the name have already switched the
- * study, and the marks after the name leave the page, which a press on them
- * should do without also opening something behind it.
+ * The cover and the name stay links of their own, to the address the open
+ * study has. They are what the keyboard and a screen reader reach, and what a
+ * cmd-click or "open in new tab" lands on, and the row is not made a link
+ * around them — a link inside a link is not a thing the browser will have. So
+ * the row listens for clicks instead, and steps aside for any that started on
+ * a link or button inside it: the cover and the name have already switched
+ * the study, and the marks after the name leave the page, which a press on
+ * them should do without also opening something behind it.
  *
  * `group` is for the cover and the name, which take their hover from the row
  * rather than from themselves — see project-thumbnail.tsx and

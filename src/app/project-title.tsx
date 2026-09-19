@@ -10,6 +10,13 @@
 // nothing when pressed reads as a page with nothing behind it. The two are one
 // state — press either and the study opens, press either again and it closes.
 //
+// It is a link all the same, to the address the open study has — "/" plus the
+// slug, see app/[slug]/page.tsx. A plain click never follows it: the study
+// opens in place and the address is written to match. What the href is for is
+// every other way of asking — cmd-click, the middle button, "open in new
+// tab", "copy link" — which a button answers with nothing, and which someone
+// lining up three projects in three tabs to read later reaches for first.
+//
 // Off the list, where there is no switch to read, it goes to the study's own
 // page, as the cover does. The marks after the name — the App Store, the
 // chain to a live site — stay their own links; they are the way out of the
@@ -18,7 +25,7 @@
 
 import Link from "next/link";
 import { caseStudies } from "@/data/case-studies";
-import { usePress } from "./press";
+import { modified, usePress } from "./press";
 import { useCoverToggle } from "./project-study";
 
 export function ProjectTitle({
@@ -35,8 +42,8 @@ export function ProjectTitle({
   const toggle = useCoverToggle();
 
   // Turns the accent colour under the pointer, so the name reads as something
-  // that can be pressed without being dressed as a link — nothing is being
-  // navigated to. On the list the whole row is the switch, so the name
+  // that can be pressed without being underlined like a link in a paragraph.
+  // On the list the whole row is the switch, so the name
   // answers a hover anywhere in it (group-hover, from ProjectRow) and not
   // only on its own letters.
   const press =
@@ -44,8 +51,14 @@ export function ProjectTitle({
 
   if (study && toggle) {
     return (
-      <button
-        type="button"
+      <Link
+        href={`/${slug}`}
+        // Nothing to fetch ahead of a click: a plain one never leaves the
+        // page, and the ones that do are a fresh load in another tab.
+        prefetch={false}
+        // A link dragged is the browser's own drag of its address, which
+        // would take the press away from a throw — see press.ts.
+        draggable={false}
         aria-expanded={toggle.open}
         // Held in the accent colour for as long as its study is open, so the
         // name says which project the page is showing after the pointer has
@@ -53,12 +66,14 @@ export function ProjectTitle({
         className={`${press} ${toggle.open ? "text-accent" : ""}`}
         onPointerDown={onPointerDown}
         onClick={(e) => {
-          if (dragged(e)) return;
+          if (dragged(e)) return e.preventDefault();
+          if (modified(e)) return;
+          e.preventDefault();
           toggle.toggle();
         }}
       >
         {children}
-      </button>
+      </Link>
     );
   }
 

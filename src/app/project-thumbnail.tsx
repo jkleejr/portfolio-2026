@@ -17,7 +17,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { caseStudies } from "@/data/case-studies";
 import type { EntryImage } from "@/data/projects";
-import { usePress } from "./press";
+import { modified, usePress } from "./press";
 import { useCoverToggle } from "./project-study";
 
 // ---------------------------------------------------------------------------
@@ -243,25 +243,31 @@ export function ProjectThumbnail({
     );
   }
 
-  // On the list the picture is a switch, not a way out of the page: it opens
-  // the study under the row and closes it again. aria-expanded is what says so
-  // to anything not looking at the screen, and it is why this is a button
-  // rather than a link — nothing is being navigated to.
+  // On the list the picture is a switch, not a way out of the page: a plain
+  // click opens the study under the row and closes it again, and
+  // aria-expanded is what says so to anything not looking at the screen. It
+  // is a link to the open study's address all the same, for the clicks that
+  // ask for another tab — see the note at the top of project-title.tsx, which
+  // is the same switch and the same link.
   if (study && toggle) {
     return (
-      <button
-        type="button"
+      <Link
+        href={`/${slug}`}
+        prefetch={false}
+        draggable={false}
         aria-expanded={toggle.open}
         aria-label={`${toggle.open ? "Close" : "Read"} the ${study.title} case study`}
         className={rowLift}
         onPointerDown={onPointerDown}
         onClick={(e) => {
-          if (dragged(e)) return;
+          if (dragged(e)) return e.preventDefault();
+          if (modified(e)) return;
+          e.preventDefault();
           toggle.toggle();
         }}
       >
         {inner}
-      </button>
+      </Link>
     );
   }
 
