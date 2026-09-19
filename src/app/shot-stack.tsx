@@ -156,7 +156,13 @@ export function ShotStack({
               // or half of it — the widths case-study.tsx gives any row.
               // Under a finger the shot follows it exactly, so the transition
               // is dropped for as long as the pull lasts.
-              className={`w-[78%] [grid-area:1/1] [filter:brightness(var(--shot-dim))] [transform:var(--shot-place)] [z-index:var(--shot-z)] ${
+              // Each shot in the pile is kept on a layer of its own. A shot is
+              // a full-size screenshot drawn down to a phone's width and
+              // dimmed, which is a lot to paint; left to itself the browser
+              // paints the whole pile again for every frame of a pull, and
+              // makes the layers only once a turn has begun, which is the
+              // frames a tap drops. On layers a move is the layers moved.
+              className={`w-[78%] [grid-area:1/1] [filter:brightness(var(--shot-dim))] [transform:var(--shot-place)] [z-index:var(--shot-z)] max-sm:[will-change:transform,filter] ${
                 columns === 2
                   ? "sm:w-[calc((100%_-_1rem)/2)]"
                   : "sm:w-[calc((100%_-_2rem)/3)]"
