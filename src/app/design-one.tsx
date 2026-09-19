@@ -313,19 +313,41 @@ export function DesignOne() {
             Still in flow below sm, where pb-8 is not deep enough to hold a
             pinned line clear of the last project row. The wrapper keeps that
             phone layout and does nothing else — with both children out of
-            flow from sm up it has no height, so its margin goes too. */}
+            flow from sm up it has no height, so its margin goes too.
+
+            The closing line stops short of the right-hand corner by the width
+            of the links and a gap, so on a narrow window it wraps upward
+            rather than running under them. */}
         <div className="mt-16 flex flex-col gap-4 sm:mt-0 sm:block">
           {site.closing && (
-            <p className="text-lg font-medium leading-relaxed text-foreground sm:absolute sm:bottom-6 sm:left-6">
+            <p className="text-lg font-medium leading-relaxed text-foreground sm:absolute sm:bottom-6 sm:left-6 sm:right-76">
               {site.closing}
             </p>
           )}
-          <a
-            href={`mailto:${site.email}`}
-            className="self-end text-lg font-medium text-foreground transition-colors duration-200 ease-out hover:text-accent sm:absolute sm:bottom-6 sm:right-6"
-          >
-            Contact
-          </a>
+          {/* The other places to find him, then the way to write to him. One
+              line, so it is the line that is pinned and not each link. */}
+          <nav className="flex gap-6 self-end text-lg font-medium text-foreground sm:absolute sm:bottom-6 sm:right-6">
+            {site.links.map(
+              (link) =>
+                link.href && (
+                  <a
+                    key={link.label}
+                    href={link.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="transition-colors duration-200 ease-out hover:text-accent"
+                  >
+                    {link.label}
+                  </a>
+                ),
+            )}
+            <a
+              href={`mailto:${site.email}`}
+              className="transition-colors duration-200 ease-out hover:text-accent"
+            >
+              Contact
+            </a>
+          </nav>
         </div>
       </div>
     </main>

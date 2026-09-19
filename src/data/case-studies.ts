@@ -904,7 +904,7 @@ export const caseStudies: Record<string, CaseStudy> = {
     
       {
         type: "text",
-        text: "Because LLMs don't have long term memory, the agent calibrates itself by reading reports of the last few days before writing. The historical data simulates  continuity and allows the report to distinguish between ongoing and new market trends."
+        text: "Because LLMs don't have long term memory, the agent calibrates itself by reading reports of the last few days before writing. The historical data simulates continuity and allows the report to distinguish between ongoing and new market trends."
       },
 
       {

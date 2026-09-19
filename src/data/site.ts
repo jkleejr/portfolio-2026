@@ -11,6 +11,13 @@ export const site = {
   // Under the role in the header, as the way to get in touch.
   email: "johnkleejr@gmail.com",
 
+  // Beside Contact at the foot of the homepage, in this order. One with no
+  // href is left out rather than set as a link to nowhere.
+  links: [
+    { label: "Github", href: "https://github.com/jkleejr" },
+    { label: "LinkedIn", href: "https://www.linkedin.com/in/john-lee-779329401/" },
+  ],
+
   // The last line of the homepage, under the work. Left out entirely when it
   // is empty, rather than leaving a gap at the foot of the page.
   closing: "Open to product design and design engineer roles.",
@@ -21,6 +28,8 @@ export const site = {
     "Hi, I design and build in code...",
   ],
 };
+// "Hi, I design and build in code...",
+// "Design engineer building iOS and AI native products."
 
 
 /* 9.6.26
