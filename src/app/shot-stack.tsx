@@ -9,8 +9,9 @@
 // first on top, the others behind it and turned a few degrees each way, so a
 // corner of every one shows and the pile reads as a pile. A swipe to the left
 // sends the top one to the back, a swipe to the right brings the last one
-// forward again, and a tap is the same as a swipe left. The dots under it say
-// how many there are and which is showing.
+// forward again, and a tap does the same by where it lands: on the right half
+// it is a swipe left, on the left half a swipe right. The dots under it say how
+// many there are and which is showing.
 //
 // One set of markup for both. The shots are the same <img> elements at every
 // width — the row from sm up is these figures in a flex row, as case-study.tsx
@@ -102,7 +103,12 @@ export function ShotStack({
     setPull(null);
     if (cancelled) return;
     const dx = e.clientX - start.x;
-    if (dx <= -SWIPE || Math.abs(dx) <= SLOP) turnTo(1);
+    if (Math.abs(dx) <= SLOP) {
+      // A tap goes by which half of the pile it landed on. The pile is centred
+      // in this element, so its middle is the top shot's middle too.
+      const box = e.currentTarget.getBoundingClientRect();
+      turnTo(e.clientX < box.left + box.width / 2 ? -1 : 1);
+    } else if (dx <= -SWIPE) turnTo(1);
     else if (dx >= SWIPE) turnTo(-1);
   };
 
