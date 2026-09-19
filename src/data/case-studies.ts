@@ -107,6 +107,11 @@ export type CaseStudyBlock =
       // one that reads better up nearer the top of the frame, then higher and
       // highest, each a step further up again.
       captionAlign?: "middle" | "high" | "higher" | "highest";
+      // Leaves a caption out on a phone, where both sit under the video rather
+      // than beside it: one that points at something in the frame reads as a
+      // stray line there, and the other caption is enough on its own.
+      captionHiddenOnPhone?: boolean;
+      captionLeftHiddenOnPhone?: boolean;
     }
   | { type: "divider" };
 
@@ -372,6 +377,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         controls: true,
         captionAlign: "highest",
         caption: "Add a new paper from files",
+        captionHiddenOnPhone: true,
         captionLeft: [
           "Audio is generated as the user needs, lowering initial cost and wait time",
         ],
@@ -573,9 +579,10 @@ export const caseStudies: Record<string, CaseStudy> = {
         controls: true,
         captionAlign: "higher",
         // A no-break space keeps "see translations" together on the second line.
-        caption: "long press the dynamic island to see translations",
+        caption: "long press the Dynamic Island to see translations",
         captionLeft: "choose a section of the screen to translate",
         captionLeftAlign: "low",
+        captionLeftHiddenOnPhone: true,
       },
 
       {
@@ -586,12 +593,12 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
 
         type: "text",
-        text: "Constantly switching apps while learning a language is annoying and time consuming, so I created an app that translates the Korean text on screen to English in real time.",
+        text: "Constantly switching apps while learning a language is annoying, time-consuming, and makes learning inefficient, so I created an app that translates the Korean text on screen to English in real time.",
       },
   
       {
         type: "text",
-        text: "My first idea was to generate text over the current display, but iOS does not allow an app to draw over another app. To get around this, I used ReplayKit to broadcast video frames, Apple Vision OCR to extract Korean text, translated it using DeepL API, and updated the dynamic island through ActivityKit."
+        text: "My first idea was to generate text over the current display, but iOS does not allow an app to draw over another app. To get around this, I chose to use the Dynamic Island since it stays visible in every app. I used ReplayKit to broadcast video frames, Apple Vision OCR to extract Korean text, DeepL API for translations, and ActivityKit to update the island."
 
                     // architecture and data flow diagrams
                 // active app / news feed to dynamic island / live activity overlay
@@ -608,12 +615,13 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "iOS prohibits third party overlay windows, which makes language learning more difficult since a user experiences constant context switching between an app and Google Translate."
+        text: "Because iOS, not my app, controls how and when the Dynamic Island is displayed, I designed for states I couldn't choose and updates I couldn't guarantee."
       },
+      //iOS prohibits third party overlay windows, which makes language learning more difficult since a user experiences constant context switching between an app and Google Translate.
 
       {
         type: "text",
-        text: "Due to iOS limitations, I designed for three different dynamic island states - minimal, compact, and expanded. Because iOS treats live activities as an occasional status update and not a live display, I could not keep the expanded state on screen so the user has to long press the island to see the translation. I also had to design UI elements around the physical user facing camera in the top-center area of the screen."
+        text: "The island has three states: minimal, compact, and expanded. iOS treats Live Activities as an occasional status update and not a live display, so I could not keep the expanded state on screen, and the user has to long press the island to see the translation. I also had to design UI elements around the front-facing camera in the top-center area of the screen."
       },
 
 
@@ -729,19 +737,22 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "I used DeepL for sentence translations and Claude Opus 5 for word definitions. DeepL was excellent for full sentences, but unreliable for individual words. Claude was more accurate for words because it could define each word as it's used in context of the sentence."
+        text: "I used DeepL for sentence translations and Claude Opus 5 for word definitions. DeepL was excellent for full sentences, but unreliable for individual words. Claude was more accurate for words because it could define each word as it's used in the context of the sentence."
       },
 
        {
         type: "text",
-        text: "I had Claude do a benchmark test with Opus 5 and DeepL and found that using Claude for sentence translations had higher latency. It was also more expensive, costing $0.0031 vs. $0.0006 per sentence using DeepL."
+        text: "I had Claude do a benchmark test comparing Opus 5 and DeepL on sentence translations. Claude had a median latency of 2.07 seconds compared to 0.73 s for DeepL. Claude was also about 5x more expensive, at $0.0031 per sentence vs. $0.0006 for DeepL."
       },
       
        // had claude do a benchmark test with claude and deepl
       // using claude for sentence translations had higher latency and was more expensive than deepl
-      // cost is $0.0006 per sentence DeepL
-      // $0.0031 Claude Opus 5
-      
+      // claude was about 3x slower
+      // claude - median 2070 ms - 2.07 s per sentence
+      // deepl - median 727 ms - 0.73 s 
+      // cost is $0.0006 per sentence DeepL and $0.0031 claude opus 5 for a sentence of ~25 Korean characters
+
+
 
       {
           type: "heading",
@@ -751,7 +762,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
         {
         type: "text",
-        text: "I tested the island and floating window in the first prototype to see which display felt better to use. Because I didn't need to see the translation of every sentence, I focused on the dynamic island and making it feel as seamless as possible."
+        text: "I tested the island and floating window in the first prototype to see which display felt better to use. Because I didn't need to see the translation of every sentence, I focused on the Dynamic Island and making it feel as seamless as possible."
       },
       
       {
@@ -821,7 +832,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "Pinning a sentence saves it to the \"Learn\" page and breaks it into individual words. Tapping a word shows its correct definition."
+        text: "Pinning a sentence saves it to the \"Learn\" page and breaks it into individual words. Tapping a word shows its definition as used in that sentence."
       },
 
       {
@@ -840,12 +851,17 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "The biggest lesson from this project was learning to design with system constraints. Every decision considered iOS limitations which pushed me to find different solutions. It was difficult to make the user experience feel seamless when there was so much out of my control, like the dynamic island's current state and updating live activities."
+        text: "The biggest lesson from this project was learning to design with system constraints. Every decision had to account for iOS limitations, which pushed me to find different solutions. It was difficult to make the user experience feel seamless when there was so much out of my control, like the Dynamic Island's current state and when Live Activities update."
       },
 
       {
         type: "text",
-        text: "If I continued this project, I would keep improving the UI/UX so the island feels more responsive and aligned with the user's intent. I would also improve translations for visual diagrams and make it work with any app. Currently only Korean is translated but I could add more languages and see if other people find this prototype helpful for learning."  
+        text: "After building a working prototype, I looked for research on this problem to find out if the idea has potential beyond my own use. I found a paper reviewing 42 studies, which showed that readers who see translations alongside the text learn 45% of new words, compared to 27% without them, and that intermediate learners benefit the most [(Yanagisawa et al., 2020)](https://takumiuchihara.weebly.com/uploads/1/2/3/7/123756989/yanagisawa-webb-uchihara-2019-glossing_meta-analysis.pdf)."
+      },
+
+      {
+        type: "text",
+        text: "If I continued this project, I would keep improving the UI/UX so the island feels more responsive and aligned with the user's intent. I would also improve translations for visual diagrams and make it work with any app. Currently only Korean is translated, but I could add more languages and test whether other people find it helpful for learning."  
       },
 
     ],

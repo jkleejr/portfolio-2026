@@ -473,6 +473,8 @@ function Block({
           {block.caption && (
             <figcaption
               className={`mt-3 text-base italic leading-relaxed sm:col-start-3 sm:mt-0 sm:pl-5 ${
+                block.captionHiddenOnPhone ? "max-sm:hidden" : ""
+              } ${
                 block.captionAlign === "highest"
                   ? "sm:-translate-y-[293px]"
                   : block.captionAlign === "higher"
@@ -497,7 +499,11 @@ function Block({
               stacked against the video's edge, which is what the line beside
               it does on the other side. */}
           {block.captionLeft && (
-            <figcaption className="mt-3 space-y-3 text-base italic leading-relaxed sm:col-start-1 sm:row-start-1 sm:mt-0 sm:ml-auto sm:max-w-[15rem] sm:-translate-y-8 sm:pr-5 sm:text-right">
+            <figcaption
+              className={`mt-3 space-y-3 text-base italic leading-relaxed sm:col-start-1 sm:row-start-1 sm:mt-0 sm:ml-auto sm:max-w-[15rem] sm:-translate-y-8 sm:pr-5 sm:text-right ${
+                block.captionLeftHiddenOnPhone ? "max-sm:hidden" : ""
+              }`}
+            >
               {(Array.isArray(block.captionLeft)
                 ? block.captionLeft
                 : [block.captionLeft]
