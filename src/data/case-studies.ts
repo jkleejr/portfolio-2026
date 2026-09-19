@@ -986,8 +986,12 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "images",
+        // Four phones, two across: one block and not a block per pair, so
+        // that on a phone they are one pile of four to swipe through rather
+        // than two piles of two. The rows sit the same 16px apart either way.
         columns: 2,
         max: 650,
+        stackOnPhone: true,
         items: [
           {
             src: "/projects/buy-side-mobile-today.png",
@@ -997,14 +1001,6 @@ export const caseStudies: Record<string, CaseStudy> = {
             src: "/projects/buy-side-mobile-full-read.png",
             alt: "The full read on a phone: a back link to all reports, the date and Morning label, the headline, the time the report was generated, then bulleted takeaways on Brent breaching $100, US Central Command destroying five Iranian tankers, the two-year Treasury yield rising two basis points, and the Treasury's doubled long-end buybacks",
           },
-        ],
-      },
-
-      {
-        type: "images",
-        columns: 2,
-        max: 650,
-        items: [
           {
             src: "/projects/buy-side-mobile-full-read-body.png",
             alt: "Further down the full read on a phone: a CNBC source link, a collapsed row for three more sourced points, the Full Read label with a six minute estimate, an italic methodology note, then the first section heading on Brent clearing $100 with its body paragraph and underlined sourced bullets below",

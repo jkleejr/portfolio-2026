@@ -54,7 +54,16 @@ function resting(depth: number): string {
   return `translateX(${side * 6}px) rotate(${side * turn}deg)`;
 }
 
-export function ShotStack({ items, max }: { items: Shot[]; max?: number }) {
+export function ShotStack({
+  items,
+  max,
+  columns,
+}: {
+  items: Shot[];
+  max?: number;
+  /** Two across from sm up, where the row is otherwise three. */
+  columns?: 2;
+}) {
   const n = items.length;
   // Which shot is on top.
   const [top, setTop] = useState(0);
@@ -137,17 +146,24 @@ export function ShotStack({ items, max }: { items: Shot[]; max?: number }) {
             <figure
               key={i}
               // Every shot in the one cell of the grid under sm, so the pile is
-              // as tall as a shot and no taller; a third of the row from sm up.
+              // as tall as a shot and no taller; a third of the row from sm up,
+              // or half of it — the widths case-study.tsx gives any row.
               // Under a finger the shot follows it exactly, so the transition
               // is dropped for as long as the pull lasts.
-              className="w-[78%] [grid-area:1/1] [filter:brightness(var(--shot-dim))] [transform:var(--shot-place)] [z-index:var(--shot-z)] sm:w-[calc((100%_-_2rem)/3)] sm:[filter:none] sm:[grid-area:auto] sm:[transform:none] sm:[z-index:auto]"
+              className={`w-[78%] [grid-area:1/1] [filter:brightness(var(--shot-dim))] [transform:var(--shot-place)] [z-index:var(--shot-z)] ${
+                columns === 2
+                  ? "sm:w-[calc((100%_-_1rem)/2)]"
+                  : "sm:w-[calc((100%_-_2rem)/3)]"
+              } sm:[filter:none] sm:[grid-area:auto] sm:[transform:none] sm:[z-index:auto]`}
               style={
                 {
                   "--shot-place": place,
                   "--shot-z": n - depth,
                   // The ones underneath sit back a shade, so the top one reads
-                  // as the top one.
-                  "--shot-dim": depth === 0 ? 1 : 0.55,
+                  // as the top one. Only a shade: a dark screenshot on the dark
+                  // page has nothing but its edge to be seen by, and dimmed
+                  // much further the corners that say there is a pile are gone.
+                  "--shot-dim": depth === 0 ? 1 : 0.75,
                   transition:
                     depth === 0 && pull !== null
                       ? "none"
@@ -162,7 +178,10 @@ export function ShotStack({ items, max }: { items: Shot[]; max?: number }) {
                 // A picture dragged is the browser's own drag of it, which
                 // takes the pointer away mid-swipe.
                 draggable={false}
-                className="w-full rounded-xl border border-foreground/10"
+                // A firmer edge in the pile than in the row, for the same
+                // reason: it is the edge that separates one dark shot from
+                // the one under it.
+                className="w-full rounded-xl border border-foreground/30 sm:border-foreground/10"
               />
             </figure>
           );

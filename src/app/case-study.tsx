@@ -342,6 +342,7 @@ function Block({
             <ShotStack
               items={block.items.map(({ src, alt }) => ({ src, alt }))}
               max={block.max}
+              columns={block.columns}
             />
             <Caption text={block.caption} />
           </figure>
