@@ -389,7 +389,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
        {
         type: "text",
-        text: "I designed the app around a user paying for their own API usage due to the costs of audio generation at ~$1-3 per paper. To keep things simple, I used one API to identify text and generate audio. Gemini 3.1 Flash was the best option because it could clean up text and had TTS with eight voices.",
+        text: "I designed the app around a user paying for their own API usage due to the costs of audio generation at ~$1-3 per paper. To keep things simple, I used one API to identify text and generate audio. Gemini 3.1 Flash was the best option because it could clean up text and had text to speech with eight voices.",
       },      
 
       {
@@ -549,14 +549,13 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "Reflecting on this project, I realized that I didn't consider the user enough over my own self interests (not wanting to cover initial costs). Asking users to set up their own key created unacceptable onboarding friction especially because it was the first step. It was a critical decision because audio generation required a sustainable business model to cover the costs.",
+        text: "Reflecting on this project, I realized that I didn't consider the user enough over my own self interests (not wanting to cover initial costs). Asking users to set up their own key created unacceptable onboarding friction especially as the first step.",
       },
 
       {
         type: "text",
-        text: "If I continued this idea, I would definitely integrate an API key into the app and either cover the initial costs, charge per paper, or find a cheaper TTS model. In the end, I didn't see a business opportunity for this app due to established and well designed products like Speechify that solve the same problems, so I moved on.",
+        text: "If I continued this idea, I would manage an API key on the backend and either cover the initial costs for onboarding, charge per paper, or switch to a cheaper TTS model. Considering the market, products like Speechify dominate consumer text to speech and solve the same problems so it would be difficult to monetize.",
       },
-
     ],
   },
 
@@ -635,6 +634,22 @@ export const caseStudies: Record<string, CaseStudy> = {
       // island shows at most 2 live activities at once - screen recording indicator and the app
       // which is why the minimal state is showing most of the time
       // though Apple's default is compact state
+
+      // iOS renders the expanded island only when the app pushes an update, it can't render at the moment of the long press
+      // if i long press and see previous text, the latency is bc of OCR (optical character recognition) and network time - the new update hasn't been pushed yet
+      
+      // 1. screen is captured
+      // 2. OCR reads the text out of the image
+      // 3. round trip to translation API
+      // 4. activity.update pushes the new text
+      // 5. iOS re renders the island
+
+
+      // iOS decides execution time - when the app can run
+      // iOS suspends background apps for battery, speed, privacy
+      // each Live Activity has an update budget - which delays or drops updates that are too often
+      // call activity.update 
+      // need to keep the app running in the background - Apple keeps screen broadcast extensions / screen recording running
       
 
       // had claude do a benchmark test with claude and deepl
@@ -879,20 +894,17 @@ export const caseStudies: Record<string, CaseStudy> = {
       
       {
         type: "text",
-        text: "I gave Claude clear rules on how to research and structure each report. Instead of running one query, it runs parallel web searches across market feeds and stock watchlists to collect data.",
-        
+        text: "I designed an automated research pipeline that runs parallel web queries across market feeds, economic calendars, and stock watchlists to collect data.",
       },
-
 
       {
         type: "text",
-        text: "The core design work is in the [instructions file](https://github.com/jkleejr/buy-side-briefings/blob/deploy/prompts/markets-website.md) in the repository. The file behaves as a living design system because every adjustment changes future reports. The agent writes the report following the rules and schema I gave it. It never fabricates information and always cites sources."
+        text: "A core part of the project was the [instructions file](https://github.com/jkleejr/buy-side-briefings/blob/deploy/prompts/markets-website.md)." // finish
       },
-
     
       {
         type: "text",
-        text: "Because LLMs don't have long term memory, the agent calibrates itself by reading reports of the last few days before writing. This creates continuity and prevents the AI from overreacting if a trend only continued."
+        text: "Because LLMs don't have long term memory, the agent calibrates itself by reading reports of the last few days before writing. The historical data simulates  continuity and allows the report to distinguish between ongoing and new market trends."
       },
 
       {
@@ -1029,48 +1041,3 @@ export const caseStudies: Record<string, CaseStudy> = {
     ],
   },
 };
-
-  // Time with Tree: hidden until the case study is finished
-  // "time-with-tree": {
-  //   title: "Time with Tree",
-  //   date: "May - September 2026",
-  //   role: "Web Design",
-  //   scope: "Live website",
-  //   href: "https://timewithtree.co.kr/",
-  //   blocks: [
-
-  //     {
-  //       type: "text",
-  //       text: "Time with Tree is a birch tree farm in South Korea. They had trees but no way for customers to find them, so I built their website. "
-  //     },
-
-  //     // agricultural products rely on trust and visual inspection, customers want to know how it was grown
-  //     // calming nature aesthetic
-  //     // website handles orders
-
-
-  //     {
-  //       type: "text",
-  //       text: "",
-  //     },
-
-  //     {
-  //       type: "text",
-  //       text: "",
-  //     },
-
-  //     // following expectations from client, so less ideation
-  //     // looked at other true farm websites in Korea
-  //     // used lovable
-
-  //     // create new logo
-  //     // redesign the site
-
-  //     // optimize for seo
-
-  //     // sending order confirmation/status emails
-  //     // authentication - customer and admin sign in
-      
-
-  //   ],
-  // },

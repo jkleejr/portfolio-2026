@@ -150,22 +150,4 @@ export const entries: Entry[] = [
       },
     ],
   },
-
-  // Time with Tree: hidden until the case study is finished
-  // {
-  //   title: "Time with Tree",
-  //   blurb:
-  //     "Website for a birch tree farm in South Korea",
-  //   slug: "time-with-tree",
-  //   titleHref: "https://timewithtree.co.kr/",
-  //   platform: "web",
-  //   images: [
-  //     {
-  //       cover: "/projects/time-with-tree-water.png",
-  //       coverVideo: "/projects/time-with-tree-water.mp4",
-  //       alt: "Rain on a branch: pale green leaves along a stem, each rimmed with water, against a dark window and a lit wall behind",
-  //       // spacing from the last project to the bottom of the page is 112 px on desktop, 32 px on phone
-  //     },
-  //   ],
-  // },
 ];
