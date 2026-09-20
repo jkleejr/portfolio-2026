@@ -370,7 +370,31 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "Loot Check is live on the [App Store](https://apps.apple.com/us/app/loot-check/id6785767104). I wanted to automate the listing process but most marketplaces don't have a public listing API, so the app creates a title and description for copy and paste. The next steps are finding users and validating product market fit.",
+        text: "Loot Check is live on the [App Store](https://apps.apple.com/us/app/loot-check/id6785767104). With no marketing, the app gained over 100 organic downloads and ~7K App Store impressions in the first month with 870 items scanned globally. From the initial usage, I saw that the architecture held up as intended: requests didn't get lost, keys stayed secure, and there were no runaway API costs or crashes.",
+      },
+
+      // the first scan matters - how fast it is, if the price is believable
+
+
+      // 9.20.26: rn only stores total scans in Upstash, per device daily scan counts and web search counts stored for 2 days
+      // not recorded anywhere: duration, original vs. resale, confidence, what the item was, and whether the scan succeeded
+
+      /// so i need to figure out what data to capture while still respecting the users privacy
+      // to get a better idea of the best use cases for this app and how to improve it
+      // how to monetize
+
+      // privacy: 
+      // never stored: photos, hint text, item title, brand name
+      // maybe can store: category of the item, a yes/no if a brand was recognized, timings, confidence, web search outcome, price range, and cost
+
+      // backend - anonymous per scan analytics, no device linking, respescting the users privacy
+      // every scan is kept anonymous for privacy. (clothing, resale, high confidence, 2 photos, 6.1s, no web search, $25-40)
+      // App Store - usage data is collected and is not linked to the users device
+      
+
+       {
+        type: "text",
+        text: "I wanted to automate the listing process but because marketplaces don't have a public listing API, the app creates a title and description for copy and paste. The next steps are continuing to test the app and learning which use cases provide the most value.",
       },
     ],
   },
@@ -566,12 +590,12 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "Reflecting on this project, I realized that I didn't consider the user enough over my own self interests (not wanting to cover initial costs). Asking users to set up their own key created unacceptable onboarding friction especially as the first step.",
+        text: "Reflecting on this project, I realized that I prioritized avoiding API costs over delivering a good user onboarding experience which impacted the whole design. Requiring users to bring their own Gemini API key kept the app free for me to host but created unacceptable friction.",
       },
 
       {
         type: "text",
-        text: "If I continued this idea, I would manage an API key on the backend and either cover the initial costs for onboarding, charge per paper, or switch to a cheaper TTS model. Considering the market, products like Speechify dominate consumer text to speech and solve the same problems so it would be difficult to monetize.",
+        text: "If I continued this idea, I would manage keys on the backend and either cover the initial costs for onboarding, charge per paper, or switch to a cheaper TTS model. Considering the market, products like Speechify dominate consumer text to speech and solve the same problems so it would be difficult to monetize this idea without a valuable use case.",
       },
     ],
   },
@@ -862,7 +886,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "After building a working prototype, I found a paper reviewing 42 studies, which showed that readers who see translations alongside the text learn 45% of new words compared to 27% without them [(Yanagisawa et al., 2020)](https://takumiuchihara.weebly.com/uploads/1/2/3/7/123756989/yanagisawa-webb-uchihara-2019-glossing_meta-analysis.pdf). I honestly don't understand very much about this paper but it could be worth spending more time to improve this project."
+        text: "After building a working prototype, I looked for academic research to see if this idea had real merit. I found a paper reviewing 42 studies, which showed that readers who see translations alongside the text learn 45% of new words compared to 27% without them [(Yanagisawa et al., 2020)](https://takumiuchihara.weebly.com/uploads/1/2/3/7/123756989/yanagisawa-webb-uchihara-2019-glossing_meta-analysis.pdf). Seeing that data gave me more conviction to keep refining the concept."
       },
 
       {
