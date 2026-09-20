@@ -203,7 +203,9 @@ body {
 
    And the rows that were under the study, which land under the closed row all
    at once: they come up into place the way the study did, a step behind one
-   another so they arrive as a list and not as a block.
+   another so they arrive as a list and not as a block. When the study was
+   closed by another opening in its place, it is every row but that one — the
+   whole list has moved around it, and it alone is where it was.
 
    None of it for a reader who has asked for no motion; the study and the rows
    are then simply there, as they were before any of this.
@@ -230,7 +232,8 @@ body {
     animation: study-out 160ms ease-in forwards;
   }
 
-  section[data-settled] ~ section {
+  section[data-settled] ~ section,
+  section[data-arrive] {
     animation: study-in 420ms cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
   }
 
