@@ -145,41 +145,43 @@ export function DesignOne() {
         {site.name}
       </h1>
 
-      {/* Everything the page says is one column — a cover, and the writing
+      {/* The writing at the top of the page, which is the intro. It is set from
+          the page's left edge, under the name and on the line the name's ink
+          starts on, rather than in the column with the projects: the name
+          holds that corner, and a line about whose name it is reads as part of
+          it there, where out in the middle it read as the first of the
+          projects. px-6 is the page's margin — the same 1.5rem the notes in
+          the margin further down start at.
+
+          Held to the column's measure all the same, so a longer intro breaks
+          at a width it can be read at rather than running across the window.
+
+          The buttons are in the corner opposite at every width now, so the
+          header no longer reserves the height a row of them used to sit in
+          — see "The page on a phone" in globals.css. */}
+      <header className="px-6">
+        {/* Who that is. A paragraph per line of site.intro, so a sentence that
+            should start fresh does, rather than being wrapped into the one
+            above it. Set plainly — the size and weight of the page's other
+            lines — so only the name leads.
+
+            One margin at every width. */}
+        {site.intro.length > 0 && (
+          <div className="mt-8 max-w-[var(--column)] space-y-3">
+            {site.intro.map((line) => (
+              <p key={line} className="text-lg font-medium leading-relaxed text-foreground">
+                {line}
+              </p>
+            ))}
+          </div>
+        )}
+      </header>
+
+      {/* Everything else the page says is one column — a cover, and the writing
           beside it — and the column sits in the middle of the window rather
           than against its left edge. The maximum is what keeps a margin on a
           phone, where the column is wider than the screen. */}
       <div className="mx-auto w-[var(--column)] max-w-[calc(100%-3rem)]">
-        {/* The writing at the top of the page. The name is no longer in here
-            — it is above, across the window — and the role that was pinned in
-            the page's top left corner is gone, since the intro opens with it.
-            What is left is the intro.
-
-            No measure of its own: the header runs the width of the whole
-            column, so the intro breaks where the last word of a project's
-            line does, out at the right edge of the page's writing.
-
-            The buttons are in the corner opposite at every width now, so the
-            header no longer reserves the height a row of them used to sit in
-            — see "The page on a phone" in globals.css. */}
-        <header>
-          {/* Who that is. A paragraph per line of site.intro, so a sentence that
-              should start fresh does, rather than being wrapped into the one
-              above it. Set plainly — the size and weight of the page's other
-              lines — so only the name leads.
-
-              One margin at every width. */}
-          {site.intro.length > 0 && (
-            <div className="mt-8 space-y-3">
-              {site.intro.map((line) => (
-                <p key={line} className="text-lg font-medium leading-relaxed text-foreground">
-                  {line}
-                </p>
-              ))}
-            </div>
-          )}
-        </header>
-
         {/* One row per project: its cover, and beside that the name and the one
             line that says what the thing is. Nothing here is a press target any
             more — the writing for a project is on the page beside it rather than

@@ -253,7 +253,12 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "I used Claude Sonnet 4.6 due to its low costs and high accuracy at ~$0.013 per scan. I considered other models but the costs were similar and I wanted the results to be as trustworthy as possible. A key product decision was determining how items were valued. Using a web search for every scan increased accuracy, but because it raised API costs by 3-4x and quadrupled the total latency from ~6-25 seconds, I chose to rely on Sonnet's pre-trained data for most items.",
+        text: "I used Claude Sonnet 4.6 due to its low costs and high accuracy at ~$0.013 per scan. I considered other models but the costs were similar and I wanted the results to be as trustworthy as possible.",
+      },
+
+      {
+        type: "text",
+        text: "A key product decision was determining how items were valued. Using a web search for every scan increased accuracy, but because it raised API costs by 3-4x and quadrupled the total latency from ~6-25 seconds, I chose to rely on Sonnet's pre-trained data for most items.",
       },
 
 
@@ -851,7 +856,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "After building a working prototype, I looked for research on this problem to find out if the idea has potential to grow. I found a paper reviewing 42 studies, which showed that readers who see translations alongside the text learn 45% of new words compared to 27% without them [(Yanagisawa et al., 2020)](https://takumiuchihara.weebly.com/uploads/1/2/3/7/123756989/yanagisawa-webb-uchihara-2019-glossing_meta-analysis.pdf)."
+        text: "After building a working prototype, I found a paper reviewing 42 studies, which showed that readers who see translations alongside the text learn 45% of new words compared to 27% without them [(Yanagisawa et al., 2020)](https://takumiuchihara.weebly.com/uploads/1/2/3/7/123756989/yanagisawa-webb-uchihara-2019-glossing_meta-analysis.pdf). I honestly don't understand very much about this paper but it could be worth spending more time to improve this project."
       },
 
       {
