@@ -247,8 +247,14 @@ export function DesignOne() {
                       its own measure from sm up, where there is room for it.
                       min-w-0 is what lets it be narrower than its longest line —
                       without it a flex item refuses to shrink past its content and
-                      pushes the row off the side of the screen. */}
-                  <div className="min-w-0 flex-1 sm:w-[var(--text-width)] sm:flex-none sm:shrink-0">
+                      pushes the row off the side of the screen.
+
+                      The measure is where it starts from sm up and not a width
+                      it is held to: the cover, the gap and the measure come to
+                      a little more than a window just over sm has once its
+                      margins are off, and held there the row ran 26px off the
+                      side. It gives that up and no more, and never grows. */}
+                  <div className="min-w-0 flex-1 sm:flex-[0_1_var(--text-width)]">
                     {/* The name is the same switch the cover is — see
                         project-title.tsx. The marks after it are not: they
                         leave the page, and stay outside the press. */}
@@ -261,22 +267,29 @@ export function DesignOne() {
                         <SiteBadge href={entry.titleHref} label={entry.title} />
                       )}
                     </h2>
-                    {/* One line, running off the end of the column into the
-                        room at the right of the window rather than breaking
-                        at the measure. The measure belongs to the study under
-                        it, which is a page of writing and needs a line length
-                        it can be read at; a blurb is one line about one
-                        project, and reads better as one line.
+                    {/* One line where the window has the room for it, running
+                        off the end of the column into the space at the right
+                        rather than breaking at the measure. The measure
+                        belongs to the study under it, which is a page of
+                        writing and needs a line length it can be read at; a
+                        blurb is one line about one project, and reads better
+                        as one line.
 
-                        It overflows its box to do that, which is only safe
-                        where there is window to overflow into: at 1000px
-                        there are around 580px to the right of where the
-                        writing starts and the longest blurb wants 470, and
-                        under that it would push the page sideways. So it
-                        breaks at the measure there, as it always did — the
-                        same width the facts in the margin appear at. */}
+                        It is wider than its box to do that, and how much wider
+                        is measured off the window and not off the blurb: it
+                        runs to where an open study's right edge is, and breaks
+                        there if it has not finished — balanced, so what is
+                        left over is a second line and not two words under a
+                        full one. It was nowrap once, safe
+                        only while the longest blurb was shorter than the room
+                        at 1000px — and then a longer one was written, ran off
+                        the side of the window and took the page with it.
+
+                        Only from 1000px, the width the facts in the margin
+                        appear at. Under that it breaks at the measure, as it
+                        always did. */}
                     {entry.blurb && (
-                      <p className="mt-3 text-base leading-relaxed text-muted min-[1000px]:whitespace-nowrap">
+                      <p className="mt-3 text-base leading-relaxed text-muted min-[1000px]:w-[calc(var(--study-width)-var(--text-start))] min-[1000px]:text-balance">
                         {entry.blurb}
                       </p>
                     )}
