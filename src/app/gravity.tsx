@@ -187,6 +187,41 @@ function inlineLeading(el: HTMLElement, rect: DOMRect): number | null {
   return content > 0 ? content : null;
 }
 
+/**
+ * Something inside an atom whose place on the screen can be read before the
+ * atom is pinned and again after: its first letter, or failing that its first
+ * child. Null for an atom with neither — a picture — which is measured by its
+ * own box and has nothing inside it to have moved.
+ *
+ * Pinning is meant to leave an atom exactly where it stood, and the box it is
+ * pinned to is the one it was measured at. But what is in the box is laid out
+ * again when the atom turns from a run of inline text into a block, and it
+ * does not always land where it was: a link with a mark after its words — an
+ * arrow from another face, an icon standing on the baseline — has a taller
+ * line as a block than it had as part of someone else's line, and its words
+ * come to rest a pixel or two lower. Reading the same point twice is what
+ * finds that, whatever the cause, and the difference is taken back off.
+ */
+function anchorOf(el: HTMLElement): (() => DOMRect) | null {
+  const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+  let node = walker.nextNode() as Text | null;
+  while (node && !/\S/.test(node.nodeValue ?? "")) {
+    node = walker.nextNode() as Text | null;
+  }
+  if (node) {
+    const text = node;
+    const at = (text.nodeValue ?? "").search(/\S/);
+    return () => {
+      const range = document.createRange();
+      range.setStart(text, at);
+      range.setEnd(text, at + 1);
+      return range.getBoundingClientRect();
+    };
+  }
+  const child = el.firstElementChild;
+  return child ? () => child.getBoundingClientRect() : null;
+}
+
 /** The outermost interactive or drawn elements — nested ones fall with them. */
 function collectAtoms(roots: HTMLElement[]): HTMLElement[] {
   const found: HTMLElement[] = [];
@@ -363,7 +398,11 @@ function run(
   // that followed would slide the layout sideways in the instant before it was
   // measured. Held first, so nothing below has ever seen a different page.
   const heldHeight = panel.style.height;
-  panel.style.height = `${panel.offsetHeight}px`;
+  // To the fraction, and not offsetHeight, which is the height rounded to a
+  // whole pixel: the links at the foot of the page are pinned to its bottom
+  // edge, and held at 4902 where it had been 4901.5 they stood half a pixel
+  // lower for it.
+  panel.style.height = `${panel.getBoundingClientRect().height}px`;
 
   // Hide the page BEFORE measuring anything, so the swap from real content to
   // pieces happens where nobody can see it.
@@ -385,6 +424,10 @@ function run(
   }
 
   const atomRects = atoms.map((el) => el.getBoundingClientRect());
+  // And where what is inside each one stands, to be read again once it is
+  // pinned — see anchorOf.
+  const atomAnchors = atoms.map(anchorOf);
+  const anchoredAt = atomAnchors.map((read) => (read ? read() : null));
 
   const overlay = document.createElement("div");
   overlay.className = "gravity-overlay";
@@ -464,6 +507,34 @@ function run(
       if (before === null) el.removeAttribute("style");
       else el.setAttribute("style", before);
     };
+  });
+
+  // What is inside each atom, read again now that it is pinned, and whatever
+  // it moved by taken back off. All of them read first and only then written,
+  // so the set costs one layout rather than one apiece. The offset is kept on
+  // the piece as ox and oy — the same two numbers a word carries for where its
+  // ink sits in its box — so the painter keeps taking it off for as long as
+  // the piece is on the page, and it turns about the middle of its body.
+  const drift = atomAnchors.map((read, i) => {
+    const was = anchoredAt[i];
+    if (!read || !was || !drawn(was)) return null;
+    const now = read();
+    const dx = now.left - was.left;
+    const dy = now.top - was.top;
+    return Math.abs(dx) < 0.05 && Math.abs(dy) < 0.05 ? null : { dx, dy };
+  });
+  drift.forEach((d, i) => {
+    if (!d) return;
+    const piece = pieces[i];
+    const rect = atomRects[i];
+    piece.ox = d.dx;
+    piece.oy = d.dy;
+    piece.el.style.transformOrigin = `${d.dx + rect.width / 2}px ${
+      d.dy + rect.height / 2
+    }px`;
+    piece.el.style.transform = `translate3d(${rect.left - d.dx}px, ${
+      rect.top - d.dy
+    }px, 0)`;
   });
 
   // Words: copies, since text cannot be moved without rewriting the document.

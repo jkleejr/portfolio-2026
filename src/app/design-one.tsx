@@ -45,9 +45,15 @@ function StudyFacts({ study }: { study?: CaseStudy }) {
     // switch the row is: data-own-hover keeps the row from lighting under a
     // pointer out here and from opening the study at a click, and the cursor
     // goes back to the arrow to say so. See row-hover in globals.css.
+    // Centred on the row by stretching to its height and centring what is
+    // inside, and not by top-1/2 and a translate of its own height back up:
+    // a transform makes this box what anything fixed inside it is placed
+    // against, and the link in it is pinned as fixed when the apple is
+    // pressed — see gravity.tsx — so it was pinned half a page from where it
+    // stood.
     <div
       data-own-hover
-      className="absolute left-[var(--margin-note-x)] top-1/2 hidden w-[var(--margin-note)] -translate-y-1/2 cursor-auto min-[1000px]:block"
+      className="absolute inset-y-0 left-[var(--margin-note-x)] hidden w-[var(--margin-note)] cursor-auto flex-col justify-center min-[1000px]:flex"
     >
       {lines.map((line, i) => (
         <p key={i} className={`text-base leading-relaxed ${i ? "mt-1" : ""}`}>
