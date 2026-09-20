@@ -12,9 +12,9 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { caseStudies } from "@/data/case-studies";
-import { site } from "@/data/site";
 import Link from "next/link";
 import { StudyBody } from "../../case-study";
+import { studyMetadata } from "../../study-metadata";
 
 type Params = { params: Promise<{ slug: string }> };
 
@@ -24,14 +24,7 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { slug } = await params;
-  const study = caseStudies[slug];
-  if (!study) return {};
-  return {
-    // The project first, then the name, joined by a plain hyphen — the tab
-    // is read from the left, and the project is what this page is about.
-    title: `${study.title} - ${site.titleName}`,
-    description: study.tagline,
-  };
+  return studyMetadata(slug, `/projects/${slug}`);
 }
 
 export default async function ProjectPage({ params }: Params) {

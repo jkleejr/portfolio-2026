@@ -15,8 +15,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { caseStudies } from "@/data/case-studies";
-import { site } from "@/data/site";
 import { DesignOne } from "../design-one";
+import { studyMetadata } from "../study-metadata";
 
 type Params = { params: Promise<{ slug: string }> };
 
@@ -26,13 +26,9 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { slug } = await params;
-  const study = caseStudies[slug];
-  if (!study) return {};
-  return {
-    // The project first, then the name, as on the study's own page.
-    title: `${study.title} - ${site.titleName}`,
-    description: study.tagline,
-  };
+  // The same as the study's own page says, but for the address — see
+  // study-metadata.ts.
+  return studyMetadata(slug, `/${slug}`);
 }
 
 export default async function OpenProjectPage({ params }: Params) {

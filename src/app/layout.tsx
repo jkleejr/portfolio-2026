@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import { site } from "@/data/site";
 import { AppleButton } from "./apple-button";
+import { card } from "./study-metadata";
 import "./globals.css";
 
 // The variable cut, so one file covers every weight in the range. The licence
@@ -75,8 +76,9 @@ export const metadata: Metadata = {
     title: `${site.titleName} — ${site.role}`,
     description: site.intro[0],
     url: "https://johnkleejr.com",
-    siteName: site.titleName,
-    images: [{ url: "/og.png", width: 1200, height: 630 }],
+    // The site's name and the image, which a study's card carries too — see
+    // study-metadata.ts for why they are said there again.
+    ...card,
   },
   twitter: {
     card: "summary_large_image",
