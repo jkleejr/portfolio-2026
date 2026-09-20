@@ -20,6 +20,52 @@ import { type CaseStudy, type CaseStudyBlock } from "@/data/case-studies";
 import { ShotStack } from "./shot-stack";
 import { SiteLink } from "./site-link";
 import { AppStoreBadge, AppStoreMark } from "./title-badge";
+
+// ---------------------------------------------------------------------------
+// The facts about a project: where it stands, who did what, and when.
+//
+//   Live on the App Store ↗
+//   Design, iOS dev, Solo
+//   Jun–Sep 2026
+//
+// Where it stands comes first because it is the one a reader acts on — and
+// when the project is up somewhere that line is the way there, with an arrow
+// after it to say it leaves the page. The listing on the App Store if there is
+// one, the project's own site if not. The date is last: it is the one that
+// matters least to someone deciding whether to read on.
+//
+// One list for both places the facts are set — the margin beside a project on
+// the homepage, and under the title of its study — so the two cannot come to
+// say different things.
+// ---------------------------------------------------------------------------
+
+type Fact = { text: string; href?: string };
+
+export function studyFacts(study: CaseStudy): Fact[] {
+  const there = study.appStore || study.href || undefined;
+  return [
+    study.scope && { text: study.scope, href: there },
+    study.status && { text: study.status },
+    study.role && { text: study.role },
+    study.date && { text: study.date },
+  ].filter(Boolean) as Fact[];
+}
+
+export function StudyFact({ text, href }: Fact) {
+  if (!href) return <>{text}</>;
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noreferrer"
+      className="transition-colors duration-200 ease-out hover:text-accent"
+    >
+      {text}
+      {/* A no-break space, so the arrow is never alone on a line of its own. */}
+      {"\u00a0"}↗
+    </a>
+  );
+}
 export function StudyBody({
   study,
   inline,
@@ -76,23 +122,17 @@ export function StudyBody({
           {study.tagline && (
             <p className="mt-1 text-lg font-medium">{study.tagline}</p>
           )}
-          {study.date && (
-            <p className="mt-2 text-base leading-relaxed">{study.date}</p>
-          )}
-          {/* Where the project stands, on the line under the date it belongs to
-              — so the two read as one small block of facts about the work. */}
-          {study.status && (
-            <p className="mt-1 text-base leading-relaxed">{study.status}</p>
-          )}
-          {/* Role and Scope, each on its own line under the date. Printed as
-              written with no label of their own, so the three lines read as one
-              small block of facts rather than a form. */}
-          {study.role && (
-            <p className="mt-1 text-base leading-relaxed">{study.role}</p>
-          )}
-          {study.scope && (
-            <p className="mt-1 text-base leading-relaxed">{study.scope}</p>
-          )}
+          {/* The facts, in the order and the words the homepage sets them in
+              its margin — see studyFacts. Printed with no labels, so the lines
+              read as one small block of facts rather than a form. */}
+          {studyFacts(study).map((line, i) => (
+            <p
+              key={i}
+              className={`${i ? "mt-1" : "mt-2"} text-base leading-relaxed`}
+            >
+              <StudyFact {...line} />
+            </p>
+          ))}
 
           {study.links && study.links.length > 0 && (
             <div className="mt-6 flex flex-wrap gap-3">

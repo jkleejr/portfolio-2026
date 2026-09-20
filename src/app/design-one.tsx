@@ -9,7 +9,7 @@
 import { site } from "@/data/site";
 import { entries } from "@/data/projects";
 import { caseStudies, type CaseStudy } from "@/data/case-studies";
-import { StudyBody } from "./case-study";
+import { StudyBody, StudyFact, studyFacts } from "./case-study";
 import { ProjectList, ProjectRow, ProjectSection } from "./project-study";
 import { ProjectThumbnail } from "./project-thumbnail";
 import { ProjectTitle } from "./project-title";
@@ -38,16 +38,14 @@ import { AppStoreBadge, SiteBadge } from "./title-badge";
  */
 function StudyFacts({ study }: { study?: CaseStudy }) {
   if (!study) return null;
-  const lines = [study.date, study.status, study.role, study.scope].filter(
-    Boolean,
-  );
+  const lines = studyFacts(study);
   if (!lines.length) return null;
 
   return (
     <div className="absolute left-[var(--margin-note-x)] top-1/2 hidden w-[var(--margin-note)] -translate-y-1/2 min-[1000px]:block">
       {lines.map((line, i) => (
         <p key={i} className={`text-base leading-relaxed ${i ? "mt-1" : ""}`}>
-          {line}
+          <StudyFact {...line} />
         </p>
       ))}
     </div>

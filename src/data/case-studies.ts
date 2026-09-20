@@ -121,16 +121,22 @@ export type CaseStudy = {
   // becomes the link to it, opened in a tab of its own.
   href?: string;
   tagline?: string; // one line under the title
-  // When the project was made, under the title, in whatever words suit it —
-  // "2026", "August 2026", "Summer 2026". The page prints it as written.
-  date?: string;
-  // A line under the date for where the project stands — "Work in Progress",
-  // "Shipped", "Shelved". Printed as written, and left out when unset.
-  status?: string;
-  // Role and Scope, on the two lines under the date. Each is printed after
-  // its label as written, and left out when unset.
-  role?: string;
+  // The facts about a project, set as one small block of three lines: where
+  // it stands, who did what, and when. Each is printed as written and left
+  // out when unset.
+  //
+  // Scope is the first of them — "Live on the App Store", "Prototype". When
+  // the project is up somewhere (`appStore` or `href` below) the line is the
+  // link there, with an arrow after it to say it leaves the page.
+  // Role is the second — the work, shortened, then who it was done with.
+  // Date is the last, months abbreviated and an en dash for a span:
+  // "Jun–Sep 2026", "Sep 2026", "May 2026–Present".
   scope?: string;
+  role?: string;
+  date?: string;
+  // A further line for where the project stands — "Work in Progress",
+  // "Shelved" — for when the scope does not already say. Under the scope.
+  status?: string;
   // On the App Store: the mark goes after the title. The value is the listing
   // it opens; an empty string shows the mark without a link. When there is no
   // `href`, the title itself opens the listing too. See the same field on an
@@ -159,8 +165,8 @@ export const caseStudies: Record<string, CaseStudy> = {
   "loot-check": {
     title: "Loot Check",
     appStore: "https://apps.apple.com/us/app/loot-check/id6785767104",
-    date: "June - September 2026",
-    role: "Product Design, iOS Development",
+    date: "Jun–Sep 2026",
+    role: "Design, iOS dev, Solo",
     scope: "Live on the App Store",
     blocks: [
 
@@ -372,8 +378,8 @@ export const caseStudies: Record<string, CaseStudy> = {
 
   "paper-reader": {
     title: "Paper Reader",
-    date: "July - August 2026",
-    role: "Product Design, iOS Development",
+    date: "Jul–Aug 2026",
+    role: "Design, iOS dev, Solo",
     scope: "Prototype",
     blocks: [
       {
@@ -574,8 +580,8 @@ export const caseStudies: Record<string, CaseStudy> = {
 
   "screen-translator": {
     title: "Screen Translator",
-    date: "September 2026",
-    role: "Product Design, iOS Development",
+    date: "Sep 2026",
+    role: "Design, iOS dev, Solo",
     scope: "Prototype",
     blocks: [
       {
@@ -873,9 +879,9 @@ export const caseStudies: Record<string, CaseStudy> = {
 
   "buy-side-briefings": {
     title: "Buy Side Briefings",
-    date: "May 2026 - Current",
-    role: "Product Design, Web Design",
-    scope: "Concept to live website",
+    date: "May 2026–Present",
+    role: "Design, web dev, Solo",
+    scope: "Live on the web",
     href: "https://buy-side-briefings.vercel.app/",
     blocks: [
 
