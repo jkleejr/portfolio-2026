@@ -42,7 +42,14 @@ function StudyFacts({ study }: { study?: CaseStudy }) {
   if (!lines.length) return null;
 
   return (
-    <div className="absolute left-[var(--margin-note-x)] top-1/2 hidden w-[var(--margin-note)] -translate-y-1/2 min-[1000px]:block">
+    // In the row, since that is what it is set beside, but not part of the
+    // switch the row is: data-own-hover keeps the row from lighting under a
+    // pointer out here and from opening the study at a click, and the cursor
+    // goes back to the arrow to say so. See row-hover in globals.css.
+    <div
+      data-own-hover
+      className="absolute left-[var(--margin-note-x)] top-1/2 hidden w-[var(--margin-note)] -translate-y-1/2 cursor-auto min-[1000px]:block"
+    >
       {lines.map((line, i) => (
         <p key={i} className={`text-base leading-relaxed ${i ? "mt-1" : ""}`}>
           <StudyFact {...line} />

@@ -118,6 +118,18 @@
   color-scheme: dark;
 }
 
+/* A hover anywhere in a project's row, which is what lights its cover and its
+   name — see ProjectRow in project-study.tsx, which is the `group`. All but a
+   hover on the part of the row that is not the switch: the facts set out in
+   the margin beside it. They are notes about the project, a window's margin
+   away from its cover, and one of them is a link of its own to somewhere
+   else — with the name lit and the cover lifted under a pointer out there, a
+   press on the link read as a press on the project, and the notes read as
+   something to press when they are only something to read. Marked with
+   data-own-hover, and the row holds still while the pointer is in one; a
+   click there does not open the study either, see ProjectRow. */
+@custom-variant row-hover (&:is(:where(.group):hover:not(:has([data-own-hover]:hover)) *));
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);

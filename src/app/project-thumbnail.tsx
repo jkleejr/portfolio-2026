@@ -211,12 +211,12 @@ export function ProjectThumbnail({
   );
 
   // The lift under the pointer. On the list the whole row is the switch and
-  // the cover answers a hover anywhere in it (group-hover, from ProjectRow);
+  // the cover answers a hover anywhere in it (row-hover, from ProjectRow);
   // a cover that leaves the page answers only its own.
   const lift =
     "block cursor-pointer rounded-lg transition-transform duration-200 ease-out";
   const ownLift = `${lift} hover:scale-105`;
-  const rowLift = `${lift} hover:scale-105 group-hover:scale-105`;
+  const rowLift = `${lift} hover:scale-105 row-hover:scale-105`;
 
   // A throw of the cover is not a click on it — see press.ts.
   const { onPointerDown, dragged } = usePress();

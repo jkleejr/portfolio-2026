@@ -213,10 +213,12 @@ export function ProjectSection({
  * the row listens for clicks instead, and steps aside for any that started on
  * a link or button inside it: the cover and the name have already switched
  * the study, and the marks after the name leave the page, which a press on
- * them should do without also opening something behind it.
+ * them should do without also opening something behind it. It steps aside
+ * for the facts out in the margin too (data-own-hover) — they are set beside
+ * the row and are in it for that reason only, and are not a thing to press.
  *
  * `group` is for the cover and the name, which take their hover from the row
- * rather than from themselves — see project-thumbnail.tsx and
+ * (the row-hover variant in globals.css) rather than from themselves — see project-thumbnail.tsx and
  * project-title.tsx — so the whole row lights when any of it is under the
  * pointer, the way it all answers when any of it is pressed.
  */
@@ -240,7 +242,7 @@ export function ProjectRow({
       className={`group cursor-pointer ${className}`}
       onPointerDown={onPointerDown}
       onClick={(e) => {
-        if ((e.target as Element).closest("a, button")) return;
+        if ((e.target as Element).closest("a, button, [data-own-hover]")) return;
         if (dragged(e)) return;
         toggle.toggle();
       }}

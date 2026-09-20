@@ -44,10 +44,11 @@ export function ProjectTitle({
   // Turns the accent colour under the pointer, so the name reads as something
   // that can be pressed without being underlined like a link in a paragraph.
   // On the list the whole row is the switch, so the name
-  // answers a hover anywhere in it (group-hover, from ProjectRow) and not
+  // answers a hover anywhere in it (row-hover, from ProjectRow — see the
+  // variant in globals.css for the one place in the row it does not) and not
   // only on its own letters.
   const press =
-    "cursor-pointer text-left transition-colors duration-200 ease-out hover:text-accent group-hover:text-accent";
+    "cursor-pointer text-left transition-colors duration-200 ease-out hover:text-accent row-hover:text-accent";
 
   if (study && toggle) {
     return (
