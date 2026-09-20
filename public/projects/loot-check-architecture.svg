@@ -15,7 +15,7 @@
 
           <rect x="395" y="102" width="210" height="54" rx="2" fill="#3a3a3a" stroke="#8a8a8a" stroke-width="1"></rect>
           <text x="500" y="124" fill="#ededed" font-size="13" font-weight="500" text-anchor="middle">/api/analyze</text>
-          <text x="500" y="142" fill="#b6b6b6" font-size="10.5" text-anchor="middle">runs the scan, 30s ceiling</text>
+          <text x="500" y="142" fill="#b6b6b6" font-size="10.5" text-anchor="middle">runs the scan, 45s ceiling</text>
 
           <polyline points="440,156 440,190 300,190 300,210" fill="none" stroke="#c9c9c9" stroke-width="1.1" marker-start="url(#m2)" marker-end="url(#m2)"></polyline>
           <text x="370" y="182" fill="#9b9b9b" font-size="10.5" text-anchor="middle">photo + JSON schema</text>

@@ -193,7 +193,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "The app routes requests through a Vercel endpoint so API keys aren't stored on the device. To keep the app free without risking runway costs, I used Upstash Redis to cap usage at 100 scans per device and 1,000 scans globally per day.",
+        text: "The app routes requests through a Vercel endpoint so API keys aren't stored on the device. To keep the app free without risking runaway costs, I used Upstash Redis to cap usage at 100 scans per device and 1,000 scans globally per day.",
         // risks using claude api and making the app free: my api keys need to be secure, and i need to create spending limits to minimize the cost and plan for a worst case scenario. 
       },
       
@@ -598,12 +598,7 @@ export const caseStudies: Record<string, CaseStudy> = {
   
       {
         type: "text",
-        text: "My first idea was to generate text over the current display, but iOS does not allow an app to draw over another app. To get around this, I chose to use the Dynamic Island since it stays visible in every app. I used ReplayKit to broadcast video frames, Apple Vision OCR to extract Korean text, DeepL API for translations, and ActivityKit to update the island."
-
-                    // architecture and data flow diagrams
-                // active app / news feed to dynamic island / live activity overlay
-
-
+        text: "My first idea was to generate text over the current display, but iOS does not allow an app to draw over another app. To get around this, I used the Dynamic Island since it stays visible in every app. I used ReplayKit to broadcast video frames, Apple Vision OCR to extract Korean text, DeepL API for translations, and ActivityKit to update the island."
       },
 
       {
@@ -615,7 +610,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "Because iOS, not my app, controls how and when the Dynamic Island is displayed, I designed for states I couldn't choose and updates I couldn't guarantee."
+        text: "Because iOS controls how and when the Dynamic Island is displayed, I designed for states I couldn't choose and updates I couldn't guarantee."
       },
       //iOS prohibits third party overlay windows, which makes language learning more difficult since a user experiences constant context switching between an app and Google Translate.
 
@@ -742,7 +737,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
        {
         type: "text",
-        text: "I had Claude do a benchmark test comparing Opus 5 and DeepL on sentence translations. Claude had a median latency of 2.07 seconds compared to 0.73 s for DeepL. Claude was also about 5x more expensive, at $0.0031 per sentence vs. $0.0006 for DeepL."
+        text: "I had Claude do a benchmark test comparing Opus 5 and DeepL on sentence translations. Claude had a median latency of 2.07 seconds compared to 0.73s for DeepL. Claude was also about 5x more expensive, at $0.0031 per sentence vs. $0.0006 for DeepL."
       },
       
        // had claude do a benchmark test with claude and deepl
@@ -856,13 +851,15 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "After building a working prototype, I looked for research on this problem to find out if the idea has potential beyond my own use. I found a paper reviewing 42 studies, which showed that readers who see translations alongside the text learn 45% of new words, compared to 27% without them, and that intermediate learners benefit the most [(Yanagisawa et al., 2020)](https://takumiuchihara.weebly.com/uploads/1/2/3/7/123756989/yanagisawa-webb-uchihara-2019-glossing_meta-analysis.pdf)."
+        text: "After building a working prototype, I looked for research on this problem to find out if the idea has potential to help others experiencing the same struggle as me. I found a paper reviewing 42 studies, which showed that readers who see translations alongside the text learn 45% of new words, compared to 27% without them, and that intermediate learners benefit the most [(Yanagisawa et al., 2020)](https://takumiuchihara.weebly.com/uploads/1/2/3/7/123756989/yanagisawa-webb-uchihara-2019-glossing_meta-analysis.pdf)."
       },
 
       {
         type: "text",
         text: "If I continued this project, I would keep improving the UI/UX so the island feels more responsive and aligned with the user's intent. I would also improve translations for visual diagrams and make it work with any app. Currently only Korean is translated, but I could add more languages and test whether other people find it helpful for learning."  
       },
+      // could try making it vocabulary focused, only translating difficult words from a sentence, not the entire sentence
+      // so it would show only a few difficult or new words in the dynamic island not the sentence
 
     ],
   },
