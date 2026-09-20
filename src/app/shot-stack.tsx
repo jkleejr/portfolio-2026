@@ -27,7 +27,9 @@
 
 import { useEffect, useRef, useState } from "react";
 
-type Shot = { src: string; alt: string };
+// The width and height are the file's own, read on the server — see
+// media-size.ts — so a shot holds its room before it has loaded.
+type Shot = { src: string; alt: string; width?: number; height?: number };
 
 // How far a swipe has to travel to count, in px, and how far a press may
 // travel and still be a tap — the same slip press.ts allows a click.
@@ -187,6 +189,8 @@ export function ShotStack({
               <img
                 src={item.src}
                 alt={item.alt}
+                width={item.width}
+                height={item.height}
                 // A picture dragged is the browser's own drag of it, which
                 // takes the pointer away mid-swipe.
                 draggable={false}

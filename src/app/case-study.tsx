@@ -21,6 +21,7 @@ import { ShotStack } from "./shot-stack";
 import { SiteLink } from "./site-link";
 import { AppStoreBadge, AppStoreMark } from "./title-badge";
 import { LinkGlyph } from "./link-glyph";
+import { mediaSize } from "./media-size";
 
 // ---------------------------------------------------------------------------
 // The facts about a project: where it stands, who did what, and when.
@@ -42,6 +43,12 @@ import { LinkGlyph } from "./link-glyph";
 // the homepage, and under the title of its study — so the two cannot come to
 // say different things.
 // ---------------------------------------------------------------------------
+
+/** A film's first frame, if one has been saved beside it. */
+function poster(src: string): string | undefined {
+  const still = src.replace(/\.[a-z0-9]+$/i, "-poster.jpg");
+  return mediaSize(still) ? still : undefined;
+}
 
 type Fact = { text: string; href?: string; appStore?: boolean };
 
@@ -387,6 +394,10 @@ function Block({
           <img
             src={block.src}
             alt={block.alt}
+            // The file's own width and height, so the room it takes is held
+            // before it loads — see media-size.ts. The classes still set how
+            // wide it is drawn; these only give it a shape.
+            {...mediaSize(block.src)}
             className={`mx-auto w-full max-w-full rounded-xl border border-foreground/10 ${
               block.shift ? "sm:translate-x-(--shift)" : ""
             }`}
@@ -420,7 +431,13 @@ function Block({
         return (
           <figure>
             <ShotStack
-              items={block.items.map(({ src, alt }) => ({ src, alt }))}
+              // The sizes go with them as data: the stack is a client
+              // component and cannot read the disk for itself.
+              items={block.items.map(({ src, alt }) => ({
+                src,
+                alt,
+                ...mediaSize(src),
+              }))}
               max={block.max}
               columns={block.columns}
             />
@@ -487,6 +504,7 @@ function Block({
                     <img
                       src={item.src}
                       alt={item.alt}
+                      {...mediaSize(item.src)}
                       className="w-full rounded-xl border border-foreground/10"
                     />
                     <Caption text={item.caption} center hang />
@@ -497,6 +515,7 @@ function Block({
                     <img
                       src={item.src}
                       alt={item.alt}
+                      {...mediaSize(item.src)}
                       className="w-full rounded-xl border border-foreground/10"
                     />
                     {/* Centred under the shot, which is itself centred in the row. */}
@@ -537,6 +556,17 @@ function Block({
         <figure className="sm:grid sm:grid-cols-[1fr_340px_1fr] sm:items-center sm:-translate-x-1.5">
           <video
             src={block.src}
+            // Its shape, before a byte of it has arrived. Without it a film
+            // is 300 by 150 until its header lands, a tenth of a second after
+            // the study is on the page, and then 737 tall — with the captions
+            // beside it, which are placed off its height, and everything
+            // under it jumping to suit. See media-size.ts.
+            {...mediaSize(block.src)}
+            // And its first frame, as a picture a fiftieth of its weight, so
+            // what holds that room while the film loads is the film and not
+            // an empty frame. Sits beside the film as <name>-poster.jpg; a
+            // film without one goes without.
+            poster={poster(block.src)}
             autoPlay
             muted
             loop

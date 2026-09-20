@@ -9,6 +9,14 @@
 // press closes it. The list is never left behind, and no page is ever loaded
 // to read one.
 //
+// Neither way is a cut. A study comes up into place under its row as it
+// appears, and goes out before it is taken away, with the rows that were under
+// it coming up after — see "Opening a study" in globals.css for the motion and
+// ProjectSection for the order of it. The height is not what moves: a study is
+// thousands of pixels of pictures, and unrolling that is the whole page laid
+// out again for every frame of it, to show rows leaving at a speed that reads
+// as a cut anyway.
+//
 // The open study is in the address — "/" plus its slug — so it can be shared
 // and comes back on reload, and the back button closes it. See ProjectList.
 //
@@ -119,6 +127,13 @@ export function ProjectList({ children }: { children: React.ReactNode }) {
 
 // --- one project ----------------------------------------------------------
 
+// How long a study is given to go out before it is taken off the page, and
+// how long the rows under it are marked as arriving. Each is the length of its
+// animation in globals.css, and a beat over for the second so the mark is not
+// taken off a frame before the last row has landed.
+const LEAVE = 160;
+const SETTLE = 480;
+
 export function ProjectSection({
   slug,
   study,
@@ -134,6 +149,15 @@ export function ProjectSection({
   const open = !!study && list?.openSlug === slug;
 
   const sectionRef = useRef<HTMLElement>(null);
+
+  // Closing is two steps: the study goes out while it is still on the page,
+  // and only then is taken off it — `leaving` is the first. `settled` is the
+  // moment after the second, when the rows that were under the study have
+  // just arrived under this one and are coming up into place.
+  const [leaving, setLeaving] = useState(false);
+  const [settled, setSettled] = useState(false);
+  const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
+  useEffect(() => () => timers.current.forEach(clearTimeout), []);
 
   // Arriving at an address with a study in it — johnkleejr.com/loot-check —
   // lands on the list with that study open, and the page should start at it
@@ -156,7 +180,23 @@ export function ProjectSection({
       // Closing takes away only what is under the row, and the cover was just
       // pressed, so the row is on the screen and stays exactly where it is.
       // Nothing to put back.
-      list?.setOpenSlug(null);
+      //
+      // The study goes out first and is taken away after, so the rows under
+      // it do not jump up through it. Asked for no motion, it is a cut.
+      if (leaving) return;
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        list?.setOpenSlug(null);
+        return;
+      }
+      setLeaving(true);
+      timers.current.push(
+        setTimeout(() => {
+          list?.setOpenSlug(null);
+          setLeaving(false);
+          setSettled(true);
+          timers.current.push(setTimeout(() => setSettled(false), SETTLE));
+        }, LEAVE),
+      );
       return;
     }
     // Opening this one closes whatever was open, and if that was a project
@@ -173,11 +213,19 @@ export function ProjectSection({
         window.scrollBy(0, after - before);
       }
     });
-  }, [study, open, list, slug]);
+  }, [study, open, leaving, list, slug]);
 
   return (
     // scroll-mt is the room left over the row when the page starts at it.
-    <section ref={sectionRef} className="w-full scroll-mt-6">
+    <section
+      ref={sectionRef}
+      // Read by the rows after this one, which come up into place while it is
+      // set — see globals.css. Only after a press that closed this study, and
+      // only while nothing is open: a study closed by another opening under it
+      // leaves that row under the finger, where it is held still.
+      data-settled={settled && !list?.openSlug ? "" : undefined}
+      className="w-full scroll-mt-6"
+    >
       <ToggleContext.Provider value={study ? { open, toggle } : null}>
         {children}
       </ToggleContext.Provider>
@@ -189,7 +237,11 @@ export function ProjectSection({
         //
         // Only from the width where there is a right side worth having. Under
         // that it takes the column, which on a phone is the screen.
-        <div className="mt-10 w-full min-[1000px]:w-[var(--study-width)]">
+        <div
+          className={`mt-10 w-full min-[1000px]:w-[var(--study-width)] ${
+            leaving ? "study-out" : "study-in"
+          }`}
+        >
           {study}
         </div>
       )}
