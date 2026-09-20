@@ -13,7 +13,6 @@ import { StudyBody, StudyFact, studyFacts } from "./case-study";
 import { ProjectList, ProjectRow, ProjectSection } from "./project-study";
 import { ProjectThumbnail } from "./project-thumbnail";
 import { ProjectTitle } from "./project-title";
-import { AppStoreBadge, SiteBadge } from "./title-badge";
 
 /**
  * When a project was made, what the role was, and how far it went.
@@ -253,16 +252,26 @@ export function DesignOne() {
                       side. It gives that up and no more, and never grows. */}
                   <div className="min-w-0 flex-1 sm:flex-[0_1_var(--text-width)]">
                     {/* The name is the same switch the cover is — see
-                        project-title.tsx. The marks after it are not: they
-                        leave the page, and stay outside the press. */}
+                        project-title.tsx.
+
+                        Every project with a study written about it carries an
+                        arrow after its name, and the arrow is part of the
+                        name: it opens the study, as the name does, and lights
+                        with it. It is what says the name can be pressed. The
+                        way out to a listing or a site of the project's own is
+                        in the margin, on the line that says the project is
+                        live there, under the App Store's mark or the chain —
+                        see studyFacts in case-study.tsx. */}
                     <h2 className="text-xl font-semibold leading-snug tracking-[-0.02em]">
-                      <ProjectTitle slug={entry.slug}>{entry.title}</ProjectTitle>
-                      {entry.appStore !== undefined && (
-                        <AppStoreBadge href={entry.appStore} label={entry.title} />
-                      )}
-                      {entry.titleHref && (
-                        <SiteBadge href={entry.titleHref} label={entry.title} />
-                      )}
+                      <ProjectTitle slug={entry.slug}>
+                        {entry.title}
+                        {study && (
+                          // A no-break space, so the arrow never starts a line
+                          // of its own; hidden from a screen reader, which
+                          // would read it out as a direction.
+                          <span aria-hidden>{"\u00a0"}↗</span>
+                        )}
+                      </ProjectTitle>
                     </h2>
                     {/* One line where the window has the room for it, running
                         off the end of the column into the space at the right

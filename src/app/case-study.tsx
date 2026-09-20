@@ -20,6 +20,7 @@ import { type CaseStudy, type CaseStudyBlock } from "@/data/case-studies";
 import { ShotStack } from "./shot-stack";
 import { SiteLink } from "./site-link";
 import { AppStoreBadge, AppStoreMark } from "./title-badge";
+import { LinkGlyph } from "./link-glyph";
 
 // ---------------------------------------------------------------------------
 // The facts about a project: where it stands, who did what, and when.
@@ -29,29 +30,36 @@ import { AppStoreBadge, AppStoreMark } from "./title-badge";
 //   Jun–Sep 2026
 //
 // Where it stands comes first because it is the one a reader acts on — and
-// when the project is up somewhere that line is the way there, with an arrow
+// when the project is up somewhere that line is the way there, with a mark
 // after it to say it leaves the page. The listing on the App Store if there is
-// one, the project's own site if not. The date is last: it is the one that
-// matters least to someone deciding whether to read on.
+// one, under the App Store's own mark; the project's own site if not, under
+// the chain. Either says where the line goes better than an arrow can, and on
+// the homepage the arrow is spoken for — it follows the project's name and
+// opens the study. The date is last: it is the one that matters least to
+// someone deciding whether to read on.
 //
 // One list for both places the facts are set — the margin beside a project on
 // the homepage, and under the title of its study — so the two cannot come to
 // say different things.
 // ---------------------------------------------------------------------------
 
-type Fact = { text: string; href?: string };
+type Fact = { text: string; href?: string; appStore?: boolean };
 
 export function studyFacts(study: CaseStudy): Fact[] {
   const there = study.appStore || study.href || undefined;
   return [
-    study.scope && { text: study.scope, href: there },
+    study.scope && {
+      text: study.scope,
+      href: there,
+      appStore: Boolean(study.appStore),
+    },
     study.status && { text: study.status },
     study.role && { text: study.role },
     study.date && { text: study.date },
   ].filter(Boolean) as Fact[];
 }
 
-export function StudyFact({ text, href }: Fact) {
+export function StudyFact({ text, href, appStore }: Fact) {
   if (!href) return <>{text}</>;
   return (
     <a
@@ -61,8 +69,40 @@ export function StudyFact({ text, href }: Fact) {
       className="transition-colors duration-200 ease-out hover:text-accent"
     >
       {text}
-      {/* A no-break space, so the arrow is never alone on a line of its own. */}
-      {"\u00a0"}↗
+      {/* A no-break space, so the mark is never alone on a line of its own. */}
+      {"\u00a0"}
+      {/* Both marks are cut to the arrow that follows a project's name on the
+          homepage, so the three read as one size of mark: that arrow inks
+          14.5px square, at the name's 20px. The measure is the ink and not
+          the box, since each mark fills its box differently.
+
+          And both are centred on the capitals beside them. Stood on the
+          baseline first — said outright, because Tailwind's reset sets every
+          img and svg to vertical-align: middle, which is the middle of the
+          lowercase and hangs a mark this size under the line — and then
+          lowered by half of what the mark stands taller than Satoshi's
+          0.716em capitals by, plus the clear sliver under its ink. */}
+      {appStore ? (
+        // The exception to the 14.5px, at 17px. Cut to the arrow its tile
+        // measured the same and read as smaller: on a dark page the blue tile
+        // falls back and what the eye sizes is the white A inside it, which is
+        // two thirds of the tile. At 17px — 1.0625em of this line's 16 — the A
+        // is 13px across, and it is the A that sits with the arrow and the
+        // chain. Important, since the mark sets a height of its own and the
+        // two would otherwise be settled by the order the stylesheet happens
+        // to come out in.
+        <AppStoreMark className="h-[1.0625em]! translate-y-[0.18em] align-baseline" />
+      ) : (
+        // Drawn from 2 to 22 of its 24 units under a stroke of 2, so a 1em
+        // box is 14.6px of chain.
+        //
+        // A pixel lower than the capitals' middle, which is 0.14em. The line
+        // it follows is lowercase but for its first letter — "Live on the
+        // web" — and what the eye takes for the middle of that is nearer the
+        // middle of the lowercase, 2px further down. Measured dead centre on
+        // the capitals it read as riding high; this splits the two.
+        <LinkGlyph className="inline-block h-[1em] w-[1em] translate-y-[0.2em] align-baseline" />
+      )}
     </a>
   );
 }
