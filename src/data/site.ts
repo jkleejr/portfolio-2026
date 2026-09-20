@@ -25,11 +25,11 @@ export const site = {
   // One entry per line: each is set as a paragraph of its own rather than run
   // into the one before it.
   intro: [
-    "Design engineer building iOS and AI native products.",
+    "Design engineer and product designer building iOS and AI native products.",
   ],
 };
 // "Hi, I design and build in code...",
-// "Design engineer building iOS and AI native products."
+// "Design engineer and product designer building iOS and AI native products."
 
 
 /* 9.6.26
