@@ -49,4 +49,13 @@ structure / information architecture
 
 clean codebase
 
+
+product design:
+no evidence of users, process, or visual craft
+no research, no testing, no outcomes, real numbers
+no evidence of process
+no ui design explainations
+i built this to solve my own problems
+
+
 */

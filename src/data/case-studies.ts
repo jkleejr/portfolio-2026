@@ -851,7 +851,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "After building a working prototype, I looked for research on this problem to find out if the idea has potential to help others experiencing the same struggle as me. I found a paper reviewing 42 studies, which showed that readers who see translations alongside the text learn 45% of new words, compared to 27% without them, and that intermediate learners benefit the most [(Yanagisawa et al., 2020)](https://takumiuchihara.weebly.com/uploads/1/2/3/7/123756989/yanagisawa-webb-uchihara-2019-glossing_meta-analysis.pdf)."
+        text: "After building a working prototype, I looked for research on this problem to find out if the idea has potential to help others experiencing the same struggle as me. I found a paper reviewing 42 studies, which showed that readers who see translations alongside the text learn 45% of new words compared to 27% without them [(Yanagisawa et al., 2020)](https://takumiuchihara.weebly.com/uploads/1/2/3/7/123756989/yanagisawa-webb-uchihara-2019-glossing_meta-analysis.pdf)."
       },
 
       {
