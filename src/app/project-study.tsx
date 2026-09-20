@@ -64,8 +64,8 @@ export function useCoverToggle() {
 // how long the rows around it are marked as arriving. Each is the length of
 // its animation in globals.css, and a beat over for the second so the mark is
 // not taken off a frame before the last row has landed.
-const LEAVE = 160;
-const SETTLE = 480;
+const LEAVE = 120;
+const SETTLE = 420;
 
 /**
  * The rows that have just landed somewhere new and are coming up into place.
@@ -149,7 +149,7 @@ export function ProjectList({ children }: { children: React.ReactNode }) {
   const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
   useEffect(() => () => timers.current.forEach(clearTimeout), []);
   // What is open now, for a step that runs later to check it still holds: the
-  // back button can change it in the 160ms between a press and its swap.
+  // back button can change it in the 120ms between a press and its swap.
   const openNow = useRef(openSlug);
   useEffect(() => {
     openNow.current = openSlug;
@@ -189,6 +189,15 @@ export function ProjectList({ children }: { children: React.ReactNode }) {
 
       // Nothing to go out first: nothing is open, or no motion is wanted.
       if (!was || still) return swap(was === slug ? null : slug, null);
+
+      // Or what is open is not in the window to be seen going out. A reader
+      // who has scrolled clear of the open study and pressed another project
+      // would be kept waiting on a fade that is happening off the screen, and
+      // a press that does nothing for a beat is what reads as lag.
+      const showing = document.querySelector("[data-study]");
+      const box = showing?.getBoundingClientRect();
+      const seen = box && box.bottom > 0 && box.top < window.innerHeight;
+      if (!seen) return swap(was === slug ? null : slug, was === slug ? "after" : "around");
 
       setLeaving(was);
       later(() => {
@@ -283,6 +292,8 @@ export function ProjectSection({
         // Only from the width where there is a right side worth having. Under
         // that it takes the column, which on a phone is the screen.
         <div
+          // For the list to find the open study by — see `press`.
+          data-study
           className={`mt-10 w-full min-[1000px]:w-[var(--study-width)] ${
             leaving ? "study-out" : "study-in"
           }`}

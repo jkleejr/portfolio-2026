@@ -191,6 +191,9 @@ export function ShotStack({
                 alt={item.alt}
                 width={item.width}
                 height={item.height}
+                // As every picture in a study is — see LATER in case-study.tsx.
+                loading="lazy"
+                decoding="async"
                 // A picture dragged is the browser's own drag of it, which
                 // takes the pointer away mid-swipe.
                 draggable={false}

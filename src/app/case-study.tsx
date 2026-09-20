@@ -44,6 +44,21 @@ import { mediaSize } from "./media-size";
 // say different things.
 // ---------------------------------------------------------------------------
 
+/**
+ * On every picture in a study: fetched when it is near the window rather than
+ * when the study is put on the page, and decoded off the thread that draws.
+ *
+ * A study is ten or so full-size phone screens, 12MB apiece once decoded, and
+ * all of them used to start at the press that opened it — so the decoding and
+ * the drawing of them landed in the same third of a second as the study
+ * coming up into place, and the frames that dropped were that motion's. Now
+ * the press costs the first screen of pictures and the rest arrive ahead of
+ * the reader as they scroll. Safe only because each has its size in the
+ * markup (media-size.ts): a picture that loads late without one pushes the
+ * page down as it lands.
+ */
+const LATER = { loading: "lazy", decoding: "async" } as const;
+
 /** A film's first frame, if one has been saved beside it. */
 function poster(src: string): string | undefined {
   const still = src.replace(/\.[a-z0-9]+$/i, "-poster.jpg");
@@ -398,6 +413,7 @@ function Block({
             // before it loads — see media-size.ts. The classes still set how
             // wide it is drawn; these only give it a shape.
             {...mediaSize(block.src)}
+            {...LATER}
             className={`mx-auto w-full max-w-full rounded-xl border border-foreground/10 ${
               block.shift ? "sm:translate-x-(--shift)" : ""
             }`}
@@ -505,6 +521,7 @@ function Block({
                       src={item.src}
                       alt={item.alt}
                       {...mediaSize(item.src)}
+                      {...LATER}
                       className="w-full rounded-xl border border-foreground/10"
                     />
                     <Caption text={item.caption} center hang />
@@ -516,6 +533,7 @@ function Block({
                       src={item.src}
                       alt={item.alt}
                       {...mediaSize(item.src)}
+                      {...LATER}
                       className="w-full rounded-xl border border-foreground/10"
                     />
                     {/* Centred under the shot, which is itself centred in the row. */}
