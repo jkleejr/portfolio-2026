@@ -867,7 +867,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "If I continued this project, I would keep improving the UI/UX so the island feels more responsive and aligned with the user's intent. I would also improve translations for visual diagrams and make it work with any app. Currently only Korean is translated, but I could add more languages and test whether other people find it helpful for learning."  
+        text: "If I continued this project, I would work on the UI/UX so the island feels more responsive and aligned with the user's intent. I would also improve translations for visual diagrams and make it work with any app. Currently only Korean is translated, but I could add more languages and test whether other people find it helpful for learning."  
       },
       // could try making it vocabulary focused, only translating difficult words from a sentence, not the entire sentence
       // so it would show only a few difficult or new words in the dynamic island not the sentence
