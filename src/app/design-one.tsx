@@ -60,28 +60,36 @@ export function DesignOne() {
   // every upward swipe to the browser as a scroll, and the ribbons lose the
   // gesture — see "Touch behaviour" in globals.css.
   //
-  // The top padding is what sets the room between the role, pinned across the
-  // top of the page, and the name; the whole page follows the name down. The
-  // number is chosen by the ink, not the boxes: the blackletter starts its
-  // capitals ~27px below the top of its line box at full size, so 6.25rem puts
-  // ~80px of black between the bottom of the role and the top of the name —
-  // the same room the name's bottom margin leaves under it, see the h1. Only
-  // from sm up: a phone keeps the small padding, and the name clears that row
-  // with a margin of its own instead.
+  // The top padding is the same 1.5rem at every width, the air the page keeps
+  // at all of its edges. The name is the first thing under it and nothing is
+  // pinned above the name any more, so there is no row for the padding to
+  // clear — where the name has to get under the buttons it does so with a
+  // margin of its own, see the h1.
   return (
-    <main data-home className="relative pb-8 pt-6 sm:pb-28 sm:pt-25">
+    <main data-home className="relative pb-8 pt-6 sm:pb-28">
       {/* The name, set in the blackletter — see .fraktur in globals.css, which
           carries the face and pins the weight. It is the one thing on the page
-          that is not in the column: it runs the width of the window and is
-          centred in that, rather than lining up with the covers below it.
+          that is not in the column: it holds the page's top left corner and
+          runs most of the width of the window from there, rather than lining
+          up with the covers below it. It is the only thing up there on the
+          left — the role that used to be pinned in that corner is the first
+          words of the intro now.
 
-          The top margin is what keeps it under the row pinned across the top
-          of the page — the role at the left, the buttons at the right. That
-          row is the fixed thing; the name is what moves. From sm up main's own
-          6.25rem of padding already clears it and the margin comes off, but a
-          phone keeps main's padding small, so the name takes --top-row plus a
-          gap of its own. Reading the row's height from the variable rather
-          than writing 44px here means the two cannot fall out of step.
+          From 900px it starts at the very top, on the line the buttons in the
+          opposite corner are on. There is room for both: the name is 87% of
+          the window and the buttons are in the last 70px of it, so at 900px
+          some 40px is left between the last E and the apple, and more above
+          that. Under 900px there is not, so the name takes --top-row plus a
+          gap as a top margin and sits under the buttons instead. Reading the
+          row's height from the variable rather than writing 44px here means
+          the two cannot fall out of step.
+
+          The left padding is the page's 1.5rem and 0.0375em more, because
+          that is how far the J's swash hangs out to the left of where the
+          face says the letter starts — measured, off the ink. With it the
+          swash stops on the same line the intro and the notes in the margin
+          start on, where set flush the name stood 10px out into the margin
+          at full size. In em, so it holds at every size the name is set at.
 
           One row at every width, which is why whitespace-nowrap carries no
           breakpoint. It is also why the name is out here rather than in the
@@ -94,12 +102,11 @@ export function DesignOne() {
           sideways.
 
           4.71em of text against the window less the padding is the whole sum,
-          which makes the padding worth as much as the size. px-4 on a phone
-          rather than px-6 buys 1rem of width, and that rem is what lets the
-          size be 18.5vw and still hold down to a 250px window — at px-6 the
-          same 18.5vw would give out at 375px, inside phone territory. From sm
-          up the padding goes back to px-6, where the extra rem buys nothing:
-          the size is capped at 18rem long before the window gets tight.
+          which makes the padding worth as much as the size. There is none on
+          the right for that reason: set from the left, the name needs only
+          its own left margin, and with nothing reserved at the other end
+          18.5vw holds down to a 200px window. What is left over at the right
+          is a margin all the same — about 1.5rem of it on a 390px phone.
 
           The other cost is worth naming. Letting the name break gave the
           phone a much larger one — only "JOHN" at 2.62em had to fit, which
@@ -121,9 +128,8 @@ export function DesignOne() {
           it — the intro's own margin collapses into this one, so this is the
           whole of it. Measured from the ink again: the capitals stop ~16px
           short of the box's bottom at full size and the intro's ink starts
-          ~8px into its line, so 3.5rem is ~80px of black, the same as the
-          room above the name. A phone shows less of both, in step with its
-          smaller name.
+          ~8px into its line, so 3.5rem is ~80px of black. A phone shows less,
+          in step with its smaller name.
 
           data-gravity="letters" is for when the apple is pressed: the name
           comes apart a character at a time rather than as "JOHN" and "LEE",
@@ -134,7 +140,7 @@ export function DesignOne() {
           the finer-grained answer, not the coarser one. */}
       <h1
         data-gravity="letters"
-        className="fraktur mb-12 mt-[calc(var(--top-row)+1.5rem)] whitespace-nowrap px-4 text-center text-[length:var(--name-size)] leading-none sm:mb-14 sm:mt-0 sm:px-6"
+        className="fraktur mb-12 mt-[calc(var(--top-row)+1.5rem)] whitespace-nowrap pl-[calc(1.5rem+0.0375em)] text-[length:var(--name-size)] leading-none sm:mb-14 min-[900px]:mt-0"
       >
         {site.name}
       </h1>
@@ -145,9 +151,9 @@ export function DesignOne() {
           phone, where the column is wider than the screen. */}
       <div className="mx-auto w-[var(--column)] max-w-[calc(100%-3rem)]">
         {/* The writing at the top of the page. The name is no longer in here
-            — it is above, spanning the window — and the role is pinned to the
-            page's top left corner from sm up, opposite the buttons. What is
-            left in flow is the intro.
+            — it is above, across the window — and the role that was pinned in
+            the page's top left corner is gone, since the intro opens with it.
+            What is left is the intro.
 
             No measure of its own: the header runs the width of the whole
             column, so the intro breaks where the last word of a project's
@@ -157,28 +163,12 @@ export function DesignOne() {
             header no longer reserves the height a row of them used to sit in
             — see "The page on a phone" in globals.css. */}
         <header>
-          {/* The role holds the page's top left corner at every width, and
-              the buttons in layout.tsx the top right — one row across the top,
-              which is the layout's fixed point. Nothing here moves with the
-              window; it is the name below that gets out of the way, by taking
-              a top margin on a phone. See the note on it above.
-
-              h-11 is that row's height, the apple's box, and the role is
-              centred in it so its text sits on the buttons' middle rather
-              than at the top of them. Only on a phone, where the row is tight
-              enough for the difference to show — from sm up the role is a
-              plain block in its corner, which is what it was. */}
-          <p className="absolute left-6 top-6 z-20 flex h-11 items-center text-lg font-medium text-foreground sm:block sm:h-auto">
-            {site.role}
-          </p>
           {/* Who that is. A paragraph per line of site.intro, so a sentence that
               should start fresh does, rather than being wrapped into the one
-              above it. Set exactly as the role above it — same size, same
-              weight, same colour — so the two read as one block under the
-              name, and only the name leads.
+              above it. Set plainly — the size and weight of the page's other
+              lines — so only the name leads.
 
-              One margin at every width, now that nothing is pinned between
-              the role and this. */}
+              One margin at every width. */}
           {site.intro.length > 0 && (
             <div className="mt-8 space-y-3">
               {site.intro.map((line) => (
