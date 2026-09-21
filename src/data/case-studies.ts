@@ -264,7 +264,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "A key product decision was determining how items were valued. Using a web search for every scan increased accuracy, but because it raised API costs by 3-4x and quadrupled the total latency from ~6-25 seconds, I chose to rely on Sonnet's pre-trained data for most items.",
+        text: "A key product decision was determining how items were valued. Using a web search for every scan increased accuracy, but because it raised API costs by 3-4x and quadrupled the total latency from ~6 to ~25 seconds, I chose to rely on Sonnet's pre-trained data for most items.",
       },
 
 
@@ -430,7 +430,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
        {
         type: "text",
-        text: "I designed the app around a user paying for their own API usage due to the costs of audio generation at ~$1-3 per paper. To keep things simple, I used one API to identify text and generate audio. Gemini 3.1 Flash was the best option because it could clean up text and had text to speech with eight voices.",
+        text: "I designed the app around a user paying for their own API usage due to the costs of audio generation at ~$1-3 per paper. To keep things simple, I used one API to identify text and generate audio. Gemini 3.1 Flash was the best option because it could clean up text and had text-to-speech with eight voices.",
       },      
 
       {
@@ -467,7 +467,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         // Apple NLTokenizer splits text
       {
         type: "text",
-        text: "Because Gemini only returns audio and no timestamps, the app has to estimate which sentence is being spoken to highlight it. I used Apple's NLTokenizer to find the end of each sentence instead of splitting text on periods to prevent abbreviations like 'et al.' or 'Fig. 1' from breaking sentences. The app groups the sentences, sends them to Gemini TTS, and receives an audio clip. Since the app knows the duration of the clip, it divides a group's audio proportionally by character count, so a sentence with 5% of a group's characters is assumed to take 5% of the audio. As audio plays, the app tracks the time passed and highlights a sentence based on its estimate. This is not always accurate so sentences are re-synced at the start of every group to minimize errors.",
+        text: "Because Gemini only returns audio and no timestamps, the app has to estimate which sentence is being spoken to highlight it. I used Apple's NLTokenizer to find the end of each sentence instead of splitting text on periods to prevent abbreviations like 'et al.' or 'Fig. 1' from breaking sentences. The app groups the sentences, sends them to Gemini TTS, and receives an audio clip. Since the app knows the duration of the clip, it divides a group's audio proportionally by character count, so a sentence with 5% of a group's characters is assumed to take 5% of the audio. As audio plays, the app tracks the time passed and highlights a sentence based on its estimate. This is not always accurate, so sentences are re-synced at the start of every group to minimize errors.",
       },
 
       {
@@ -590,12 +590,12 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "Reflecting on this project, I realized that I prioritized avoiding API costs over delivering a good user onboarding experience which impacted the whole design. Requiring users to bring their own Gemini API key kept the app free for me to host but created unacceptable friction.",
+        text: "Reflecting on this project, I realized that I prioritized avoiding API costs over delivering a good user onboarding experience, which impacted the whole design. Requiring users to bring their own Gemini API key kept the app free for me to host but created unacceptable friction.",
       },
 
       {
         type: "text",
-        text: "If I continued this idea, I would manage keys on the backend and either cover the initial costs for onboarding, charge per paper, or switch to a cheaper TTS model. Considering the market, products like Speechify dominate consumer text to speech and solve the same problems so it would be difficult to monetize this idea without a valuable use case.",
+        text: "If I continued this idea, I would manage keys on the backend and either cover the initial costs for onboarding, charge per paper, or switch to a cheaper TTS model. Considering the market, products like Speechify dominate consumer text-to-speech and solve the same problems so it would be difficult to monetize this idea without a valuable use case.",
       },
     ],
   },
@@ -772,7 +772,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
        {
         type: "text",
-        text: "I had Claude do a benchmark test comparing Opus 5 and DeepL on sentence translations. Claude had a median latency of 2.07 seconds compared to 0.73s for DeepL. Claude was also about 5x more expensive, at $0.0031 per sentence vs. $0.0006 for DeepL."
+        text: "I had Claude do a benchmark test comparing Opus 5 and DeepL on sentence translations. Claude had a median latency of 2.07 seconds compared to 0.73 seconds for DeepL. Claude was also about 5x more expensive, at $0.0031 per sentence vs. $0.0006 for DeepL."
       },
       
        // had claude do a benchmark test with claude and deepl
@@ -928,7 +928,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "Stock prices change constantly, and it takes time and judgement to find the right information. Tracking the market requires aggregating data from multiple sources: stock exchanges, financial news outlets, SEC filings, and social media. "
+        text: "Stock prices change constantly, and it takes time and judgment to find the right information. Tracking the market requires aggregating data from multiple sources: stock exchanges, financial news outlets, SEC filings, and social media."
       },
 
       {
@@ -950,7 +950,7 @@ export const caseStudies: Record<string, CaseStudy> = {
     
       {
         type: "text",
-        text: "Because LLMs don't have long term memory, the agent calibrates itself by reading reports of the last few days before writing. The historical data simulates continuity and allows the report to distinguish between ongoing and new market trends."
+        text: "Because LLMs don't have long-term memory, the agent calibrates itself by reading reports of the last few days before writing. The historical data simulates continuity and allows the report to distinguish between ongoing and new market trends."
       },
 
       {
@@ -969,7 +969,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "An investor's mental state changes fundamentally depending on the time of day. The morning report is forward looking and focuses on preparation for pre-market open. The night report is analytical and reflects on the day's performance."
+        text: "An investor's mental state changes fundamentally depending on the time of day. The morning report is forward-looking and focuses on preparation for pre-market open. The night report is analytical and reflects on the day's performance."
       },
 
       {
@@ -985,14 +985,14 @@ export const caseStudies: Record<string, CaseStudy> = {
 
             {
         type: "text",
-        text: "I used real time market data from Yahoo Finance (delayed quotes) and FRED to visualize price action.",
+        text: "I used real-time market data from Yahoo Finance (delayed quotes) and FRED to visualize price action.",
       },
       // delay only applies during the trading session, since outside market hours the last price is the close for most stocks. us stocks and etfs are delayed by ~15 minutes, crypto is closer to current
       // data for chart comes from Yahoo Finance API
 
       {
         type: "text",
-        text: "The interactive chart allows a quick inspection of tickers with candlestick ranges and some technical tools like volume, RSI, EMA, support/resistance and fibonacci levels."
+        text: "The interactive chart allows a quick inspection of tickers with candlestick ranges and some technical tools like volume, RSI, EMA, support/resistance and Fibonacci levels."
       },
 
       {
@@ -1005,7 +1005,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
             {
         type: "text",
-        text: "To display the flow of capital, I added a table for short term (1 day) and medium term (50 day) changes of 11 ETFs. "
+        text: "To display the flow of capital, I added a table for short-term (1-day) and medium-term (50-day) changes of 11 ETFs."
       },
 
       {

@@ -14,7 +14,7 @@ export const site = {
   // Beside Contact at the foot of the homepage, in this order. One with no
   // href is left out rather than set as a link to nowhere.
   links: [
-    { label: "Github", href: "https://github.com/jkleejr" },
+    { label: "GitHub", href: "https://github.com/jkleejr" },
     { label: "LinkedIn", href: "https://www.linkedin.com/in/john-lee-779329401/" },
   ],
 
@@ -25,7 +25,7 @@ export const site = {
   // One entry per line: each is set as a paragraph of its own rather than run
   // into the one before it.
   intro: [
-    "Design engineer and product designer building iOS and AI native products.",
+    "Design engineer and product designer building iOS and AI-native products.",
   ],
 };
 // "Hi, I design and build in code...",
