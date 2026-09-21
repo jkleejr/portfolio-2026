@@ -210,7 +210,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "image",
         src: "/projects/loot-check-architecture.svg",
-        max: 700,
+        max: 760,
         alt: "Architecture diagram. The iOS app uploads a photo to a single analyze endpoint on Vercel, which calls Claude Sonnet 4.6 to identify and price the item and Upstash Redis for daily caps and search allowances. A JSON response returns to the app as an item valuation with payouts from marketplaces.",
       },
 
@@ -292,7 +292,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "image",
         src: "/projects/loot-check-pricing-fork.svg",
-        max: 700,
+        max: 760,
         alt: "The pricing fork. After the iOS app uploads a photo, the scan asks whether the item is a handmade or original piece. If no, it is resale and priced from training data. If yes, there is no fixed secondhand catalog, so one web search finds the asking price of comparable work. Both paths end in an item valuation.",
       },
 
@@ -954,7 +954,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "image",
         src: "/projects/buy-side-briefings-authoring-loop.svg",
-        max: 700,
+        max: 760,
         alt: "Authoring loop. A cron trigger starts the agent, which researches the session on the web and then writes two files: a structured verdict JSON and a written report. The JSON is parsed and checked against the schema. If it fails, the agent rewrites it. If it passes, a script stamps the generated-at timestamp from the clock, and the files are committed and pushed.",
       },
 
