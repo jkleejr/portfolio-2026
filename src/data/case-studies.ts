@@ -798,9 +798,10 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "images",
         // Three phones across. The row is what is held rather than each shot,
-        // so they keep sharing it evenly: 900 across, less the two gaps, puts
-        // each phone at 289px whatever the window is doing.
-        max: 900,
+        // so they keep sharing it evenly: 983 across, less the two gaps, puts
+        // each phone at 317px — the size of Buy Side's phones, which are two
+        // across in a row of 650 — wherever the column is that wide.
+        max: 983,
         stackOnPhone: true,
         items: [
           {
@@ -834,10 +835,11 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "images",
-        max: 900,
+        // Sized as the row above, for the same reason.
+        max: 983,
         stackOnPhone: true,
         items: [
-        
+
           {
             src: "/projects/screen-translator-captions-idle.png",
             alt: "The Translate tab before a session: a card with a grey circle and the words Tap the circle to start screen recording, then rows for Select display set to Island, Translation region set to Custom, API Keys and Debug log",
