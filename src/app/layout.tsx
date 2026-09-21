@@ -168,6 +168,32 @@ export default function RootLayout({
               "(function(){var m=function(){var w=window.innerWidth-document.documentElement.clientWidth;document.documentElement.style.setProperty('--scrollbar',(w>0?w:0)+'px')};m();addEventListener('resize',m)})();",
           }}
         />
+        {/* The page with a study open starts at that study's row, and this is
+            what puts it there. ProjectSection scrolls to the row too, but from
+            an effect, and an effect waits for the scripts to arrive and the
+            page to hydrate — a second or more on a slow connection, all of it
+            spent showing the top of the homepage, which the server's markup
+            paints long before that, and then the page jumped. Here the row is
+            already in the markup above and nothing has to load to find it.
+
+            After the scrollbar script because the study's width starts from
+            that measure. And again when the fonts are in: the name at the top
+            of the page is set in its fallback until then and stands 30px
+            taller in it, so the row moves up by that much when the real one
+            arrives, which can also be well before the effect. Not if the
+            reader has scrolled by then — the page is theirs from that point.
+            The effect still runs, and lands on the spot the page is already
+            at.
+
+            The study is only in the server's markup on the open-study route,
+            so finding one is the whole check. scrollIntoView is what the
+            effect calls, so the row's scroll-mt is kept here as well. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              '(function(){var s=document.querySelector("[data-study]"),r=s&&s.parentElement;if(!r)return;var y,g=function(){r.scrollIntoView({block:"start"});y=scrollY};g();if(document.fonts)document.fonts.ready.then(function(){if(scrollY===y)g()})})();',
+          }}
+        />
       </body>
     </html>
   );

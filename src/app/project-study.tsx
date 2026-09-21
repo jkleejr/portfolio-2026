@@ -247,6 +247,12 @@ export function ProjectSection({
   // first paint: a study opened by a press is under the finger already and
   // is held still by the toggle below, and a back or forward that opens one
   // is a return to where the reader was.
+  //
+  // On a hard load this is the second time the page is put there. An effect
+  // waits for the page to hydrate, and the server's markup is on screen well
+  // before that, so a script at the foot of the body in layout.tsx scrolls to
+  // the row first. This one is for an arrival by navigation, where that
+  // script does not run.
   const first = useRef(true);
   useEffect(() => {
     if (!first.current) return;
