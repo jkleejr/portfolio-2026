@@ -749,11 +749,11 @@ export const caseStudies: Record<string, CaseStudy> = {
         src: "/projects/screen-translator-region-card.png",
         // A step under the card's own size: the shot is a 2x capture cropped
         // to the card's edges, 837px across, so 418 would show it 1:1 on a
-        // Retina screen. 380 keeps it clearly a card rather than a screen.
-        max: 380,
+        // Retina screen. 400 keeps it clearly a card rather than a screen.
+        max: 400,
         // The card's own corners, measured off the alpha channel: ~72px at
-        // the file's 2x scale, which is 36 at 1:1 and 33 at 380 across.
-        radius: 33,
+        // the file's 2x scale, which is 36 at 1:1 and 34 at 400 across.
+        radius: 34,
         // Centred to the pixel it read as sitting a touch left.
         shift: 6,
         alt: "The Translation region card: a crop icon and title with a Custom dropdown at the right, a note that only text inside the box is translated, a phone outline with a blue box dragged over the top of its screen and a resize handle at the corner, and Subtitle band and Full screen presets along the bottom",
