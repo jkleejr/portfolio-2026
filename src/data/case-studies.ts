@@ -370,7 +370,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "Loot Check is live on the [App Store](https://apps.apple.com/us/app/loot-check/id6785767104). With no marketing, the app gained over 100 organic downloads and ~7K App Store impressions in the first month with 870 items scanned globally. Requests didn't get lost, keys stayed secure, and there were no runaway API costs or crashes.",
+        text: "Loot Check is live on the [App Store](https://apps.apple.com/us/app/loot-check/id6785767104). With no marketing, the app gained over 100 organic downloads and ~7K App Store impressions in the first two months with 870 items scanned globally. Requests didn't get lost, keys stayed secure, and there were no runaway API costs or crashes.",
       },
 
       // the first scan matters - how fast it is, if the price is believable
