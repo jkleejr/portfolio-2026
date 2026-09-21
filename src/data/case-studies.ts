@@ -614,8 +614,8 @@ export const caseStudies: Record<string, CaseStudy> = {
         controls: true,
         captionAlign: "higher",
         // A no-break space keeps "see translations" together on the second line.
-        caption: "long press the Dynamic Island to see translations",
-        captionLeft: "choose a section of the screen to translate",
+        caption: "Long press the Dynamic Island to see translations",
+        captionLeft: "Choose a section of the screen to translate",
         captionLeftAlign: "low",
         captionLeftHiddenOnPhone: true,
       },
@@ -702,7 +702,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         height: 204,
         crop: "top",
         alt: "The minimal Dynamic Island over the top of the Naver News site: the island shrunk to a Korean flag, a red recording dot in its own circle beside it, and the blue news header with its section tabs under the status bar",
-        caption: "minimal state (active while recording)",
+        caption: "Minimal state (active while recording)",
         captionCenter: true,
       },
 
@@ -714,7 +714,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         max: 455,
         height: 204,
         alt: "The compact Dynamic Island on the home screen above the FaceTime, Calendar, Photos and Camera icons: a Korean flag, an arrow and a US flag at the left, and the start of the Korean line being read at the right",
-        caption: "compact state (after recording stops)",
+        caption: "Compact state (after recording stops)",
         captionCenter: true,
       },
 
@@ -728,7 +728,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         max: 480,
         height: 215,
         alt: "The expanded Dynamic Island over the top of a Korean news article: a Korean-to-US flag pair and a pin at the top, a two-line Korean headline about a Samsung employee's internal loan sending home prices soaring in Suwon Yeongtong, and its English translation under it in grey",
-        caption: "expanded state (long press for full translation)",
+        caption: "Expanded state (long press for full translation)",
         captionCenter: true,
       },
 
