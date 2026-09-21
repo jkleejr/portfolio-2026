@@ -259,7 +259,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "I used Claude Sonnet 4.6 due to its low costs and high accuracy at ~$0.013 per scan. I considered other models but the costs were similar and I wanted the results to be as trustworthy as possible.",
+        text: "I used Claude Sonnet 4.6 due to its low costs and high accuracy at ~$0.013 per scan. I considered other models, but the costs were similar, and I wanted the results to be as trustworthy as possible.",
       },
 
       {
@@ -276,7 +276,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       
       {
         type: "text",
-        text: "The project started with resale pricing, but the most interesting use case was showing it something original like a painting that wasn't listed before. That grew the idea into a price discovery tool for both used and original items.",
+        text: "The project started with resale pricing, but the most interesting use case was showing the app something original like a painting that wasn't listed before. That grew the idea into a price discovery tool for both used and original items.",
       },
 
 
@@ -306,7 +306,7 @@ export const caseStudies: Record<string, CaseStudy> = {
               // managing inference latency - time budgeted fallback, trying to reduce errors
       {
         type: "text",
-        text: "Scans with web searches took ~14-27 seconds from testing, so I capped searches at 45s and the loading state displays an estimated wait time. If the first API call times out, it automatically tries again with the remaining time. If both attempts fail, no price estimate is shown and the user can retry or start over.",
+        text: "Scans with web searches took ~14-27 seconds from testing, so I capped searches at 45 seconds and the loading state displays an estimated wait time. If the first API call times out, it automatically tries again with the remaining time. If both attempts fail, no price estimate is shown and the user can retry or start over.",
       },
 
             {
@@ -346,7 +346,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "Results with low confidence are labeled \"best guess\", and users have the option to add another photo and retry.",
+        text: "Results with low confidence are labeled \"best guess,\" and users have the option to add another photo and retry.",
       },
 
       {
@@ -370,7 +370,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "Loot Check is live on the [App Store](https://apps.apple.com/us/app/loot-check/id6785767104). With no marketing, the app gained over 100 organic downloads and ~7K App Store impressions in the first two months with 870 items scanned. Requests didn't get lost, keys stayed secure, and there were no runaway API costs or crashes.",
+        text: "Loot Check is live on the [App Store](https://apps.apple.com/us/app/loot-check/id6785767104). With no marketing, the app gained over 100 organic downloads and ~7K App Store impressions in the first two months, with 870 items scanned. Requests didn't get lost, keys stayed secure, and there were no runaway API costs or crashes.",
       },
 
       // the first scan matters - how fast it is, if the price is believable
@@ -394,7 +394,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
        {
         type: "text",
-        text: "I wanted to automate the listing process but because marketplaces don't have a public listing API, the app creates a title and description for copy and paste. The next steps are continuing to test the app and learning which use cases provide the most value.",
+        text: "I wanted to automate the listing process, but because marketplaces don't have a public listing API, the app creates a title and description to copy and paste. The next steps are continuing to test the app and learning which use cases provide the most value.",
       },
     ],
   },
@@ -414,7 +414,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         caption: "Add a new paper from files",
         captionHiddenOnPhone: true,
         captionLeft: [
-          "Audio is generated as the user needs, lowering initial cost and wait time",
+          "Audio is generated as the user listens, lowering initial cost and wait time",
         ],
       },
 
@@ -426,7 +426,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
         {
         type: "text",
-        text: "A friend was listening to a research paper while walking and got '[1] et al., pp. 234-256' read aloud in a robot voice. I tried to build an app to fix that problem.",
+        text: "A friend was listening to a research paper while walking and got \"[1] et al., pp. 234-256\" read aloud in a robot voice. I tried to build an app to fix that problem.",
       },
        {
         type: "text",
@@ -453,7 +453,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "Generating audio for the entire paper was unnecessary if someone only wanted to listen briefly. I organized text from a paper into groups of about 750 characters, which made ~50 seconds of audio. Making groups shorter would require more API requests and could reach Gemini's Free Tier rate limit, while making groups longer would increase the initial wait time. At 50 seconds, the first group takes ~20 seconds to generate and the next group loads in the background.",
+        text: "Generating audio for the entire paper was unnecessary if someone only wanted to listen briefly. I organized text from a paper into groups of about 750 characters, which made ~50 seconds of audio. Making groups shorter would require more API requests and could reach Gemini's free tier rate limit, while making groups longer would increase the initial wait time. At 50 seconds, the first group takes ~20 seconds to generate and the next group loads in the background.",
       },
 
 
@@ -467,14 +467,14 @@ export const caseStudies: Record<string, CaseStudy> = {
         // Apple NLTokenizer splits text
       {
         type: "text",
-        text: "Because Gemini only returns audio and no timestamps, the app has to estimate which sentence is being spoken to highlight it. I used Apple's NLTokenizer to find the end of each sentence instead of splitting text on periods to prevent abbreviations like 'et al.' or 'Fig. 1' from breaking sentences. The app groups the sentences, sends them to Gemini TTS, and receives an audio clip. Since the app knows the duration of the clip, it divides a group's audio proportionally by character count, so a sentence with 5% of a group's characters is assumed to take 5% of the audio. As audio plays, the app tracks the time passed and highlights a sentence based on its estimate. This is not always accurate, so sentences are re-synced at the start of every group to minimize errors.",
+        text: "Because Gemini only returns audio and no timestamps, the app has to estimate which sentence is being spoken to highlight it. I used Apple's NLTokenizer to find the end of each sentence instead of splitting text on periods to prevent abbreviations like \"et al.\" or \"Fig. 1\" from breaking sentences. The app groups the sentences, sends them to Gemini TTS, and receives an audio clip. Since the app knows the duration of the clip, it divides a group's audio proportionally by character count, so a sentence with 5% of a group's characters is assumed to take 5% of the audio. As audio plays, the app tracks the time passed and highlights a sentence based on its estimate. This is not always accurate, so sentences are re-synced at the start of every group to minimize errors.",
       },
 
       {
         type: "image",
         src: "/projects/paper-reader-highlight-detail.png",
         width: 420,
-        alt: "A close read of the narration: the sentence being spoken sits in a pale blue block, the lines either side of it in grey",
+        alt: "A close read of the narration: the sentence being spoken sits in a pale blue block, the lines on either side of it in gray",
       },
 
       {
@@ -489,7 +489,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "I added a sample paper to test the app before setting up a key.",
+        text: "I added a sample paper so users can try the app before setting up a key.",
       },
       {
         type: "image",
@@ -595,7 +595,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "If I continued this idea, I would manage keys on the backend and either cover the initial costs for onboarding, charge per paper, or switch to a cheaper TTS model. Considering the market, products like Speechify dominate consumer text-to-speech and solve the same problems so it would be difficult to monetize this idea without a valuable use case.",
+        text: "If I continued this idea, I would manage keys on the backend and cover the initial costs for onboarding, charge per paper, or switch to a cheaper TTS model. Considering the market, products like Speechify dominate consumer text-to-speech and solve the same problems, so it would be difficult to monetize this idea without a valuable use case.",
       },
     ],
   },
@@ -628,12 +628,12 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
 
         type: "text",
-        text: "Constantly switching apps while learning a language is annoying, time-consuming, and makes learning inefficient, so I created an app that translates the Korean text on screen to English in real time.",
+        text: "Constantly switching apps while learning a language is annoying and time-consuming, and makes learning inefficient, so I created an app that translates the Korean text on screen to English in real time.",
       },
   
       {
         type: "text",
-        text: "My first idea was to generate text over the current display, but iOS does not allow an app to draw over another app. To get around this, I used the Dynamic Island since it stays visible in every app. I used ReplayKit to broadcast video frames, Apple Vision OCR to extract Korean text, DeepL API for translations, and ActivityKit to update the island."
+        text: "My first idea was to generate text over the current display, but iOS does not allow an app to draw over another app. To get around this, I used the Dynamic Island since it stays visible in every app. I used ReplayKit to broadcast video frames, Apple Vision OCR to extract Korean text, the DeepL API for translations, and ActivityKit to update the island."
       },
 
       {
@@ -651,7 +651,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "The island has three states: minimal, compact, and expanded. iOS treats Live Activities as an occasional status update and not a live display, so I could not keep the expanded state on screen, and the user has to long press the island to see the translation. I also had to design UI elements around the front-facing camera in the top-center area of the screen."
+        text: "The island has three states: minimal, compact, and expanded. iOS treats Live Activities as occasional status updates rather than a live display, so I could not keep the expanded state on screen, and the user has to long press the island to see the translation. I also had to design UI elements around the front-facing camera in the top-center area of the screen."
       },
 
 
@@ -713,7 +713,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         // own proportions, so nothing is cropped here.
         max: 455,
         height: 204,
-        alt: "The compact Dynamic Island on the home screen above the FaceTime, Calendar, Photos and Camera icons: a Korean flag, an arrow and a US flag at the left, and the start of the Korean line being read at the right",
+        alt: "The compact Dynamic Island on the home screen above the FaceTime, Calendar, Photos, and Camera icons: a Korean flag, an arrow and a US flag at the left, and the start of the Korean line being read at the right",
         caption: "Compact state (after recording stops)",
         captionCenter: true,
       },
@@ -727,7 +727,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         // same proportions.
         max: 480,
         height: 215,
-        alt: "The expanded Dynamic Island over the top of a Korean news article: a Korean-to-US flag pair and a pin at the top, a two-line Korean headline about a Samsung employee's internal loan sending home prices soaring in Suwon Yeongtong, and its English translation under it in grey",
+        alt: "The expanded Dynamic Island over the top of a Korean news article: a Korean-to-US flag pair and a pin at the top, a two-line Korean headline about a Samsung employee's internal loan sending home prices soaring in Suwon Yeongtong, and its English translation under it in gray",
         caption: "Expanded state (long press for full translation)",
         captionCenter: true,
       },
@@ -810,7 +810,7 @@ export const caseStudies: Record<string, CaseStudy> = {
           },
           {
             src: "/projects/screen-translator-floating-window.png",
-            alt: "The floating window over the Naver news front page: a red recording dot in the Dynamic Island, the Politics tab's headline list, and a dark caption panel at the bottom holding the first headline in Korean, its English translation, and the start of the next one",
+            alt: "The floating window over the Naver News front page: a red recording dot in the Dynamic Island, the Politics tab's headline list, and a dark caption panel at the bottom holding the first headline in Korean, its English translation, and the start of the next one",
           },
           {
             src: "/projects/screen-translator-1.png",
@@ -842,7 +842,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
           {
             src: "/projects/screen-translator-captions-idle.png",
-            alt: "The Translate tab before a session: a card with a grey circle and the words Tap the circle to start screen recording, then rows for Select display set to Island, Translation region set to Custom, API Keys and Debug log",
+            alt: "The Translate tab before a session: a card with a gray circle and the words Tap the circle to start screen recording, then rows for Select display set to Island, Translation region set to Custom, API Keys and Debug log",
           },
           {
             src: "/projects/screen-translator-recording.png",
@@ -916,7 +916,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         type: "image",
         src: "/projects/buy-side-site-today-5.png",
         max: 1000,
-        alt: "The Today page with the toggle on AM: a live ticker strip under the nav, then the morning report of Monday, September 14, filed at 8:21 AM ET, its headline on frontier AI labs calling for a slowdown and chip stocks dropping before the open, the paragraph that argues it, a link out to the full six minute read, and the charts panel opening underneath",
+        alt: "The Today page with the toggle on AM: a live ticker strip under the nav, then the morning report of Monday, September 14, filed at 8:21 AM ET, its headline on frontier AI labs calling for a slowdown and chip stocks dropping before the open, the paragraph that argues it, a link out to the full six-minute read, and the charts panel opening underneath",
       },
 
             {
@@ -950,7 +950,7 @@ export const caseStudies: Record<string, CaseStudy> = {
     
       {
         type: "text",
-        text: "Because LLMs don't have long-term memory, the agent calibrates itself by reading reports of the last few days before writing. The historical data simulates continuity and allows the report to distinguish between ongoing and new market trends."
+        text: "Because LLMs don't have long-term memory, the agent calibrates itself by reading reports from the last few days before writing. The historical data simulates continuity and allows the report to distinguish between ongoing and new market trends."
       },
 
       {
@@ -969,7 +969,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "An investor's mental state changes fundamentally depending on the time of day. The morning report is forward-looking and focuses on preparation for pre-market open. The night report is analytical and reflects on the day's performance."
+        text: "An investor's mental state changes fundamentally depending on the time of day. The morning report is forward-looking and focuses on preparation before the market opens. The night report is analytical and reflects on the day's performance."
       },
 
       {
@@ -985,14 +985,14 @@ export const caseStudies: Record<string, CaseStudy> = {
 
             {
         type: "text",
-        text: "I used real-time market data from Yahoo Finance (delayed quotes) and FRED to visualize price action.",
+        text: "I used market data from Yahoo Finance (delayed quotes) and FRED to visualize price action.",
       },
       // delay only applies during the trading session, since outside market hours the last price is the close for most stocks. us stocks and etfs are delayed by ~15 minutes, crypto is closer to current
       // data for chart comes from Yahoo Finance API
 
       {
         type: "text",
-        text: "The interactive chart allows a quick inspection of tickers with candlestick ranges and some technical tools like volume, RSI, EMA, support/resistance and Fibonacci levels."
+        text: "The interactive chart allows a quick inspection of tickers with candlestick ranges and some technical tools like volume, RSI, EMA, support/resistance, and Fibonacci levels."
       },
 
       {
@@ -1012,7 +1012,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         type: "image",
         src: "/projects/buy-side-sector-rotation.png",
         max: 800,
-        alt: "The sector rotation table: eleven sectors from Energy down to Consumer Discretionary, each with its ETF ticker, today's move, and the fifty day move, the gains in green and the losses in red, with a source line under it noting the quotes are delayed",
+        alt: "The sector rotation table: eleven sectors from Energy down to Consumer Discretionary, each with its ETF ticker, today's move, and the fifty-day move, the gains in green and the losses in red, with a source line under it noting the quotes are delayed",
       },
 
       {
@@ -1034,7 +1034,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "The mobile design keeps the same style as the desktop interface with a few small changes. The headline description is more concise and all other pages were moved into a menu button."
+        text: "The mobile design keeps the same style as the desktop interface with a few small changes. The headline description is more concise, and all other pages live in a menu button."
       },
 
       {
@@ -1048,7 +1048,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         items: [
           {
             src: "/projects/buy-side-mobile-today.png",
-            alt: "The Today page on a phone: the ticker strip under the nav, the date with an AM/PM toggle set to AM, the morning report's headline on US strikes on Iranian tankers pushing oil to a two-month high while only short rates move, its opening paragraph, a link to the six minute read, and the charts panel starting below",
+            alt: "The Today page on a phone: the ticker strip under the nav, the date with an AM/PM toggle set to AM, the morning report's headline on US strikes on Iranian tankers pushing oil to a two-month high while only short rates move, its opening paragraph, a link to the six-minute read, and the charts panel starting below",
           },
           {
             src: "/projects/buy-side-mobile-full-read.png",
@@ -1056,11 +1056,11 @@ export const caseStudies: Record<string, CaseStudy> = {
           },
           {
             src: "/projects/buy-side-mobile-full-read-body.png",
-            alt: "Further down the full read on a phone: a CNBC source link, a collapsed row for three more sourced points, the Full Read label with a six minute estimate, an italic methodology note, then the first section heading on Brent clearing $100 with its body paragraph and underlined sourced bullets below",
+            alt: "Further down the full read on a phone: a CNBC source link, a collapsed row for three more sourced points, the Full Read label with a six-minute estimate, an italic methodology note, then the first section heading on Brent clearing $100 with its body paragraph and underlined sourced bullets below",
           },
           {
             src: "/projects/buy-side-mobile-pre-open-table.png",
-            alt: "The pre-open table on a phone for September 9, 2026: rows for Brent, WTI, the 2-year, 10-year and 30-year Treasuries, S&P 500, Nasdaq 100, Dow and Russell 2000 futures, gold, the dollar index, the VIX and bitcoin, each with its level, change and a short note, with the rows the report keys on highlighted in blue",
+            alt: "The pre-open table on a phone for September 9, 2026: rows for Brent, WTI, the 2-year, 10-year and 30-year Treasuries, S&P 500, Nasdaq 100, Dow and Russell 2000 futures, gold, the dollar index, the VIX, and Bitcoin, each with its level, change and a short note, with the rows the report keys on highlighted in blue",
           },
         ],
       },
@@ -1072,7 +1072,7 @@ export const caseStudies: Record<string, CaseStudy> = {
             },
       {
         type: "text",
-        text: "This project has changed many times since the start. Initially I used AI to predict the market and send me buy/sell signals based on its research, but I realized that a strictly informational website would help me more. [Buy Side](https://buy-side-briefings.vercel.app/) used to display a lot more data when I was learning the market but I cut it down to the most important resources."
+        text: "This project has changed many times since the start. Initially I used AI to predict the market and send me buy/sell signals based on its research, but I realized that a strictly informational website would help me more. [Buy Side](https://buy-side-briefings.vercel.app/) used to display a lot more data when I was learning the market, but I cut it down to the most important resources."
       },
 
       {

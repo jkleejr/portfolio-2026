@@ -79,7 +79,7 @@ export const entries: Entry[] = [
   {
     title: "Screen Translator",
     blurb:
-      "Translate the text on your screen without having to switch apps by using the Dynamic Island",
+      "Use the Dynamic Island to translate the text on your screen without switching apps",
       //Live translation of whatever is on screen, running in the background from the Dynamic Island.
       // translate text on screen without having to switch apps.
       // Live translation of whatever is on screen without having to switch apps
