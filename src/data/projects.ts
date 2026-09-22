@@ -96,7 +96,7 @@ export const entries: Entry[] = [
         // Translation region row still clear the top and bottom edges.
         coverCrop: "50% 11%",
         coverZoom: 1.06,
-        alt: "Screen Translator just after recording starts: the recording card with a red to blue glow around it, watching for Korean text, over the display and translation region rows",
+        alt: "Screen Translator just after recording starts: the recording card with a red-to-blue glow around it, watching for Korean text, over the display and translation region rows",
         crop: "50% 2%",
         title: "Screen Translator",
         description: "",

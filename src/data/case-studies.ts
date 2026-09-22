@@ -187,7 +187,7 @@ export const caseStudies: Record<string, CaseStudy> = {
                   },
       {
         type: "text",
-        text: "When I was moving places, I had a room full of clothes, electronics, and other things to sell. It took me too much time to research the fair selling price and write listings for every single item. I tried existing appraisal apps to speed up the process, but they had unnecessary steps, ads, or asked me to subscribe after a few scans. I saw an opportunity to create Loot Check, a free solution that uses AI to identify an item, estimate its value range, and recommend where to sell it.",
+        text: "When I was moving places, I had a room full of clothes, electronics, and other things to sell. It took me too much time to research the fair selling price and write listings for every single item. I tried existing appraisal apps to speed up the process, but they had unnecessary steps or ads, or asked me to subscribe after a few scans. I saw an opportunity to create Loot Check, a free solution that uses AI to identify an item, estimate its value range, and recommend where to sell it.",
       },
 
       
@@ -306,7 +306,7 @@ export const caseStudies: Record<string, CaseStudy> = {
               // managing inference latency - time budgeted fallback, trying to reduce errors
       {
         type: "text",
-        text: "Scans with web searches took ~14-27 seconds from testing, so I capped searches at 45 seconds and the loading state displays an estimated wait time. If the first API call times out, it automatically tries again with the remaining time. If both attempts fail, no price estimate is shown and the user can retry or start over.",
+        text: "Scans with web searches took ~14-27 seconds in testing, so I capped searches at 45 seconds and the loading state displays an estimated wait time. If the first API call times out, it automatically tries again with the remaining time. If both attempts fail, no price estimate is shown and the user can retry or start over.",
       },
 
             {
@@ -357,7 +357,7 @@ export const caseStudies: Record<string, CaseStudy> = {
           {
             src: "/projects/loot-check-generic-match.png",
             fullOnPhone: true,
-            alt: "A warning card on a result titled \"Not sure of the exact product\". It says this looks like a generic match, suggests adding a close-up of the brand logo or typing the brand in the detail field, and offers an \"Add a photo & retry\" button",
+            alt: "A warning card on a result titled \"Not sure of the exact product.\" It says this looks like a generic match, suggests adding a close-up of the brand logo or typing the brand in the detail field, and offers an \"Add a photo & retry\" button.",
           },
         ],
       },
@@ -453,7 +453,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "Generating audio for the entire paper was unnecessary if someone only wanted to listen briefly. I organized text from a paper into groups of about 750 characters, which made ~50 seconds of audio. Making groups shorter would require more API requests and could reach Gemini's free tier rate limit, while making groups longer would increase the initial wait time. At 50 seconds, the first group takes ~20 seconds to generate and the next group loads in the background.",
+        text: "Generating audio for the entire paper was unnecessary if someone only wanted to listen briefly. I organized text from a paper into groups of about 750 characters, which made ~50 seconds of audio. Making groups shorter would require more API requests and could reach Gemini's free-tier rate limit, while making groups longer would increase the initial wait time. At 50 seconds, the first group takes ~20 seconds to generate and the next group loads in the background.",
       },
 
 
@@ -467,7 +467,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         // Apple NLTokenizer splits text
       {
         type: "text",
-        text: "Because Gemini only returns audio and no timestamps, the app has to estimate which sentence is being spoken to highlight it. I used Apple's NLTokenizer to find the end of each sentence instead of splitting text on periods to prevent abbreviations like \"et al.\" or \"Fig. 1\" from breaking sentences. The app groups the sentences, sends them to Gemini TTS, and receives an audio clip. Since the app knows the duration of the clip, it divides a group's audio proportionally by character count, so a sentence with 5% of a group's characters is assumed to take 5% of the audio. As audio plays, the app tracks the time passed and highlights a sentence based on its estimate. This is not always accurate, so sentences are re-synced at the start of every group to minimize errors.",
+        text: "Because Gemini only returns audio and no timestamps, the app has to estimate which sentence is being spoken to highlight it. I used Apple's NLTokenizer to find the end of each sentence instead of splitting text on periods, so abbreviations like \"et al.\" or \"Fig. 1\" don't break sentences. The app groups the sentences, sends them to Gemini TTS, and receives an audio clip. Since the app knows the duration of the clip, it divides a group's audio proportionally by character count, so a sentence with 5% of a group's characters is assumed to take 5% of the audio. As audio plays, the app tracks the time passed and highlights a sentence based on its estimate. This is not always accurate, so sentences are re-synced at the start of every group to minimize errors.",
       },
 
       {
@@ -595,7 +595,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "If I continued this idea, I would manage keys on the backend and cover the initial costs for onboarding, charge per paper, or switch to a cheaper TTS model. Considering the market, products like Speechify dominate consumer text-to-speech and solve the same problems, so it would be difficult to monetize this idea without a valuable use case.",
+        text: "If I continued this idea, I would manage keys on the backend and cover the initial costs for onboarding, charge per paper, or switch to a cheaper TTS model. In the current market, products like Speechify dominate consumer text-to-speech and solve the same problems, so it would be difficult to monetize this idea without a valuable use case.",
       },
     ],
   },
@@ -713,7 +713,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         // own proportions, so nothing is cropped here.
         max: 455,
         height: 204,
-        alt: "The compact Dynamic Island on the home screen above the FaceTime, Calendar, Photos, and Camera icons: a Korean flag, an arrow and a US flag at the left, and the start of the Korean line being read at the right",
+        alt: "The compact Dynamic Island on the home screen above the FaceTime, Calendar, Photos, and Camera icons: a Korean flag, an arrow, and a US flag at the left, and the start of the Korean line being read at the right",
         caption: "Compact state (after recording stops)",
         captionCenter: true,
       },
@@ -842,15 +842,15 @@ export const caseStudies: Record<string, CaseStudy> = {
 
           {
             src: "/projects/screen-translator-captions-idle.png",
-            alt: "The Translate tab before a session: a card with a gray circle and the words Tap the circle to start screen recording, then rows for Select display set to Island, Translation region set to Custom, API Keys and Debug log",
+            alt: "The Translate tab before a session: a card with a gray circle and the words Tap the circle to start screen recording, then rows for Select display set to Island, Translation region set to Custom, API Keys, and Debug log",
           },
           {
             src: "/projects/screen-translator-recording.png",
-            alt: "The Translate tab while recording: the Dynamic Island holding a red recording dot, the card retitled Recording with a note that captions follow you between apps, a red to blue glow around it, and two Korean sentences from a court ruling with their English under each",
+            alt: "The Translate tab while recording: the Dynamic Island holding a red recording dot, the card retitled Recording with a note that captions follow you between apps, a red-to-blue glow around it, and two Korean sentences from a court ruling with their English under each",
           },
           {
             src: "/projects/screen-translator-captions-sheet.png",
-            alt: "The Live captions sheet: a count of thirteen and a Done button, then each caption as a card with its Korean line, its English under it and a pin at the corner, the first one pinned in blue and the rest hollow",
+            alt: "The Live captions sheet: a count of thirteen and a Done button, then each caption as a card with its Korean line, its English under it, and a pin at the corner, the first one pinned in blue and the rest hollow",
           },
         ],
       },
@@ -1005,7 +1005,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
             {
         type: "text",
-        text: "To display the flow of capital, I added a table for short-term (1-day) and medium-term (50-day) changes of 11 ETFs."
+        text: "To display the flow of capital, I added a table for short-term (1-day) and medium-term (50-day) changes for 11 ETFs."
       },
 
       {
@@ -1017,7 +1017,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "Instead of using a calendar list, I designed a timeline for upcoming earnings calls up to 90 days out. Solid dots represent confirmed dates and hollow dots are unconfirmed.",
+        text: "Instead of using a calendar list, I designed a timeline for upcoming earnings calls up to 90 days out. Solid dots represent confirmed dates, and hollow dots represent unconfirmed ones.",
       },
 
       {
@@ -1060,7 +1060,7 @@ export const caseStudies: Record<string, CaseStudy> = {
           },
           {
             src: "/projects/buy-side-mobile-pre-open-table.png",
-            alt: "The pre-open table on a phone for September 9, 2026: rows for Brent, WTI, the 2-year, 10-year and 30-year Treasuries, S&P 500, Nasdaq 100, Dow and Russell 2000 futures, gold, the dollar index, the VIX, and Bitcoin, each with its level, change and a short note, with the rows the report keys on highlighted in blue",
+            alt: "The pre-open table on a phone for September 9, 2026: rows for Brent, WTI, the two-year, ten-year, and thirty-year Treasuries, S&P 500, Nasdaq 100, Dow and Russell 2000 futures, gold, the dollar index, the VIX, and Bitcoin, each with its level, change, and a short note, with the rows the report keys on highlighted in blue",
           },
         ],
       },

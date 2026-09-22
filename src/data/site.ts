@@ -20,7 +20,7 @@ export const site = {
 
   // The last line of the homepage, under the work. Left out entirely when it
   // is empty, rather than leaving a gap at the foot of the page.
-  closing: "Open to product design and design engineer roles.",
+  closing: "Open to product design and design engineering roles.",
 
   // One entry per line: each is set as a paragraph of its own rather than run
   // into the one before it.
