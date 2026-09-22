@@ -99,7 +99,7 @@ function CoverDot({ dot }: { dot: NonNullable<EntryImage["coverDot"]> }) {
 // ---------------------------------------------------------------------------
 
 const TILT = 14;
-const TILT_SPRING = { damping: 30, stiffness: 100, mass: 2 };
+const TILT_SPRING = { damping: 25, stiffness: 350, mass: 0.5 };
 
 function useTilt() {
   const rotateX = useSpring(useMotionValue(0), TILT_SPRING);
