@@ -18,6 +18,11 @@ export const site = {
     { label: "LinkedIn", href: "https://www.linkedin.com/in/john-lee-779329401/" },
   ],
 
+  // Between the links and Contact at the foot of the homepage. Clicking it
+  // saves the file rather than opening it, under the name given here. The file
+  // itself lives in public/, so the href is its path from the site root.
+  resume: { label: "Resume", href: "/John_Lee_Resume.pdf", filename: "John_Lee_Resume.pdf" },
+
   // The last line of the homepage, under the work. Left out entirely when it
   // is empty, rather than leaving a gap at the foot of the page.
   closing: "Open to product design and design engineering roles.",

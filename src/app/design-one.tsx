@@ -345,12 +345,13 @@ export function DesignOne() {
             rather than running under them. */}
         <div className="mt-16 flex flex-col gap-4 sm:mt-0 sm:block">
           {site.closing && (
-            <p className="text-lg font-medium leading-relaxed text-foreground sm:absolute sm:bottom-6 sm:left-6 sm:right-76">
+            <p className="text-lg font-medium leading-relaxed text-foreground sm:absolute sm:bottom-6 sm:left-6 sm:right-100">
               {site.closing}
             </p>
           )}
-          {/* The other places to find him, then the way to write to him. One
-              line, so it is the line that is pinned and not each link. */}
+          {/* The other places to find him, his resume, then the way to write
+              to him. One line, so it is the line that is pinned and not each
+              link. */}
           <nav className="flex gap-6 self-end text-lg font-medium text-foreground sm:absolute sm:bottom-6 sm:right-6">
             {site.links.map(
               (link) =>
@@ -366,6 +367,15 @@ export function DesignOne() {
                   </a>
                 ),
             )}
+            {/* The download attribute is what makes the click save the file
+                rather than open it in the tab. */}
+            <a
+              href={site.resume.href}
+              download={site.resume.filename}
+              className="transition-colors duration-200 ease-out hover:text-accent"
+            >
+              {site.resume.label}
+            </a>
             <a
               href={`mailto:${site.email}`}
               className="transition-colors duration-200 ease-out hover:text-accent"
