@@ -338,7 +338,7 @@ function Block({
             className={`${lead} relative mb-2 text-xl font-bold leading-snug tracking-[-0.02em]`}
           >
             {/* A line about the section, out in the margin at the left of the
-                window rather than in the column — the same margin the project
+                band rather than in the column — the same margin the project
                 above it puts its dates in, so the whole left edge of the page
                 is one voice talking about what is beside it.
 
@@ -552,11 +552,13 @@ function Block({
         // Centred in the column rather than filling it: the recordings are
         // shot on a phone, so a full-width one would stand a screen and a half
         // tall. Capped at a phone's width and put in the middle of the page.
-        // 340px, against files that are 498px wide — room to go on if one
-        // wants it, and short of the width where the picture would soften.
-        // The number is here twice on purpose: the middle grid column is the
-        // video's width, so the two beside it stay equal only if both move
-        // together.
+        // The width is --film in globals.css — 340px, against files that are
+        // 498px wide, and less than that on a window too short to show the
+        // film whole; see "A recording that fits the window" there. It is
+        // read here three times — the middle grid column, the film's own
+        // max-width, and every caption set beside it — so the columns beside
+        // the film stay equal and the captions stay on the frame they point
+        // at, whatever size it is drawn at.
         //
         // Three columns rather than a caption set out of the flow: the middle
         // one is the video's width, so the two beside it are equal and the
@@ -571,14 +573,14 @@ function Block({
         // off its right edge, so the pair read as sitting right of a shot
         // centred on its own. Shifted as a whole so the captions keep their
         // place against the video's edges.
-        <figure className="sm:grid sm:grid-cols-[1fr_340px_1fr] sm:items-center sm:-translate-x-1.5">
+        <figure className="sm:grid sm:grid-cols-[1fr_var(--film)_1fr] sm:items-center sm:-translate-x-1.5">
           <video
             src={block.src}
             // Its shape, before a byte of it has arrived. Without it a film
             // is 300 by 150 until its header lands, a tenth of a second after
-            // the study is on the page, and then 737 tall — with the captions
-            // beside it, which are placed off its height, and everything
-            // under it jumping to suit. See media-size.ts.
+            // the study is on the page, and then 737 tall at the full 340px
+            // — with the captions beside it, which are placed off its height,
+            // and everything under it jumping to suit. See media-size.ts.
             {...mediaSize(block.src)}
             // And its first frame, as a picture a fiftieth of its weight, so
             // what holds that room while the film loads is the film and not
@@ -594,22 +596,29 @@ function Block({
             // rest of what the browser puts there is not.
             controlsList="nodownload noplaybackrate"
             disablePictureInPicture
-            className="mx-auto w-full max-w-[340px] rounded-xl border border-foreground/10 sm:col-start-2"
+            className="mx-auto w-full max-w-[var(--film)] rounded-xl border border-foreground/10 sm:col-start-2"
           />
           {/* A little above the middle of the video, and under it below sm,
-              where there is no room beside it. */}
+              where there is no room beside it.
+
+              Every lift here and on the other side is a fraction of --film:
+              the pixels it was measured at on the 340px film, over 340. The
+              captions are centred on the film by the grid and then lifted, so
+              a lift that scales with the film's width scales with its height
+              too, and the caption stays on the frame it was set against when
+              the film is drawn smaller on a short window. */}
           {block.caption && (
             <figcaption
               className={`mt-3 text-base italic leading-relaxed sm:col-start-3 sm:mt-0 sm:pl-5 ${
                 block.captionHiddenOnPhone ? "max-sm:hidden" : ""
               } ${
                 block.captionAlign === "highest"
-                  ? "sm:-translate-y-[293px]"
+                  ? "sm:-translate-y-[calc(var(--film)*0.862)]"
                   : block.captionAlign === "higher"
-                  ? "sm:-translate-y-[290px]"
+                  ? "sm:-translate-y-[calc(var(--film)*0.853)]"
                   : block.captionAlign === "high"
-                    ? "sm:-translate-y-24"
-                    : "sm:-translate-y-14"
+                    ? "sm:-translate-y-[calc(var(--film)*0.282)]"
+                    : "sm:-translate-y-[calc(var(--film)*0.165)]"
               }`}
             >
               {block.caption}
@@ -621,14 +630,14 @@ function Block({
 
               Capped well short of the column it sits in, and pushed to the
               far end of it. The column is a 1fr of a grid measured off the
-              window, so on a wide screen a line left to fill it starts a long
+              band, so on a wide screen a line left to fill it starts a long
               way out to the left and reads as a stray remark rather than a
               note on the video. Held to 15rem it breaks into a narrow block
               stacked against the video's edge, which is what the line beside
               it does on the other side. */}
           {block.captionLeft && (
             <figcaption
-              className={`mt-3 space-y-3 text-base italic leading-relaxed sm:col-start-1 sm:row-start-1 sm:mt-0 sm:ml-auto sm:max-w-[15rem] sm:-translate-y-8 sm:pr-5 sm:text-right ${
+              className={`mt-3 space-y-3 text-base italic leading-relaxed sm:col-start-1 sm:row-start-1 sm:mt-0 sm:ml-auto sm:max-w-[15rem] sm:-translate-y-[calc(var(--film)*0.094)] sm:pr-5 sm:text-right ${
                 block.captionLeftHiddenOnPhone ? "max-sm:hidden" : ""
               }`}
             >
@@ -638,14 +647,16 @@ function Block({
               ).map((line, i) => (
                 // The lines are set apart from where they would fall by
                 // translates, which leaves the ones under them where they are.
+                // Fractions of --film, like the caption on the other side —
+                // 24px, 44px and 40px on the 340px film.
                 <p
                   key={line}
                   className={
                     i > 0
-                      ? "sm:translate-y-6"
+                      ? "sm:translate-y-[calc(var(--film)*0.071)]"
                       : block.captionLeftAlign === "low"
-                        ? "sm:translate-y-[44px]"
-                        : "sm:-translate-y-10"
+                        ? "sm:translate-y-[calc(var(--film)*0.129)]"
+                        : "sm:-translate-y-[calc(var(--film)*0.118)]"
                   }
                 >
                   {line}

@@ -44,7 +44,7 @@
      instead. Measured on the client and written here — see the script at the
      foot of layout.tsx — because CSS has no way to ask.
 
-     Every measure below that starts from 100vw needs it. 100vw is the window
+     --page below starts from 100vw and needs it. 100vw is the window
      including the scrollbar, while everything on the page is laid out in the
      width the scrollbar leaves behind, and the two are centred on different
      points. Half a scrollbar is the error, which is why the role at the top
@@ -53,24 +53,38 @@
      where this is 0 and nothing changes. */
   --scrollbar: 0px;
 
-  /* The strip of window left over beside the column, less the air held at
+  /* The band the page is laid out in: the window less its scrollbar, and no
+     wider than 97.3rem. That number is where the name across the top reaches
+     its 18rem ceiling — 18rem divided by the 0.185 of --name-size below — so
+     it is the width the page was drawn at, and the two numbers are one and
+     move together. Past it the band stops growing and is centred in the
+     window by the wrapper in layout.tsx, and everything that was measured
+     from a window edge — the notes in the margin, the study's right edge,
+     the buttons in the corner, the links at the foot — is measured from the
+     band's edge instead. On a wide monitor that is the whole difference: the
+     page keeps the shape it has on a laptop, with the room left over split
+     evenly either side rather than opening up inside it. Under 97.3rem the
+     band is the window, and nothing moves. */
+  --page: min(100vw - var(--scrollbar), 97.3rem);
+
+  /* The strip of band left over beside the column, less the air held at
      each end of it — the room a note set out in the margin has to live in.
      Read by the facts about a project, which move out there while its study
      is open; see StudyFacts in project-study.tsx.
 
-     100vw and not 100%, because it is measured against the window rather than
-     against whatever box the note is written in. The scrollbar comes off it
-     first — see --scrollbar above — so what is left is the width the page is
-     actually laid out in. The 3rem is then only air: 1.5rem at the window's
-     edge, and the 1.5rem the note is held off the cover by. */
-  --margin-note: calc((100vw - var(--scrollbar) - var(--column)) / 2 - 3rem);
+     --page and not 100%, because it is measured against the band rather than
+     against whatever box the note is written in. The column is centred in
+     the band, so half of what the column leaves is the strip on each side.
+     The 3rem is then only air: 1.5rem at the band's edge, and the 1.5rem
+     the note is held off the cover by. */
+  --margin-note: calc((var(--page) - var(--column)) / 2 - 3rem);
 
   /* And where it starts, measured from the left edge of the column it is set
      beside — a negative number, since it is out to the left of it. 1.5rem
-     from the window's own edge, which is where the role at the top of the
-     page sits, so a note in the margin lines up under it rather than
+     from the band's own edge, which is where the intro at the top of the
+     page starts, so a note in the margin lines up under it rather than
      floating somewhere between it and the column. */
-  --margin-note-x: calc(1.5rem - (100vw - var(--scrollbar) - var(--column)) / 2);
+  --margin-note-x: calc(1.5rem - (var(--page) - var(--column)) / 2);
 
   /* How wide a study runs when it is opened under its project. Wider than the
      column the list is set in, and wider on the right only: it starts at the
@@ -79,24 +93,35 @@
      out there — and the right is empty.
 
      All of it: the column plus the whole margin at its right, less 1.5rem of
-     air at the window's edge and the 1.5rem the note on the other side is
-     held off by. Nothing caps it but the window, so on a wide screen a line
-     runs long — 1340px gives about a hundred and ten characters, and a line
-     that long is hard to come back from at the end of it. If it wants
-     holding, a min() against a fixed width here is the place. */
-  --study-width: calc((100vw - var(--scrollbar) + var(--column)) / 2 - 3rem);
+     air at the band's edge and the 1.5rem the note on the other side is
+     held off by. The band caps it: at 97.3rem it comes to about 1044px, a
+     hundred and ten characters or so, which is the length the page was
+     drawn at. Wider than that a line was hard to come back from at the end
+     of it, and the band is what now holds it. */
+  --study-width: calc((var(--page) + var(--column)) / 2 - 3rem);
 
   /* The name across the top of the homepage. It sets solid, so its type size
      is also its height — which is what the line beneath it has to clear, and
      the reason the size lives here rather than only in the markup. Where the
-     18.5vw comes from, and why it is bounded, is in the note on the name in
-     design-one.tsx. */
-  --name-size: clamp(2rem, 18.5vw, 18rem);
+     0.185 comes from is in the note on the name in design-one.tsx. It was
+     18.5vw, capped at 18rem; now it is 18.5% of the band, which is the same
+     thing with the cap moved into --page, less the scrollbar — about 3px
+     smaller on a machine drawing one, and the same as before on one that
+     does not. The floor is for a window too narrow for the name at all. */
+  --name-size: max(2rem, calc(var(--page) * 0.185));
   /* The height of the row across the top of the page, which is the two
      buttons at the right of it. It is the apple's box, the taller of the
      two. The homepage reads it to know how far to drop its name under 900px,
      where the name would otherwise run into them on that same line. */
   --top-row: 2.75rem;
+
+  /* The width a recording in a study is drawn at — a phone's width. 340px
+     against files 498px wide; see the video case in case-study.tsx, which
+     reads it for the middle column of its grid, the film's own max-width and
+     every caption set beside it, since those are placed as fractions of it.
+     One number, so the three cannot drift apart. From sm up it gives way on
+     a short window — see "A recording that fits the window" below. */
+  --film: 340px;
 
   color-scheme: light;
 }
@@ -282,6 +307,35 @@ body {
   :root {
     --cover: 104px;
     --cover-gap: 1rem;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   A recording that fits the window
+   The films are 498 by 1080, so at 340px wide one stands 737px tall, and once
+   a study is scrolled to its first film starts 264px down — 24px of scroll-mt,
+   the 200px row, the 40px above the study. That needs a window about 1000px
+   tall to show whole, which a laptop has and a short window does not: on one
+   the bottom of the film was simply off the screen.
+
+   So below a height the film is cut to what is left: the window's height less
+   13.5rem, turned into a width by the films' 0.461 ratio, and never narrower
+   than 221px (480px tall). The 13.5rem is the one number to move. The film
+   starts shrinking once the window is shorter than 737px plus that — about
+   954px — which leaves a 960px laptop at the full 340px; an 800px window gets
+   about 269px, and at 540px it is on the floor and the reader scrolls a
+   little. A larger constant fits the film under the row on more windows at
+   the cost of shrinking it on the laptop it was drawn on: 18rem fits it
+   whole on anything 1025px tall and up.
+
+   svh rather than vh, so a phone's toolbar never counts as room. Only from
+   sm, where the captions sit beside the film and are placed off its height;
+   under it the grid is off and the film keeps its 340px.
+   --------------------------------------------------------------------------- */
+
+@media (width >= 40rem) {
+  :root {
+    --film: clamp(221px, calc((100svh - 13.5rem) * 0.461), 340px);
   }
 }
 

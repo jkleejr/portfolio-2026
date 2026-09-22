@@ -126,30 +126,46 @@ export default function RootLayout({
               'if(location.pathname.split("/").filter(Boolean).length===1)history.scrollRestoration="manual"',
           }}
         />
-        {/* One container places every button, so their spacing is a gap
-            rather than a sum each of them has to know. The top-right corner,
-            as a row, at every width — no breakpoint. The apple is last, which
-            puts it hard against the right edge.
+        {/* The band the page is laid out in — see --page in globals.css. It
+            is the window up to about 1557px and a centred box of that width
+            past it, so the buttons in the corner, the name, the notes in the
+            margin, the column and the links at the foot all keep their
+            places against the same edges at any window size. relative so
+            the corner stack here and, through main, the homepage's footer
+            pin to the band's corners rather than the window's: past the cap
+            the two are not the same.
 
-            items-center is what --top-row on the homepage measures against:
-            the row is the apple's height, and the name is dropped under it on
-            a phone. */}
-        <div
-          data-gravity="atom"
-          className="corner-stack absolute right-6 top-6 z-20 flex flex-row items-center gap-2"
-        >
-          <AppleButton />
+            Never give this box a transform, a filter or contain. Gravity pins
+            the corner stack with position: fixed and reads its place off the
+            viewport, and any of those would make this box what fixed
+            resolves against. The two scripts at the foot of the body stay
+            outside it; neither looks inside a particular box. */}
+        <div className="relative mx-auto max-w-[var(--page)]">
+          {/* One container places every button, so their spacing is a gap
+              rather than a sum each of them has to know. The band's top-right
+              corner, as a row, at every width — no breakpoint. The apple is
+              last, which puts it hard against the right edge.
+
+              items-center is what --top-row on the homepage measures against:
+              the row is the apple's height, and the name is dropped under it
+              on a phone. */}
+          <div
+            data-gravity="atom"
+            className="corner-stack absolute right-6 top-6 z-20 flex flex-row items-center gap-2"
+          >
+            <AppleButton />
+          </div>
+          {/* The drawn cursor is switched off for now — uncomment to bring it
+              back. */}
+          {/* <SiteCursor /> */}
+          {/* Cursor ribbons are switched off for now. The effect is still
+              here — re-enable it by uncommenting this line. */}
+          {/* <CursorRibbons /> */}
+          {children}
         </div>
-        {/* The drawn cursor is switched off for now — uncomment to bring it
-            back. */}
-        {/* <SiteCursor /> */}
-        {/* Cursor ribbons are switched off for now. The effect is still
-            here — re-enable it by uncommenting this line. */}
-        {/* <CursorRibbons /> */}
-        {children}
-        {/* The scrollbar's width onto :root, for the measures in globals.css
-            that start from 100vw — read the note on --scrollbar there for why
-            they need it.
+        {/* The scrollbar's width onto :root, for --page in globals.css and
+            every measure that starts from it — read the note on --scrollbar
+            there for why they need it.
 
             At the foot of the body rather than the head on purpose: the
             difference it is measuring only exists once there is enough page

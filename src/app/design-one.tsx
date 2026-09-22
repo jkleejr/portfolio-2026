@@ -17,9 +17,10 @@ import { ProjectTitle } from "./project-title";
 /**
  * When a project was made, what the role was, and how far it went.
  *
- * Out in the margin at the left of the window, on the line the role at the top
- * of the page holds — so everything the page says about itself in the margin
- * is ranged off one edge. Nothing else leaves the column. These are notes
+ * Out in the margin at the left of the band the page is laid out in — see
+ * --page in globals.css — on the line the intro at the top of the page holds,
+ * so everything the page says about itself in the margin is ranged off one
+ * edge. Nothing else leaves the column. These are notes
  * about the project rather than part of it, and the study under the row, when
  * it is opened, does not have to carry them.
  *
@@ -87,7 +88,7 @@ export function DesignOne() {
 
           From 900px it starts at the very top, on the line the buttons in the
           opposite corner are on. There is room for both: the name is 87% of
-          the window and the buttons are in the last 70px of it, so at 900px
+          the band and the buttons are in the last 70px of it, so at 900px
           some 40px is left between the last E and the apple, and more above
           that. Under 900px there is not, so the name takes --top-row plus a
           gap as a top margin and sits under the buttons instead. Reading the
@@ -115,8 +116,15 @@ export function DesignOne() {
           which makes the padding worth as much as the size. There is none on
           the right for that reason: set from the left, the name needs only
           its own left margin, and with nothing reserved at the other end
-          18.5vw holds down to a 200px window. What is left over at the right
+          18.5% holds down to a 200px window. What is left over at the right
           is a margin all the same — about 1.5rem of it on a 390px phone.
+
+          18.5% of --page, the band the page is laid out in, rather than of
+          the window: the two are the same up to about 1557px, and past that
+          the band stops growing and is centred, so the name holds at 18rem
+          and the whole page goes with it as one block. That is where the
+          ceiling comes from — it is the band's cap in globals.css, not a
+          number here.
 
           The other cost is worth naming. Letting the name break gave the
           phone a much larger one — only "JOHN" at 2.62em had to fit, which
@@ -188,7 +196,7 @@ export function DesignOne() {
       </header>
 
       {/* Everything else the page says is one column — a cover, and the writing
-          beside it — and the column sits in the middle of the window rather
+          beside it — and the column sits in the middle of the band rather
           than against its left edge. The maximum is what keeps a margin on a
           phone, where the column is wider than the screen. */}
       <div className="mx-auto w-[var(--column)] max-w-[calc(100%-3rem)]">
@@ -324,16 +332,16 @@ export function DesignOne() {
         </ProjectList>
 
         {/* What the work was leading to, and the way to answer it. From sm up
-            these are not in the column at all: they sit in the page's two
-            bottom corners, closing it the way the role and the buttons open it
-            at the top.
+            these are not in the column at all: they sit in the band's two
+            bottom corners, closing it the way the intro and the buttons open
+            it at the top.
 
             They are pinned to main rather than to the initial containing
             block, which is why main is relative. An absolute box with no
             positioned ancestor resolves bottom against the first viewport, so
             on a page this long it would land somewhere up in the projects
-            instead of at the end of them. main's box is the whole document,
-            and bottom-6 sits inside its pb-28.
+            instead of at the end of them. main's box is the whole document
+            at the band's width, and bottom-6 sits inside its pb-28.
 
             Still in flow below sm, where pb-8 is not deep enough to hold a
             pinned line clear of the last project row. The wrapper keeps that
