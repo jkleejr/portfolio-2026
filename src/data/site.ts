@@ -11,14 +11,14 @@ export const site = {
   // Under the role in the header, as the way to get in touch.
   email: "johnkleejr@gmail.com",
 
-  // Beside Contact at the foot of the homepage, in this order. One with no
+  // Beside Email at the foot of the homepage, in this order. One with no
   // href is left out rather than set as a link to nowhere.
   links: [
     { label: "GitHub", href: "https://github.com/jkleejr" },
     { label: "LinkedIn", href: "https://www.linkedin.com/in/john-lee-779329401/" },
   ],
 
-  // Between the links and Contact at the foot of the homepage. Clicking it
+  // Between the links and Email at the foot of the homepage. Clicking it
   // saves the file rather than opening it, under the name given here. The file
   // itself lives in public/, so the href is its path from the site root.
   resume: { label: "Resume", href: "/John_Lee_Resume.pdf", filename: "John_Lee_Resume.pdf" },

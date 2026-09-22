@@ -380,7 +380,7 @@ export function DesignOne() {
               href={`mailto:${site.email}`}
               className="transition-colors duration-200 ease-out hover:text-accent"
             >
-              Contact
+              Email
             </a>
           </nav>
         </div>
