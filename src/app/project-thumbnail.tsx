@@ -13,6 +13,7 @@
 // ---------------------------------------------------------------------------
 
 import { useEffect, useRef, useState } from "react";
+import { motion, useMotionValue, useSpring } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
 import { caseStudies } from "@/data/case-studies";
@@ -89,6 +90,45 @@ function CoverDot({ dot }: { dot: NonNullable<EntryImage["coverDot"]> }) {
   );
 }
 
+// ---------------------------------------------------------------------------
+// The tilt under the pointer. The cover turns about its middle as if the
+// pointer were pressing on it: the edge nearest the cursor sinks away and the
+// far one comes up, at most TILT degrees either way, and it springs back flat
+// when the pointer leaves. Springs rather than a transition, so a quick pass
+// over the square eases in and out instead of snapping to each new angle.
+// ---------------------------------------------------------------------------
+
+const TILT = 14;
+const TILT_SPRING = { damping: 30, stiffness: 100, mass: 2 };
+
+function useTilt() {
+  const rotateX = useSpring(useMotionValue(0), TILT_SPRING);
+  const rotateY = useSpring(useMotionValue(0), TILT_SPRING);
+
+  const onMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+    // Not while the page has weight: the cover is being thrown about by then,
+    // and gravity writes this same transform itself.
+    if (document.documentElement.classList.contains("gravity-on")) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const box = e.currentTarget.getBoundingClientRect();
+    // -1 to 1 across the square, 0 at its middle.
+    const x = (e.clientX - box.left) / (box.width / 2) - 1;
+    const y = (e.clientY - box.top) / (box.height / 2) - 1;
+    rotateX.set(-y * TILT);
+    rotateY.set(x * TILT);
+  };
+  const onMouseLeave = () => {
+    rotateX.set(0);
+    rotateY.set(0);
+  };
+
+  return {
+    style: { rotateX, rotateY, transformPerspective: 800 },
+    onMouseMove,
+    onMouseLeave,
+  };
+}
+
 export function ProjectThumbnail({
   image,
   slug,
@@ -139,6 +179,8 @@ export function ProjectThumbnail({
     el.currentTime = 0;
   };
 
+  const tilt = useTilt();
+
   // The screenshots are ~1200px wide, so letting the browser squeeze one into a
   // box this size is a ~6x downscale that its cheap filter turns to mush.
   // next/image resamples them properly and ships a 2x variant for retina
@@ -155,11 +197,16 @@ export function ProjectThumbnail({
     // The film, where there is one, is started and stopped from here rather
     // than left to autoplay: a loop running behind a pointer that is nowhere
     // near it is work nobody asked for, and five of them would be five.
-    <div
+    <motion.div
       data-gravity="piece"
       className={`${box} relative overflow-hidden`}
+      style={tilt.style}
       onMouseEnter={image.coverVideo ? enter : undefined}
-      onMouseLeave={image.coverVideo ? leave : undefined}
+      onMouseMove={tilt.onMouseMove}
+      onMouseLeave={() => {
+        tilt.onMouseLeave();
+        if (image.coverVideo) leave();
+      }}
     >
       <Image
         src={shown}
@@ -204,7 +251,7 @@ export function ProjectThumbnail({
         />
       )}
       {image.coverDot && <CoverDot dot={image.coverDot} />}
-    </div>
+    </motion.div>
   ) : (
     // A project whose cover has not been taken yet still holds its row.
     <div className={`${box} bg-foreground/[0.02]`} aria-label={image.alt} />
