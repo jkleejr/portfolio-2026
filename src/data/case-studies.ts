@@ -193,7 +193,7 @@ export const caseStudies: Record<string, CaseStudy> = {
                   },
       {
         type: "text",
-        text: "When I was moving places, I had a room full of clothes, electronics, and other things to sell. It took me too much time to research the fair selling price and write listings for every single item. I tried existing appraisal apps to speed up the process, but they had unnecessary steps or ads, or asked me to subscribe after a few scans. I saw an opportunity to create Loot Check, a free solution that uses AI to identify an item, estimate its value range, and recommend where to sell it.",
+        text: "When I was moving places, I had a room full of clothes, electronics, and other things to sell. It took me too much time to research the fair selling price and write listings for every single item. I tried existing appraisal apps to speed up the process, but they had unnecessary steps, ads, or asked me to subscribe after a few scans. I saw an opportunity to create Loot Check, a free solution that uses AI to identify an item, estimate its value range, and recommend where to sell it.",
       },
 
       
@@ -312,7 +312,7 @@ export const caseStudies: Record<string, CaseStudy> = {
               // managing inference latency - time budgeted fallback, trying to reduce errors
       {
         type: "text",
-        text: "Scans with web searches took ~14-27 seconds in testing, so I capped searches at 45 seconds and the loading state displays an estimated wait time. If the first API call times out, it automatically tries again with the remaining time. If both attempts fail, no price estimate is shown and the user can retry or start over.",
+        text: "Scans with web searches took ~14 to 27 seconds in testing, so I capped searches at 45 seconds and the loading state displays an estimated wait time. If the first API call times out, it automatically tries again with the remaining time. If both attempts fail, no price estimate is shown and the user can retry or start over.",
       },
 
             {
