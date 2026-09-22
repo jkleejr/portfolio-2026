@@ -59,6 +59,10 @@ import { mediaSize } from "./media-size";
  */
 const LATER = { loading: "lazy", decoding: "async" } as const;
 
+/** A size in case-studies.ts, in pixels at full size, as a length that
+ *  shrinks with the film on a short window — see --shot in globals.css. */
+const shot = (px: number) => `calc(${px} * var(--shot))`;
+
 /** A film's first frame, if one has been saved beside it. */
 function poster(src: string): string | undefined {
   const still = src.replace(/\.[a-z0-9]+$/i, "-poster.jpg");
@@ -417,23 +421,27 @@ function Block({
             className={`mx-auto w-full max-w-full rounded-xl border border-foreground/10 ${
               block.shift ? "sm:translate-x-(--shift)" : ""
             }`}
+            // Every size in pixels goes through shot(), so the picture
+            // shrinks with the film on a short window rather than holding
+            // its size beside a film that has given way.
             style={{
               ...(block.shift
-                ? ({ "--shift": `${block.shift}px` } as React.CSSProperties)
+                ? ({ "--shift": shot(block.shift) } as React.CSSProperties)
                 : null),
-              ...(block.width ? { width: block.width } : null),
-              ...(block.max ? { maxWidth: block.max } : null),
+              ...(block.width ? { width: shot(block.width) } : null),
+              ...(block.max ? { maxWidth: shot(block.max) } : null),
               ...(block.crop ? { objectPosition: block.crop } : null),
               // With a max, the height is the height at that width and the
               // shot keeps the proportion below it: a phone's column is
               // narrower than the max, and a fixed height there would zoom
-              // the shot to fill it and crop the sides away.
+              // the shot to fill it and crop the sides away. The proportion
+              // is a ratio of two sizes, so it needs no scaling of its own.
               ...(block.height
                 ? block.max
                   ? { aspectRatio: `${block.max} / ${block.height}`, objectFit: "cover" }
-                  : { height: block.height, objectFit: "cover" }
+                  : { height: shot(block.height), objectFit: "cover" }
                 : null),
-              ...(block.radius ? { borderRadius: block.radius } : null),
+              ...(block.radius ? { borderRadius: shot(block.radius) } : null),
             }}
           />
           <Caption text={block.caption} center={block.captionCenter} />
@@ -454,7 +462,7 @@ function Block({
                 alt,
                 ...mediaSize(src),
               }))}
-              max={block.max}
+              max={block.max ? shot(block.max) : undefined}
               columns={block.columns}
             />
             <Caption text={block.caption} />
@@ -476,7 +484,7 @@ function Block({
               them. */}
           <div
             className="mx-auto flex flex-wrap items-start justify-center gap-4"
-            style={block.max ? { maxWidth: block.max } : undefined}
+            style={block.max ? { maxWidth: shot(block.max) } : undefined}
           >
             {block.items.map((item, i) => (
               // Each shot in a figure of its own that carries the width, so a
@@ -500,7 +508,7 @@ function Block({
                     ? "flex flex-col items-center justify-center self-stretch"
                     : ""
                 }`}
-                style={item.width ? { width: item.width } : undefined}
+                style={item.width ? { width: shot(item.width) } : undefined}
               >
                 {item.scale ? (
                   // The picture alone is what is centred on the shot beside
@@ -512,7 +520,7 @@ function Block({
                     style={{
                       width: `${item.scale * 100}%`,
                       ...(item.lift
-                        ? { transform: `translateY(-${item.lift}px)` }
+                        ? { transform: `translateY(calc(-1 * ${shot(item.lift)}))` }
                         : null),
                     }}
                   >

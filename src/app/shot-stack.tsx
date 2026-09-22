@@ -63,7 +63,9 @@ export function ShotStack({
   columns,
 }: {
   items: Shot[];
-  max?: number;
+  /** A length: case-study.tsx passes the row's max already scaled for a
+   *  short window — see shot() there. */
+  max?: string;
   /** Two across from sm up, where the row is otherwise three. */
   columns?: 2;
 }) {

@@ -17,6 +17,12 @@ export type CaseStudyBlock =
   // For a wide shot that is readable long before the column runs out, and on
   // a large monitor at full screen would otherwise be blown up past the point
   // where the extra size tells you anything.
+  //
+  // Every size in pixels here — width, max, height, shift, radius, and a
+  // row's max, a shot's width and lift — is the size at full scale. On a
+  // window too short to show the study's film whole the film is drawn
+  // smaller, and these shrink with it in the same proportion, so the study
+  // keeps its shape; see --shot in globals.css and shot() in case-study.tsx.
   | {
       type: "image";
       src: string;

@@ -122,6 +122,16 @@
      One number, so the three cannot drift apart. From sm up it gives way on
      a short window — see "A recording that fits the window" below. */
   --film: 340px;
+  /* One pixel of a shot in a study: 1px at full size, and less on a short
+     window, in step with the film — it is the film's width over its 340px.
+     Every fixed size a shot carries in case-studies.ts (a max, a width, a
+     height, a shift, a lift, a radius) is that many of these, so the shots
+     and the film shrink together and a study keeps its proportions rather
+     than the film giving way while the pictures around it hold. The number
+     lives with the film's, and with 340 in case-study.tsx's shot(), on
+     purpose: 340 is the film's full width, and the three cannot move
+     apart. */
+  --shot: calc(var(--film) / 340);
 
   color-scheme: light;
 }
