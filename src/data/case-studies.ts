@@ -596,7 +596,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "Reflecting on this project, I realized that I prioritized avoiding API costs over delivering a good user onboarding experience, which impacted the whole design. Requiring users to bring their own Gemini API key kept the app free for me to host but created unacceptable friction.",
+        text: "Reflecting on this project, I realized that I prioritized avoiding API costs over delivering a good user onboarding experience, which impacted the whole design. Requiring users to bring their own Gemini API key kept the app free for me to host but created unacceptable friction. Studying other startups, I learned that customers prefer predictable pricing. But token costs vary with usage, which makes that difficult.",
       },
 
       {
