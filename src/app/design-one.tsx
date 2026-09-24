@@ -354,14 +354,14 @@ export function DesignOne() {
             rather than running under them. */}
         <div className="mt-16 flex flex-col gap-4 sm:mt-0 sm:block">
           {site.closing && (
-            <p className="text-lg font-medium leading-relaxed text-foreground sm:absolute sm:bottom-6 sm:left-6 sm:right-100">
+            <p className="text-xl font-medium leading-relaxed text-foreground sm:absolute sm:bottom-6 sm:left-6 sm:right-100">
               {site.closing}
             </p>
           )}
           {/* The other places to find him, his resume, then the way to write
               to him. One line, so it is the line that is pinned and not each
               link. */}
-          <nav className="flex gap-6 self-end text-lg font-medium text-foreground sm:absolute sm:bottom-6 sm:right-6">
+          <nav className="flex gap-6 self-end text-xl font-medium text-foreground sm:absolute sm:bottom-6 sm:right-6">
             {site.links.map(
               (link) =>
                 link.href && (
