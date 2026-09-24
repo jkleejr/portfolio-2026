@@ -171,8 +171,9 @@ export function DesignOne() {
           projects. px-6 is the page's margin — the same 1.5rem the notes in
           the margin further down start at.
 
-          Held to the column's measure all the same, so a longer intro breaks
-          at a width it can be read at rather than running across the window.
+          Not held to the column's measure: the sentence runs on toward the
+          right margin rather than breaking early, and only wraps where the
+          page itself runs out.
 
           The buttons are in the corner opposite at every width now, so the
           header no longer reserves the height a row of them used to sit in
@@ -180,14 +181,14 @@ export function DesignOne() {
       <header className="px-6">
         {/* Who that is. A paragraph per line of site.intro, so a sentence that
             should start fresh does, rather than being wrapped into the one
-            above it. Set plainly — the size and weight of the page's other
-            lines — so only the name leads.
+            above it. A step up from the page's other lines — still far
+            short of the name, so only the name leads.
 
             One margin at every width. */}
         {site.intro.length > 0 && (
-          <div className="mt-8 max-w-[var(--column)] space-y-3">
+          <div className="mt-8 space-y-3">
             {site.intro.map((line) => (
-              <p key={line} className="text-lg font-medium leading-relaxed text-foreground">
+              <p key={line} className="text-xl font-medium leading-relaxed text-foreground">
                 {line}
               </p>
             ))}
