@@ -170,7 +170,7 @@
    a dimming rather than a cut. */
 ::view-transition-old(root),
 ::view-transition-new(root) {
-  animation-duration: 0.4s;
+  animation-duration: 0.6s;
   animation-timing-function: ease-in-out;
 }
 
