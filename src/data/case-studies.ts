@@ -8,6 +8,17 @@ export type CaseStudyBlock =
   | { type: "text"; text: string }
   | { type: "list"; items: string[]; ordered?: boolean }
   | { type: "quote"; text: string; attribution?: string }
+  // The Translation region card from Screen Translator, working: the box on
+  // the phone drags, resizes and follows the presets — see region-demo.tsx.
+  // Placed and sized the way an image is (max, radius, shift below), and alt
+  // is what a screen reader is told the card is.
+  | {
+      type: "region-demo";
+      alt: string;
+      max?: number;
+      radius?: number;
+      shift?: number;
+    }
   // Runs the width of the column unless width is set, which holds it to that
   // many pixels and centres it — for a crop taken off a retina screen, where
   // the file is twice the size the thing was on screen and blowing it up to
@@ -712,11 +723,12 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
 
       {
-        type: "image",
-        src: "/projects/screen-translator-region-card.png",
-        // A step under the card's own size: the shot is a 2x capture cropped
-        // to the card's edges, 837px across, so 418 would show it 1:1 on a
-        // Retina screen. 400 keeps it clearly a card rather than a screen.
+        // The card itself, working, where it used to be a screenshot of it.
+        type: "region-demo",
+        // A step under the card's own size: it is drawn to a 2x capture
+        // cropped to the card's edges, 837px across, so 418 would show it 1:1
+        // on a Retina screen. 400 keeps it clearly a card rather than a
+        // screen.
         max: 400,
         // The card's own corners, measured off the alpha channel: ~72px at
         // the file's 2x scale, which is 36 at 1:1 and 34 at 400 across.
