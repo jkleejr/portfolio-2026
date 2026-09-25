@@ -1019,19 +1019,19 @@ export const caseStudies: Record<string, CaseStudy> = {
         items: [
           {
             src: "/projects/buy-side-mobile-today.png",
-            alt: "The Today page on a phone: the ticker strip under the nav, the date with an AM/PM toggle set to AM, the morning report's headline on US strikes on Iranian tankers pushing oil to a two-month high while only short rates move, its opening paragraph, a link to the six-minute read, and the charts panel starting below",
+            alt: "The Today page on a phone: the ticker strip under the nav, Friday, September 25 with an AM/PM toggle set to AM, the morning report's headline on Iran making its Hormuz offer public as oil, bond yields and rate-hike bets ease before the open, its opening paragraph, a link to the six-minute read, and the charts panel starting below",
           },
           {
             src: "/projects/buy-side-mobile-full-read.png",
-            alt: "The full read on a phone: a back link to all reports, the date and Morning label, the headline, the time the report was generated, then bulleted takeaways on Brent breaching $100, US Central Command destroying five Iranian tankers, the two-year Treasury yield rising two basis points, and the Treasury's doubled long-end buybacks",
+            alt: "The full read on a phone: a back link to Today, the date and Morning label, the headline, the time the report was generated, then bulleted takeaways on Iran's foreign minister saying Hormuz will be open in seven days if Washington accepts conditions, October hike odds falling to 71%, oil slipping about 1% after Thursday's gain, and the thirty-year Treasury yield",
           },
           {
             src: "/projects/buy-side-mobile-full-read-body.png",
-            alt: "Further down the full read on a phone: a CNBC source link, a collapsed row for three more sourced points, the Full Read label with a six-minute estimate, an italic methodology note, then the first section heading on Brent clearing $100 with its body paragraph and underlined sourced bullets below",
+            alt: "Further down the full read on a phone: the Full Read label with a six-minute estimate, an italic methodology note, then the first section heading on Iran putting a seven-day Hormuz plan on the record as oil, yields and rate-hike odds ease, with its body paragraph and underlined sourced bullets below",
           },
           {
-            src: "/projects/buy-side-mobile-pre-open-table.png",
-            alt: "The pre-open table on a phone for September 9, 2026: rows for Brent, WTI, the two-year, ten-year, and thirty-year Treasuries, S&P 500, Nasdaq 100, Dow and Russell 2000 futures, gold, the dollar index, the VIX, and Bitcoin, each with its level, change, and a short note, with the rows the report keys on highlighted in blue",
+            src: "/projects/buy-side-mobile-what-changed.png",
+            alt: "The What Changed Since Last Report section on a phone: a paragraph comparing last night's read with the overnight moves, then bulleted points with bold blue leads on the offer's terms being harder than reported, lower oil easing the rate path, the global bond relief, and a correction to Thursday's thirty-year close, with the Movers heading starting below",
           },
         ],
       },
