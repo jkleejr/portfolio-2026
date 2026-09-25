@@ -153,6 +153,18 @@
   color-scheme: dark;
 }
 
+/* The theme toggle at the foot of the homepage shows the mode the page is in:
+   the sun in light, the moon in dark. */
+.theme-icon-moon {
+  display: none;
+}
+[data-theme="dark"] .theme-icon-moon {
+  display: block;
+}
+[data-theme="dark"] .theme-icon-sun {
+  display: none;
+}
+
 /* A hover anywhere in a project's row, which is what lights its cover and its
    name — see ProjectRow in project-study.tsx, which is the `group`. All but a
    hover on the part of the row that is not the switch: the facts set out in

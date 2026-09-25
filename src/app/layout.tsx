@@ -92,10 +92,11 @@ export default function RootLayout({
 }>) {
   return (
     // suppressHydrationWarning is for the style attribute the script at the
-    // foot of the body writes here: it runs before React hydrates, so by then
-    // the html element carries a --scrollbar the server never rendered, and
-    // React reports the difference. It is the one element that is written to
-    // outside React, and the warning is suppressed one level deep — nothing
+    // foot of the body writes here, and the data-theme the theme script at the
+    // top of it can: both run before React hydrates, so by then the html
+    // element can carry a --scrollbar or a theme the server never rendered,
+    // and React reports the difference. It is the one element that is written
+    // to outside React, and the warning is suppressed one level deep — nothing
     // inside the page is covered by it.
     <html lang="en" data-theme="dark" suppressHydrationWarning>
       <body
@@ -124,6 +125,18 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html:
               'if(location.pathname.split("/").filter(Boolean).length===1)history.scrollRestoration="manual"',
+          }}
+        />
+        {/* The theme the toggle at the foot of the homepage stored, onto the
+            html element and the browser's bars before first paint — see
+            theme-toggle.tsx. Dark is what the markup carries, so an empty
+            store, or one the browser will not open, leaves the page dark.
+            suppressHydrationWarning on the html element covers the
+            data-theme this can write there. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              '(function(){try{if(localStorage.getItem("theme")==="light"){document.documentElement.setAttribute("data-theme","light");var m=document.querySelector(\'meta[name="theme-color"]\');if(m)m.setAttribute("content","#ffffff")}}catch(e){}})()',
           }}
         />
         {/* The band the page is laid out in — see --page in globals.css. It
