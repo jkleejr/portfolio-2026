@@ -8,8 +8,9 @@
 // presets under the phone or the menu at the top right — the way it works in
 // the app. The box never leaves the phone.
 //
-// Drawn to the screenshot it replaces (public/projects/screen-translator-
-// region-card.png, a 2x capture 837px across) and measured off it: every size
+// Drawn to the screenshot it replaces (screen-translator-region-card.png, a
+// 2x capture 837px across, in the history before 73517ae) and measured off
+// it: every size
 // below is that capture's pixels through u(), a fraction of the card's width,
 // so the whole card scales with its box like the picture did. The card is its
 // own size container, and cqw is a hundredth of it.
