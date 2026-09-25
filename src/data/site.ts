@@ -30,7 +30,7 @@ export const site = {
   // One entry per line: each is set as a paragraph of its own rather than run
   // into the one before it.
   intro: [
-    "Product designer and front-end engineer building iOS and AI-native products.",
+    "Product designer and design engineer building iOS and AI-native products.",
   ],
 };
 // "Hi, I design and build in code...",
@@ -61,11 +61,10 @@ no evidence of users, testing, previous designs, research
 
 context
 problem
+solution
 research
 design approach
-solution
 reflection
-
 
 
 */

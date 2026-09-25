@@ -155,9 +155,7 @@ export type CaseStudy = {
   blocks: CaseStudyBlock[];
 };
 
-
-
-// outcome + reflection - i wont have team metrics and thats fine. outcomes should show direction, learning, or real world impact. 
+// outcome + reflection - i wont have team metrics and thats fine. outcomes should show direction, learning, or real world impact.
 
 // note on figma: when good designers show process artifacts, they present them beautifully, cleaned up, on consistent backgrounds, annotated
 // dont show raw uncropped screenshots w mismatchced sizes
@@ -165,7 +163,6 @@ export type CaseStudy = {
 // thinking process, execution quality, problem solving
 
 // design thinking -empathise, define, ideate, prototype, test
-
 
 export const caseStudies: Record<string, CaseStudy> = {
   "loot-check": {
@@ -175,10 +172,8 @@ export const caseStudies: Record<string, CaseStudy> = {
     role: "Design, iOS dev, Solo",
     scope: "Live on the App Store",
     blocks: [
-
       // frame the problem in terms of user friction and business opportunity. state a clear hypothesis or goal.
 
-      
       {
         type: "video",
         src: "/projects/loot-check-shark.mp4",
@@ -186,29 +181,28 @@ export const caseStudies: Record<string, CaseStudy> = {
         caption: "Finding the potential value of my shark painting",
       },
 
-            {
-                    type: "heading",
-                    text: "Context",
-                    note: "Problem & Solution",
-                  },
+      {
+        type: "heading",
+        text: "Context",
+        note: "Problem & Solution",
+      },
       {
         type: "text",
         text: "When I was moving places, I had a room full of clothes, electronics, and other things to sell. It took me too much time to research the fair selling price and write listings for every single item. I tried existing appraisal apps to speed up the process, but they had unnecessary steps, ads, or asked me to subscribe after a few scans. I saw an opportunity to create Loot Check, a free solution that uses AI to identify an item, estimate its value range, and recommend where to sell it.",
       },
 
-      
-            {
-              type: "heading",
-              text: "System Architecture",
-              note: "Design Decisions",
-            },
+      {
+        type: "heading",
+        text: "System Architecture",
+        note: "Design Decisions",
+      },
 
       {
         type: "text",
         text: "The app routes requests through a Vercel endpoint so API keys aren't stored on the device. To keep the app free without risking runaway costs, I used Upstash Redis to cap usage at 100 scans per device and 1,000 scans globally per day.",
-        // risks using claude api and making the app free: my api keys need to be secure, and i need to create spending limits to minimize the cost and plan for a worst case scenario. 
+        // risks using claude api and making the app free: my api keys need to be secure, and i need to create spending limits to minimize the cost and plan for a worst case scenario.
       },
-      
+
       // system architecture and data flow diagrams
       // photo captured to the result and estimated price range
 
@@ -220,52 +214,45 @@ export const caseStudies: Record<string, CaseStudy> = {
         alt: "Architecture diagram. The iOS app uploads a photo to a single analyze endpoint on Vercel, which calls Claude Sonnet 4.6 to identify and price the item and Upstash Redis for daily caps and search allowances. A JSON response returns to the app as an item valuation with payouts from marketplaces.",
       },
 
-            // api key lives in Vercel's environment variables - so its never in app, sent to phone, or git
-            // upstash redis - stores numbers: 100 scans a day per phone cap, 1000 global daily cap, all time number of scans, 25 paid web searches a day per user cap - to limit costs and a worst case scenario 
-            // at rougly $0.013-$0.02 per scan - 100 scans would cost me ~$2 a day per user, or ~$20 a day if the global daily cap is reached
-            // 9.8.26 - deleted the verification cache since it didn't help much
-            // anthropic monthly spend limit is another real backstop
+      // api key lives in Vercel's environment variables - so its never in app, sent to phone, or git
+      // upstash redis - stores numbers: 100 scans a day per phone cap, 1000 global daily cap, all time number of scans, 25 paid web searches a day per user cap - to limit costs and a worst case scenario
+      // at rougly $0.013-$0.02 per scan - 100 scans would cost me ~$2 a day per user, or ~$20 a day if the global daily cap is reached
+      // 9.8.26 - deleted the verification cache since it didn't help much
+      // anthropic monthly spend limit is another real backstop
 
+      // PRICE_VERIFY - original items worth $40+ get a web searched price, costs ~$0.01 per search, capped at 25 per device a day, scans take ~6-27 seconds (ON - 9.8.26)
+        // web search scan is not too common
 
+      // 9.18.26
+      // vercel - 60s ceiling
+      // iOS default request timeout - 60s
+      // loot check app - 45s ceiling - from testing the longest scan took ~27s
+      // the app's deadline is always hit first
+      // after the first call (sonnet), if the item passes the checks i set, a web search can use whatever is left of the time - if it takes too long the user still gets Sonnet 4.6's own price
+      // if the first call times out, it tries again with the remaining time
+      // if both attempts time out, no price estimate is returned, and the user sees "That took longer than expected. Please try again."
+      // both failed another way - like API being overloaded or a bad request - "Analysis failed" (502).
+      // in both cases the user can see a try again button which reuses the same photos and hint, and a start over button
+      // this is the only way to end up with no price - if just the web search fails, the user sees Sonnet's estimate
+      // verified scan is scan with web search
 
-            // PRICE_VERIFY - original items worth $40+ get a web searched price, costs ~$0.01 per search, capped at 25 per device a day, scans take ~6-27 seconds (ON - 9.8.26)
-              // web search scan is not too common            
+      // loading state shows ~6 seconds, switches to ~25s at 10s
+      // 0-10 s - "identifying ... ~6 seconds"
+      // 10-25s - "checking recent listings... ~25 seconds"
+      // after 25s - "checking recent listings... taking longer than usual..."
 
+      // from testing web searches the range was 14-27s for verified scans
+      // results say where the estimate is from, "based on ..."
 
-            // 9.18.26
-            // vercel - 60s ceiling
-            // iOS default request timeout - 60s
-            // loot check app - 45s ceiling - from testing the longest scan took ~27s
-            // the app's deadline is always hit first 
-            // after the first call (sonnet), if the item passes the checks i set, a web search can use whatever is left of the time - if it takes too long the user still gets Sonnet 4.6's own price
-            // if the first call times out, it tries again with the remaining time
-            // if both attempts time out, no price estimate is returned, and the user sees "That took longer than expected. Please try again."
-            // both failed another way - like API being overloaded or a bad request - "Analysis failed" (502).
-            // in both cases the user can see a try again button which reuses the same photos and hint, and a start over button
-            // this is the only way to end up with no price - if just the web search fails, the user sees Sonnet's estimate
-            // verified scan is scan with web search
-
-
-            // loading state shows ~6 seconds, switches to ~25s at 10s
-            // 0-10 s - "identifying ... ~6 seconds"
-            // 10-25s - "checking recent listings... ~25 seconds"
-            // after 25s - "checking recent listings... taking longer than usual..."
-
-
-            // from testing web searches the range was 14-27s for verified scans 
-            // results say where the estimate is from, "based on ..."
-
-
-            {
-              type: "heading",
-              text: "Balancing Accuracy and API Costs",
-              note: "",
-            },
-
+      {
+        type: "heading",
+        text: "Balancing Accuracy and API Costs",
+        note: "",
+      },
 
       {
         type: "text",
-        text: "I used Claude Sonnet 4.6 due to its low costs and high accuracy at ~$0.013 per scan. I considered other models, but the costs were similar, and I wanted the results to be as trustworthy as possible.",
+        text: "I used Claude Sonnet 4.6 due to its low costs and high accuracy at ~$0.013 per scan. I considered other models, but I wanted the results to be as trustworthy as possible.",
       },
 
       {
@@ -273,19 +260,16 @@ export const caseStudies: Record<string, CaseStudy> = {
         text: "A key product decision was determining how items were valued. Using a web search for every scan increased accuracy, but because it raised API costs by 3-4x and quadrupled the total latency from ~6 to ~25 seconds, I chose to rely on Sonnet's pre-trained data for most items.",
       },
 
-
       {
-              type: "heading",
-              text: "Price Discovery",
-              note: "",
-            },
-      
+        type: "heading",
+        text: "Price Discovery",
+        note: "",
+      },
+
       {
         type: "text",
         text: "The project started with resale pricing, but the most interesting use case was showing the app something original like a painting that wasn't listed before. That grew the idea into a price discovery tool for both used and original items.",
       },
-
-
 
       {
         type: "text",
@@ -302,31 +286,28 @@ export const caseStudies: Record<string, CaseStudy> = {
         alt: "The pricing fork. After the iOS app uploads a photo, the scan asks whether the item is a handmade or original piece. If no, it is resale and priced from training data. If yes, there is no fixed secondhand catalog, so one web search finds the asking price of comparable work. Both paths end in an item valuation.",
       },
 
-
       {
-              type: "heading",
-              text: "Managing Inference Latency",
-              note: "",
-            },
+        type: "heading",
+        text: "Managing Inference Latency",
+        note: "",
+      },
 
-              // managing inference latency - time budgeted fallback, trying to reduce errors
+      // managing inference latency - time budgeted fallback, trying to reduce errors
       {
         type: "text",
         text: "Scans with web searches took ~14 to 27 seconds in testing, so I capped searches at 45 seconds and the loading state displays an estimated wait time. If the first API call times out, it automatically tries again with the remaining time. If both attempts fail, no price estimate is shown and the user can retry or start over.",
       },
 
-            {
-              type: "heading",
-              text: "Designing for LLM Uncertainty",
-              note: "",
-            },
+      {
+        type: "heading",
+        text: "Designing for LLM Uncertainty",
+        note: "",
+      },
 
       {
         type: "text",
         text: "Since vision models are not 100% accurate, users can input optional keywords to guide the model before submitting a photo.",
       },
-
-
 
       {
         type: "images",
@@ -349,7 +330,6 @@ export const caseStudies: Record<string, CaseStudy> = {
         ],
       },
 
-
       {
         type: "text",
         text: "Results with low confidence are labeled \"best guess,\" and users have the option to add another photo and retry.",
@@ -367,12 +347,12 @@ export const caseStudies: Record<string, CaseStudy> = {
           },
         ],
       },
-      
-                {
-                  type: "heading",
-                  text: "Result",
-                  note: "Retrospective",
-                },
+
+      {
+        type: "heading",
+        text: "Result",
+        note: "Retrospective",
+      },
 
       {
         type: "text",
@@ -381,7 +361,6 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       // the first scan matters - how fast it is, if the price is believable
 
-
       // 9.20.26: rn only stores total scans in Upstash, per device daily scan counts and web search counts stored for 2 days
       // not recorded anywhere: duration, original vs. resale, confidence, what the item was, and whether the scan succeeded
 
@@ -389,22 +368,20 @@ export const caseStudies: Record<string, CaseStudy> = {
       // to get a better idea of the best use cases for this app and how to improve it
       // how to monetize
 
-      // privacy: 
+      // privacy:
       // never stored: photos, hint text, item title, brand name
       // maybe can store: category of the item, a yes/no if a brand was recognized, timings, confidence, web search outcome, price range, and cost
 
       // backend - anonymous per scan analytics, no device linking, respescting the users privacy
       // every scan is kept anonymous for privacy. (clothing, resale, high confidence, 2 photos, 6.1s, no web search, $25-40)
       // App Store - usage data is collected and is not linked to the users device
-      
 
-       {
+      {
         type: "text",
         text: "I wanted to automate the listing process, but because marketplaces don't have a public listing API, the app creates a title and description to copy and paste. The next steps are continuing to test the app and learning which use cases provide the most value.",
       },
     ],
   },
-
 
   "paper-reader": {
     title: "Paper Reader",
@@ -430,47 +407,46 @@ export const caseStudies: Record<string, CaseStudy> = {
         note: "Problem & Solution",
       },
 
-        {
+      {
         type: "text",
-        text: "A friend was listening to a research paper while walking and got \"[1] et al., pp. 234-256\" read aloud in a robot voice. I tried to build an app to fix that problem.",
+        text: "A friend was listening to a research paper while walking and got \"[1] et al., pp. 234-256\" read aloud in a robot voice. I built an app to fix that problem.",
       },
-       {
+      {
         type: "text",
         text: "I designed the app around a user paying for their own API usage due to the costs of audio generation at ~$1-3 per paper. To keep things simple, I used one API to identify text and generate audio. Gemini 3.1 Flash was the best option because it could clean up text and had text-to-speech with eight voices.",
-      },      
+      },
 
       {
-              type: "heading",
-              text: "Generating Audio in Groups",
-              note: "Design Decisions",
-            },
+        type: "heading",
+        text: "Generating Audio in Groups",
+        note: "Design Decisions",
+      },
 
-        // network lag - more API requests can cause delays, or hit Gemini's rate limit
-        // Gemini - Free Tier so thats 15 requests per minute
-        // TTS takes time - 50 seconds of audio, ~20 seconds for Gemini to process and return
-        // so initial wait is 20 seconds
+      // network lag - more API requests can cause delays, or hit Gemini's rate limit
+      // Gemini - Free Tier so thats 15 requests per minute
+      // TTS takes time - 50 seconds of audio, ~20 seconds for Gemini to process and return
+      // so initial wait is 20 seconds
 
-        // 50 second groups - 1 API request per minute
+      // 50 second groups - 1 API request per minute
 
-        // the app works on Google's free tier - 10-15 mins of free audio generation a day
-        // a user could be using the free tier so i had to consider rate limits
-        
-        // typical academic paper is 30 - 45 mins of audio
+      // the app works on Google's free tier - 10-15 mins of free audio generation a day
+      // a user could be using the free tier so i had to consider rate limits
+
+      // typical academic paper is 30 - 45 mins of audio
 
       {
         type: "text",
         text: "Generating audio for the entire paper was unnecessary if someone only wanted to listen briefly. I organized text from a paper into groups of about 750 characters, which made ~50 seconds of audio. Making groups shorter would require more API requests and could reach Gemini's free-tier rate limit, while making groups longer would increase the initial wait time. At 50 seconds, the first group takes ~20 seconds to generate and the next group loads in the background.",
       },
 
+      {
+        type: "heading",
+        text: "Highlighting",
+        note: "",
+      },
 
-            {
-              type: "heading",
-              text: "Highlighting",
-              note: "",
-            },
-        
-        // Apple PDFKit extracts the text from the paper
-        // Apple NLTokenizer splits text
+      // Apple PDFKit extracts the text from the paper
+      // Apple NLTokenizer splits text
       {
         type: "text",
         text: "Because Gemini only returns audio and no timestamps, the app has to estimate which sentence is being spoken to highlight it. I used Apple's NLTokenizer to find the end of each sentence instead of splitting text on periods, so abbreviations like \"et al.\" or \"Fig. 1\" don't break sentences. The app groups the sentences, sends them to Gemini TTS, and receives an audio clip. Since the app knows the duration of the clip, it divides a group's audio proportionally by character count, so a sentence with 5% of a group's characters is assumed to take 5% of the audio. As audio plays, the app tracks the time passed and highlights a sentence based on its estimate. This is not always accurate, so sentences are re-synced at the start of every group to minimize errors.",
@@ -504,7 +480,6 @@ export const caseStudies: Record<string, CaseStudy> = {
         alt: "A close read of the sample row: a SAMPLE tag over the paper's title, 77% listened beneath it with a progress bar, and a play button on its right",
       },
 
-
       // (total samples / 24,000 = total seconds)
       // (characters in each sentence / group total characters = % of group text)
       // (% of group text x total seconds = how long each sentence could take)
@@ -513,12 +488,10 @@ export const caseStudies: Record<string, CaseStudy> = {
       // as playback runs, the app tracks elapsed time against these estimates to decide which sentence to highlight.
       // the split is only an estimate, so the highlight can drift slightly, but the moment a clip ends is exact and it re-syncs there
 
-
       // 24000 samples per second is the same as 24000 numbers for every second of sound
         // knows the number of sentences from splitting the script into sentences using Apple NLTokenizer, producing a numbered list of sentences through the whole paper
- 
+
       // Gemini returns no timings so the app estimates them. each sentence takes a share of the group's audio in proportion to its length. that drifts slightly, but the highlight is corrected every 45 seconds and the error never builds up
-    
 
       // Gemini's TTS response comes back as the audio, as base64 sound data
       // so the app has to derive everything itself: the total length by counting samples, and the position of each sentence inside that length by the character count estimate. thats why the highlight works the way it does, its sentence level rather than word level
@@ -528,17 +501,16 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       // what the app doesn't know is where each sentence sits inside those 45 seconds.
       // so it divides the clip by text length
-      // the sentence "The paper is TradingAgents..." has 192 characters, 31% share of the clip, and took 14.29 seconds. 192 characters out of 623 is 31% of the text, so its assumed to take 31% of the time. 
+      // the sentence "The paper is TradingAgents..." has 192 characters, 31% share of the clip, and took 14.29 seconds. 192 characters out of 623 is 31% of the text, so its assumed to take 31% of the time.
 
-      // the highlight follows that estimate. 4 times a second, the app adds the elapsed time to a running total.. at 1.5x the total climbs 1.5 seconds per real second. 
-    
+      // the highlight follows that estimate. 4 times a second, the app adds the elapsed time to a running total.. at 1.5x the total climbs 1.5 seconds per real second.
+
       // a 40 minute paper is roughly 50 groups
-       
+
       // the user's Gemini API key is safely stored in the iOS keychain. it can't be read by other apps, is encryptoed by the rest of the OS tied to the device's hardware.
       // where it goes:
       // generativelanguage.googleapis.com over HTTPS, in a request header (x-goog-api-key), not in the URL, which matters because URLs get logged by proxies and headers generally don't. There's one URLSession in the entire app and one destination host.
       // the key is never printed to a log, never written into a paper's JSON, never attached to an error message, and never sent anywhere else.
-    
 
       // gemini flash latest - title + document, then the per chunk cleanup
       // gemini 3.1 flash tts - narration, 8 curated prebuilt voices
@@ -547,11 +519,11 @@ export const caseStudies: Record<string, CaseStudy> = {
       // 1. extract - PDFTextExtractor.swift - PDFKit pulls text page by page
       // 2. repair - TextRepair.swift - rebuilds the spacing using the document's own vocabulary
       // until this point, no model is involved
-      // 3. identify - Gemini text call identifies the page, and cleans the text. 
+      // 3. identify - Gemini text call identifies the page, and cleans the text.
       // 4. clean - the text is split into <10,000 character chunks at paragraph boundaries, and each chunk gets its own Gemini call. a paper gets citations, captions, bibliography, etc taken out while the prose stays verbatim. a slide deck gets its fragments turned into speakable sentences. each chunk's result is persisted as it lands, so a killed app resumes instead of re-spending tokens.
       // 5. segment - Apple's NLTokenizer splits the cleaned script into sentences on device. ChunkPlanner then groups them into ~750 character TTS chunks.
       // 6. narrate - each chunk goes to Gemini TTS with a style prefix and the user's chosen voice, comes back as 24 kHz mono PCM, gets wrapped in a WAV and cached on disk. Since the API returns no word timings, each sentence's duration is apportioned from the chunk's exacty length by character count - accurate enough for sentence level highlighting, and it re-syncs at every chunk boundary so error can't accumulate.
-      // playback is AVAudioEngine with a time-pitch unit (speed changes without chipmunking), scheduling one chunk ahead so works smoothly. 
+      // playback is AVAudioEngine with a time-pitch unit (speed changes without chipmunking), scheduling one chunk ahead so works smoothly.
 
       // while the user is listening to one chunk, the next one finishes. users can pay as they listen
 
@@ -560,39 +532,38 @@ export const caseStudies: Record<string, CaseStudy> = {
       // the app knows the clip is exactly 46 seconds total, so it slices those 46 seconds up in proportion to how long each sentence is
       // its only a guess because people don't read at a perfectly steady pace. a sentence with a lot of commas takes longer than a simple one. so highlight might be half a second early or late.
       // why that never gets bad: each clip is only about 50 seconds long. when it finishes playing, the app knows it finished. so it moves the highlight to the first sentence of the next clip and starts counting from 0 again.
-      // the reset is important. the guessing only happens for 50 seconds before its corrected. 
+      // the reset is important. the guessing only happens for 50 seconds before its corrected.
       // if the app made one 40 min guess for the whole paper, small errors would pile together and the text highlight would end up nowhere near the voice.
-      // 750 characterse, ~50 seconds of speech. 
-      // why around a minute? - too short is wasteful, each group is a separate round trip to Google. cut them 10 seconds each and a 40 minute paper needs 240 requests instead of 50. 5 times the waiting on network overhead, chances of getting rate-limited, or retries if something fails. 
-      // too long delays the start. nothing plays until the first group exists. at 50 seconds, thats about a 20 second wait. if a group were 3 minutes of audio, i'd wait over a minute before hearing anything. 
+      // 750 characterse, ~50 seconds of speech.
+      // why around a minute? - too short is wasteful, each group is a separate round trip to Google. cut them 10 seconds each and a 40 minute paper needs 240 requests instead of 50. 5 times the waiting on network overhead, chances of getting rate-limited, or retries if something fails.
+      // too long delays the start. nothing plays until the first group exists. at 50 seconds, thats about a 20 second wait. if a group were 3 minutes of audio, i'd wait over a minute before hearing anything.
       // too long wastes money when you skip. jump to a different part of the paper and whatever was being generated is paid for but never heard
       // about a minute was the best choice
 
-      // in the latest update Aug 27,2026, the narration speed can be set by the user from 0.75x-2x speed. 
+      // in the latest update Aug 27,2026, the narration speed can be set by the user from 0.75x-2x speed.
       // also, the first chunk/group of text is generated into audio before the paper is playable
       // takes about 20 seconds to generate audio for the first chunk ~40 seconds of audio
       // chunk 2 loads before chunk 1 finishes playing
       // also fixed a ui design issue where the iphone time and battery were over the text making it hard to see. now the text doesnt reach that top part of the screen
 
       // for segment - apple nltokenizer is Apple's. it comes from the naturallanguage framework, not swiftui. swiftui is only for building the interface, naturallanguage is text analysis. you hand it a string, it hands back the ranges of each sentence. it knows that "et al." and "Fig. 3" arent sentence endings, which is why i use it instead of splitting on periods.
-      // ChunkPlanner is my own code, not Apple's. it has one function, plan(for:targetChars:), which walks the sentences NLTokenizer produced and groups consecutive ones until adding the next would exceed 750 characters. 
+      // ChunkPlanner is my own code, not Apple's. it has one function, plan(for:targetChars:), which walks the sentences NLTokenizer produced and groups consecutive ones until adding the next would exceed 750 characters.
       // the reason is - small enough that character-proportional sentence timing stays accurate, large enough for natural speech and few API calls.
 
-      // why did we decide to show the highlighted sentences/current sentence this way? 
+      // why did we decide to show the highlighted sentences/current sentence this way?
       // theres a constraint. Gemini TTS returns audio and nothing else - no word timings, no marks. so the app has to work out for itself when each piece of text is being spoken, and the only signal available is length: this sentence is 190 characters of a 623 character chunk, so it gets 190/623 of the chunk's 46 seconds
       // the estimate is decent but not exact. a comma heavy sentence reads slower than a plain sentence so any estimate is off
       // word lasts about 0.3 seconds, a sentence lasts 5-15 seconds. so words are better, but word level would have required real timings which is more complicated and probably requires another model to do
       // the re-sync for the end of every clip/chunk/group, so the app stops guessing and it knows whats the current sentence that needs to be highlighted to match the audio
       //
 
+      // write to the level of my understanding
 
-     // write to the level of my understanding
-      
-            {
-              type: "heading",
-              text: "Result",
-              note: "Retrospective",
-            },
+      {
+        type: "heading",
+        text: "Result",
+        note: "Retrospective",
+      },
 
       {
         type: "text",
@@ -605,8 +576,6 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
     ],
   },
-
-
 
   "screen-translator": {
     title: "Screen Translator",
@@ -627,27 +596,25 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
 
       {
-          type: "heading",
-          text: "Context",
-          note: "Problem & Solution",
-        },
+        type: "heading",
+        text: "Context",
+        note: "Problem & Solution",
+      },
       {
-
         type: "text",
         text: "Constantly switching apps while learning a language is annoying and time-consuming, and makes learning inefficient, so I created an app that translates the Korean text on screen to English in real time.",
       },
-  
+
       {
         type: "text",
         text: "My first idea was to generate text over the current display, but iOS does not allow an app to draw over another app. To get around this, I used the Dynamic Island since it stays visible in every app. I used ReplayKit to broadcast video frames, Apple Vision OCR to extract Korean text, the DeepL API for translations, and ActivityKit to update the island."
       },
 
       {
-          type: "heading",
-          text: "System Constraints",
-          note: "Design Decisions",
-        },
-
+        type: "heading",
+        text: "System Constraints",
+        note: "Design Decisions",
+      },
 
       {
         type: "text",
@@ -660,42 +627,37 @@ export const caseStudies: Record<string, CaseStudy> = {
         text: "The island has three states: minimal, compact, and expanded. iOS treats Live Activities as occasional status updates rather than a live display, so I could not keep the expanded state on screen, and the user has to long press the island to see the translation. I also had to design UI elements around the front-facing camera in the top-center area of the screen."
       },
 
-
       // dynamic island has no published refresh rate, and iOS silently limits background updates
       // designed the island so it only shows text from the translation region (selected by the user)
       // dynamic island can't refresh on its own, it only updates when the app calls activity.update
-      
-      // the app uses a Live Activity (ActivityKit) to display translations in the island
-      // because the system (not my app) controls how and when the dynamic island displays the activity, I designed for states I couldn’t choose and updates I couldn’t guarantee 
 
+      // the app uses a Live Activity (ActivityKit) to display translations in the island
+      // because the system (not my app) controls how and when the dynamic island displays the activity, I designed for states I couldn’t choose and updates I couldn’t guarantee
 
       // 3 different dynamic island states
       // minimal (active overlay, default state)
       // compact (limited by iOS, since we r recording the screen, appears for 6 seconds after recording stops)
       // expanded (during recording, long press, full caption card)
       // iOS collapses it on its own again
-      
+
       // island shows at most 2 live activities at once - screen recording indicator and the app
       // which is why the minimal state is showing most of the time
       // though Apple's default is compact state
 
       // iOS renders the expanded island only when the app pushes an update, it can't render at the moment of the long press
       // if i long press and see previous text, the latency is bc of OCR (optical character recognition) and network time - the new update hasn't been pushed yet
-      
+
       // 1. screen is captured
       // 2. OCR reads the text out of the image
       // 3. round trip to translation API
       // 4. activity.update pushes the new text
       // 5. iOS re renders the island
 
-
       // iOS decides execution time - when the app can run
       // iOS suspends background apps for battery, speed, privacy
       // each Live Activity has an update budget - which delays or drops updates that are too often
-      // call activity.update 
+      // call activity.update
       // need to keep the app running in the background - Apple keeps screen broadcast extensions / screen recording running
- 
-      
 
       {
         type: "image",
@@ -738,12 +700,11 @@ export const caseStudies: Record<string, CaseStudy> = {
         captionCenter: true,
       },
 
-
       {
-          type: "heading",
-          text: "Translation Region",
-          note: "",
-        },
+        type: "heading",
+        text: "Translation Region",
+        note: "",
+      },
 
       {
         type: "text",
@@ -766,41 +727,39 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
 
       {
-          type: "heading",
-          text: "Translation Models",
-          note: "",
-        },
+        type: "heading",
+        text: "Translation Models",
+        note: "",
+      },
 
       {
         type: "text",
-        text: "I used DeepL for sentence translations and Claude Opus 5 for word definitions. DeepL was excellent for full sentences, but unreliable for individual words. Claude was more accurate for words because it could define each word as it's used in the context of the sentence."
+        text: "I used DeepL for sentence translations and Claude Opus 5 for word definitions. DeepL was excellent for full sentences, but unreliable for individual words. Opus 5 was more accurate for words because it could define each word as it's used in the context of the sentence."
       },
 
-       {
+      {
         type: "text",
-        text: "I had Claude do a benchmark test comparing Opus 5 and DeepL on sentence translations. Claude had a median latency of 2.07 seconds compared to 0.73 seconds for DeepL. Claude was also about 5x more expensive, at $0.0031 per sentence vs. $0.0006 for DeepL."
+        text: "I benchmarked Opus 5 against DeepL on sentence translations. Opus 5 had a median latency of 2.07 seconds vs. 0.73 seconds for DeepL, and was about 5x more expensive ($0.0031 vs. $0.0006 per sentence)."
       },
-      
+
        // had claude do a benchmark test with claude and deepl
       // using claude for sentence translations had higher latency and was more expensive than deepl
       // claude was about 3x slower
       // claude - median 2070 ms - 2.07 s per sentence
-      // deepl - median 727 ms - 0.73 s 
+      // deepl - median 727 ms - 0.73 s
       // cost is $0.0006 per sentence DeepL and $0.0031 claude opus 5 for a sentence of ~25 Korean characters
 
-
+      {
+        type: "heading",
+        text: "First UI Design",
+        note: "",
+      },
 
       {
-          type: "heading",
-          text: "First UI Design",
-          note: "",
-        },
-
-        {
         type: "text",
         text: "I tested the island and floating window in the first prototype to see which display felt better to use. Because I didn't need to see the translation of every sentence, I focused on the Dynamic Island and making it feel as seamless as possible."
       },
-      
+
       {
         type: "images",
         // Three phones across. The row is what is held rather than each shot,
@@ -825,19 +784,16 @@ export const caseStudies: Record<string, CaseStudy> = {
         ],
       },
 
-      
+      {
+        type: "heading",
+        text: "Current UI Design",
+        note: "",
+      },
 
       {
-          type: "heading",
-          text: "Current UI Design",
-          note: "",
-        },
-
-        {
         type: "text",
         text: "The home screen centers on a circle that starts the recording. Settings are shown in a list of rows, so nothing is hidden behind a separate menu. Once recording starts, the user can leave the app and open whatever they want to read. Screen Translator stays active in the background and translates text from the selected region of the screen."
       },
-
 
       {
         type: "images",
@@ -845,7 +801,6 @@ export const caseStudies: Record<string, CaseStudy> = {
         max: 983,
         stackOnPhone: true,
         items: [
-
           {
             src: "/projects/screen-translator-captions-idle.png",
             alt: "The Translate tab before a session: a card with a gray circle and the words Tap the circle to start screen recording, then rows for Select display set to Island, Translation region set to Custom, API Keys, and Debug log",
@@ -861,12 +816,11 @@ export const caseStudies: Record<string, CaseStudy> = {
         ],
       },
 
-
       {
-          type: "heading",
-          text: "Saving Translations for Learning",
-          note: "",
-        },
+        type: "heading",
+        text: "Saving Translations for Learning",
+        note: "",
+      },
 
       {
         type: "text",
@@ -880,12 +834,11 @@ export const caseStudies: Record<string, CaseStudy> = {
         caption: "",
       },
 
-
       {
-          type: "heading",
-          text: "Result",
-          note: "Retrospective",
-        },
+        type: "heading",
+        text: "Result",
+        note: "Retrospective",
+      },
 
       {
         type: "text",
@@ -899,15 +852,12 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "If I continued this project, I would work on the UI/UX so the island feels more responsive and aligned with the user's intent. I would also improve translations for visual diagrams and make it work with any app. Currently only Korean is translated, but I could add more languages and test whether other people find it helpful for learning."  
+        text: "If I continued this project, I would work on the UI/UX so the island feels more responsive and aligned with the user's intent. I would also improve translations for visual diagrams and make it work with any app. Currently only Korean is translated, but I could add more languages and test whether other people find it helpful for learning."
       },
       // could try making it vocabulary focused, only translating difficult words from a sentence, not the entire sentence
       // so it would show only a few difficult or new words in the dynamic island not the sentence
-
     ],
   },
-
-
 
   "buy-side-briefings": {
     title: "Buy Side Briefings",
@@ -916,8 +866,6 @@ export const caseStudies: Record<string, CaseStudy> = {
     scope: "Live on the web",
     href: "https://buy-side-briefings.vercel.app/",
     blocks: [
-
-
       {
         type: "image",
         src: "/projects/buy-side-site-today-5.png",
@@ -925,12 +873,11 @@ export const caseStudies: Record<string, CaseStudy> = {
         alt: "The Today page with the toggle on AM: a live ticker strip under the nav, then the morning report of Monday, September 14, filed at 8:21 AM ET, its headline on frontier AI labs calling for a slowdown and chip stocks dropping before the open, the paragraph that argues it, a link out to the full six-minute read, and the charts panel opening underneath",
       },
 
-            {
-              type: "heading",
-              text: "Context",
-              note: "Problem & Solution", // title text on the left side
-            },
-
+      {
+        type: "heading",
+        text: "Context",
+        note: "Problem & Solution", // title text on the left side
+      },
 
       {
         type: "text",
@@ -942,18 +889,17 @@ export const caseStudies: Record<string, CaseStudy> = {
         text: "This is a fragmented workflow due to context switching and information overload. It can be difficult to separate what's relevant from the noise, which leads to uncertainty and missed opportunities. My solution was an automated market reporting website that aggregates this information and generates daily reports so I can make faster decisions."
       },
 
-            {
-              type: "heading",
-              text: "Curating Market Context with AI",
-              note: "Design Decisions",
-            },
-      
+      {
+        type: "heading",
+        text: "Curating Market Context with AI",
+        note: "Design Decisions",
+      },
+
       {
         type: "text",
         text: "I designed an automated research pipeline that runs parallel web queries across market data, sentiment indicators, economic calendars, and a fixed set of stocks. The core of the project is the [instructions file](https://github.com/jkleejr/buy-side-briefings/blob/deploy/prompts/markets-website.md), which controls how each report is researched and written and defines the JSON schema the website renders from.", //
       },
 
-    
       {
         type: "text",
         text: "Because LLMs don't have long-term memory, the agent calibrates itself by reading reports from the last few days before writing. The historical data simulates continuity and allows the report to distinguish between ongoing and new market trends."
@@ -972,7 +918,6 @@ export const caseStudies: Record<string, CaseStudy> = {
         note: "",
       },
 
-
       {
         type: "text",
         text: "An investor's mental state changes fundamentally depending on the time of day. The morning report is forward-looking and focuses on preparation before the market opens. The night report is analytical and reflects on the day's performance."
@@ -983,13 +928,13 @@ export const caseStudies: Record<string, CaseStudy> = {
         text: "I added an AM/PM toggle to visually accommodate different mental states. Switching to another report restructures the page with the right information."
       },
 
-            {
-              type: "heading",
-              text: "Data Visualization",
-              note: "",
-            },
+      {
+        type: "heading",
+        text: "Data Visualization",
+        note: "",
+      },
 
-            {
+      {
         type: "text",
         text: "I used market data from Yahoo Finance (delayed quotes) and FRED to visualize price action.",
       },
@@ -1008,8 +953,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         alt: "The charts panel: Nvidia selected, range and bar controls under it, and a daily candlestick chart zoomed to ninety bars with a hover card on the March 27 bar showing its open, high, low, and volume, over a footer crediting Yahoo Finance and noting quotes are delayed about fifteen minutes",
       },
 
-
-            {
+      {
         type: "text",
         text: "To display the flow of capital, I added a table for short-term (1-day) and medium-term (50-day) changes for 11 ETFs."
       },
@@ -1071,11 +1015,11 @@ export const caseStudies: Record<string, CaseStudy> = {
         ],
       },
 
-            {
-              type: "heading",
-              text: "Result",
-              note: "Retrospective",
-            },
+      {
+        type: "heading",
+        text: "Result",
+        note: "Retrospective",
+      },
       {
         type: "text",
         text: "This project has changed many times since the start. Initially I used AI to predict the market and send me buy/sell signals based on its research, but I realized that a strictly informational website would help me more. [Buy Side](https://buy-side-briefings.vercel.app/) used to display a lot more data when I was learning the market, but I cut it down to the most important resources."
@@ -1088,3 +1032,4 @@ export const caseStudies: Record<string, CaseStudy> = {
     ],
   },
 };
+
