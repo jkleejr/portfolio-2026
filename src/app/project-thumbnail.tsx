@@ -214,6 +214,13 @@ export function ProjectThumbnail({
         fill
         sizes="(width < 40rem) 104px, 200px"
         quality={90}
+        // Fetched with the page rather than when layout finds them near the
+        // screen. The first two are above the fold on every phone, and left
+        // lazy they sat as empty squares — no square at all, for a cover with
+        // no hairline — for a second or two on a slow connection. There are
+        // five, each a few kilobytes at this size, so the ones below the fold
+        // cost nothing worth deferring.
+        loading="eager"
         className="object-cover"
         style={
           image.cover
