@@ -13,6 +13,7 @@ import { StudyBody, StudyFact, studyFacts } from "./case-study";
 import { ProjectList, ProjectRow, ProjectSection } from "./project-study";
 import { ProjectThumbnail } from "./project-thumbnail";
 import { ProjectTitle } from "./project-title";
+import { ThemeToggle } from "./theme-toggle";
 
 /**
  * When a project was made, what the role was, and how far it went.
@@ -188,7 +189,7 @@ export function DesignOne() {
         {site.intro.length > 0 && (
           <div className="mt-8 space-y-3">
             {site.intro.map((line) => (
-              <p key={line} className="text-xl font-medium leading-relaxed text-foreground">
+              <p key={line} className="text-[22px] font-medium leading-relaxed text-foreground">
                 {line}
               </p>
             ))}
@@ -362,6 +363,7 @@ export function DesignOne() {
               to him. One line, so it is the line that is pinned and not each
               link. */}
           <nav className="flex gap-6 self-end text-xl font-medium text-foreground sm:absolute sm:bottom-6 sm:right-6">
+            <ThemeToggle />
             {site.links.map(
               (link) =>
                 link.href && (
