@@ -709,10 +709,11 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "image",
         src: "/projects/screen-translator-island-expanded.mp4",
-        // The top of a screen recording, cut to 498 by 224 — as near the
-        // compact shot's proportions as a film's even sizes allow — so it
-        // lands at the same size with next to no crop in the browser. A step
-        // wider than the two above it, at the same proportions. Saved with no
+        // The top of the full-resolution screen recording, 1:11.17 to 1:18.10,
+        // cut to 1206 by 542 — as near the compact shot's proportions as a
+        // film's even sizes allow — so it lands at the same size with next to
+        // no crop in the browser. A step wider than the two above it, at the
+        // same proportions. Kept at the recording's 60fps and saved with no
         // audio track.
         max: 480,
         height: 215,
