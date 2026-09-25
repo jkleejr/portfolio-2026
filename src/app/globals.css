@@ -217,6 +217,15 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* A study's own cursor, over the whole page while that study is open — see
+   ProjectList in project-study.tsx, which sets both. Important, and on every
+   element, so a link's pointer or the grab over a box does not show through
+   it. */
+html[data-study-cursor],
+html[data-study-cursor] * {
+  cursor: var(--study-cursor) !important;
+}
+
 ::selection {
   background: var(--foreground);
   color: var(--background);

@@ -126,6 +126,29 @@ export function ProjectList({ children }: { children: React.ReactNode }) {
       : site.titleName;
   }, [openSlug]);
 
+  // The pointer follows the study too, for one that has a cursor of its own
+  // — the shark while Loot Check is open. Drawn as an SVG of the emoji and
+  // set on the html element, where the rule in globals.css ("A study's own
+  // cursor") puts it over everything on the page, links and all. Taken off
+  // when the study closes, another opens, or the list leaves the page.
+  useEffect(() => {
+    const emoji = openSlug ? caseStudies[openSlug]?.cursor : undefined;
+    if (!emoji) return;
+    const root = document.documentElement;
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"><text x="16" y="17" font-size="26" text-anchor="middle" dominant-baseline="middle">${emoji}</text></svg>`;
+    // The hotspot, the point that clicks, is the shark's nose: it faces left,
+    // with its snout up at the top left of the 32px square.
+    root.style.setProperty(
+      "--study-cursor",
+      `url("data:image/svg+xml,${encodeURIComponent(svg)}") 3 9, auto`,
+    );
+    root.setAttribute("data-study-cursor", "");
+    return () => {
+      root.removeAttribute("data-study-cursor");
+      root.style.removeProperty("--study-cursor");
+    };
+  }, [openSlug]);
+
   const setOpenSlug = useCallback((slug: string | null) => {
     setOpen(slug);
     // The native call rather than the router's: Next folds it into its own
