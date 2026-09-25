@@ -21,7 +21,7 @@ export const site = {
   // Between the links and Email at the foot of the homepage. Clicking it
   // saves the file rather than opening it, under the name given here. The file
   // itself lives in public/, so the href is its path from the site root.
-  resume: { label: "Resume", href: "/John_Lee_Resume.pdf", filename: "John_Lee_Resume.pdf" },
+  resume: { label: "Resume", href: "/John-Lee-Resume.pdf", filename: "John-Lee-Resume.pdf" },
 
   // The last line of the homepage, under the work. Left out entirely when it
   // is empty, rather than leaving a gap at the foot of the page.
