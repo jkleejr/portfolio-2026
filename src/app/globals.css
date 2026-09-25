@@ -165,6 +165,15 @@
   display: none;
 }
 
+/* The fade the toggle plays between the two palettes — see theme-toggle.tsx.
+   The browser's own cross-fade, slowed from its 0.25s so the change reads as
+   a dimming rather than a cut. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.4s;
+  animation-timing-function: ease-in-out;
+}
+
 /* A hover anywhere in a project's row, which is what lights its cover and its
    name — see ProjectRow in project-study.tsx, which is the `group`. All but a
    hover on the part of the row that is not the switch: the facts set out in

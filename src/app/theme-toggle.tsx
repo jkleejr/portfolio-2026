@@ -18,13 +18,30 @@ export function ThemeToggle() {
   function toggle() {
     const root = document.documentElement;
     const next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
-    root.setAttribute("data-theme", next);
-    document
-      .querySelector('meta[name="theme-color"]')
-      ?.setAttribute("content", THEME_COLOR[next]);
+    const apply = () => {
+      root.setAttribute("data-theme", next);
+      document
+        .querySelector('meta[name="theme-color"]')
+        ?.setAttribute("content", THEME_COLOR[next]);
+    };
     try {
       localStorage.setItem("theme", next);
     } catch {}
+
+    // A cross-fade from the old palette to the new one: the browser snapshots
+    // the page either side of the switch and fades between the two (the
+    // timing is ::view-transition-* in globals.css). One fade covers every
+    // colour on the page at once, where a transition on each element would
+    // have to be kept in step by hand. Where the browser has no view
+    // transitions, or motion is not wanted, the switch is instant.
+    if (
+      !document.startViewTransition ||
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
+      apply();
+      return;
+    }
+    document.startViewTransition(apply);
   }
 
   return (
