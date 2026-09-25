@@ -17,6 +17,7 @@
 // ---------------------------------------------------------------------------
 
 import { type CaseStudy, type CaseStudyBlock } from "@/data/case-studies";
+import { RegionDemo } from "./region-demo";
 import { ShotStack } from "./shot-stack";
 import { SiteLink } from "./site-link";
 import { AppStoreBadge, AppStoreMark } from "./title-badge";
@@ -312,7 +313,7 @@ function Caption({
 }
 
 /** Blocks a heading needs less room after — see the heading case below. */
-const PICTURES = new Set(["image", "images", "video"]);
+const PICTURES = new Set(["image", "images", "video", "region-demo"]);
 
 function Block({
   block,
@@ -445,6 +446,27 @@ function Block({
             }}
           />
           <Caption text={block.caption} center={block.captionCenter} />
+        </figure>
+      );
+
+    case "region-demo":
+      // Placed the way an image with the same settings is, above: the
+      // column's width up to max, and nudged by shift from sm up. The card
+      // draws itself at whatever width that comes to.
+      return (
+        <figure
+          className={`mx-auto w-full overflow-hidden rounded-xl border border-foreground/10 ${
+            block.shift ? "sm:translate-x-(--shift)" : ""
+          }`}
+          style={{
+            ...(block.shift
+              ? ({ "--shift": shot(block.shift) } as React.CSSProperties)
+              : null),
+            ...(block.max ? { maxWidth: shot(block.max) } : null),
+            ...(block.radius ? { borderRadius: shot(block.radius) } : null),
+          }}
+        >
+          <RegionDemo label={block.alt} />
         </figure>
       );
 
