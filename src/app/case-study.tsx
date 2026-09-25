@@ -407,18 +407,33 @@ function Block({
         </blockquote>
       );
 
-    case "image":
+    case "image": {
+      // A film in a shot's place is set the way a recording is — muted and
+      // looping, with play, scrub and volume, the same as the video case
+      // below — and sized and placed as the picture it stands in for.
+      const film = /\.mp4$/i.test(block.src);
+      const Media = film ? "video" : "img";
       return (
         <figure>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+          <Media
             src={block.src}
-            alt={block.alt}
             // The file's own width and height, so the room it takes is held
             // before it loads — see media-size.ts. The classes still set how
             // wide it is drawn; these only give it a shape.
             {...mediaSize(block.src)}
-            {...LATER}
+            {...(film
+              ? {
+                  "aria-label": block.alt,
+                  poster: poster(block.src),
+                  autoPlay: true,
+                  muted: true,
+                  loop: true,
+                  playsInline: true,
+                  controls: true,
+                  controlsList: "nodownload noplaybackrate",
+                  disablePictureInPicture: true,
+                }
+              : { alt: block.alt, ...LATER })}
             className={`mx-auto w-full max-w-full rounded-xl border border-foreground/10 ${
               block.shift ? "sm:translate-x-(--shift)" : ""
             }`}
@@ -448,6 +463,7 @@ function Block({
           <Caption text={block.caption} center={block.captionCenter} />
         </figure>
       );
+    }
 
     case "region-demo":
       // Placed the way an image with the same settings is, above: the

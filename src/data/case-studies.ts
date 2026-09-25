@@ -34,6 +34,10 @@ export type CaseStudyBlock =
   // window too short to show the study's film whole the film is drawn
   // smaller, and these shrink with it in the same proportion, so the study
   // keeps its shape; see --shot in globals.css and shot() in case-study.tsx.
+  //
+  // A src that is a film (.mp4) is drawn the same way at the same size, as a
+  // loop that plays muted with the controls a recording has, for a close
+  // read that moves.
   | {
       type: "image";
       src: string;
@@ -470,9 +474,9 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "image",
-        src: "/projects/paper-reader-highlight-detail.png",
+        src: "/projects/paper-reader-highlight.mp4",
         width: 420,
-        alt: "A close read of the narration: the sentence being spoken sits in a pale blue block, the lines on either side of it in gray",
+        alt: "A close read of the narration: the sentence being spoken sits in a pale blue block, the lines on either side of it in gray, and the block moves on to the next sentence as the page scrolls",
       },
 
       {
