@@ -708,14 +708,15 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "image",
-        src: "/projects/screen-translator-island-expanded-news.png",
-        // The top of a full-screen capture, cut to 1206 by 541 — the compact
-        // shot's exact proportions — so it lands at the same size with no
-        // crop in the browser. A step wider than the two above it, at the
-        // same proportions.
+        src: "/projects/screen-translator-island-expanded.mp4",
+        // The top of a screen recording, cut to 498 by 224 — as near the
+        // compact shot's proportions as a film's even sizes allow — so it
+        // lands at the same size with next to no crop in the browser. A step
+        // wider than the two above it, at the same proportions. Saved with no
+        // audio track.
         max: 480,
         height: 215,
-        alt: "The expanded Dynamic Island over the top of a Korean news article: a Korean-to-US flag pair and a pin at the top, a two-line Korean headline about a Samsung employee's internal loan sending home prices soaring in Suwon Yeongtong, and its English translation under it in gray",
+        alt: "The Dynamic Island over the top of a Korean news article, growing from the compact island beside the clock into the expanded state: a Korean-to-US flag pair and a pin, Waiting for captions, then three lines of Korean from the article with their English translation under them in gray",
         caption: "Expanded state (long press for full translation)",
         captionCenter: true,
       },
