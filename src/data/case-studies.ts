@@ -159,6 +159,10 @@ export type CaseStudy = {
   // `href`, the title itself opens the listing too. See the same field on an
   // entry in projects.ts.
   appStore?: string;
+  // An emoji the pointer becomes while the study is open on the homepage,
+  // and stops being when it is closed or another is opened — see
+  // ProjectList in project-study.tsx.
+  cursor?: string;
   // --- all optional; add to a study to switch one on ---
   cover?: { src: string; alt: string; crop?: string }; // wide image up top
   facts?: { label: string; value: string }[]; // Role / Timeline / Tools strip
@@ -182,6 +186,7 @@ export const caseStudies: Record<string, CaseStudy> = {
     date: "Jun–Sep 2026",
     role: "Design, iOS dev, Solo",
     scope: "Live on the App Store",
+    cursor: "🦈",
     blocks: [
       // frame the problem in terms of user friction and business opportunity. state a clear hypothesis or goal.
 
