@@ -353,7 +353,7 @@ export function DesignOne() {
             The closing line stops short of the right-hand corner by the width
             of the links and a gap, so on a narrow window it wraps upward
             rather than running under them. */}
-        <div className="mt-16 flex flex-col gap-4 sm:mt-0 sm:block">
+        <div className="mt-16 flex flex-col gap-7 sm:mt-0 sm:block">
           {site.closing && (
             <p className="text-xl font-medium leading-relaxed text-foreground sm:absolute sm:bottom-6 sm:left-6 sm:right-100">
               {site.closing}
