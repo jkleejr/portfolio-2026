@@ -53,7 +53,7 @@ export function ThemeToggle() {
     >
       {/* Sun, shown in light mode. */}
       <svg
-        className="theme-icon-sun"
+        className="theme-icon-sun size-5 sm:size-[22px]"
         width="22"
         height="22"
         viewBox="0 0 24 24"
@@ -68,7 +68,7 @@ export function ThemeToggle() {
       </svg>
       {/* Moon, shown in dark mode. */}
       <svg
-        className="theme-icon-moon"
+        className="theme-icon-moon size-[19px] sm:size-[21px]"
         width="21"
         height="21"
         viewBox="0 0 24 24"
