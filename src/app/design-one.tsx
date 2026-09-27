@@ -362,7 +362,7 @@ export function DesignOne() {
           {/* The other places to find him, his resume, then the way to write
               to him. One line, so it is the line that is pinned and not each
               link. */}
-          <nav className="flex gap-6 self-end text-xl font-medium text-foreground sm:absolute sm:bottom-6 sm:right-6">
+          <nav className="flex gap-5 self-end text-lg font-medium sm:gap-6 sm:text-xl text-foreground sm:absolute sm:bottom-6 sm:right-6">
             <ThemeToggle />
             {site.links.map(
               (link) =>
