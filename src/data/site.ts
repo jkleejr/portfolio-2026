@@ -35,36 +35,3 @@ export const site = {
 };
 // "Hi, I design and build in code...",
 // "Design engineer and product designer building iOS and AI native products."
-
-
-/* 9.6.26
-
-project substance + raw ability - 8.5/10
-portfolio architecture + shell ux - 5/10
-case stydy storytelling + depth - 4/10
-
-
-focus on:
-product strategy
-design engineering
-visual craft
-
-
-structure / information architecture
-
-clean codebase
-
-
-product design:
-no evidence of users, testing, previous designs, research
-
-
-context
-problem
-solution
-research
-design approach
-reflection
-
-
-*/
