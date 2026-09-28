@@ -1,17 +1,10 @@
 export type CaseStudyBlock =
-  // `note` is set out in the margin at the left of the window, level with the
-  // heading — a line about the section beside the section, rather than in it.
-  // Shown only where there is a margin to hold it, which is from 1000px up;
-  // under that the heading stands alone. Leave it out, or empty, for a
-  // heading that has nothing to say out there.
   | { type: "heading"; text: string; note?: string }
   | { type: "text"; text: string }
   | { type: "list"; items: string[]; ordered?: boolean }
   | { type: "quote"; text: string; attribution?: string }
-  // The Translation region card from Screen Translator, working: the box on
-  // the phone drags, resizes and follows the presets — see region-demo.tsx.
-  // Placed and sized the way an image is (max, radius, shift below), and alt
-  // is what a screen reader is told the card is.
+
+  // Screen Translator crop box demo
   | {
       type: "region-demo";
       alt: string;
@@ -19,64 +12,21 @@ export type CaseStudyBlock =
       radius?: number;
       shift?: number;
     }
-  // Runs the width of the column unless width is set, which holds it to that
-  // many pixels and centres it — for a crop taken off a retina screen, where
-  // the file is twice the size the thing was on screen and blowing it up to
-  // the column would show it at twice life size.
-  // max is the other way round from width: the shot still takes the column
-  // and still grows with the window, but stops growing at that many pixels.
-  // For a wide shot that is readable long before the column runs out, and on
-  // a large monitor at full screen would otherwise be blown up past the point
-  // where the extra size tells you anything.
-  //
-  // Every size in pixels here — width, max, height, shift, radius, and a
-  // row's max, a shot's width and lift — is the size at full scale. On a
-  // window too short to show the study's film whole the film is drawn
-  // smaller, and these shrink with it in the same proportion, so the study
-  // keeps its shape; see --shot in globals.css and shot() in case-study.tsx.
-  //
-  // A src that is a film (.mp4) is drawn the same way at the same size, as a
-  // loop that plays muted with the controls a recording has, for a close
-  // read that moves.
+
   | {
       type: "image";
       src: string;
       alt: string;
       caption?: string;
-      // Centred under the shot rather than set against the left edge.
       captionCenter?: boolean;
       crop?: string;
       width?: number;
       max?: number;
-      // A fixed height in CSS pixels. The shot is scaled to fill its width
-      // and cropped to this, with crop saying which part is kept, so shots
-      // of different proportions can sit in a run at one size. With max set
-      // it is the height at that width, and the shot keeps the proportion
-      // when the column is narrower than the max — on a phone — rather than
-      // holding the height and cropping the sides to fill it.
       height?: number;
-      // The corner radius in CSS pixels, for a shot whose own corners are
-      // rounder than the page's default: the page clips and borders every shot
-      // at rounded-xl, and a card cut out with a larger radius would show the
-      // page through the gap between the two curves.
       radius?: number;
-      // Pixels to nudge the shot right of centre (negative for left) from sm
-      // up, where the shot is narrower than the column. For one that is
-      // centred to the pixel but reads as off it, the way a picture with a
-      // heavy edge does. On a phone the shot fills the column and stays put.
       shift?: number;
     }
-  // Three across from sm up, or two where the shots are wider than they are
-  // tall and three would leave them too small to read.
-  // A shot takes its width from the row unless it sets one, which holds it to
-  // that many pixels — for one that reads bigger than what is beside it.
-  //
-  // Set fullOnPhone on a shot that is half a column too small to read. A row
-  // is two across at every width, so on a phone half of it is around 160px —
-  // fine for a whole screen, which is only being placed, and too small for a
-  // crop, which is being read. Such a shot takes the column to itself there
-  // and goes back to sharing the row from sm up. Not with `width`, which is a
-  // fixed number of pixels and wins at every size, this one included.
+
   | {
       type: "images";
       items: {
@@ -85,52 +35,24 @@ export type CaseStudyBlock =
         crop?: string;
         width?: number;
         fullOnPhone?: boolean;
-        caption?: string; // under this one shot, where the row's is under them all
-        // Drawn at this fraction of its slot and centred in it, both ways, so
-        // it keeps its place beside the shot next to it while sitting a
-        // little smaller. 0.91 for one a touch under the rest. Its caption
-        // hangs under the picture rather than adding to its height, so the
-        // picture is what sits centred.
+        caption?: string;
         scale?: number;
-        // Pixels a scaled shot is raised from the middle of its slot, for one
-        // that reads a hair low there.
         lift?: number;
       }[];
       caption?: string;
       columns?: 2;
-      // Under sm the shots are piled on one another, each turned a few
-      // degrees so the ones behind show, and swiped through one at a time —
-      // for three phones across, which a phone can only show too small or as
-      // three screens of scrolling. The row from sm up is unchanged. It is for
-      // plain shots all the same shape: a pile draws each item's `src` and
-      // `alt` and nothing else of it, so no `caption`, `scale` or `width`.
       stackOnPhone?: boolean;
-      // A ceiling on the row, not on a shot in it: the shots keep sharing it
-      // in the same proportions and stop growing together.
       max?: number;
     }
-  // Autoplays muted and looping. Set controls to let a viewer pause and scrub
-  // it, and unmute it where the sound is part of what the recording shows.
-  // A browser leaves the volume button off a file with no audio track, so a
-  // silent recording is saved without one rather than with an empty one.
+  // Autoplays muted and looping. Set controls to let a viewer pause, go back or forward
   | {
       type: "video";
       src: string;
       caption?: string;
-      // A second caption, in the space on the other side of the video. An
-      // array for one that runs to more than a line, each set under the last.
       captionLeft?: string | string[];
-      // Low sets the left caption's first line a step under where it sits by
-      // default, for one that reads better nearer the middle of the frame.
       captionLeftAlign?: "low";
       controls?: boolean;
-      // Where the caption sits beside the video. Middle by default; high for
-      // one that reads better up nearer the top of the frame, then higher and
-      // highest, each a step further up again.
       captionAlign?: "middle" | "high" | "higher" | "highest";
-      // Leaves a caption out on a phone, where both sit under the video rather
-      // than beside it: one that points at something in the frame reads as a
-      // stray line there, and the other caption is enough on its own.
       captionHiddenOnPhone?: boolean;
       captionLeftHiddenOnPhone?: boolean;
     }
@@ -138,39 +60,18 @@ export type CaseStudyBlock =
 
 export type CaseStudy = {
   title: string;
-  // Where the project lives, if it is up somewhere. Set it and the title
-  // becomes the link to it, opened in a tab of its own.
   href?: string;
   tagline?: string; // one line under the title
-  // The facts about a project, set as one small block of three lines: where
-  // it stands, who did what, and when. Each is printed as written and left
-  // out when unset.
-  //
-  // Scope is the first of them — "Live on the App Store", "Prototype". When
-  // the project is up somewhere (`appStore` or `href` below) the line is the
-  // link there, with an arrow after it to say it leaves the page.
-  // Role is the second — the work, shortened, then who it was done with.
-  // Date is the last, months abbreviated and an en dash for a span:
-  // "Jun–Sep 2026", "Sep 2026", "May 2026–Present".
+  // The facts about a project
   scope?: string;
   role?: string;
   date?: string;
-  // A further line for where the project stands — "Work in Progress",
-  // "Shelved" — for when the scope does not already say. Under the scope.
   status?: string;
-  // On the App Store: the mark goes after the title. The value is the listing
-  // it opens; an empty string shows the mark without a link. When there is no
-  // `href`, the title itself opens the listing too. See the same field on an
-  // entry in projects.ts.
   appStore?: string;
-  // An emoji the pointer becomes while the study is open on the homepage,
-  // and stops being when it is closed or another is opened — see
-  // ProjectList in project-study.tsx.
   cursor?: string;
-  // --- all optional; add to a study to switch one on ---
-  cover?: { src: string; alt: string; crop?: string }; // wide image up top
-  facts?: { label: string; value: string }[]; // Role / Timeline / Tools strip
-  links?: { label: string; href: string }[]; // buttons, e.g. "Live site"
+  cover?: { src: string; alt: string; crop?: string }; 
+  facts?: { label: string; value: string }[]; 
+  links?: { label: string; href: string }[]; 
   blocks: CaseStudyBlock[];
 };
 
@@ -575,9 +476,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       // the estimate is decent but not exact. a comma heavy sentence reads slower than a plain sentence so any estimate is off
       // word lasts about 0.3 seconds, a sentence lasts 5-15 seconds. so words are better, but word level would have required real timings which is more complicated and probably requires another model to do
       // the re-sync for the end of every clip/chunk/group, so the app stops guessing and it knows whats the current sentence that needs to be highlighted to match the audio
-      //
 
-      // write to the level of my understanding
 
       {
         type: "heading",
@@ -640,7 +539,6 @@ export const caseStudies: Record<string, CaseStudy> = {
         type: "text",
         text: "Because iOS controls how and when the Dynamic Island is displayed, I designed for states I couldn't choose and updates I couldn't guarantee."
       },
-      //iOS prohibits third party overlay windows, which makes language learning more difficult since a user experiences constant context switching between an app and Google Translate.
 
       {
         type: "text",
@@ -682,10 +580,6 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "image",
         src: "/projects/screen-translator-island-minimal.png",
-        // The three island shots share one size so they read as a set. 455
-        // is 1:1 for this 2x capture, 910px across; 204 is the compact shot's
-        // natural height at that width, and the crop keeps the island at the
-        // top and gives up the bottom of the news nav.
         max: 455,
         height: 204,
         crop: "top",
@@ -697,8 +591,6 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "image",
         src: "/projects/screen-translator-island-compact.jpg",
-        // The one the other two are sized to: 455 across is 204 tall at its
-        // own proportions, so nothing is cropped here.
         max: 455,
         height: 204,
         alt: "The compact Dynamic Island on the home screen above the FaceTime, Calendar, Photos, and Camera icons: a Korean flag, an arrow, and a US flag at the left, and the start of the Korean line being read at the right",
@@ -709,12 +601,6 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "image",
         src: "/projects/screen-translator-island-expanded.mp4",
-        // The top of the full-resolution screen recording, 1:11.17 to 1:18.10,
-        // cut to 1206 by 542 — as near the compact shot's proportions as a
-        // film's even sizes allow — so it lands at the same size with next to
-        // no crop in the browser. A step wider than the two above it, at the
-        // same proportions. Kept at the recording's 60fps and saved with no
-        // audio track.
         max: 480,
         height: 215,
         alt: "The Dynamic Island over the top of a Korean news article, growing from the compact island beside the clock into the expanded state: a Korean-to-US flag pair and a pin, Waiting for captions, then three lines of Korean from the article with their English translation under them in gray",
@@ -734,17 +620,9 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
 
       {
-        // The card itself, working, where it used to be a screenshot of it.
         type: "region-demo",
-        // A step under the card's own size: it is drawn to a 2x capture
-        // cropped to the card's edges, 837px across, so 418 would show it 1:1
-        // on a Retina screen. 400 keeps it clearly a card rather than a
-        // screen.
         max: 400,
-        // The card's own corners, measured off the alpha channel: ~72px at
-        // the file's 2x scale, which is 36 at 1:1 and 34 at 400 across.
         radius: 34,
-        // Centred to the pixel it read as sitting a touch left.
         shift: 6,
         alt: "The Translation region card: a crop icon and title with a Custom dropdown at the right, a note that only text inside the box is translated, a phone outline with a blue box dragged over the top of its screen and a resize handle at the corner, and Subtitle band and Full screen presets along the bottom",
       },
@@ -785,10 +663,6 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "images",
-        // Three phones across. The row is what is held rather than each shot,
-        // so they keep sharing it evenly: 983 across, less the two gaps, puts
-        // each phone at 317px — the size of Buy Side's phones, which are two
-        // across in a row of 650 — wherever the column is that wide.
         max: 983,
         stackOnPhone: true,
         items: [
@@ -820,7 +694,6 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "images",
-        // Sized as the row above, for the same reason.
         max: 983,
         stackOnPhone: true,
         items: [
@@ -1012,9 +885,6 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "images",
-        // Four phones, two across: one block and not a block per pair, so
-        // that on a phone they are one pile of four to swipe through rather
-        // than two piles of two. The rows sit the same 16px apart either way.
         columns: 2,
         max: 650,
         stackOnPhone: true,
