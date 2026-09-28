@@ -6,13 +6,10 @@
 // One picture per project, and the way into what has been written about it:
 // pressing one opens that project's case study under its row — see
 // project-study.tsx, which holds the switch this reads. Off the list, where
-// there is no switch to read, it falls back to the study's own page. An entry
-// with a `srcHref` goes to the live site instead — seeing the real thing is
-// not something a page about it can stand in for — and a project with nothing
-// written about it yet is just the picture.
+// there is no switch to read, it falls back to the study's own page. A
+// project with nothing written about it yet is just the picture.
 // ---------------------------------------------------------------------------
 
-import { useEffect, useRef, useState } from "react";
 import { motion, useMotionValue, useSpring } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -20,75 +17,6 @@ import { caseStudies } from "@/data/case-studies";
 import type { EntryImage } from "@/data/projects";
 import { modified, usePress } from "./press";
 import { useCoverToggle } from "./project-study";
-
-// ---------------------------------------------------------------------------
-// A dot painted over a cover that drifts toward the pointer, so the mark looks
-// like it is watching the cursor. It leans in the pointer's direction and stops
-// at `travel`, rather than tracking it one-to-one — the movement should read as
-// a glance, not a drag.
-// ---------------------------------------------------------------------------
-
-function CoverDot({ dot }: { dot: NonNullable<EntryImage["coverDot"]> }) {
-  const ref = useRef<HTMLSpanElement>(null);
-  const [lean, setLean] = useState({ x: 0, y: 0 });
-
-  useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-    // Coalesce to one update a frame: mousemove fires far more often than the
-    // screen refreshes, and each update costs a layout read.
-    let frame = 0;
-    const onMove = (e: MouseEvent) => {
-      if (frame) return;
-      frame = requestAnimationFrame(() => {
-        frame = 0;
-        const el = ref.current;
-        if (!el) return;
-        // Not while the page has weight. The cover is tumbling around the
-        // screen by then, so a glance toward the cursor means nothing on it —
-        // and the measurement below is a layout read on every pointer move,
-        // taken against a page whose every word is being rewritten each frame.
-        // That is the one place it is expensive, and it is the one place it
-        // buys nothing.
-        if (document.documentElement.classList.contains("gravity-on")) return;
-        const box = el.getBoundingClientRect();
-        const dx = e.clientX - (box.left + box.width / 2);
-        const dy = e.clientY - (box.top + box.height / 2);
-        const distance = Math.hypot(dx, dy);
-        if (distance < 1) return setLean({ x: 0, y: 0 });
-        setLean({ x: dx / distance, y: dy / distance });
-      });
-    };
-
-    window.addEventListener("mousemove", onMove);
-    return () => {
-      window.removeEventListener("mousemove", onMove);
-      if (frame) cancelAnimationFrame(frame);
-    };
-  }, []);
-
-  return (
-    <span
-      ref={ref}
-      aria-hidden
-      className="pointer-events-none absolute rounded-full transition-transform duration-300 ease-out"
-      style={{
-        left: `${dot.x}%`,
-        top: `${dot.y}%`,
-        width: `${dot.size}%`,
-        aspectRatio: "1",
-        background: dot.color,
-        // -50% centres it on (x, y); the lean rides on top of that. `travel`
-        // is a share of the thumbnail, but a percentage translate is a share
-        // of the element being moved, so it is rescaled against the dot's own
-        // width here.
-        transform: `translate(-50%, -50%) translate(${
-          (lean.x * dot.travel * 100) / dot.size
-        }%, ${(lean.y * dot.travel * 100) / dot.size}%)`,
-      }}
-    />
-  );
-}
 
 // ---------------------------------------------------------------------------
 // The tilt under the pointer. The cover turns about its middle as if the
@@ -132,14 +60,11 @@ function useTilt() {
 export function ProjectThumbnail({
   image,
   slug,
-  href,
 }: {
   image: EntryImage;
   slug: string;
-  href?: string;
 }) {
   const study = caseStudies[slug];
-  const label = image.title ?? study?.title;
 
   // A cover brings its own background, so the hairline that frames a
   // screenshot just reads as an outline around it — drop it for covers.
@@ -156,29 +81,6 @@ export function ProjectThumbnail({
   // still the shot itself. `crop` frames that shot, so a cover ignores it.
   const shown = image.cover ?? image.src;
 
-  // The film under the pointer, for a cover that has one.
-  const film = useRef<HTMLVideoElement>(null);
-  const [rolling, setRolling] = useState(false);
-  const enter = () => {
-    const el = film.current;
-    if (!el) return;
-    // The promise rejects if the pointer leaves before it starts, which is
-    // not a failure and not worth hearing about.
-    void el.play().then(
-      () => setRolling(true),
-      () => {},
-    );
-  };
-  const leave = () => {
-    setRolling(false);
-    const el = film.current;
-    if (!el) return;
-    el.pause();
-    // Back to the frame the still is, so the next hover starts where the
-    // picture left off rather than mid-shower.
-    el.currentTime = 0;
-  };
-
   const tilt = useTilt();
 
   // The screenshots are ~1200px wide, so letting the browser squeeze one into a
@@ -192,21 +94,13 @@ export function ProjectThumbnail({
   const inner = shown ? (
     // Marked for gravity: with no button around it any more, the box is the
     // outermost thing here, and without the marker the image inside would fall
-    // out of its own frame and leave the dot painted on it behind.
-    //
-    // The film, where there is one, is started and stopped from here rather
-    // than left to autoplay: a loop running behind a pointer that is nowhere
-    // near it is work nobody asked for, and five of them would be five.
+    // out of its own frame.
     <motion.div
       data-gravity="piece"
       className={`${box} relative overflow-hidden`}
       style={tilt.style}
-      onMouseEnter={image.coverVideo ? enter : undefined}
       onMouseMove={tilt.onMouseMove}
-      onMouseLeave={() => {
-        tilt.onMouseLeave();
-        if (image.coverVideo) leave();
-      }}
+      onMouseLeave={tilt.onMouseLeave}
     >
       <Image
         src={shown}
@@ -237,27 +131,6 @@ export function ProjectThumbnail({
               : undefined
         }
       />
-      {/* Over the still rather than instead of it. Until the first frame is
-          decoded a video paints nothing, so what shows through is the cover —
-          no hole where the picture was on the first hover, and no second
-          picture to load for anyone who never hovers. It is only faded in
-          once it is running, so a slow first start shows the still and not a
-          black square. */}
-      {image.coverVideo && (
-        <video
-          ref={film}
-          src={image.coverVideo}
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          aria-hidden
-          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-200 ease-out ${
-            rolling ? "opacity-100" : "opacity-0"
-          }`}
-        />
-      )}
-      {image.coverDot && <CoverDot dot={image.coverDot} />}
     </motion.div>
   ) : (
     // A project whose cover has not been taken yet still holds its row.
@@ -265,11 +138,9 @@ export function ProjectThumbnail({
   );
 
   // The lift under the pointer. On the list the whole row is the switch and
-  // the cover answers a hover anywhere in it (row-hover, from ProjectRow);
-  // a cover that leaves the page answers only its own.
+  // the cover answers a hover anywhere in it (row-hover, from ProjectRow).
   const lift =
     "block cursor-pointer rounded-lg transition-transform duration-100 ease-out";
-  const ownLift = `${lift} hover:scale-105`;
   const rowLift = `${lift} hover:scale-105 row-hover:scale-105`;
 
   // A throw of the cover is not a click on it — see press.ts.
@@ -278,24 +149,6 @@ export function ProjectThumbnail({
   // Set on the list, where a press opens the study in place. Null anywhere
   // else, and for a project with nothing written about it.
   const toggle = useCoverToggle();
-
-  if (href) {
-    return (
-      <a
-        href={href}
-        target="_blank"
-        rel="noreferrer"
-        aria-label={`Visit ${label ?? image.alt}`}
-        className={ownLift}
-        onPointerDown={onPointerDown}
-        onClick={(e) => {
-          if (dragged(e)) e.preventDefault();
-        }}
-      >
-        {inner}
-      </a>
-    );
-  }
 
   // On the list the picture is a switch, not a way out of the page: a plain
   // click opens the study under the row and closes it again, and

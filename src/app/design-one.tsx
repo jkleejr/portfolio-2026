@@ -252,7 +252,6 @@ export function DesignOne() {
                       key={`${entry.slug}-${i}`}
                       image={image}
                       slug={entry.slug}
-                      href={entry.srcHref}
                     />
                   ))}
                   {/* The writing takes whatever the cover leaves on a phone, and

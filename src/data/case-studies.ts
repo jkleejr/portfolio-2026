@@ -233,9 +233,6 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "images",
         columns: 2,
-        // Crops off a retina screen, so 776px of file is 388px of screen.
-        // Half the row plus the gap between the two halves holds the first
-        // there, rather than letting a wide window blow it up past life size.
         max: 792,
         items: [
           {
