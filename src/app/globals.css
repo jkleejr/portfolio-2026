@@ -198,14 +198,15 @@
 /* The browser paints the strips outside the page — on iOS the status bar at
    the top and the Safari toolbar at the bottom — from the ROOT background.
    Those strips fall outside the view transition's snapshot, so they show the
-   live value and would flip the instant `data-theme` changes, while the wave
-   is still sweeping across the content. Giving :root its own background and
-   easing it over the wave's duration keeps the strips in step.
+   live value and would flip the instant `data-theme` changes, while the fade
+   is still running over the content. Giving :root its own background lets the
+   toggle animate it over the fade's duration — see fadeBars in
+   theme-toggle.tsx — and keep the strips in step.
 
    `body` keeps its own background too: with :root painting the canvas, body no
    longer propagates, and the content area needs an opaque layer for the
    transition to snapshot. That one changes instantly, which is fine — it is
-   hidden behind the wave the whole time. */
+   hidden behind the fade the whole time. */
 :root {
   background-color: var(--background);
 }

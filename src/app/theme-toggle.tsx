@@ -14,15 +14,44 @@
 // layout.tsx.
 const THEME_COLOR = { light: "#ffffff", dark: "#0a0a0a" };
 
+// The strips the browser paints outside the page — on a phone the status bar
+// at the top and Safari's toolbar at the foot — take their colour from the
+// html element's background and from theme-color, and both sit outside the
+// view transition's snapshot. Left alone they would flip the moment the
+// palette does, a full shade ahead of the page fading under them. So the html
+// background is animated here over the fade's own 0.6s ease-in-out (see
+// ::view-transition-* in globals.css), and theme-color is written from it on
+// every frame, so the whole screen turns together.
+function fadeBars(
+  root: HTMLElement,
+  meta: Element | null,
+  from: string,
+  to: string,
+) {
+  const fade = root.animate(
+    { backgroundColor: [from, to] },
+    { duration: 600, easing: "ease-in-out" },
+  );
+  if (!meta) return;
+  const tick = () => {
+    if (fade.playState !== "running") {
+      meta.setAttribute("content", to);
+      return;
+    }
+    meta.setAttribute("content", getComputedStyle(root).backgroundColor);
+    requestAnimationFrame(tick);
+  };
+  tick();
+}
+
 export function ThemeToggle() {
   function toggle() {
     const root = document.documentElement;
     const next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
+    const meta = document.querySelector('meta[name="theme-color"]');
     const apply = () => {
       root.setAttribute("data-theme", next);
-      document
-        .querySelector('meta[name="theme-color"]')
-        ?.setAttribute("content", THEME_COLOR[next]);
+      meta?.setAttribute("content", THEME_COLOR[next]);
     };
     try {
       localStorage.setItem("theme", next);
@@ -41,7 +70,15 @@ export function ThemeToggle() {
       apply();
       return;
     }
-    document.startViewTransition(apply);
+    document.startViewTransition(() => {
+      apply();
+      fadeBars(
+        root,
+        meta,
+        THEME_COLOR[next === "dark" ? "light" : "dark"],
+        THEME_COLOR[next],
+      );
+    });
   }
 
   return (
