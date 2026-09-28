@@ -61,8 +61,7 @@ export type CaseStudyBlock =
 export type CaseStudy = {
   title: string;
   href?: string;
-  tagline?: string; // one line under the title
-  // The facts about a project
+  tagline?: string;
   scope?: string;
   role?: string;
   date?: string;
@@ -84,6 +83,8 @@ export type CaseStudy = {
 
 // design thinking -empathise, define, ideate, prototype, test
 
+// frame the problem in terms of user friction and business opportunity. state a clear hypothesis or goal.
+
 export const caseStudies: Record<string, CaseStudy> = {
   "loot-check": {
     title: "Loot Check",
@@ -93,8 +94,6 @@ export const caseStudies: Record<string, CaseStudy> = {
     scope: "Live on the App Store",
     cursor: "🦈",
     blocks: [
-      // frame the problem in terms of user friction and business opportunity. state a clear hypothesis or goal.
-
       {
         type: "video",
         src: "/projects/loot-check-shark.mp4",
