@@ -1,9 +1,7 @@
 // ---------------------------------------------------------------------------
-// Design one — the original layout.
-//
-// Moved here unchanged when the design switcher landed. The switcher renders
-// this and DesignTwo side by side and shows one at a time, so edits to the
-// alternative never touch this file.
+// The homepage: the name, the intro, the list of projects, and the links at
+// the bottom. The same page is served at / and, with one study open, at
+// /[slug] — see [slug]/page.tsx.
 // ---------------------------------------------------------------------------
 
 import { site } from "@/data/site";
@@ -203,9 +201,8 @@ export function DesignOne() {
           phone, where the column is wider than the screen. */}
       <div className="mx-auto w-[var(--column)] max-w-[calc(100%-3rem)]">
         {/* One row per project: its cover, and beside that the name and the one
-            line that says what the thing is. Nothing here is a press target any
-            more — the writing for a project is on the page beside it rather than
-            behind it.
+            line that says what the thing is. Pressing the row opens the
+            project's case study under it.
 
             The covers hold the left of the column and the writing the right of
             it, on the same two lines the header above them keeps.
@@ -312,16 +309,6 @@ export function DesignOne() {
                     {entry.blurb && (
                       <p className="mt-3 text-base leading-relaxed text-muted min-[1000px]:w-[calc(var(--study-width)-var(--text-start))] min-[1000px]:text-balance">
                         {entry.blurb}
-                      </p>
-                    )}
-                    {entry.date && (
-                      <p className="mt-2 text-base leading-relaxed">
-                        Date: {entry.date}
-                      </p>
-                    )}
-                    {entry.tools && (
-                      <p className="mt-1 text-base leading-relaxed">
-                        Tools: {entry.tools}
                       </p>
                     )}
                     <StudyFacts study={study} />

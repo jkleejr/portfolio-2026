@@ -12,10 +12,8 @@ export type EntryImage = {
 export type Entry = {
   title: string; 
   blurb?: string;
-  date?: string;
-  tools?: string;
-  slug: string; // short ID connects a project to its case study page
-  images?: EntryImage[]; // the project's pictures (the "[]" means a list)
+  slug: string; // short ID connects a project to its case study page - design-one
+  images?: EntryImage[]; 
 };
 
 // Projects shown in order
