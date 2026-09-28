@@ -1,18 +1,9 @@
 export const site = {
-  // The wordmark across the top of the homepage. The capitals are the
-  // typographic choice, and the sizing in design-one.tsx is measured off this
-  // exact string in Old London — read the note on the h1 before changing it.
-  name: "JOHN LEE",
-
-  // The same name as prose, for the places the browser and other people's
-  // servers set it rather than the page: the tab, and link previews.
+  name: "JOHN LEE", // oldlondon font
   titleName: "John Lee",
   role: "Design Engineer",
-  // Under the role in the header, as the way to get in touch.
   email: "johnkleejr@gmail.com",
 
-  // Beside Email at the foot of the homepage, in this order. One with no
-  // href is left out rather than set as a link to nowhere.
   links: [
     { label: "GitHub", href: "https://github.com/jkleejr" },
     { label: "LinkedIn", href: "https://www.linkedin.com/in/john-lee-779329401/" },
@@ -21,7 +12,7 @@ export const site = {
   // Between the links and Email at the foot of the homepage. Clicking it
   // saves the file rather than opening it, under the name given here. The file
   // itself lives in public/, so the href is its path from the site root.
-  resume: { label: "Resume", href: "/John-Lee-Resume.pdf", filename: "John-Lee-Resume.pdf" },
+  resume: { label: "Resume", href: "/John-Lee-Resume.pdf" },
 
   // The last line of the homepage, under the work. Left out entirely when it
   // is empty, rather than leaving a gap at the foot of the page.

@@ -378,11 +378,12 @@ export function DesignOne() {
                   </a>
                 ),
             )}
-            {/* The download attribute is what makes the click save the file
-                rather than open it in the tab. */}
+            {/* Opens the PDF in a new tab, where the browser shows it, rather
+                than saving it to the computer. */}
             <a
               href={site.resume.href}
-              download={site.resume.filename}
+              target="_blank"
+              rel="noreferrer"
               className="transition-colors duration-200 ease-out hover:text-accent"
             >
               {site.resume.label}
