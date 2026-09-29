@@ -189,7 +189,6 @@
 @custom-variant row-hover (&:is(:where(.group):hover:not(:has([data-own-hover]:hover)) *));
 
 @theme inline {
-  --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-muted: var(--muted);
   --color-body: var(--text-body);

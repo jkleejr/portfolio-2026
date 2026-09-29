@@ -73,7 +73,7 @@ export function DesignOne() {
   // clear — where the name has to get under the buttons it does so with a
   // margin of its own, see the h1.
   return (
-    <main data-home className="relative pb-8 pt-6 sm:pb-28">
+    <main className="relative pb-8 pt-6 sm:pb-28">
       {/* The name, set in the blackletter — see .fraktur in globals.css, which
           carries the face and pins the weight. It is the one thing on the page
           that is not in the column: it holds the page's top left corner and
