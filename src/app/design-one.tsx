@@ -12,6 +12,7 @@ import { ProjectList, ProjectRow, ProjectSection } from "./project-study";
 import { ProjectThumbnail } from "./project-thumbnail";
 import { ProjectTitle } from "./project-title";
 import { ThemeToggle } from "./theme-toggle";
+import { CopyEmail } from "./copy-email";
 
 /**
  * When a project was made, what the role was, and how far it went.
@@ -70,7 +71,7 @@ export function DesignOne() {
   // The top padding is the same 1.5rem at every width, the air the page keeps
   // at all of its edges. The name is the first thing under it and nothing is
   // pinned above the name any more, so there is no row for the padding to
-  // clear — where the name has to get under the buttons it does so with a
+  // clear — where the name has to get under the apple button it does so with a
   // margin of its own, see the h1.
   return (
     <main className="relative pb-8 pt-6 sm:pb-28">
@@ -82,12 +83,12 @@ export function DesignOne() {
           left — the role that used to be pinned in that corner is the first
           words of the intro now.
 
-          From 900px it starts at the very top, on the line the buttons in the
-          opposite corner are on. There is room for both: the name is 87% of
-          the band and the buttons are in the last 70px of it, so at 900px
+          From 900px it starts at the very top, on the same line as the apple
+          button in the opposite corner. There is room for both: the name is
+          87% of the band and the apple is in the last 70px of it, so at 900px
           some 40px is left between the last E and the apple, and more above
           that. Under 900px there is not, so the name takes --top-row plus a
-          gap as a top margin and sits under the buttons instead. Reading the
+          gap as a top margin and sits under the apple instead. Reading the
           row's height from the variable rather than writing 44px here means
           the two cannot fall out of step.
 
@@ -171,9 +172,9 @@ export function DesignOne() {
           right margin rather than breaking early, and only wraps where the
           page itself runs out.
 
-          The buttons are in the corner opposite at every width now, so the
-          header no longer reserves the height a row of them used to sit in
-          — see "The page on a phone" in globals.css. */}
+          The apple button is in the opposite corner at every width, so the
+          header doesn't need to leave room for it — see "The page on a
+          phone" in globals.css. */}
       <header className="px-6">
         {/* Who that is. A paragraph per line of site.intro, so a sentence that
             should start fresh does, rather than being wrapped into the one
@@ -318,8 +319,8 @@ export function DesignOne() {
 
         {/* What the work was leading to, and the way to answer it. From sm up
             these are not in the column at all: they sit in the band's two
-            bottom corners, closing it the way the intro and the buttons open
-            it at the top.
+            bottom corners, closing it the way the intro and the apple button
+            open it at the top.
 
             They are pinned to main rather than to the initial containing
             block, which is why main is relative. An absolute box with no
@@ -338,7 +339,7 @@ export function DesignOne() {
             rather than running under them. */}
         <div className="mt-16 flex flex-col gap-7 sm:mt-0 sm:block">
           {site.closing && (
-            <p className="text-xl font-medium leading-relaxed text-foreground sm:absolute sm:bottom-6 sm:left-6 sm:right-100">
+            <p className="text-xl font-medium leading-relaxed text-foreground sm:absolute sm:bottom-6 sm:left-6 sm:right-100 min-[70rem]:right-[37rem]">
               {site.closing}
             </p>
           )}
@@ -371,12 +372,24 @@ export function DesignOne() {
             >
               {site.resume.label}
             </a>
+            {/* Two ways to the address, one at a time. Where the row has room
+                for it (from 70rem, 1120px — the closing line makes way for the
+                longer row there, right-[37rem] above) it is the address
+                itself, and pressing it copies it — see copy-email.tsx. Under
+                that, on a phone above all, it is the word, and opens a mail
+                app the way it always did. */}
             <a
               href={`mailto:${site.email}`}
-              className="transition-colors duration-200 ease-out hover:text-accent"
+              className="transition-colors duration-200 ease-out hover:text-accent min-[70rem]:hidden"
             >
               Email
             </a>
+            <CopyEmail
+              email={site.email}
+              className="hidden transition-colors duration-200 ease-out hover:text-accent min-[70rem]:inline"
+            >
+              {site.email}
+            </CopyEmail>
           </nav>
         </div>
       </div>

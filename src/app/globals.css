@@ -13,6 +13,9 @@
      themes, a shade deeper here: the pale one dark mode uses looks washed out
      on white. */
   --accent: #5476d4;
+  /* The lapis on the other theme's background — for the "Copied" note, which
+     is set in the other theme's colours (see .copied-note). */
+  --accent-inverse: #93a9e2;
 
   /* The two columns the page is set in: a cover, and the writing beside it.
      One place to say how wide a cover is, how far the writing sits off it, and
@@ -61,7 +64,7 @@
      move together. Past it the band stops growing and is centred in the
      window by the wrapper in layout.tsx, and everything that was measured
      from a window edge — the notes in the margin, the study's right edge,
-     the buttons in the corner, the links at the foot — is measured from the
+     the apple in the corner, the links at the foot — is measured from the
      band's edge instead. On a wide monitor that is the whole difference: the
      page keeps the shape it has on a laptop, with the room left over split
      evenly either side rather than opening up inside it. Under 97.3rem the
@@ -110,10 +113,9 @@
      smaller on a machine drawing one, and the same as before on one that
      does not. The floor is for a window too narrow for the name at all. */
   --name-size: max(2rem, calc(var(--page) * 0.185));
-  /* The height of the row across the top of the page, which is the two
-     buttons at the right of it. It is the apple's box, the taller of the
-     two. The homepage reads it to know how far to drop its name under 900px,
-     where the name would otherwise run into them on that same line. */
+  /* The height of the row across the top of the page, which is the apple
+     button's box. The homepage reads it to know how far to drop its name
+     under 900px, where the name would otherwise run into the apple. */
   --top-row: 2.75rem;
 
   /* The width a recording in a study is drawn at — a phone's width. 340px
@@ -152,6 +154,7 @@
   --text-body: #d4d4d8;
   --muted: #a1a1aa;
   --accent: #93a9e2;
+  --accent-inverse: #5476d4;
   color-scheme: dark;
 }
 
@@ -325,10 +328,8 @@ html[data-study-cursor] * {
    The cover grew on the desktop and this did not follow it, for that reason:
    there is nothing here to spend.
 
-   The corner stack sits in the top-right corner here as it does on a laptop,
-   as a row rather than a column — so it clears the name at the top left and
-   the writing under it, and the header no longer has to reserve height for a
-   row of buttons sitting under it.
+   The apple button sits in the top-right corner here as it does on a laptop,
+   so it clears the name at the top left and the writing under it.
    --------------------------------------------------------------------------- */
 
 @media (width < 40rem) {
@@ -517,4 +518,63 @@ html.gravity-on main {
 .gravity-word:active,
 .gravity-atom:active {
   cursor: grabbing;
+}
+
+/* ---------------------------------------------------------------------------
+   "Copied ✓"
+   The note that rises by the pointer when the email in the footer is pressed
+   and the address has been copied — see copy-email.tsx. Centred over the
+   point it is given and held 12px above it, so the pointer never covers it.
+   The site's colours turned around, so it reads as a label on either theme,
+   and the check after "Copied" is the lapis that belongs on that background.
+
+   Timed to the tooltip in transitions.dev: 150ms in from a touch smaller and
+   a few pixels low, ease-out, and no delay, since it answers a press rather
+   than a hover. Out on the same 150ms.
+   --------------------------------------------------------------------------- */
+.copied-note {
+  position: fixed;
+  z-index: 60;
+  padding: 4px 10px;
+  border-radius: 8px;
+  background: var(--foreground);
+  color: var(--background);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-satoshi), system-ui, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.4;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  /* One transform rather than translate and scale on their own: the build
+     drops those two here. -50% centres it on the point, -100% - 12px lifts it
+     clear of the pointer, and the resting state sits 4px lower and a touch
+     smaller, which is what it rises out of. */
+  transform: translate(-50%, calc(-100% - 8px)) scale(0.98);
+  transform-origin: 50% 100%;
+  transition:
+    opacity 150ms ease-out,
+    transform 150ms ease-out;
+}
+
+.copied-note[data-show="true"] {
+  opacity: 1;
+  transform: translate(-50%, calc(-100% - 12px)) scale(1);
+}
+
+.copied-note .copied-check {
+  width: 14px;
+  height: 14px;
+  color: var(--accent-inverse);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .copied-note,
+  .copied-note[data-show="true"] {
+    transition: opacity 150ms ease-out;
+    transform: translate(-50%, calc(-100% - 12px));
+  }
 }
