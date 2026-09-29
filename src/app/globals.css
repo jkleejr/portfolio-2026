@@ -318,20 +318,6 @@ html[data-study-cursor] * {
 }
 
 /* ---------------------------------------------------------------------------
-   Cursor ribbons
-   The stylesheet that ships with React Bits' Ribbons, kept verbatim — the
-   component sets this class on the element it renders the canvas into. It is
-   mounted inside a click-through overlay (see CursorRibbons), so none of this
-   intercepts presses on the page underneath.
-   --------------------------------------------------------------------------- */
-
-.ribbons-container {
-  width: 100%;
-  height: 100%;
-  position: relative;
-}
-
-/* ---------------------------------------------------------------------------
    The page on a phone
    A project is a cover with its writing beside it at every width, which on a
    narrow screen only works if the cover gives way: 104px and a 1rem gap leave
@@ -384,24 +370,12 @@ html[data-study-cursor] * {
 
 /* ---------------------------------------------------------------------------
    Touch behaviour
-   The ribbons follow a finger exactly the way they follow a cursor — the same
-   handler takes touchstart and touchmove. What they lose on a phone is the
-   gesture itself: a swipe is also the browser's scroll gesture, the browser
-   wins it, and while the page scrolls the animation frames the ribbons are
-   drawn on are paused. The trail stutters and stops.
-
-   The largest part of the fix is in the layout: design one trims its bottom
-   padding so the page fits the screen, because a page that overflows even
-   slightly still hands over every swipe. What is left here backs that up.
-
    pan-y leaves vertical scrolling to the browser and takes horizontal panning
-   off it, so a sideways swipe is never claimed as a scroll and draws a clean
-   ribbon with the page held still — the one gesture that always works, at any
-   page length. pinch-zoom is kept so the page can still be zoomed in on.
+   off it, so a sideways swipe never drags the page. pinch-zoom is kept so the
+   page can still be zoomed in on.
 
-   overscroll-behavior stops the rubber-band at the ends of the page. Without
-   it a swipe on a page with nothing to scroll still drags the whole view, and
-   the fixed canvas the ribbons live on goes with it.
+   overscroll-behavior stops the rubber-band at the ends of the page, so a
+   swipe on a page with nothing to scroll does not drag the whole view.
    --------------------------------------------------------------------------- */
 
 html {
@@ -544,20 +518,4 @@ html.gravity-on main {
 .gravity-word:active,
 .gravity-atom:active {
   cursor: grabbing;
-}
-
-/* ---------------------------------------------------------------------------
-   Custom cursor
-   The Cursor component hides the native pointer on <body>, but that only
-   covers what inherits: a UA `cursor: pointer` on a link, or a Tailwind
-   cursor utility anywhere inside, wins over it and flashes the system arrow
-   back mid-page. This hides it for the whole subtree instead — only while
-   SiteCursor is mounted, which is the flag it sets on <html>, and only where
-   a pointer exists to hide.
-   --------------------------------------------------------------------------- */
-@media (pointer: fine) {
-  html[data-cursor="custom"],
-  html[data-cursor="custom"] * {
-    cursor: none;
-  }
 }

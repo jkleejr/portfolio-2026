@@ -12,7 +12,7 @@ export type EntryImage = {
 export type Entry = {
   title: string; 
   blurb?: string;
-  slug: string; // short ID connects a project to its case study page - design-one
+  slug: string; // short ID connects a project to its case study page - design-one.tsx
   images?: EntryImage[]; 
 };
 
