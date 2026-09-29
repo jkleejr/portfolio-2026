@@ -141,7 +141,7 @@ export default function RootLayout({
         />
         {/* The band the page is laid out in — see --page in globals.css. It
             is the window up to about 1557px and a centred box of that width
-            past it, so the buttons in the corner, the name, the notes in the
+            past it, so the apple in the corner, the name, the notes in the
             margin, the column and the links at the foot all keep their
             places against the same edges at any window size. relative so
             the corner stack here and, through main, the homepage's footer
@@ -154,14 +154,9 @@ export default function RootLayout({
             resolves against. The two scripts at the foot of the body stay
             outside it; neither looks inside a particular box. */}
         <div className="relative mx-auto max-w-[var(--page)]">
-          {/* One container places every button, so their spacing is a gap
-              rather than a sum each of them has to know. The band's top-right
-              corner, as a row, at every width — no breakpoint. The apple is
-              last, which puts it hard against the right edge.
-
-              items-center is what --top-row on the homepage measures against:
-              the row is the apple's height, and the name is dropped under it
-              on a phone. */}
+          {/* Holds the apple button in the top-right corner at every width.
+              The row is the apple's height, which is what --top-row on the
+              homepage measures to drop the name under it on a phone. */}
           <div
             data-gravity="atom"
             className="corner-stack absolute right-6 top-6 z-20 flex flex-row items-center gap-2"

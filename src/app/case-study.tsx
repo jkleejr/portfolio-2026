@@ -1,6 +1,6 @@
 // ---------------------------------------------------------------------------
-// The written half of a case study: the title, whatever facts and links the
-// study carries, and its blocks in order.
+// The written half of a case study: the title, the facts about the project,
+// and its blocks in order.
 //
 // Set the way the homepage is set. The title is the size and weight the name
 // at the top of the homepage is, a paragraph is the size and colour an intro
@@ -158,11 +158,10 @@ export function StudyBody({
     <article className={inline ? undefined : "pb-20"}>
       {!inline && (
         <header>
-          {/* The title is the way to the live site when there is one — a link
-              mark after it says so. A button under the title said the same
-              thing at more cost. With no site but a listing on the App Store,
-              the title goes there instead, and the App Store mark rides inside
-              the same link so the two light up as one. */}
+          {/* The title links to the live site when there is one, with a link
+              mark after it. With no site but an App Store listing, the title
+              goes there instead, with the App Store mark inside the same link
+              so the two light up together. */}
           <h1 className="text-2xl font-bold tracking-[-0.02em]">
             {study.href ? (
               <SiteLink href={study.href}>{study.title}</SiteLink>
