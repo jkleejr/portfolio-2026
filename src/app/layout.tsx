@@ -168,12 +168,6 @@ export default function RootLayout({
           >
             <AppleButton />
           </div>
-          {/* The drawn cursor is switched off for now — uncomment to bring it
-              back. */}
-          {/* <SiteCursor /> */}
-          {/* Cursor ribbons are switched off for now. The effect is still
-              here — re-enable it by uncommenting this line. */}
-          {/* <CursorRibbons /> */}
           {children}
         </div>
         {/* The scrollbar's width onto :root, for --page in globals.css and

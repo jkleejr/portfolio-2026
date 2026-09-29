@@ -65,10 +65,7 @@ function StudyFacts({ study }: { study?: CaseStudy }) {
 }
 
 export function DesignOne() {
-  // The bottom padding is trimmed on a phone so the page fits the screen. That
-  // is not only spacing: a page that overflows by even a few dozen pixels hands
-  // every upward swipe to the browser as a scroll, and the ribbons lose the
-  // gesture — see "Touch behaviour" in globals.css.
+  // The bottom padding is trimmed on a phone so the page fits the screen.
   //
   // The top padding is the same 1.5rem at every width, the air the page keeps
   // at all of its edges. The name is the first thing under it and nothing is
