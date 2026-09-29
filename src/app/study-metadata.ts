@@ -39,8 +39,7 @@ export function studyMetadata(slug: string, path: string): Metadata {
   const title = `${study.title} - ${site.titleName}`;
   // The line that sits under the project's name on the homepage. It is the one
   // sentence written to say what the thing is to someone who has not seen it.
-  const description =
-    study.tagline ?? entries.find((entry) => entry.slug === slug)?.blurb;
+  const description = entries.find((entry) => entry.slug === slug)?.blurb;
 
   return {
     title,

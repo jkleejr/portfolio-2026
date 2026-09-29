@@ -23,8 +23,6 @@ export type CaseStudyBlock =
       width?: number;
       max?: number;
       height?: number;
-      radius?: number;
-      shift?: number;
     }
 
   | {
@@ -32,14 +30,8 @@ export type CaseStudyBlock =
       items: {
         src: string;
         alt: string;
-        crop?: string;
-        width?: number;
         fullOnPhone?: boolean;
-        caption?: string;
-        scale?: number;
-        lift?: number;
       }[];
-      caption?: string;
       columns?: 2;
       stackOnPhone?: boolean;
       max?: number;
@@ -52,7 +44,7 @@ export type CaseStudyBlock =
       captionLeft?: string | string[];
       captionLeftAlign?: "low";
       controls?: boolean;
-      captionAlign?: "middle" | "high" | "higher" | "highest";
+      captionAlign?: "higher" | "highest";
       captionHiddenOnPhone?: boolean;
       captionLeftHiddenOnPhone?: boolean;
     }
@@ -61,16 +53,11 @@ export type CaseStudyBlock =
 export type CaseStudy = {
   title: string;
   href?: string;
-  tagline?: string;
   scope?: string;
   role?: string;
   date?: string;
-  status?: string;
   appStore?: string;
   cursor?: string;
-  cover?: { src: string; alt: string; crop?: string }; 
-  facts?: { label: string; value: string }[]; 
-  links?: { label: string; href: string }[]; 
   blocks: CaseStudyBlock[];
 };
 

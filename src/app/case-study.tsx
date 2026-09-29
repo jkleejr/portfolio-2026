@@ -20,7 +20,7 @@ import { type CaseStudy, type CaseStudyBlock } from "@/data/case-studies";
 import { RegionDemo } from "./region-demo";
 import { ShotStack } from "./shot-stack";
 import { SiteLink } from "./site-link";
-import { AppStoreBadge, AppStoreMark } from "./title-badge";
+import { AppStoreMark } from "./title-badge";
 import { LinkGlyph } from "./link-glyph";
 import { mediaSize } from "./media-size";
 
@@ -80,7 +80,6 @@ export function studyFacts(study: CaseStudy): Fact[] {
       href: there,
       appStore: Boolean(study.appStore),
     },
-    study.status && { text: study.status },
     study.role && { text: study.role },
     study.date && { text: study.date },
   ].filter(Boolean) as Fact[];
@@ -179,16 +178,7 @@ export function StudyBody({
             ) : (
               study.title
             )}
-            {/* Its own link after the title's when the two go to different
-                places, or a plain mark when there is no listing to go to yet.
-                A title that already opens the listing carries the mark itself. */}
-            {study.appStore !== undefined && (study.href || !study.appStore) && (
-              <AppStoreBadge href={study.appStore} label={study.title} />
-            )}
           </h1>
-          {study.tagline && (
-            <p className="mt-1 text-lg font-medium">{study.tagline}</p>
-          )}
           {/* The facts, in the order and the words the homepage sets them in
               its margin — see studyFacts. Printed with no labels, so the lines
               read as one small block of facts rather than a form. */}
@@ -200,46 +190,7 @@ export function StudyBody({
               <StudyFact {...line} />
             </p>
           ))}
-
-          {study.links && study.links.length > 0 && (
-            <div className="mt-6 flex flex-wrap gap-3">
-              {study.links.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="rounded-lg border border-foreground/15 bg-foreground/[0.04] px-4 py-2 text-base font-semibold text-foreground transition duration-200 ease-out hover:scale-105 hover:opacity-80"
-                >
-                  {link.label}
-                </a>
-              ))}
-            </div>
-          )}
-
-          {study.facts && study.facts.length > 0 && (
-            <dl className="mt-8 flex flex-wrap gap-x-10 gap-y-4 border-y border-foreground/10 py-5">
-              {study.facts.map((fact) => (
-                <div key={fact.label}>
-                  <dt className="text-base font-semibold">{fact.label}</dt>
-                  <dd className="mt-1 text-base leading-relaxed">{fact.value}</dd>
-                </div>
-              ))}
-            </dl>
-          )}
         </header>
-      )}
-
-      {study.cover && (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={study.cover.src}
-          alt={study.cover.alt}
-          className="mt-10 h-[220px] w-full rounded-xl border border-foreground/10 object-cover"
-          style={
-            study.cover.crop ? { objectPosition: study.cover.crop } : undefined
-          }
-        />
       )}
 
       <div className={`${inline ? "" : "mt-8 "}space-y-4`}>
@@ -290,22 +241,11 @@ function Inline({ text }: { text: string }) {
   return <>{parts}</>;
 }
 
-function Caption({
-  text,
-  center,
-  hang,
-}: {
-  text?: string;
-  center?: boolean;
-  /** Hung under the picture, out of the flow, so it adds nothing to its height. */
-  hang?: boolean;
-}) {
+function Caption({ text, center }: { text?: string; center?: boolean }) {
   if (!text) return null;
   return (
     <figcaption
-      className={`mt-3 text-base italic leading-relaxed ${center ? "text-center" : ""} ${
-        hang ? "absolute inset-x-0 top-full" : ""
-      }`}
+      className={`mt-3 text-base italic leading-relaxed ${center ? "text-center" : ""}`}
     >
       <Inline text={text} />
     </figcaption>
@@ -434,16 +374,11 @@ function Block({
                   disablePictureInPicture: true,
                 }
               : { alt: block.alt, ...LATER })}
-            className={`mx-auto w-full max-w-full rounded-xl border border-foreground/10 ${
-              block.shift ? "sm:translate-x-(--shift)" : ""
-            }`}
+            className="mx-auto w-full max-w-full rounded-xl border border-foreground/10"
             // Every size in pixels goes through shot(), so the picture
             // shrinks with the film on a short window rather than holding
             // its size beside a film that has given way.
             style={{
-              ...(block.shift
-                ? ({ "--shift": shot(block.shift) } as React.CSSProperties)
-                : null),
               ...(block.width ? { width: shot(block.width) } : null),
               ...(block.max ? { maxWidth: shot(block.max) } : null),
               ...(block.crop ? { objectPosition: block.crop } : null),
@@ -457,7 +392,6 @@ function Block({
                   ? { aspectRatio: `${block.max} / ${block.height}`, objectFit: "cover" }
                   : { height: shot(block.height), objectFit: "cover" }
                 : null),
-              ...(block.radius ? { borderRadius: shot(block.radius) } : null),
             }}
           />
           <Caption text={block.caption} center={block.captionCenter} />
@@ -466,9 +400,8 @@ function Block({
     }
 
     case "region-demo":
-      // Placed the way an image with the same settings is, above: the
-      // column's width up to max, and nudged by shift from sm up. The card
-      // draws itself at whatever width that comes to.
+      // The column's width up to max, rounded by radius, and nudged by shift
+      // from sm up. The card draws itself at whatever width that comes to.
       return (
         <figure
           className={`mx-auto w-full overflow-hidden rounded-xl border border-foreground/10 ${
@@ -503,7 +436,6 @@ function Block({
               max={block.max ? shot(block.max) : undefined}
               columns={block.columns}
             />
-            <Caption text={block.caption} />
           </figure>
         );
       }
@@ -525,71 +457,27 @@ function Block({
             style={block.max ? { maxWidth: shot(block.max) } : undefined}
           >
             {block.items.map((item, i) => (
-              // Each shot in a figure of its own that carries the width, so a
-              // caption under one shot sits under that shot and not the row.
               <figure
                 key={i}
                 // fullOnPhone takes the column on a phone and gives the row
                 // back from sm up, for a crop that half a column leaves too
                 // small to read. It is written after the base width so it wins
-                // inside its own media query; an inline `width` still beats
-                // both, which is why the two are alternatives.
-                //
-                // A scaled shot keeps the slot and is centred in it: stretched
-                // to the height of its line so it sits level with the shot
-                // beside it rather than at the top, and its picture and
-                // caption held in the middle.
+                // inside its own media query.
                 className={`w-[calc((100%_-_1rem)/2)] ${
                   block.columns === 2 ? "" : "sm:w-[calc((100%_-_2rem)/3)]"
-                } ${item.fullOnPhone ? "max-sm:w-full" : ""} ${
-                  item.scale
-                    ? "flex flex-col items-center justify-center self-stretch"
-                    : ""
-                }`}
-                style={item.width ? { width: shot(item.width) } : undefined}
+                } ${item.fullOnPhone ? "max-sm:w-full" : ""}`}
               >
-                {item.scale ? (
-                  // The picture alone is what is centred on the shot beside
-                  // it: the caption hangs under it out of the flow, since in
-                  // the flow it made the pair as tall as the neighbour and
-                  // left the picture pinned to the top.
-                  <div
-                    className="relative"
-                    style={{
-                      width: `${item.scale * 100}%`,
-                      ...(item.lift
-                        ? { transform: `translateY(calc(-1 * ${shot(item.lift)}))` }
-                        : null),
-                    }}
-                  >
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={item.src}
-                      alt={item.alt}
-                      {...mediaSize(item.src)}
-                      {...LATER}
-                      className="w-full rounded-xl border border-foreground/10"
-                    />
-                    <Caption text={item.caption} center hang />
-                  </div>
-                ) : (
-                  <>
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={item.src}
-                      alt={item.alt}
-                      {...mediaSize(item.src)}
-                      {...LATER}
-                      className="w-full rounded-xl border border-foreground/10"
-                    />
-                    {/* Centred under the shot, which is itself centred in the row. */}
-                    <Caption text={item.caption} center />
-                  </>
-                )}
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={item.src}
+                  alt={item.alt}
+                  {...mediaSize(item.src)}
+                  {...LATER}
+                  className="w-full rounded-xl border border-foreground/10"
+                />
               </figure>
             ))}
           </div>
-          <Caption text={block.caption} />
         </figure>
       );
 
@@ -662,9 +550,7 @@ function Block({
                   ? "sm:-translate-y-[calc(var(--film)*0.862)]"
                   : block.captionAlign === "higher"
                   ? "sm:-translate-y-[calc(var(--film)*0.853)]"
-                  : block.captionAlign === "high"
-                    ? "sm:-translate-y-[calc(var(--film)*0.282)]"
-                    : "sm:-translate-y-[calc(var(--film)*0.165)]"
+                  : "sm:-translate-y-[calc(var(--film)*0.165)]"
               }`}
             >
               {block.caption}
