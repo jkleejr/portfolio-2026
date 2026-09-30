@@ -210,13 +210,21 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "heading",
-        text: "Designing for LLM Uncertainty",
-        note: "",
+        text: "Designing for Model Uncertainty",
+        note: "User Testing",
       },
 
       {
         type: "text",
-        text: "Since vision models are not 100% accurate, users can input optional keywords to guide the model before submitting a photo.",
+        text: "Early testing with friends and family quickly showed the limits of using Sonnet 4.6 in the first prototype. When testing items like jewelry and bracelets, the vision model struggled to identify some brands and gave very inaccurate prices. Watching them experience this problem led to two key design decisions:",
+      },
+      {
+        type: "list",
+        ordered: true,
+        items: [
+          "Optional Keyword Hints: Letting users enter a brand or description before scanning to guide the vision model.",
+          "Confidence Ratings (Best Guess, Certain): Being open when Sonnet's confidence is low so users don't trust a wrong estimate, and allowing them to take another photo or retry.",
+        ],
       },
 
       {
