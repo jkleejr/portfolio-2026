@@ -76,7 +76,7 @@ export const caseStudies: Record<string, CaseStudy> = {
   "loot-check": {
     title: "Loot Check",
     appStore: "https://apps.apple.com/us/app/loot-check/id6785767104",
-    date: "Jun–Sep 2026",
+    date: "Jun 2026–Present",
     role: "Design, iOS dev, Solo",
     scope: "Live on the App Store",
     cursor: "🦈",
@@ -118,7 +118,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         type: "image",
         src: "/projects/loot-check-architecture.svg",
         max: 760,
-        alt: "Architecture diagram. The iOS app uploads a photo to a single analyze endpoint on Vercel, which calls Claude Sonnet 4.6 to identify and price the item and Upstash Redis for daily caps and search allowances. A JSON response returns to the app as an item valuation with payouts from marketplaces.",
+        alt: "Architecture diagram. The iOS app uploads a photo to a single analyze endpoint on Vercel, which calls Claude Sonnet 5.5 to identify and price the item and Upstash Redis for daily caps and search allowances. A JSON response returns to the app as an item valuation with payouts from marketplaces.",
       },
 
       // api key lives in Vercel's environment variables - so its never in app, sent to phone, or git
@@ -159,8 +159,11 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "I used Claude Sonnet 4.6 due to its low costs and high accuracy at ~$0.013 per scan. I considered other models, but I wanted the results to be as trustworthy as possible.",
+        text: "I chose Claude Sonnet 5.5 due to its low costs and high accuracy at ~$0.024 per scan. I considered slightly cheaper options like Sonnet 4.6, but I wanted the results to be as trustworthy as possible.",
       },
+      // Sonnet 4.6 ~$0.013 per scan
+      // Sonnet 5.5 ~$0.024
+      // input grew since the instructions got longer, and output grew because the AI writes more - returns a ranked list of marketplaces
 
       {
         type: "text",
@@ -250,6 +253,53 @@ export const caseStudies: Record<string, CaseStudy> = {
             alt: "A warning card on a result titled \"Not sure of the exact product.\" It says this looks like a generic match, suggests adding a close-up of the brand logo or typing the brand in the detail field, and offers an \"Add a photo & retry\" button.",
           },
         ],
+      },
+
+       {
+        type: "heading",
+        text: "UI Design",
+        note: "",
+      },
+
+      {
+        type: "text",
+        text: "I designed Loot Check to get from photo to price in three steps. Taking a photo is the main action on the home screen. The results show the photo above the title so the user can check it's the right item, followed by an estimated price range. The 'Where to sell' section compares what the user would pocket after fees on ecah marketplace and highlights the best option."
+      },
+
+      {
+        type: "images",
+        columns: 2,
+        max: 650,
+        stackOnPhone: true,
+        items: [
+          {
+            src: "/projects/loot-check-ui-home.png",
+            alt: "The Loot Check home screen: the title and a settings gear, a line saying to snap something you want to sell, a green 1,454 items scanned globally badge, Take a photo and Choose from library buttons, and a History list of an Akai MPK Mini at $55, a '47 Brand LA Dodgers cap at $22, and a Louis Vuitton chain bracelet at $150",
+          },
+          {
+            src: "/projects/loot-check-ui-photo-added.png",
+            alt: "The home screen after a photo is added: a thumbnail of an Akai MIDI keyboard beside an empty slot for a second photo, an optional detail field with a tip to include the brand logo or label, and Identify, Add from library, and Start over buttons",
+          },
+          {
+            src: "/projects/loot-check-ui-result.png",
+            alt: "The result for the photo: the Akai keyboard at the top, then Akai Professional MPK Mini 25-Key USB MIDI Keyboard Controller, Black, tagged Electronics, Good, and Certain, its brand and search keywords, and an estimated resale value of $55 that resells for $40 to $70, marked as an exact product match",
+          },
+          {
+            src: "/projects/loot-check-ui-where-to-sell.png",
+            alt: "Further down the result: the $55 estimate, then Where to Sell recommending eBay because buyers search it by exact model, with a list of what you'd pocket after fees on eBay at $48 marked Best, Reverb at $50, Facebook Marketplace at $55, Mercari at $50, and OfferUp at $55",
+          },
+        ],
+      },
+
+      {
+        type: "heading",
+        text: "Privacy",
+        note: "",
+      },
+
+      {
+        type: "text",
+        text: "Privacy choices also impacted the design. Photos are sent to Claude to identify the item, but past scans, photos, and results are saved only on the user's device. Considering the user's privacy, I decided to keep an anonymous record of each scan, like how the price was worked out and how confident the estimate was to find ways to improve the app.",
       },
 
       {
@@ -740,7 +790,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
   "buy-side-briefings": {
     title: "Buy Side Briefings",
-    date: "May 2026–Present",
+    date: "May–Sep 2026",
     role: "Design, web dev, Solo",
     scope: "Live on the web",
     href: "https://buy-side-briefings.vercel.app/",
