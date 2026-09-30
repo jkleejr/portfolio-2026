@@ -95,7 +95,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "Price discovery for secondhand items is full of small frictions: identifying the exact item, seeing what similar items actually sold for, and comparing what you'd keep after platform fees. I built Loot Check when I was moving apartments to speed up the process of valuing my old stuff and deciding whether to sell it."
+        text: "Price discovery for used items is full of small frictions: identifying the exact item, seeing what similar items actually sold for, and comparing what you'd keep after platform fees. I built Loot Check when I was moving apartments to speed up the process of valuing my old stuff and deciding whether to sell it."
       },
 
       {
