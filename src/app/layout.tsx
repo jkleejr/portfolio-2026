@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import { site } from "@/data/site";
 import { AppleButton } from "./apple-button";
 import { card } from "./study-metadata";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 // The variable cut, so one file covers every weight in the range. The licence
@@ -212,6 +213,7 @@ export default function RootLayout({
               '(function(){var s=document.querySelector("[data-study]"),r=s&&s.parentElement;if(!r)return;var y,g=function(){r.scrollIntoView({block:"start"});y=scrollY};g();if(document.fonts)document.fonts.ready.then(function(){if(scrollY===y)g()})})();',
           }}
         />
+        <Analytics />
       </body>
     </html>
   );
