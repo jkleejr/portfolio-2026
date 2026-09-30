@@ -14,6 +14,6 @@ export const site = {
   closing: "Open to product design and design engineering roles.",
 
   intro: [
-    "Design Engineer and product designer building iOS and AI native products.",
+    "Design engineer and product designer building iOS and AI native products.",
   ],
 };
