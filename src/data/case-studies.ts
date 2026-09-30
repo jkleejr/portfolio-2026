@@ -784,11 +784,6 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "After building a working prototype, I looked for academic research to see if this idea had real merit. I found a paper reviewing 42 studies, which showed that readers who see translations alongside the text learn 45% of new words compared to 27% without them [(Yanagisawa et al., 2020)](https://takumiuchihara.weebly.com/uploads/1/2/3/7/123756989/yanagisawa-webb-uchihara-2019-glossing_meta-analysis.pdf). Seeing that data gave me more conviction to keep refining the concept."
-      },
-
-      {
-        type: "text",
         text: "If I continued this project, I would work on the UI/UX so the island feels more responsive and aligned with the user's intent. I would also improve translations for visual diagrams and make it work with any app. Currently only Korean is translated, but I could add more languages and test whether other people find it helpful for learning."
       },
       // could try making it vocabulary focused, only translating difficult words from a sentence, not the entire sentence
