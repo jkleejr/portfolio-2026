@@ -95,7 +95,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "When I was moving places, I had a room full of clothes, electronics, and other things to sell. It took me too much time to research the fair selling price and write listings for every single item. I tried existing appraisal apps to speed up the process, but they had unnecessary steps, ads, or asked me to subscribe after a few scans. I saw an opportunity to create Loot Check, a free solution that uses AI to identify an item, estimate its value range, and recommend where to sell it.",
+        text: "Price discovery for secondhand items is full of small frictions: identifying the exact item, seeing what similar items actually sold for, and comparing what you'd keep after platform fees. I built Loot Check when I was moving apartments to speed up the process of valuing my old stuff and deciding whether to sell it."
       },
 
       {
@@ -263,7 +263,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "I designed Loot Check to get from photo to price in three steps. Taking a photo is the main action on the home screen. The results show the photo above the title so the user can check it's the right item, followed by an estimated price range. The 'Where to sell' section compares what the user would pocket after fees on ecah marketplace and highlights the best option."
+        text: "I designed Loot Check to get from photo to price in three steps. Taking a photo is the main action on the home screen. The results show the photo above the title so the user can check it's the right item, followed by an estimated price range. The 'Where to sell' section compares what the user would pocket after fees on each marketplace and highlights the best option."
       },
 
       {
