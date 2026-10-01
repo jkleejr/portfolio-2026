@@ -80,20 +80,20 @@ export const caseStudies: Record<string, CaseStudy> = {
     scope: "Live on the App Store",
     blocks: [
       {
-        type: "video",
-        src: "/projects/loot-check-shark.mp4",
-        controls: true,
-        caption: "Finding the potential value of my shark painting",
-      },
-
-      {
         type: "heading",
-        text: "Context",
-        note: "Problem & Solution",
+        text: "Problem",
+        note: "Overview",
       },
       {
         type: "text",
         text: "Price discovery for used items is full of small frictions: identifying the exact item, seeing what similar items actually sold for, and comparing what you'd keep after platform fees. I built Loot Check when I was moving apartments to speed up the process of valuing my old stuff and deciding whether to sell it."
+      },
+
+      {
+        type: "video",
+        src: "/projects/loot-check-shark.mp4",
+        controls: true,
+        caption: "Finding the potential value of a painting",
       },
 
       {
@@ -203,7 +203,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       // managing inference latency - time budgeted fallback, trying to reduce errors
       {
         type: "text",
-        text: "Scans with web searches took ~14 to 27 seconds in testing, so I capped searches at 45 seconds and the loading state displays an estimated wait time. If the first API call times out, it automatically tries again with the remaining time. If both attempts fail, no price estimate is shown and the user can retry or start over.",
+        text: "While most scans took ~6 seconds, a scan with web searches took ~14 to 27 seconds in testing, so I capped searches at 45 seconds and the loading state displays an estimated wait time. If the first API call times out, it automatically tries again with the remaining time. If both attempts fail, no price estimate is shown and the user can retry or start over.",
       },
 
       {
@@ -254,9 +254,14 @@ export const caseStudies: Record<string, CaseStudy> = {
         max: 792,
         items: [
           {
+            src: "/projects/loot-check-best-guess.png",
+            fullOnPhone: true,
+            alt: "A result card for a Ceramic Table Lamp, tagged Home Decor, Good, and a yellow \"Best guess\" label, with the brand shown as unknown and search keywords under it",
+          },
+          {
             src: "/projects/loot-check-generic-match.png",
             fullOnPhone: true,
-            alt: "A warning card on a result titled \"Not sure of the exact product.\" It says this looks like a generic match, suggests adding a close-up of the brand logo or typing the brand in the detail field, and offers an \"Add a photo & retry\" button.",
+            alt: "A warning card on a result titled \"Not sure of the exact product.\" It suggests adding a close-up of the brand logo or label, or adding a hint and identifying again for more accurate results, and offers an \"Add a photo & retry\" button.",
           },
         ],
       },
@@ -280,7 +285,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         items: [
           {
             src: "/projects/loot-check-ui-home.png",
-            alt: "The Loot Check home screen: the title and a settings gear, a line saying to snap something you want to sell, a green 1,454 items scanned globally badge, Take a photo and Choose from library buttons, and a History list of an Akai MPK Mini at $55, a '47 Brand LA Dodgers cap at $20, and a Louis Vuitton chain bracelet at $300",
+            alt: "The Loot Check home screen: the title, a line saying to snap something you want to sell, a green 1,584 items scanned globally badge, Take a photo and Choose from library buttons, and a History list of Calbee Jagapokkuru potato snacks at $4, an Akai MPK Mini at $55, a '47 Brand LA Dodgers cap at $20, and a Louis Vuitton chain bracelet at $300",
           },
           {
             src: "/projects/loot-check-ui-photo-added.png",
@@ -310,8 +315,8 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "heading",
-        text: "Result",
-        note: "Retrospective",
+        text: "Reflection",
+        note: "Results",
       },
 
       {
@@ -350,6 +355,21 @@ export const caseStudies: Record<string, CaseStudy> = {
     scope: "Prototype",
     blocks: [
       {
+        type: "heading",
+        text: "Problem",
+        note: "Overview",
+      },
+
+      {
+        type: "text",
+        text: "A friend was listening to a research paper while walking and got \"[1] et al., pp. 234-256\" read aloud in a robot voice. I built an app to fix that problem.",
+      },
+      {
+        type: "text",
+        text: "I designed Paper Reader around a user paying for their own API usage due to the costs of audio generation at ~$1-3 per paper. To keep things simple, I used one API to identify text and generate audio. Gemini 3.1 Flash was the best option because it could clean up text and had text-to-speech with eight voices.",
+      },
+
+      {
         type: "video",
         src: "/projects/paper-reader-add-and-listen.mp4",
         controls: true,
@@ -359,21 +379,6 @@ export const caseStudies: Record<string, CaseStudy> = {
         captionLeft: [
           "Audio is generated as the user listens, lowering initial cost and wait time",
         ],
-      },
-
-      {
-        type: "heading",
-        text: "Context",
-        note: "Problem & Solution",
-      },
-
-      {
-        type: "text",
-        text: "A friend was listening to a research paper while walking and got \"[1] et al., pp. 234-256\" read aloud in a robot voice. I built an app to fix that problem.",
-      },
-      {
-        type: "text",
-        text: "I designed the app around a user paying for their own API usage due to the costs of audio generation at ~$1-3 per paper. To keep things simple, I used one API to identify text and generate audio. Gemini 3.1 Flash was the best option because it could clean up text and had text-to-speech with eight voices.",
       },
 
       {
@@ -519,8 +524,8 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "heading",
-        text: "Result",
-        note: "Retrospective",
+        text: "Reflection",
+        note: "Results",
       },
 
       {
@@ -542,6 +547,25 @@ export const caseStudies: Record<string, CaseStudy> = {
     scope: "Prototype",
     blocks: [
       {
+        type: "heading",
+        text: "Problem",
+        note: "Overview",
+      },
+      {
+        type: "text",
+        text: "Constantly switching apps to translate a language is time-consuming and makes learning new words less efficient.",
+      },
+      {
+        type: "heading",
+        text: "Solution",
+        note: "",
+      },
+      {
+        type: "text",
+        text: "I created an app that translates Korean text on screen to English in real time, and saves sentences for learning.",
+      },
+
+      {
         type: "video",
         src: "/projects/screen-translator-demo.mp4",
         controls: true,
@@ -555,23 +579,13 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "heading",
-        text: "Context",
-        note: "Problem & Solution",
-      },
-      {
-        type: "text",
-        text: "Constantly switching apps while learning a language is annoying and time-consuming, and makes learning inefficient, so I created an app that translates the Korean text on screen to English in real time.",
-      },
-
-      {
-        type: "text",
-        text: "My first idea was to generate text over the current display, but iOS does not allow an app to draw over another app. To get around this, I used the Dynamic Island since it stays visible in every app. I used ReplayKit to broadcast video frames, Apple Vision OCR to extract Korean text, the DeepL API for translations, and ActivityKit to update the island."
-      },
-
-      {
-        type: "heading",
         text: "System Constraints",
         note: "Design Decisions",
+      },
+
+      {
+        type: "text",
+        text: "My first idea was to generate text over the current display, but iOS does not allow an app to draw over another app. To get around this, I used ReplayKit to broadcast video frames, Apple Vision OCR to extract Korean text, the DeepL API for translations, and ActivityKit to update the island.  I chose the Dynamic Island to display translations since it stays visible in every app."
       },
 
       {
@@ -771,8 +785,8 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "heading",
-        text: "Result",
-        note: "Retrospective",
+        text: "Reflection",
+        note: "Results",
       },
 
       {
@@ -805,8 +819,8 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "heading",
-        text: "Context",
-        note: "Problem & Solution", // title text on the left side
+        text: "Problem",
+        note: "Overview", // title text on the left side
       },
 
       {
@@ -944,8 +958,8 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "heading",
-        text: "Result",
-        note: "Retrospective",
+        text: "Reflection",
+        note: "Results",
       },
       {
         type: "text",

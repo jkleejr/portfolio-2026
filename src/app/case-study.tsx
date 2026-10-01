@@ -548,7 +548,7 @@ function Block({
                 block.captionAlign === "highest"
                   ? "sm:-translate-y-[calc(var(--film)*0.862)]"
                   : block.captionAlign === "higher"
-                  ? "sm:-translate-y-[calc(var(--film)*0.853)]"
+                  ? "sm:-translate-y-[calc(var(--film)*0.835)]"
                   : "sm:-translate-y-[calc(var(--film)*0.165)]"
               }`}
             >
