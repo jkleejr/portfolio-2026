@@ -57,7 +57,6 @@ export type CaseStudy = {
   role?: string;
   date?: string;
   appStore?: string;
-  cursor?: string;
   blocks: CaseStudyBlock[];
 };
 
@@ -79,7 +78,6 @@ export const caseStudies: Record<string, CaseStudy> = {
     date: "Jun 2026–Present",
     role: "Design, iOS dev, Solo",
     scope: "Live on the App Store",
-    cursor: "🦈",
     blocks: [
       {
         type: "video",
