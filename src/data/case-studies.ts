@@ -859,7 +859,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "heading",
         text: "Curating Market Context with AI",
-        note: "Generating Reports",
+        note: "Information Architecture",
       },
 
       {
@@ -882,7 +882,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "heading",
         text: "Designing a Pre-Market vs. After-Hours Workflow",
-        note: "Information Architecture",
+        note: "",
       },
 
       {
