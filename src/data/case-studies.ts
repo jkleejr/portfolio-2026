@@ -859,7 +859,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "heading",
         text: "Curating Market Context with AI",
-        note: "Data Pipeline",
+        note: "",
       },
 
       {
@@ -882,7 +882,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "heading",
         text: "Designing a Pre-Market vs. After-Hours Workflow",
-        note: "Temporal UX",
+        note: "",
       },
 
       {
@@ -898,7 +898,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "heading",
         text: "Data Visualization",
-        note: "Data Design",
+        note: "",
       },
 
       {
