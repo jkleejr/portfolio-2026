@@ -324,8 +324,8 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "heading",
-        text: "Reflection",
-        note: "Results",
+        text: "Results",
+        note: "Reflection",
       },
 
       {
@@ -540,8 +540,8 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "heading",
-        text: "Reflection",
-        note: "Results",
+        text: "Results",
+        note: "Reflection",
       },
 
       {
@@ -801,8 +801,8 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "heading",
-        text: "Reflection",
-        note: "Results",
+        text: "Results",
+        note: "Reflection",
       },
 
       {
@@ -969,8 +969,8 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "heading",
-        text: "Reflection",
-        note: "Results",
+        text: "Results",
+        note: "Reflection",
       },
       {
         type: "text",
