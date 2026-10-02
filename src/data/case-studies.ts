@@ -846,7 +846,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "An automated market reporting website that aggregates information and generates daily reports so retail investors can quickly understand current events and make faster decisions."
+        text: "My solution was an automated market reporting website that aggregates information and generates daily reports so retail investors can quickly understand current events and make faster decisions."
       },
 
       {
