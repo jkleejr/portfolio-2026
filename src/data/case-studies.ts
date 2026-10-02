@@ -696,7 +696,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "heading",
         text: "Translation Region",
-        note: "Spatial UI",
+        note: "Design Decisions",
       },
 
       {
