@@ -860,11 +860,11 @@ export const caseStudies: Record<string, CaseStudy> = {
         type: "heading",
         text: "Curating Market Context with AI",
         note: "Information Architecture",
-      },
+      }, // how content is organized
 
       {
         type: "text",
-        text: "I designed an automated research pipeline that runs parallel web queries across market data, sentiment indicators, economic calendars, and a fixed set of stocks. The core of the project is the [instructions file](https://github.com/jkleejr/buy-side-briefings/blob/deploy/prompts/markets-website.md), which controls how each report is researched and written and defines the JSON schema the website renders from.", //
+        text: "I designed an automated research pipeline that runs parallel web queries across market data, sentiment indicators, economic calendars, and a fixed set of stocks. The core of the project is the [instructions file](https://github.com/jkleejr/buy-side-briefings/blob/deploy/prompts/markets-website.md), which controls how each report is researched and written and defines the JSON schema the website renders from.",
       },
 
       {
@@ -879,11 +879,11 @@ export const caseStudies: Record<string, CaseStudy> = {
         alt: "Authoring loop. A cron trigger starts the agent, which researches the session on the web and then writes two files: a structured verdict JSON and a written report. The JSON is parsed and checked against the schema. If it fails, the agent rewrites it. If it passes, a script stamps the generated-at timestamp from the clock, and the files are committed and pushed.",
       },
 
-      {
+      { 
         type: "heading",
         text: "Designing a Pre-Market vs. After-Hours Workflow",
-        note: "",
-      },
+        note: "User Context",
+      }, // different design depending on situation
 
       {
         type: "text",
