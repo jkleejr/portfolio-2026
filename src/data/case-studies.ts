@@ -740,7 +740,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "heading",
         text: "First UI Design",
-        note: "UI Exploration",
+        note: "UI Iteration",
       },
 
       {
