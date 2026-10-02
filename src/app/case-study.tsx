@@ -293,12 +293,18 @@ function Block({
 
                 Only from 1000px, the width at which there is a margin at all
                 — see the note on --margin-note in globals.css. Under that the
-                heading stands on its own. */}
+                heading stands on its own.
+
+                Placed at the page's 16px and set at the heading's 20px one
+                span in: --margin-note-x is measured off a column that is 36ch
+                wide, and a ch is a width in the font of whatever reads it, so
+                placed at 20px the note took the column for a quarter wider
+                than it is and stood in from the margin's edge. */}
             {block.note && (
               <span
                 className={`absolute ${lead.replace("pt-", "top-")} left-[var(--margin-note-x)] hidden w-[var(--margin-note)] text-base font-bold leading-relaxed min-[1000px]:block`}
               >
-                {block.note}
+                <span className="block text-xl leading-snug">{block.note}</span>
               </span>
             )}
             {block.text}
