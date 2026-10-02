@@ -127,7 +127,7 @@ export function StudyFact({ text, href, appStore }: Fact) {
         // web" — and what the eye takes for the middle of that is nearer the
         // middle of the lowercase, 2px further down. Measured dead centre on
         // the capitals it read as riding high; this splits the two.
-        <LinkGlyph className="inline-block h-[1em] w-[1em] translate-y-[0.2em] align-baseline" />
+        <LinkGlyph className="inline-block h-[0.95em] w-[0.95em] translate-y-[0.175em] align-baseline" />
       )}
     </a>
   );

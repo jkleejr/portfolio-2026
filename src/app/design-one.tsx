@@ -279,7 +279,7 @@ export function DesignOne() {
                           // A no-break space, so the arrow never starts a line
                           // of its own; hidden from a screen reader, which
                           // would read it out as a direction.
-                          <span aria-hidden>{"\u00a0"}↗</span>
+                          <span aria-hidden className="text-[0.89em]">{"\u00a0"}↗</span>
                         )}
                       </ProjectTitle>
                     </h2>
