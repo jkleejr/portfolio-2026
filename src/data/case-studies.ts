@@ -776,7 +776,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "The home screen centers on a circle that starts the recording. Settings are shown in a list of rows, so nothing is hidden behind a separate menu. Once recording starts, the user can leave the app and open whatever they want to read. Screen Translator stays active in the background and translates text from the selected region of the screen."
+        text: "The main action on the home screen is tapping the circle to start a recording. Settings are shown in a list of rows, so nothing is hidden behind a separate menu. Once recording starts, the user can leave the app and open whatever they want to read. Screen Translator stays active in the background and translates text from the selected region of the screen."
       },
 
       {
