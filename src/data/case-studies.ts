@@ -86,7 +86,16 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "Price discovery for used items is full of small frictions: identifying the exact item, seeing what similar items actually sold for, and comparing what you'd keep after platform fees. I built Loot Check when I was moving apartments to speed up the process of valuing my old stuff and deciding whether to sell it."
+        text: "Price discovery for used items is time consuming and full of small frictions: identifying the exact item, finding the fair market price, and comparing what you'd keep after platform fees."
+      },
+      {
+        type: "heading",
+        text: "Solution",
+        note: "",
+      },
+      {
+        type: "text",
+        text: "A free appraisal app that uses Claude to value an item, compare payouts from different marketplaces, and suggest the best option to sell it."
       },
 
       {
@@ -362,11 +371,18 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "A friend was listening to a research paper while walking and got \"[1] et al., pp. 234-256\" read aloud in a robot voice. I built an app to fix that problem.",
+        text: "A friend was listening to a research paper while walking and got \"[1] et al., pp. 234-256\" read aloud in a robot voice.",
       },
+
+      {
+        type: "heading",
+        text: "Solution",
+        note: "",
+      },
+
       {
         type: "text",
-        text: "I designed Paper Reader around a user paying for their own API usage due to the costs of audio generation at ~$1-3 per paper. To keep things simple, I used one API to identify text and generate audio. Gemini 3.1 Flash was the best option because it could clean up text and had text-to-speech with eight voices.",
+        text: "A text-to-speech app that parses text from a .PDF file, removes unnecessary information, and reads it aloud in a natural voice. I designed it around a user paying for their own API usage due to the costs of audio generation at ~$1-3 per paper. Gemini 3.1 Flash was the best option because it could clean up text and had text-to-speech with eight voices.",
       },
 
       {
@@ -553,7 +569,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "Constantly switching apps to translate a language is time-consuming and makes learning new words less efficient.",
+        text: "Constantly switching apps to translate Korean is time-consuming and makes learning words less efficient due to context switching.",
       },
       {
         type: "heading",
@@ -562,7 +578,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "I created an app that translates Korean text on screen to English in real time, and saves sentences for learning.",
+        text: "A screen recording app that displays real-time Korean to English translations on the Dynamic Island and allows users to save sentences for learning.",
       },
 
       {
@@ -663,6 +679,22 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "heading",
+        text: "Translation Models",
+        note: "",
+      },
+
+      {
+        type: "text",
+        text: "I used DeepL for sentence translations and Claude Opus 5 for word definitions. DeepL was excellent for full sentences, but unreliable for individual words. Opus 5 was more accurate for words because it could define each word as it's used in the context of the sentence."
+      },
+
+      {
+        type: "text",
+        text: "I benchmarked Opus 5 against DeepL on sentence translations. Opus 5 had a median latency of 2.07 seconds vs. 0.73 seconds for DeepL, and was about 5x more expensive ($0.0031 vs. $0.0006 per sentence)."
+      },
+
+      {
+        type: "heading",
         text: "Translation Region",
         note: "",
       },
@@ -682,18 +714,20 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "heading",
-        text: "Translation Models",
+        text: "Saving Translations for Learning",
         note: "",
       },
 
       {
         type: "text",
-        text: "I used DeepL for sentence translations and Claude Opus 5 for word definitions. DeepL was excellent for full sentences, but unreliable for individual words. Opus 5 was more accurate for words because it could define each word as it's used in the context of the sentence."
+        text: "Pinning a sentence saves it to the \"Learn\" page and breaks it into individual words. Tapping a word shows its definition as used in that sentence."
       },
 
       {
-        type: "text",
-        text: "I benchmarked Opus 5 against DeepL on sentence translations. Opus 5 had a median latency of 2.07 seconds vs. 0.73 seconds for DeepL, and was about 5x more expensive ($0.0031 vs. $0.0006 per sentence)."
+        type: "video",
+        src: "/projects/screen-translator-pin-and-learn.mp4",
+        controls: true,
+        caption: "",
       },
 
        // had claude do a benchmark test with claude and deepl
@@ -767,24 +801,6 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "heading",
-        text: "Saving Translations for Learning",
-        note: "",
-      },
-
-      {
-        type: "text",
-        text: "Pinning a sentence saves it to the \"Learn\" page and breaks it into individual words. Tapping a word shows its definition as used in that sentence."
-      },
-
-      {
-        type: "video",
-        src: "/projects/screen-translator-pin-and-learn.mp4",
-        controls: true,
-        caption: "",
-      },
-
-      {
-        type: "heading",
         text: "Reflection",
         note: "Results",
       },
@@ -811,13 +827,6 @@ export const caseStudies: Record<string, CaseStudy> = {
     href: "https://buy-side-briefings.vercel.app/",
     blocks: [
       {
-        type: "image",
-        src: "/projects/buy-side-site-today-5.png",
-        max: 1000,
-        alt: "The Today page with the toggle on AM: a live ticker strip under the nav, then the morning report of Monday, September 14, filed at 8:21 AM ET, its headline on frontier AI labs calling for a slowdown and chip stocks dropping before the open, the paragraph that argues it, a link out to the full six-minute read, and the charts panel opening underneath",
-      },
-
-      {
         type: "heading",
         text: "Problem",
         note: "Overview", // title text on the left side
@@ -825,12 +834,26 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "Stock prices change constantly, and it takes time and judgment to find the right information. Tracking the market requires aggregating data from multiple sources: stock exchanges, financial news outlets, SEC filings, and social media."
+        text: "Understanding the stock market requires aggregating data from multiple sources: stock exchanges, financial news outlets, SEC filings, and social media. This is a fragmented workflow due to context switching and information overload, leading to uncertainty and missed opportunities."
+      },
+      // Stock prices change constantly, and it takes time and judgment to find the right information.
+
+      {
+        type: "heading",
+        text: "Solution",
+        note: "",
       },
 
       {
         type: "text",
-        text: "This is a fragmented workflow due to context switching and information overload. It can be difficult to separate what's relevant from the noise, which leads to uncertainty and missed opportunities. My solution was an automated market reporting website that aggregates this information and generates daily reports so I can make faster decisions."
+        text: "An automated market reporting website that aggregates information and generates daily reports so retail investors can quickly understand current events and make faster decisions."
+      },
+
+      {
+        type: "image",
+        src: "/projects/buy-side-site-today-5.png",
+        max: 1000,
+        alt: "The Today page with the toggle on AM: a live ticker strip under the nav, then the morning report of Monday, September 14, filed at 8:21 AM ET, its headline on frontier AI labs calling for a slowdown and chip stocks dropping before the open, the paragraph that argues it, a link out to the full six-minute read, and the charts panel opening underneath",
       },
 
       {
@@ -899,18 +922,6 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "To display the flow of capital, I added a table for short-term (1-day) and medium-term (50-day) changes for 11 ETFs."
-      },
-
-      {
-        type: "image",
-        src: "/projects/buy-side-sector-rotation.png",
-        max: 800,
-        alt: "The sector rotation table: eleven sectors from Energy down to Consumer Discretionary, each with its ETF ticker, today's move, and the fifty-day move, the gains in green and the losses in red, with a source line under it noting the quotes are delayed",
-      },
-
-      {
-        type: "text",
         text: "Instead of using a calendar list, I designed a timeline for upcoming earnings calls up to 90 days out. Solid dots represent confirmed dates, and hollow dots represent unconfirmed ones.",
       },
 
@@ -923,7 +934,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "heading",
-        text: "Mobile Design",
+        text: "Mobile UI Design",
         note: "",
       },
       {
