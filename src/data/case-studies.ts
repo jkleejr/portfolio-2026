@@ -108,7 +108,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "heading",
         text: "System Architecture",
-        note: "Design Decisions",
+        note: "System Design",
       },
 
       {
@@ -180,7 +180,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "heading",
         text: "Price Discovery",
-        note: "",
+        note: "Product Scope",
       },
 
       {
@@ -278,7 +278,7 @@ export const caseStudies: Record<string, CaseStudy> = {
        {
         type: "heading",
         text: "UI Design",
-        note: "",
+        note: "Interaction Flow",
       },
 
       {
@@ -400,7 +400,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "heading",
         text: "Generating Audio in Groups",
-        note: "Design Decisions",
+        note: "Latency UX",
       },
 
       // network lag - more API requests can cause delays, or hit Gemini's rate limit
@@ -423,7 +423,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "heading",
         text: "Highlighting",
-        note: "",
+        note: "Visual Sync",
       },
 
       // Apple PDFKit extracts the text from the paper
@@ -596,7 +596,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "heading",
         text: "System Constraints",
-        note: "Design Decisions",
+        note: "Limitations",
       },
 
       {
@@ -696,7 +696,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "heading",
         text: "Translation Region",
-        note: "",
+        note: "Spatial UI",
       },
 
       {
@@ -740,7 +740,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "heading",
         text: "First UI Design",
-        note: "",
+        note: "UI Exploration",
       },
 
       {
@@ -859,7 +859,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "heading",
         text: "Curating Market Context with AI",
-        note: "Design Decisions",
+        note: "Data Pipeline",
       },
 
       {
@@ -882,7 +882,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "heading",
         text: "Designing a Pre-Market vs. After-Hours Workflow",
-        note: "",
+        note: "Temporal UX",
       },
 
       {
@@ -898,7 +898,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "heading",
         text: "Data Visualization",
-        note: "",
+        note: "Data Design",
       },
 
       {
