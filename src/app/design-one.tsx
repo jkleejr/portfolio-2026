@@ -57,7 +57,7 @@ function StudyFacts({ study }: { study?: CaseStudy }) {
       className="absolute inset-y-0 left-[var(--margin-note-x)] hidden w-[var(--margin-note)] cursor-auto flex-col justify-center min-[1000px]:flex"
     >
       {lines.map((line, i) => (
-        <p key={i} className={`text-base leading-relaxed ${i ? "mt-1" : ""}`}>
+        <p key={i} className={`text-base font-bold leading-relaxed ${i ? "mt-1" : ""}`}>
           <StudyFact {...line} />
         </p>
       ))}
