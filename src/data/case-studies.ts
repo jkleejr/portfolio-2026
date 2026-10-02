@@ -423,7 +423,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "heading",
         text: "Highlighting",
-        note: "Visual Sync",
+        note: "Visual Feedback",
       },
 
       // Apple PDFKit extracts the text from the paper
@@ -859,7 +859,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "heading",
         text: "Curating Market Context with AI",
-        note: "",
+        note: "Generating Reports",
       },
 
       {
@@ -882,7 +882,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "heading",
         text: "Designing a Pre-Market vs. After-Hours Workflow",
-        note: "",
+        note: "Information Architecture",
       },
 
       {
