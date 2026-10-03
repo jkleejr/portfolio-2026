@@ -69,6 +69,10 @@ const GROW = 650;
 const SWIPE_STEP = 60;
 const SWIPE_REST = 300;
 
+// How far a pull down from the top of a study's first screen has to go, in
+// px of swipe, to put the study away and go back to the homepage.
+const PULL_CLOSE = 120;
+
 const OpenContext = createContext<{
   openSlug: string | null;
   /** A press on a project's cover: opens it, if it is not already open. */
@@ -473,6 +477,86 @@ export function ProjectList({
       delete root.dataset.dragging;
     };
   }, [openSlug, closing, studies]);
+
+  // Back to the homepage by pulling down from the top of a study's first
+  // screen — a swipe up on a trackpad, or the wheel turned up. Not on the
+  // first touch: the first screen comes down with the pull, against a
+  // resistance that grows, and only a pull of PULL_CLOSE px puts the study
+  // away; let go short of that and it springs back. Only a swipe that starts
+  // with the page at its top counts, so coasting up out of the study and
+  // into the top of it does not close anything.
+  useEffect(() => {
+    if (!openSlug || closing) return;
+    const frame = frameRef.current;
+    if (!frame) return;
+    let amount = 0;
+    let armed = false;
+    let lastAt = -Infinity;
+    let lastSize = 0;
+    let lastSign = 0;
+    let shrinking = 0;
+    let coasting = false;
+    let floor = Infinity;
+    let quiet = 0;
+    const show = (springing: boolean) => {
+      frame.style.transition = springing
+        ? "transform 220ms cubic-bezier(0.22, 1, 0.36, 1)"
+        : "none";
+      frame.style.transform = amount
+        ? `translate3d(0, ${give(amount)}px, 0)`
+        : "";
+    };
+    const letGo = () => {
+      clearTimeout(quiet);
+      armed = false;
+      if (!amount) return;
+      amount = 0;
+      show(true);
+    };
+    const wheel = (e: WheelEvent) => {
+      if (Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return;
+      const size = Math.abs(e.deltaY);
+      const sign = Math.sign(e.deltaY);
+      // A new swipe, told from the last one's coasting as the sideways
+      // swipes are — see the swipe between studies above.
+      const fresh =
+        e.timeStamp - lastAt > 250 ||
+        sign !== lastSign ||
+        (coasting && size > 6 && size > floor * 2);
+      if (fresh) {
+        shrinking = 0;
+        coasting = false;
+        floor = Infinity;
+        armed = sign < 0 && window.scrollY <= 0;
+      } else {
+        shrinking = size < lastSize ? shrinking + 1 : 0;
+        if (shrinking >= 2) coasting = true;
+        if (coasting) floor = Math.min(floor, size);
+      }
+      lastAt = e.timeStamp;
+      lastSize = size;
+      lastSign = sign;
+      if (!armed) return;
+      // The fingers have lifted short of the mark: back it goes.
+      if (coasting && amount < PULL_CLOSE) return letGo();
+      amount = Math.max(0, amount - e.deltaY);
+      if (amount >= PULL_CLOSE) {
+        letGo();
+        return close();
+      }
+      show(false);
+      clearTimeout(quiet);
+      quiet = window.setTimeout(letGo, 150);
+    };
+    window.addEventListener("wheel", wheel, { passive: true });
+    return () => {
+      window.removeEventListener("wheel", wheel);
+      clearTimeout(quiet);
+      // Mid-pull, put it straight back; a spring already on its way home is
+      // left to finish.
+      if (amount) frame.style.transform = "";
+    };
+  }, [openSlug, closing, close]);
 
   // A resize while open: the cover is put where it now belongs, at once.
   useEffect(() => {
