@@ -208,7 +208,8 @@ export function ProjectList({
   const study = openSlug ? studies[openSlug] : undefined;
 
   const scrollerRef = useRef<HTMLDivElement>(null);
-  useStripDrag(scrollerRef, !!study);
+  const trackRef = useRef<HTMLDivElement>(null);
+  useStripDrag(scrollerRef, trackRef, !!study);
 
   return (
     <OpenContext.Provider value={{ openSlug, leaving, press }}>
@@ -246,7 +247,9 @@ export function ProjectList({
               // amount, so the first cover still starts on the name's line.
               className="-mx-[var(--gutter)] mt-16 scroll-mt-6 sm:mt-[calc(64*var(--u))]"
             >
-              <CoverStrip scroller={scrollerRef}>{children}</CoverStrip>
+              <CoverStrip scroller={scrollerRef} track={trackRef}>
+                {children}
+              </CoverStrip>
             </div>
           </div>
         </div>
@@ -290,30 +293,48 @@ const VELOCITY_WINDOW = 80;
 const MAX_SPEED = 3;
 const MIN_SPEED = 0.02;
 
+// The give at either end of the strip. Pushed past its first or last cover —
+// by a trackpad, a drag, or a glide that runs into the end — the row moves on
+// a little, against a resistance that grows the further it goes and never
+// lets it past STRETCH, and springs back once let go. SETTLE is how long a
+// trackpad has to be still before the row is counted as let go; the spring
+// itself is .cover-track in globals.css.
+const STRETCH = 100;
+const SETTLE = 90;
+
+/** How far the row shows for a push of `x` px past its end — iOS's curve:
+ *  nearly one for one at first, flattening out towards STRETCH. */
+const give = (x: number) => STRETCH * (1 - 1 / ((Math.abs(x) * 0.55) / STRETCH + 1));
+
 /**
- * Dragging the strip sideways with a mouse. A press on the strip itself
- * always starts one. While no study is open, so does a press anywhere else on
- * the homepage that is not on something to press — a link, a button, a
- * film's controls: the page is the name and the strip and white, and the
- * white is a handle for the strip. With a study open the white around it is
- * the study's, and only the strip drags.
+ * Moving the strip sideways by hand, and the give at its ends.
  *
- * Listened for on the window, so a press out in the white beside the band
- * counts too, and the drag keeps going past the window's edge. A drag that
- * ends over a cover is not a click on it: the click the browser sends at the
- * end of one is caught on the way down and stopped before it reaches the
- * cover. A press out in the white has its default stopped, so dragging over
- * the name does not select it.
+ * Dragging with a mouse: a press on the strip itself always starts one.
+ * While no study is open, so does a press anywhere else on the homepage that
+ * is not on something to press — a link, a button, a film's controls: the
+ * page is the name and the strip and white, and the white is a handle for the
+ * strip. With a study open the white around it is the study's, and only the
+ * strip drags. Listened for on the window, so a press out in the white beside
+ * the band counts too, and the drag keeps going past the window's edge. A
+ * drag that ends over a cover is not a click on it: the click the browser
+ * sends at the end of one is caught on the way down and stopped. A press out
+ * in the white has its default stopped, so dragging over the name does not
+ * select it. Let go mid-drag and the strip glides on a little and eases to a
+ * stop — see FRICTION.
  *
- * Let go mid-drag and the strip glides on a little and eases to a stop, the
- * way a touch screen's scroll does — see FRICTION.
+ * At either end the row gives rather than stopping dead — see STRETCH. The
+ * scroll position stays at the end; what moves is the track inside the
+ * strip, by a transform, so nothing is laid out again for it.
  */
 function useStripDrag(
   scroller: React.RefObject<HTMLDivElement | null>,
+  track: React.RefObject<HTMLDivElement | null>,
   studyOpen: boolean,
 ) {
   useEffect(() => {
     const root = document.documentElement;
+    const still = () =>
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     let drag: { x: number; left: number; moved: boolean } | null = null;
     let suppress = false;
     // The pointer's last few positions, for the speed it is let go at.
@@ -324,8 +345,33 @@ function useStripDrag(
       glide = 0;
     };
 
+    // --- the give at the ends ---
+    // `push` is how far past the end the reader has pushed, signed as the
+    // row moves: positive past the start (the row shifts right), negative
+    // past the end. The row shows give(push) of it.
+    let push = 0;
+    let settle = 0;
+    let bounce = 0;
+    const show = (springing: boolean) => {
+      const el = track.current;
+      if (!el) return;
+      if (springing) el.dataset.spring = "";
+      else delete el.dataset.spring;
+      el.style.transform = push
+        ? `translate3d(${Math.sign(push) * give(push)}px, 0, 0)`
+        : "";
+    };
+    const release = () => {
+      clearTimeout(settle);
+      clearTimeout(bounce);
+      if (!push) return;
+      push = 0;
+      show(true);
+    };
+    const max = (strip: HTMLDivElement) => strip.scrollWidth - strip.clientWidth;
+
     const startGlide = (strip: HTMLDivElement, speed: number) => {
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      if (still()) return;
       let v = Math.max(-MAX_SPEED, Math.min(MAX_SPEED, speed));
       let last = performance.now();
       const step = (now: number) => {
@@ -334,9 +380,16 @@ function useStripDrag(
         const before = strip.scrollLeft;
         strip.scrollLeft = before - v * dt;
         v *= Math.pow(FRICTION, dt / (1000 / 60));
-        // Stopped, or up against an end of the strip.
-        if (Math.abs(v) < MIN_SPEED || strip.scrollLeft === before) {
+        if (Math.abs(v) < MIN_SPEED) {
           glide = 0;
+          return;
+        }
+        // Run into an end: the speed it had left goes into a small bounce.
+        if (strip.scrollLeft === before) {
+          glide = 0;
+          push = v * 120;
+          show(false);
+          bounce = window.setTimeout(release, 120);
           return;
         }
         glide = requestAnimationFrame(step);
@@ -354,8 +407,9 @@ function useStripDrag(
         if (target.closest("a, button, input, textarea, select, video[controls], [data-study]")) return;
         e.preventDefault();
       }
-      // A press catches a strip that is still gliding.
+      // A press catches a strip that is still gliding or giving.
       stopGlide();
+      clearTimeout(bounce);
       drag = { x: e.clientX, left: strip.scrollLeft, moved: false };
       samples = [{ x: e.clientX, t: e.timeStamp }];
     };
@@ -368,7 +422,13 @@ function useStripDrag(
         drag.moved = true;
         root.dataset.dragging = "";
       }
-      strip.scrollLeft = drag.left - dx;
+      // Where the drag would put the strip, and what is past either end of
+      // it goes into the give.
+      const want = drag.left - dx;
+      const end = max(strip);
+      strip.scrollLeft = Math.max(0, Math.min(end, want));
+      push = want < 0 ? -want : want > end ? end - want : 0;
+      show(false);
       samples.push({ x: e.clientX, t: e.timeStamp });
       while (samples.length > 2 && e.timeStamp - samples[0].t > VELOCITY_WINDOW)
         samples.shift();
@@ -378,6 +438,12 @@ function useStripDrag(
       drag = null;
       if (!moved) return;
       delete root.dataset.dragging;
+      suppress = true;
+      // A click follows the release only when it lands back on the element
+      // it started on; clear the flag on the next turn either way.
+      setTimeout(() => (suppress = false), 0);
+      // Let go past an end, it springs back and does not glide.
+      if (push) return release();
       // The speed over the last moments of the drag, in px/ms. Held still
       // before letting go, there is none, and the strip stays where it is.
       const first = samples[0];
@@ -386,10 +452,6 @@ function useStripDrag(
       const strip = scroller.current;
       if (strip && span > 0 && e.timeStamp - last.t < VELOCITY_WINDOW)
         startGlide(strip, (last.x - first.x) / span);
-      suppress = true;
-      // A click follows the release only when it lands back on the element
-      // it started on; clear the flag on the next turn either way.
-      setTimeout(() => (suppress = false), 0);
     };
     const click = (e: MouseEvent) => {
       if (!suppress) return;
@@ -398,34 +460,64 @@ function useStripDrag(
       e.stopPropagation();
     };
 
-    // A wheel or trackpad scroll takes over from a glide.
-    const wheel = () => stopGlide();
+    // A trackpad's sideways swipe. In the middle of the strip the browser
+    // scrolls it as it always does. Pushed past an end — or while the row is
+    // already out past one — the swipe goes into the give instead, and the
+    // row springs back once the trackpad has been still for SETTLE ms, which
+    // covers the run of slowing events a trackpad sends after the fingers
+    // lift.
+    const wheel = (e: WheelEvent) => {
+      stopGlide();
+      const strip = scroller.current;
+      if (!strip || drag) return;
+      if (Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;
+      const end = max(strip);
+      const atStart = strip.scrollLeft <= 0 && e.deltaX < 0;
+      const atEnd = strip.scrollLeft >= end - 1 && e.deltaX > 0;
+      if (!push && !atStart && !atEnd) return;
+      e.preventDefault();
+      if (still()) return;
+      const next = push - e.deltaX;
+      // Swiping back the other way takes the give in first, and never past
+      // nothing into the other end's.
+      push = push > 0 ? Math.max(0, next) : push < 0 ? Math.min(0, next) : next;
+      show(false);
+      clearTimeout(settle);
+      settle = window.setTimeout(release, SETTLE);
+    };
 
+    const strip = scroller.current;
     window.addEventListener("pointerdown", down);
-    window.addEventListener("wheel", wheel, { passive: true });
     window.addEventListener("pointermove", move);
     window.addEventListener("pointerup", up);
     window.addEventListener("pointercancel", up);
     window.addEventListener("click", click, true);
+    strip?.addEventListener("wheel", wheel, { passive: false });
     return () => {
       stopGlide();
+      clearTimeout(settle);
+      clearTimeout(bounce);
       window.removeEventListener("pointerdown", down);
-      window.removeEventListener("wheel", wheel);
       window.removeEventListener("pointermove", move);
       window.removeEventListener("pointerup", up);
       window.removeEventListener("pointercancel", up);
       window.removeEventListener("click", click, true);
+      strip?.removeEventListener("wheel", wheel);
       delete root.dataset.dragging;
     };
-  }, [scroller, studyOpen]);
+  }, [scroller, track, studyOpen]);
 }
 
 /**
  * Every project's cover, side by side in one row, in order. Wider than the
  * page once there are a few of them, and then it scrolls sideways: with a
  * trackpad's sideways swipe, a mouse's shift-wheel or a finger, natively,
- * and by dragging with a mouse — see useStripDrag. No scrollbar is drawn —
- * see .cover-strip in globals.css.
+ * and by dragging with a mouse — see useStripDrag. No scrollbar is drawn,
+ * and a swipe at either end gives and springs back rather than turning into
+ * the browser's back or forward — see .cover-strip in globals.css.
+ *
+ * The covers are on a track inside the scroll box, which is what moves for
+ * the give at the ends.
  *
  * The first cover starts at --edge, the line the name starts on, and the
  * last keeps the same air at the far end. On a window wider than the band
@@ -436,9 +528,11 @@ function useStripDrag(
  */
 function CoverStrip({
   scroller,
+  track,
   children,
 }: {
   scroller: React.RefObject<HTMLDivElement | null>;
+  track: React.RefObject<HTMLDivElement | null>;
   children: React.ReactNode;
 }) {
   return (
@@ -447,9 +541,14 @@ function CoverStrip({
       role="region"
       aria-label="Projects"
       tabIndex={0}
-      className="cover-strip flex items-start gap-28 overflow-x-auto py-4 pl-[calc(var(--edge)+var(--gutter))] pr-[var(--edge)] outline-none sm:gap-[calc(112*var(--u))] sm:py-[calc(16*var(--u))]"
+      className="cover-strip flex overflow-x-auto py-4 pl-[calc(var(--edge)+var(--gutter))] pr-[var(--edge)] outline-none sm:py-[calc(16*var(--u))]"
     >
-      {children}
+      <div
+        ref={track}
+        className="cover-track flex shrink-0 items-start gap-28 sm:gap-[calc(112*var(--u))]"
+      >
+        {children}
+      </div>
     </div>
   );
 }
