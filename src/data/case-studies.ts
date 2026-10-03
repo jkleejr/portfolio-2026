@@ -76,7 +76,7 @@ export const caseStudies: Record<string, CaseStudy> = {
     title: "Loot Check",
     appStore: "https://apps.apple.com/us/app/loot-check/id6785767104",
     date: "2026",
-    role: "0-1 Product",
+    role: "0-1 Product Development",
     scope: "App Store",
     blocks: [
       {
