@@ -822,7 +822,7 @@ export const caseStudies: Record<string, CaseStudy> = {
   "buy-side-briefings": {
     title: "Buy Side Briefings",
     date: "2026",
-    role: "Information Architecture",
+    role: "Web Designer & Developer",
     scope: "Web App",
     href: "https://buy-side-briefings.vercel.app/",
     blocks: [
