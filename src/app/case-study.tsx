@@ -65,7 +65,7 @@ const LATER = { loading: "lazy", decoding: "async" } as const;
 const shot = (px: number) => `calc(${px} * var(--shot))`;
 
 /** A film's first frame, if one has been saved beside it. */
-function poster(src: string): string | undefined {
+export function poster(src: string): string | undefined {
   const still = src.replace(/\.[a-z0-9]+$/i, "-poster.jpg");
   return mediaSize(still) ? still : undefined;
 }

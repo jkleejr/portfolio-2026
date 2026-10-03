@@ -57,11 +57,22 @@ function useTilt() {
   };
 }
 
+/** A demo video standing in for the square cover. Its size and poster are
+ *  read off the files on the server — see media-size.ts — and handed in. */
+export type CoverVideo = {
+  src: string;
+  poster?: string;
+  width?: number;
+  height?: number;
+};
+
 export function ProjectThumbnail({
   image,
+  video,
   slug,
 }: {
-  image: EntryImage;
+  image?: EntryImage;
+  video?: CoverVideo;
   slug: string;
 }) {
   const study = caseStudies[slug];
@@ -73,13 +84,13 @@ export function ProjectThumbnail({
   // narrowest phone. The size itself is --cover in globals.css, which the
   // writing beside it is placed off.
   const size = "h-[var(--cover)] w-[var(--cover)]";
-  const box = image.cover
+  const box = image?.cover
     ? `${size} rounded-lg`
     : `${size} rounded-lg border border-foreground/10`;
 
   // A cover stands in for the screenshot on the homepage only — image.src is
   // still the shot itself. `crop` frames that shot, so a cover ignores it.
-  const shown = image.cover ?? image.src;
+  const shown = image?.cover ?? image?.src;
 
   const tilt = useTilt();
 
@@ -91,7 +102,31 @@ export function ProjectThumbnail({
   // and have to be kept in step with it. Undersize the hint and the browser
   // asks for a variant smaller than the box, then stretches it, which is a
   // soft cover on every retina screen.
-  const inner = shown ? (
+  const inner = video ? (
+    // The recording, playing, at the width a study draws its films at —
+    // --film in globals.css, which gives way on a short window so the whole
+    // phone stays on the screen. No tilt: turned 14 degrees, something this
+    // tall swings a hundred pixels at its ends. Marked for gravity so it
+    // falls as one piece.
+    <div
+      data-gravity="piece"
+      className="w-[var(--film)] max-w-full overflow-hidden rounded-xl border border-foreground/10"
+    >
+      <video
+        src={video.src}
+        poster={video.poster}
+        width={video.width}
+        height={video.height}
+        autoPlay
+        muted
+        loop
+        playsInline
+        disablePictureInPicture
+        aria-hidden
+        className="block h-auto w-full"
+      />
+    </div>
+  ) : shown && image ? (
     // Marked for gravity: with no button around it any more, the box is the
     // outermost thing here, and without the marker the image inside would fall
     // out of its own frame.
@@ -134,14 +169,18 @@ export function ProjectThumbnail({
     </motion.div>
   ) : (
     // A project whose cover has not been taken yet still holds its row.
-    <div className={`${box} bg-foreground/[0.02]`} aria-label={image.alt} />
+    <div className={`${box} bg-foreground/[0.02]`} aria-label={image?.alt} />
   );
 
   // The lift under the pointer. On the list the whole row is the switch and
   // the cover answers a hover anywhere in it (row-hover, from ProjectRow).
   const lift =
     "block cursor-pointer rounded-lg transition-transform duration-100 ease-out";
-  const rowLift = `${lift} hover:scale-105 row-hover:scale-105`;
+  // A video is several times the square's height, so it lifts by a fraction
+  // of what the square does or it grows into the rows around it.
+  const rowLift = video
+    ? `${lift} rounded-xl hover:scale-[1.02] row-hover:scale-[1.02]`
+    : `${lift} hover:scale-105 row-hover:scale-105`;
 
   // A throw of the cover is not a click on it — see press.ts.
   const { onPointerDown, dragged } = usePress();
