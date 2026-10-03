@@ -11,7 +11,6 @@ import { StudyBody, StudyFact, studyFacts } from "./case-study";
 import { ProjectList, ProjectRow, ProjectSection } from "./project-study";
 import { ProjectThumbnail } from "./project-thumbnail";
 import { ProjectTitle } from "./project-title";
-import { ThemeToggle } from "./theme-toggle";
 import { CopyEmail } from "./copy-email";
 
 /**
@@ -340,7 +339,6 @@ export function DesignOne() {
               and hidden from a screen reader, which would read it out as a
               direction. */}
           <nav className="flex gap-5 self-end text-lg font-medium sm:gap-6 sm:text-xl text-foreground sm:absolute sm:bottom-6 sm:right-[var(--edge)]">
-            <ThemeToggle />
             {site.links.map(
               (link) =>
                 link.href && (
@@ -352,7 +350,7 @@ export function DesignOne() {
                     className="transition-colors duration-200 ease-out hover:text-accent"
                   >
                     {link.label}
-                    <span aria-hidden className="text-[0.89em]">{"\u00a0"}↗</span>
+                    <span aria-hidden className="text-[0.75em]">{"\u00a0"}↗</span>
                   </a>
                 ),
             )}
@@ -365,7 +363,7 @@ export function DesignOne() {
               className="transition-colors duration-200 ease-out hover:text-accent"
             >
               {site.resume.label}
-              <span aria-hidden className="text-[0.89em]">{"\u00a0"}↗</span>
+              <span aria-hidden className="text-[0.75em]">{"\u00a0"}↗</span>
             </a>
             {/* Two ways to the address, one at a time. Where the row has room
                 for it (from 70rem, 1120px — the closing line makes way for the
