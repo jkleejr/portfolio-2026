@@ -5,7 +5,6 @@ export const site = {
   email: "johnkleejr@gmail.com",
 
   links: [
-    { label: "GitHub", href: "https://github.com/jkleejr" },
     { label: "LinkedIn", href: "https://www.linkedin.com/in/john-lee-779329401/" },
   ],
 
