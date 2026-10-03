@@ -370,6 +370,80 @@ body {
   scrollbar-width: none;
   overscroll-behavior-x: contain;
 }
+/* ---------------------------------------------------------------------------
+   Opening a study: the cover grows
+   See ProjectList in project-study.tsx. The pressed cover is moved and
+   scaled in place by a transform set from script, on the transition here;
+   the covers either side slide away to their sides and fade. While it is
+   open the strip and its slack box clip only sideways, so the grown cover
+   is not cut off above and below. The name, the intro and the corner fade
+   out, and the study's name and facts and the arrow back fade in.
+   --------------------------------------------------------------------------- */
+
+.cover-strip section {
+  transition:
+    transform 650ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    opacity 450ms ease;
+}
+.cover-strip section[data-hero] {
+  position: relative;
+  z-index: 10;
+  transform-origin: 0 0;
+}
+/* The lift under the pointer is for a cover in the strip, not a grown one. */
+.cover-strip section[data-hero] a {
+  transform: none !important;
+  cursor: default;
+}
+.cover-strip section[data-away] {
+  opacity: 0;
+  pointer-events: none;
+}
+.cover-strip section[data-away="left"] {
+  transform: translateX(-40vw);
+}
+.cover-strip section[data-away="right"] {
+  transform: translateX(40vw);
+}
+.cover-strip[data-clip],
+.cover-slack[data-clip] {
+  overflow-x: clip !important;
+  overflow-y: visible !important;
+}
+
+[data-home-header],
+.corner-stack {
+  transition: opacity 300ms ease;
+}
+html[data-study-open] [data-home-header],
+html[data-study-open] .corner-stack {
+  opacity: 0;
+  pointer-events: none;
+}
+
+[data-study-intro],
+[data-study-back] {
+  animation: study-in 450ms cubic-bezier(0.2, 0.8, 0.2, 1) 250ms backwards;
+}
+html:not([data-study-open]) [data-study-intro],
+html:not([data-study-open]) [data-study-back] {
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
+
+/* Arriving straight at a study's address: the strip is kept out of sight
+   until its cover has been put in its grown place, so it is never seen in
+   the strip first. */
+[data-frame][data-open]:not([data-placed]) [data-strip] {
+  visibility: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cover-strip section {
+    transition: none;
+  }
+}
+
 /* The give at either end of the strip — see useStripDrag in
    project-study.tsx. "out" is a bounce easing out past the end, "back" the
    spring home. Neither while the row is being pushed: then it follows the
