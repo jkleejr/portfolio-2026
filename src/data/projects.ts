@@ -19,6 +19,19 @@ export type Entry = {
 // Projects shown in order
 export const entries: Entry[] = [
   {
+    title: "Loot Check",
+    blurb:
+      "Photograph any item to find its name, potential value, and where to sell it",
+    slug: "loot-check",
+    images: [
+      {
+        src: "/projects/loot-check-1.png",
+        alt: "Loot Check home screen",
+        crop: "50% 15%",
+      },
+    ],
+  },
+  {
     title: "Screen Translator",
     blurb:
       "Use the Dynamic Island to translate the text on your screen without switching apps",
@@ -30,19 +43,6 @@ export const entries: Entry[] = [
         coverCrop: "50% 11%",
         coverZoom: 1.06,
         alt: "Screen Translator just after recording starts: the recording card with a red-to-blue glow around it, watching for Korean text, over the display and translation region rows",
-      },
-    ],
-  },
-  {
-    title: "Loot Check",
-    blurb:
-      "Photograph any item to find its name, potential value, and where to sell it",
-    slug: "loot-check",
-    images: [
-      {
-        src: "/projects/loot-check-1.png",
-        alt: "Loot Check home screen",
-        crop: "50% 15%",
       },
     ],
   },
