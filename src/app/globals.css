@@ -354,17 +354,21 @@ body {
 
 .cover-strip {
   scrollbar-width: none;
-  /* A sideways swipe that reaches an end stays in the strip. Without it the
-     browser hands the rest of the swipe to the page, and on a Mac that is
-     the back or forward gesture, with its arrow at the window's edge. The
-     strip gives and springs back instead — see .cover-track. */
-  overscroll-behavior-x: contain;
   cursor: grab;
   user-select: none;
   -webkit-user-select: none;
 }
-.cover-strip::-webkit-scrollbar {
+.cover-strip::-webkit-scrollbar,
+.cover-slack::-webkit-scrollbar {
   display: none;
+}
+/* The box the strip sits in, with room to scroll past either end — see SLACK
+   in project-study.tsx. A swipe that reaches its end goes no further: without
+   this the browser hands the rest to the page, and on a Mac that is the back
+   or forward gesture, with its arrow at the window's edge. */
+.cover-slack {
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
 }
 /* The spring back from the give at either end of the strip — see
    useStripDrag in project-study.tsx. Only while springing: while the row is
