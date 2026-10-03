@@ -23,7 +23,7 @@ export const entries: Entry[] = [
   {
     title: "Loot Check",
     blurb:
-      "Photograph any item to find its name, potential value, and where to sell it",
+      "Photograph any item to find its value and where to sell it",
     slug: "loot-check",
     media: "/projects/loot-check-shark.mp4",
     images: [
@@ -37,7 +37,7 @@ export const entries: Entry[] = [
   {
     title: "Screen Translator",
     blurb:
-      "Use the Dynamic Island to translate the text on your screen without switching apps",
+      "Use the Dynamic Island to translate text on your screen",
     slug: "screen-translator",
     media: "/projects/screen-translator-demo.mp4",
     images: [
@@ -67,7 +67,7 @@ export const entries: Entry[] = [
   {
     title: "Buy Side Briefings",
     blurb:
-      "Automated, daily stock market research and reports",
+      "Automated, daily stock market reports",
     slug: "buy-side-briefings",
     media: "/projects/buy-side-site-today-5.png",
     images: [
