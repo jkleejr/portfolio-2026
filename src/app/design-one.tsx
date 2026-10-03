@@ -110,10 +110,16 @@ function VideoRow({
           </div>
         )}
       </div>
-      <ProjectThumbnail
-        slug={entry.slug}
-        video={{ src, poster: poster(src), ...mediaSize(src) }}
-      />
+      {/* From 1200px, where the name has gone out to the margin, the video
+          starts where the writing does in a row with a square cover —
+          --text-start — so it stands clear of the margin and on the line the
+          name of every other project is set on. */}
+      <div className="min-[75rem]:ml-[var(--text-start)]">
+        <ProjectThumbnail
+          slug={entry.slug}
+          video={{ src, poster: poster(src), ...mediaSize(src) }}
+        />
+      </div>
     </ProjectRow>
   );
 }
@@ -291,7 +297,7 @@ export function DesignOne() {
               <ProjectSection
                 key={entry.slug}
                 slug={entry.slug}
-                study={study ? <StudyBody study={study} inline /> : undefined}
+                study={study ? <StudyBody study={study} inline cover={entry.video} /> : undefined}
               >
                 {entry.video ? (
                   <VideoRow entry={entry} study={study} />
