@@ -8,8 +8,12 @@
 // puts it there — so opening the About page, or coming back, leaves it where
 // it was. On a phone it is 1.5rem from the top, as the page's own air is.
 //
-// The About page drops the link to itself and keeps the apple, which stays
-// where it is: the row is set from its right edge.
+// The About page drops the link to itself and keeps the apple: the row is set
+// from its right edge. And there the apple holds still at any window size.
+// The page around it is set in fixed pixels, not in --u and not centred in
+// the window, so an apple at --frame-top and scaled by --u would drift
+// against it as the window changed. On About it is a fixed size, a fixed
+// distance in from the band's edge, and level with the "Home > About" line.
 // ---------------------------------------------------------------------------
 
 import Link from "next/link";
@@ -26,7 +30,15 @@ export function SiteCorner() {
   return (
     <div
       data-gravity="atom"
-      className="corner-stack absolute right-[var(--edge)] top-6 z-20 flex flex-row items-center gap-4 sm:top-[var(--frame-top)] sm:gap-[calc(16*var(--u))]"
+      // On About, --u is pinned to 1px for the apple inside, so its size is
+      // the 1440px page's at every width. The top and the right are set out
+      // in pixels, since --frame-top and --edge are worked out at the root
+      // and do not see the pin. 93px puts the 44px apple's middle on the
+      // middle of the breadcrumb's 26px line, 102px down — see about/page.tsx.
+      style={onAbout ? ({ "--u": "1px" } as React.CSSProperties) : undefined}
+      className={`corner-stack absolute right-[var(--edge)] top-6 z-20 flex flex-row items-center gap-4 sm:gap-[calc(16*var(--u))] ${
+        onAbout ? "sm:right-12 sm:top-[93px]" : "sm:top-[var(--frame-top)]"
+      }`}
     >
       {!onAbout && (
         <Link
