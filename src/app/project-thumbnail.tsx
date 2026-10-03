@@ -57,9 +57,10 @@ function useTilt() {
   };
 }
 
-/** A demo video standing in for the square cover. Its size and poster are
- *  read off the files on the server — see media-size.ts — and handed in. */
-export type CoverVideo = {
+/** A demo video or a picture standing in for the square cover. Its size and
+ *  poster are read off the files on the server — see media-size.ts — and
+ *  handed in. */
+export type CoverMedia = {
   src: string;
   poster?: string;
   width?: number;
@@ -68,11 +69,11 @@ export type CoverVideo = {
 
 export function ProjectThumbnail({
   image,
-  video,
+  media,
   slug,
 }: {
   image?: EntryImage;
-  video?: CoverVideo;
+  media?: CoverMedia;
   slug: string;
 }) {
   const study = caseStudies[slug];
@@ -102,29 +103,48 @@ export function ProjectThumbnail({
   // and have to be kept in step with it. Undersize the hint and the browser
   // asks for a variant smaller than the box, then stretches it, which is a
   // soft cover on every retina screen.
-  const inner = video ? (
+  const film = media && /\.mp4$/i.test(media.src);
+  const inner = media ? (
     // The recording, playing, at the width a study draws its films at —
     // --film in globals.css, which gives way on a short window so the whole
-    // phone stays on the screen. No tilt: turned 14 degrees, something this
-    // tall swings a hundred pixels at its ends. Marked for gravity so it
-    // falls as one piece.
+    // phone stays on the screen. A picture runs wider, out to where an open
+    // study's right edge is, as the study draws its pictures. No tilt:
+    // turned 14 degrees, something this size swings a hundred pixels at its
+    // ends. Marked for gravity so it falls as one piece.
     <div
       data-gravity="piece"
-      className="w-[var(--film)] max-w-full overflow-hidden rounded-xl border border-foreground/10"
+      className={`overflow-hidden rounded-xl border border-foreground/10 ${
+        film
+          ? "w-[var(--film)] max-w-full"
+          : "w-full min-[75rem]:w-[calc(var(--study-width)-var(--text-start))]"
+      }`}
     >
-      <video
-        src={video.src}
-        poster={video.poster}
-        width={video.width}
-        height={video.height}
-        autoPlay
-        muted
-        loop
-        playsInline
-        disablePictureInPicture
-        aria-hidden
-        className="block h-auto w-full"
-      />
+      {film ? (
+        <video
+          src={media.src}
+          poster={media.poster}
+          width={media.width}
+          height={media.height}
+          autoPlay
+          muted
+          loop
+          playsInline
+          disablePictureInPicture
+          aria-hidden
+          className="block h-auto w-full"
+        />
+      ) : (
+        <Image
+          src={media.src}
+          alt=""
+          width={media.width ?? 1200}
+          height={media.height ?? 900}
+          sizes="(width < 75rem) 100vw, 720px"
+          quality={90}
+          loading="eager"
+          className="block h-auto w-full"
+        />
+      )}
     </div>
   ) : shown && image ? (
     // Marked for gravity: with no button around it any more, the box is the
@@ -176,9 +196,9 @@ export function ProjectThumbnail({
   // the cover answers a hover anywhere in it (row-hover, from ProjectRow).
   const lift =
     "block cursor-pointer rounded-lg transition-transform duration-100 ease-out";
-  // A video is several times the square's height, so it lifts by a fraction
+  // A video or a picture is several times the square's size, so it lifts by a fraction
   // of what the square does or it grows into the rows around it.
-  const rowLift = video
+  const rowLift = media
     ? `${lift} w-fit max-w-full rounded-xl hover:scale-[1.02] row-hover:scale-[1.02]`
     : `${lift} hover:scale-105 row-hover:scale-105`;
 
