@@ -31,10 +31,11 @@ import {
   useRef,
   useState,
 } from "react";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { caseStudies } from "@/data/case-studies";
 import { site } from "@/data/site";
-import { usePress } from "./press";
+import { modified, usePress } from "./press";
 
 // --- the switch, read by the cover and the title ---------------------------
 
@@ -435,31 +436,36 @@ export function ProjectList({
           )}
         </div>
 
-        {/* The way back to the strip: top left, where the name was. It is
-            part of the first screen and scrolls away with it, rather than
-            sitting over the study's notes in the margin below. */}
+        {/* Where this is, and the way back: "Home > Loot Check", top left
+            where the name was, set the way the About page's is. Home is a
+            link to the homepage for anything that wants one — a new tab, a
+            screen reader — and a plain press puts the cover back into the
+            strip rather than loading the page again. Part of the first screen,
+            it scrolls away with it rather than sitting over the study's notes
+            in the margin below. */}
         {shown && (
-          <button
-            type="button"
+          <nav
+            aria-label="Breadcrumb"
             data-study-back
-            onClick={close}
-            aria-label="Back to all projects"
-            className="absolute left-[var(--edge)] top-6 z-30 flex h-11 w-11 -translate-x-3 cursor-pointer items-center justify-center text-foreground transition-colors duration-200 ease-out hover:text-accent sm:top-[var(--frame-top)]"
+            className="absolute left-[var(--edge)] top-6 z-30 flex h-11 items-center text-base leading-relaxed sm:top-[var(--frame-top)]"
           >
-            <svg
-              viewBox="0 0 24 24"
-              width="26"
-              height="26"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              aria-hidden
+            <Link
+              href="/"
+              prefetch={false}
+              onClick={(e) => {
+                if (modified(e)) return;
+                e.preventDefault();
+                close();
+              }}
+              className="text-muted transition-colors duration-200 ease-out hover:text-accent"
             >
-              <path d="M15 5l-7 7 7 7" />
-            </svg>
-          </button>
+              Home
+            </Link>
+            <span aria-hidden className="px-2 text-muted">
+              &gt;
+            </span>
+            <span aria-current="page">{caseStudies[shown]?.title}</span>
+          </nav>
         )}
 
         {study && (
