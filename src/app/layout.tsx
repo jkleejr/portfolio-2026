@@ -1,8 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
-import Link from "next/link";
 import { site } from "@/data/site";
-import { AppleButton } from "./apple-button";
+import { SiteCorner } from "./corner";
 import { card } from "./study-metadata";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
@@ -143,22 +142,10 @@ export default function RootLayout({
             resolves against. The two scripts at the foot of the body stay
             outside it; neither looks inside a particular box. */}
         <div className="relative mx-auto max-w-[var(--page)]">
-          {/* Holds the About link and the apple button in the top-right
-              corner at every width. The row is the apple's height, which is
-              what --top-row on the homepage measures to drop the name under
-              it on a phone. */}
-          <div
-            data-gravity="atom"
-            className="corner-stack absolute right-[var(--edge)] top-6 z-20 flex flex-row items-center gap-4 sm:top-[calc(24*var(--u))] sm:gap-[calc(16*var(--u))]"
-          >
-            <Link
-              href="/about"
-              className="text-lg font-medium text-foreground transition-colors duration-200 ease-out hover:text-accent sm:text-[calc(20*var(--u))]"
-            >
-              About
-            </Link>
-            <AppleButton />
-          </div>
+          {/* The About link and the apple in the top-right corner, on every
+              page but the homepage, which draws its own inside its frame —
+              see corner.tsx. */}
+          <SiteCorner />
           {children}
         </div>
         {/* The scrollbar's width onto :root, for --page in globals.css and
@@ -200,12 +187,14 @@ export default function RootLayout({
             at.
 
             The study is only in the server's markup on the open-study route,
-            so finding one is the whole check. scrollIntoView is what the
-            effect calls, so the row's scroll-mt is kept here as well. */}
+            so finding one is the whole check; the page is then started at the
+            cover strip, [data-strip], with the study under it. scrollIntoView
+            is what the effect calls, so the strip's scroll-mt is kept here as
+            well. */}
         <script
           dangerouslySetInnerHTML={{
             __html:
-              '(function(){var s=document.querySelector("[data-study]"),r=s&&s.parentElement;if(!r)return;var y,g=function(){r.scrollIntoView({block:"start"});y=scrollY};g();if(document.fonts)document.fonts.ready.then(function(){if(scrollY===y)g()})})();',
+              '(function(){var s=document.querySelector("[data-study]"),r=s&&document.querySelector("[data-strip]");if(!r)return;var y,g=function(){r.scrollIntoView({block:"start"});y=scrollY};g();if(document.fonts)document.fonts.ready.then(function(){if(scrollY===y)g()})})();',
           }}
         />
         <Analytics />
