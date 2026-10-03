@@ -70,8 +70,8 @@ function FactLines({ study }: { study: CaseStudy }) {
 }
 
 /**
- * A project shown by its demo video rather than a square cover: the video
- * holds the column, and everything said about the project — its name, the
+ * A project shown by its demo video, or its first picture, rather than a
+ * square cover: that holds the column, and everything said about the project — its name, the
  * line under it, and the facts — is stacked in the margin to its left, hung
  * from the video's top edge.
  *
@@ -84,14 +84,14 @@ function FactLines({ study }: { study: CaseStudy }) {
  * data-own-hover for the reason StudyFacts has it: the facts carry a link,
  * and the name is a switch of its own.
  */
-function VideoRow({
+function MediaRow({
   entry,
   study,
 }: {
   entry: (typeof entries)[number];
   study?: CaseStudy;
 }) {
-  const src = entry.video!;
+  const src = entry.media!;
   return (
     <ProjectRow className="relative">
       <div
@@ -110,14 +110,14 @@ function VideoRow({
           </div>
         )}
       </div>
-      {/* From 1200px, where the name has gone out to the margin, the video
+      {/* From 1200px, where the name has gone out to the margin, the cover
           starts where the writing does in a row with a square cover —
           --text-start — so it stands clear of the margin and on the line the
           name of every other project is set on. */}
       <div className="min-[75rem]:ml-[var(--text-start)]">
         <ProjectThumbnail
           slug={entry.slug}
-          video={{ src, poster: poster(src), ...mediaSize(src) }}
+          media={{ src, poster: poster(src), ...mediaSize(src) }}
         />
       </div>
     </ProjectRow>
@@ -297,10 +297,10 @@ export function DesignOne() {
               <ProjectSection
                 key={entry.slug}
                 slug={entry.slug}
-                study={study ? <StudyBody study={study} inline cover={entry.video} /> : undefined}
+                study={study ? <StudyBody study={study} inline cover={entry.media} /> : undefined}
               >
-                {entry.video ? (
-                  <VideoRow entry={entry} study={study} />
+                {entry.media ? (
+                  <MediaRow entry={entry} study={study} />
                 ) : (
                 /* The row is the switch that opens the study — see ProjectRow.
                     relative so the facts about the project can be set out in

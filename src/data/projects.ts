@@ -14,8 +14,8 @@ export type Entry = {
   blurb?: string;
   slug: string;
   images?: EntryImage[];
-  // demo video shown as the cover on the homepage, in place of images
-  video?: string;
+  // demo video or picture shown as the cover on the homepage, in place of images
+  media?: string;
 };
 
 // Projects shown in order
@@ -25,7 +25,7 @@ export const entries: Entry[] = [
     blurb:
       "Photograph any item to find its name, potential value, and where to sell it",
     slug: "loot-check",
-    video: "/projects/loot-check-shark.mp4",
+    media: "/projects/loot-check-shark.mp4",
     images: [
       {
         src: "/projects/loot-check-1.png",
@@ -39,7 +39,7 @@ export const entries: Entry[] = [
     blurb:
       "Use the Dynamic Island to translate the text on your screen without switching apps",
     slug: "screen-translator",
-    video: "/projects/screen-translator-demo.mp4",
+    media: "/projects/screen-translator-demo.mp4",
     images: [
       {
         cover: "/projects/screen-translator-watching.png",
@@ -55,7 +55,7 @@ export const entries: Entry[] = [
     blurb:
       "Upload a PDF and hear it in a natural voice with citations filtered out",
     slug: "paper-reader",
-    video: "/projects/paper-reader-add-and-listen.mp4",
+    media: "/projects/paper-reader-add-and-listen.mp4",
     images: [
       {
         cover: "/projects/paper-reader-cover-highlight.png",
@@ -69,6 +69,7 @@ export const entries: Entry[] = [
     blurb:
       "Automated, daily stock market research and reports",
     slug: "buy-side-briefings",
+    media: "/projects/buy-side-site-today-5.png",
     images: [
       {
         cover: "/projects/buy-side-briefings-swing.png",

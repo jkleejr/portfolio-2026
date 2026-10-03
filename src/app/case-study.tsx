@@ -152,14 +152,17 @@ export function StudyBody({
    */
   inline?: boolean;
   /**
-   * The film the homepage row already plays as its cover. The study leaves
-   * that block out rather than playing the same recording again right under
-   * it. /projects/[slug] shows no cover, so it passes none and keeps it.
+   * The film or picture the homepage row already shows as its cover. The
+   * study leaves that block out rather than showing the same thing again
+   * right under it. /projects/[slug] shows no cover, so it passes none and
+   * keeps it.
    */
   cover?: string;
 }) {
   const blocks = cover
-    ? study.blocks.filter((b) => !(b.type === "video" && b.src === cover))
+    ? study.blocks.filter(
+        (b) => !((b.type === "video" || b.type === "image") && b.src === cover),
+      )
     : study.blocks;
   return (
     // No margins of its own: the page around it puts it in the same column the
