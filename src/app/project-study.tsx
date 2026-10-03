@@ -207,6 +207,9 @@ export function ProjectList({
 
   const study = openSlug ? studies[openSlug] : undefined;
 
+  const scrollerRef = useRef<HTMLDivElement>(null);
+  useStripDrag(scrollerRef, !!study);
+
   return (
     <OpenContext.Provider value={{ openSlug, leaving, press }}>
       {/* The frame — the name, the intro, the corner and the strip — and
@@ -222,7 +225,13 @@ export function ProjectList({
           than left to flex to centre, so the layout can put the corner on the
           same line on every page — see corner.tsx. */}
       <div>
-        <div className="sm:min-h-svh sm:pb-[calc(24*var(--u))] sm:pt-[var(--frame-top)]">
+        <div
+          // The white is a handle for the strip while nothing is open — see
+          // useStripDrag — and the cursor says so.
+          className={`sm:min-h-svh sm:pb-[calc(24*var(--u))] sm:pt-[var(--frame-top)] ${
+            study ? "" : "cursor-grab"
+          }`}
+        >
           <div className="relative">
             {header}
             <div
@@ -237,7 +246,7 @@ export function ProjectList({
               // amount, so the first cover still starts on the name's line.
               className="-mx-[var(--gutter)] mt-16 scroll-mt-6 sm:mt-[calc(64*var(--u))]"
             >
-              <CoverStrip>{children}</CoverStrip>
+              <CoverStrip scroller={scrollerRef}>{children}</CoverStrip>
             </div>
           </div>
         </div>
@@ -269,76 +278,113 @@ export function ProjectList({
 const DRAG = 5;
 
 /**
+ * Dragging the strip sideways with a mouse. A press on the strip itself
+ * always starts one. While no study is open, so does a press anywhere else on
+ * the homepage that is not on something to press — a link, a button, a
+ * film's controls: the page is the name and the strip and white, and the
+ * white is a handle for the strip. With a study open the white around it is
+ * the study's, and only the strip drags.
+ *
+ * Listened for on the window, so a press out in the white beside the band
+ * counts too, and the drag keeps going past the window's edge. A drag that
+ * ends over a cover is not a click on it: the click the browser sends at the
+ * end of one is caught on the way down and stopped before it reaches the
+ * cover. A press out in the white has its default stopped, so dragging over
+ * the name does not select it.
+ */
+function useStripDrag(
+  scroller: React.RefObject<HTMLDivElement | null>,
+  studyOpen: boolean,
+) {
+  useEffect(() => {
+    const root = document.documentElement;
+    let drag: { x: number; left: number; moved: boolean } | null = null;
+    let suppress = false;
+
+    const down = (e: PointerEvent) => {
+      const strip = scroller.current;
+      if (!strip || e.pointerType !== "mouse" || e.button !== 0) return;
+      if (root.classList.contains("gravity-on")) return;
+      const target = e.target as Element;
+      if (!strip.contains(target)) {
+        if (studyOpen) return;
+        if (target.closest("a, button, input, textarea, select, video[controls], [data-study]")) return;
+        e.preventDefault();
+      }
+      drag = { x: e.clientX, left: strip.scrollLeft, moved: false };
+    };
+    const move = (e: PointerEvent) => {
+      const strip = scroller.current;
+      if (!drag || !strip) return;
+      const dx = e.clientX - drag.x;
+      if (!drag.moved && Math.abs(dx) < DRAG) return;
+      if (!drag.moved) {
+        drag.moved = true;
+        root.dataset.dragging = "";
+      }
+      strip.scrollLeft = drag.left - dx;
+    };
+    const up = () => {
+      const moved = drag?.moved;
+      drag = null;
+      if (!moved) return;
+      delete root.dataset.dragging;
+      suppress = true;
+      // A click follows the release only when it lands back on the element
+      // it started on; clear the flag on the next turn either way.
+      setTimeout(() => (suppress = false), 0);
+    };
+    const click = (e: MouseEvent) => {
+      if (!suppress) return;
+      suppress = false;
+      e.preventDefault();
+      e.stopPropagation();
+    };
+
+    window.addEventListener("pointerdown", down);
+    window.addEventListener("pointermove", move);
+    window.addEventListener("pointerup", up);
+    window.addEventListener("pointercancel", up);
+    window.addEventListener("click", click, true);
+    return () => {
+      window.removeEventListener("pointerdown", down);
+      window.removeEventListener("pointermove", move);
+      window.removeEventListener("pointerup", up);
+      window.removeEventListener("pointercancel", up);
+      window.removeEventListener("click", click, true);
+      delete root.dataset.dragging;
+    };
+  }, [scroller, studyOpen]);
+}
+
+/**
  * Every project's cover, side by side in one row, in order. Wider than the
  * page once there are a few of them, and then it scrolls sideways: with a
  * trackpad's sideways swipe, a mouse's shift-wheel or a finger, natively,
- * and by pressing and dragging anywhere on it with a mouse. No scrollbar is
- * drawn — see .cover-strip in globals.css.
- *
- * A drag that ends over a cover is not a click on it: the click the browser
- * sends at the end of one is caught here, on the way down, and stopped before
- * it reaches the cover.
+ * and by dragging with a mouse — see useStripDrag. No scrollbar is drawn —
+ * see .cover-strip in globals.css.
  *
  * The first cover starts at --edge, the line the name starts on, and the
  * last keeps the same air at the far end. On a window wider than the band
  * the strip itself runs out to both of the window's edges and pads its start
- * by --gutter to keep that line — see ProjectList. The padding above and below is room for a cover's
- * lift under the pointer, which the scroll box would otherwise clip.
+ * by --gutter to keep that line — see ProjectList. The padding above and
+ * below is room for a cover's lift under the pointer, which the scroll box
+ * would otherwise clip.
  */
-function CoverStrip({ children }: { children: React.ReactNode }) {
-  const strip = useRef<HTMLDivElement>(null);
-  const drag = useRef<{ x: number; left: number; moved: boolean } | null>(null);
-  const suppress = useRef(false);
-
+function CoverStrip({
+  scroller,
+  children,
+}: {
+  scroller: React.RefObject<HTMLDivElement | null>;
+  children: React.ReactNode;
+}) {
   return (
     <div
-      ref={strip}
+      ref={scroller}
       role="region"
       aria-label="Projects"
       tabIndex={0}
       className="cover-strip flex items-start gap-28 overflow-x-auto py-4 pl-[calc(var(--edge)+var(--gutter))] pr-[var(--edge)] outline-none sm:gap-[calc(112*var(--u))] sm:py-[calc(16*var(--u))]"
-      onPointerDown={(e) => {
-        if (e.pointerType !== "mouse" || e.button !== 0) return;
-        if (document.documentElement.classList.contains("gravity-on")) return;
-        drag.current = {
-          x: e.clientX,
-          left: strip.current?.scrollLeft ?? 0,
-          moved: false,
-        };
-      }}
-      onPointerMove={(e) => {
-        const d = drag.current;
-        if (!d || !strip.current) return;
-        const dx = e.clientX - d.x;
-        if (!d.moved && Math.abs(dx) < DRAG) return;
-        if (!d.moved) {
-          d.moved = true;
-          strip.current.setPointerCapture(e.pointerId);
-          strip.current.dataset.dragging = "";
-        }
-        strip.current.scrollLeft = d.left - dx;
-      }}
-      onPointerUp={(e) => {
-        const d = drag.current;
-        drag.current = null;
-        if (!d?.moved || !strip.current) return;
-        strip.current.releasePointerCapture(e.pointerId);
-        delete strip.current.dataset.dragging;
-        suppress.current = true;
-        // A click follows the release only when it lands back on the element
-        // it started on; clear the flag on the next turn either way.
-        setTimeout(() => (suppress.current = false), 0);
-      }}
-      onPointerCancel={() => {
-        drag.current = null;
-        if (strip.current) delete strip.current.dataset.dragging;
-      }}
-      onClickCapture={(e) => {
-        if (!suppress.current) return;
-        suppress.current = false;
-        e.preventDefault();
-        e.stopPropagation();
-      }}
     >
       {children}
     </div>

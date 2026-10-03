@@ -345,8 +345,10 @@ body {
    The cover strip
    The homepage's covers in one row that scrolls sideways — see CoverStrip in
    project-study.tsx. It scrolls without a bar drawn for it: a trackpad, a
-   finger, a shift-wheel or a drag move it. While a drag is on, the cursor is
-   the closed hand, and nothing in the strip is selected by it.
+   finger, a shift-wheel or a drag move it — a drag on the strip, or while
+   no study is open, on the white around it (useStripDrag). While a drag is
+   on, the cursor is the closed hand everywhere, and nothing is selected by
+   it.
    --------------------------------------------------------------------------- */
 
 .cover-strip {
@@ -358,9 +360,10 @@ body {
 .cover-strip::-webkit-scrollbar {
   display: none;
 }
-.cover-strip[data-dragging],
-.cover-strip[data-dragging] * {
-  cursor: grabbing;
+html[data-dragging],
+html[data-dragging] * {
+  cursor: grabbing !important;
+  user-select: none;
 }
 
 /* ---------------------------------------------------------------------------
