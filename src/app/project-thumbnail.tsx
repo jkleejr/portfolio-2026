@@ -104,6 +104,11 @@ export function ProjectThumbnail({
   // asks for a variant smaller than the box, then stretches it, which is a
   // soft cover on every retina screen.
   const film = media && /\.mp4$/i.test(media.src);
+  // Set on the list, where a press opens the study in place. Null anywhere
+  // else, and for a project with nothing written about it.
+  const toggle = useCoverToggle();
+  // Whether this cover is the one grown into an open study.
+  const grown = !!toggle?.open;
   const inner = media ? (
     // The recording, playing, a little under the width a study draws its
     // films at — --cover-film in globals.css, which follows --film and so
@@ -128,7 +133,18 @@ export function ProjectThumbnail({
           loop
           playsInline
           disablePictureInPicture
-          aria-hidden
+          // Grown into an open study, it takes the controls a study's films
+          // have — play, scrub and volume, and nothing else the browser puts
+          // there. In the strip it is a cover, and has none.
+          controls={grown}
+          controlsList="nodownload noplaybackrate"
+          aria-hidden={!grown}
+          // The cover is inside the link that opens its study, and that link
+          // cancels the clicks it is given. Grown, the film's own clicks —
+          // play, pause, scrub, volume — go no further than the film, so the
+          // browser carries them out and the link never sees them.
+          onClick={grown ? (e) => e.stopPropagation() : undefined}
+          onPointerDown={grown ? (e) => e.stopPropagation() : undefined}
           className="block h-auto w-full"
         />
       ) : (
@@ -206,10 +222,6 @@ export function ProjectThumbnail({
 
   // A throw of the cover is not a click on it — see press.ts.
   const { onPointerDown, dragged } = usePress();
-
-  // Set on the list, where a press opens the study in place. Null anywhere
-  // else, and for a project with nothing written about it.
-  const toggle = useCoverToggle();
 
   // On the list the picture is a switch, not a way out of the page: a plain
   // click opens the study under the row and closes it again, and

@@ -390,9 +390,11 @@ body {
   z-index: 10;
   transform-origin: 0 0;
 }
-/* The lift under the pointer is for a cover in the strip, not a grown one. */
+/* The lift under the pointer is for a cover in the strip, not a grown one.
+   The lift is Tailwind's scale-, which sets the scale property rather than
+   transform. */
 .cover-strip section[data-hero] a {
-  transform: none !important;
+  scale: none !important;
   cursor: default;
 }
 .cover-strip section[data-away] {
