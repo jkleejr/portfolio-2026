@@ -264,23 +264,13 @@ export function DesignOne() {
                     {/* The name is the same switch the cover is — see
                         project-title.tsx.
 
-                        Every project with a study written about it carries an
-                        arrow after its name, and the arrow is part of the
-                        name: it opens the study, as the name does, and lights
-                        with it. It is what says the name can be pressed. The
-                        way out to a listing or a site of the project's own is
-                        in the margin, on the line that says the project is
+                        The way out to a listing or a site of the project's own
+                        is in the margin, on the line that says the project is
                         live there, under the App Store's mark or the chain —
                         see studyFacts in case-study.tsx. */}
                     <h2 className="text-xl font-semibold leading-snug tracking-[-0.02em]">
                       <ProjectTitle slug={entry.slug}>
                         {entry.title}
-                        {study && (
-                          // A no-break space, so the arrow never starts a line
-                          // of its own; hidden from a screen reader, which
-                          // would read it out as a direction.
-                          <span aria-hidden className="text-[0.89em]">{"\u00a0"}↗</span>
-                        )}
                       </ProjectTitle>
                     </h2>
                     {/* One line where the window has the room for it, running
