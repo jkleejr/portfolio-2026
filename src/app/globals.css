@@ -139,10 +139,10 @@
   color-scheme: light;
 }
 
-/* The dark half of the page, and what a first visit gets: data-theme is
-   "dark" in the markup, then whatever the toggle stored, applied before first
-   paint. The light palette stays on :root above — it is what this block is
-   layered over, and what the toggle switches back to.
+/* The dark half of the page. A first visit gets the light palette on :root
+   above: data-theme is "light" in the markup, then whatever the toggle
+   stored, applied before first paint. This block is layered over :root when
+   the toggle, or a stored choice, switches the page to dark.
 
    color-scheme is set alongside each palette so the parts of the page the
    stylesheet does not paint — scrollbars, the canvas behind the document

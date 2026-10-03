@@ -54,9 +54,9 @@ const oldLondon = localFont({
 });
 
 export const viewport: Viewport = {
-  // The dark palette's --background in globals.css, kept in step with it, so
-  // the browser's own bars are the page's shade and not a darker one.
-  themeColor: "#0a0a0a",
+  // The light palette's --background in globals.css, kept in step with it, so
+  // the browser's own bars are the page's shade and not another one.
+  themeColor: "#ffffff",
 };
 
 export const metadata: Metadata = {
@@ -99,7 +99,7 @@ export default function RootLayout({
     // and React reports the difference. It is the one element that is written
     // to outside React, and the warning is suppressed one level deep — nothing
     // inside the page is covered by it.
-    <html lang="en" data-theme="dark" suppressHydrationWarning>
+    <html lang="en" data-theme="light" suppressHydrationWarning>
       <body
         className={`${satoshi.variable} ${oldLondon.variable} antialiased`}
       >
@@ -130,14 +130,14 @@ export default function RootLayout({
         />
         {/* The theme the toggle at the foot of the homepage stored, onto the
             html element and the browser's bars before first paint — see
-            theme-toggle.tsx. Dark is what the markup carries, so an empty
-            store, or one the browser will not open, leaves the page dark.
+            theme-toggle.tsx. Light is what the markup carries, so an empty
+            store, or one the browser will not open, leaves the page light.
             suppressHydrationWarning on the html element covers the
             data-theme this can write there. */}
         <script
           dangerouslySetInnerHTML={{
             __html:
-              '(function(){try{if(localStorage.getItem("theme")==="light"){document.documentElement.setAttribute("data-theme","light");var m=document.querySelector(\'meta[name="theme-color"]\');if(m)m.setAttribute("content","#ffffff")}}catch(e){}})()',
+              '(function(){try{if(localStorage.getItem("theme")==="dark"){document.documentElement.setAttribute("data-theme","dark");var m=document.querySelector(\'meta[name="theme-color"]\');if(m)m.setAttribute("content","#0a0a0a")}}catch(e){}})()',
           }}
         />
         {/* The band the page is laid out in — see --page in globals.css. It
