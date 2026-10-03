@@ -335,7 +335,10 @@ export function DesignOne() {
           )}
           {/* The other places to find him, his resume, then the way to write
               to him. One line, so it is the line that is pinned and not each
-              link. */}
+              link. The arrow after LinkedIn and Resume says they open in a
+              new tab: a no-break space so it never starts a line of its own,
+              and hidden from a screen reader, which would read it out as a
+              direction. */}
           <nav className="flex gap-5 self-end text-lg font-medium sm:gap-6 sm:text-xl text-foreground sm:absolute sm:bottom-6 sm:right-[var(--edge)]">
             <ThemeToggle />
             {site.links.map(
@@ -349,6 +352,7 @@ export function DesignOne() {
                     className="transition-colors duration-200 ease-out hover:text-accent"
                   >
                     {link.label}
+                    <span aria-hidden className="text-[0.89em]">{"\u00a0"}↗</span>
                   </a>
                 ),
             )}
@@ -361,6 +365,7 @@ export function DesignOne() {
               className="transition-colors duration-200 ease-out hover:text-accent"
             >
               {site.resume.label}
+              <span aria-hidden className="text-[0.89em]">{"\u00a0"}↗</span>
             </a>
             {/* Two ways to the address, one at a time. Where the row has room
                 for it (from 70rem, 1120px — the closing line makes way for the
