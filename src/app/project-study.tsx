@@ -296,11 +296,21 @@ const MIN_SPEED = 0.02;
 // The give at either end of the strip. Pushed past its first or last cover —
 // by a trackpad, a drag, or a glide that runs into the end — the row moves on
 // a little, against a resistance that grows the further it goes and never
-// lets it past STRETCH, and springs back once let go. SETTLE is how long a
-// trackpad has to be still before the row is counted as let go; the spring
-// itself is .cover-track in globals.css.
+// lets it past STRETCH, and springs back once let go; the spring itself is
+// .cover-track in globals.css.
+//
+// A mouse lets go when its button comes up. A trackpad does not say when the
+// fingers leave it, so it is read off the swipe: fingers that lift while
+// moving leave a run of steadily shrinking events behind them — the
+// coasting — and COASTING of those in a row is a let-go, sprung back from at
+// once. Fingers held still past the end send nothing at all, and the row is
+// held out for HOLD ms of that quiet before it is counted as let go. A new
+// swipe is told from the tail of the last one by a gap of NEW_SWIPE ms or a
+// push harder than the event before it.
 const STRETCH = 100;
-const SETTLE = 90;
+const COASTING = 3;
+const HOLD = 400;
+const NEW_SWIPE = 120;
 
 /** How far the row shows for a push of `x` px past its end — iOS's curve:
  *  nearly one for one at first, flattening out towards STRETCH. */
@@ -463,27 +473,43 @@ function useStripDrag(
     // A trackpad's sideways swipe. In the middle of the strip the browser
     // scrolls it as it always does. Pushed past an end — or while the row is
     // already out past one — the swipe goes into the give instead, and the
-    // row springs back once the trackpad has been still for SETTLE ms, which
-    // covers the run of slowing events a trackpad sends after the fingers
-    // lift.
+    // row springs back on a let-go, read as COASTING and HOLD describe.
+    let lastSize = 0;
+    let lastAt = 0;
+    let shrinking = 0;
+    // Set once a let-go has been read: the rest of that swipe's coasting is
+    // swallowed rather than pushing the row back out.
+    let spent = false;
     const wheel = (e: WheelEvent) => {
       stopGlide();
       const strip = scroller.current;
       if (!strip || drag) return;
       if (Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;
+      const size = Math.abs(e.deltaX);
+      const fresh = e.timeStamp - lastAt > NEW_SWIPE || size > lastSize;
+      shrinking = fresh || size >= lastSize ? 0 : shrinking + 1;
+      lastSize = size;
+      lastAt = e.timeStamp;
+      if (fresh) spent = false;
+
       const end = max(strip);
       const atStart = strip.scrollLeft <= 0 && e.deltaX < 0;
       const atEnd = strip.scrollLeft >= end - 1 && e.deltaX > 0;
       if (!push && !atStart && !atEnd) return;
       e.preventDefault();
-      if (still()) return;
+      if (still() || spent) return;
+      // Coasting: the fingers have left the trackpad. Back at once.
+      if (push && shrinking >= COASTING) {
+        spent = true;
+        return release();
+      }
       const next = push - e.deltaX;
       // Swiping back the other way takes the give in first, and never past
       // nothing into the other end's.
       push = push > 0 ? Math.max(0, next) : push < 0 ? Math.min(0, next) : next;
       show(false);
       clearTimeout(settle);
-      settle = window.setTimeout(release, SETTLE);
+      settle = window.setTimeout(release, HOLD);
     };
 
     const strip = scroller.current;

@@ -370,7 +370,7 @@ body {
    useStripDrag in project-study.tsx. Only while springing: while the row is
    being pushed it follows the push with no lag. */
 .cover-track[data-spring] {
-  transition: transform 500ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform 200ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 html[data-dragging],
 html[data-dragging] * {
