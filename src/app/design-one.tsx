@@ -82,14 +82,16 @@ export function DesignOne() {
           left — the role that used to be pinned in that corner is the first
           words of the intro now.
 
-          From 900px it starts at the very top, on the same line as the apple
+          From 1280px it starts at the very top, on the same line as the apple
           button in the opposite corner. There is room for both: the name is
-          87% of the band and the apple is in the last 70px of it, so at 900px
-          some 40px is left between the last E and the apple, and more above
-          that. Under 900px there is not, so the name takes --top-row plus a
-          gap as a top margin and sits under the apple instead. Reading the
-          row's height from the variable rather than writing 44px here means
-          the two cannot fall out of step.
+          87% of the band, and with the apple and the name each held --edge in
+          from their sides, at 1280px some 15px is left between the name's box
+          and the apple and more between its ink and the apple — about what
+          the page had at 900px when --edge was 1.5rem. Under 1280px there is
+          not, so the name takes --top-row plus a gap as a top margin and sits
+          under the apple instead. Reading the row's height from the variable
+          rather than writing 44px here means the two cannot fall out of step.
+          Widen --edge and this breakpoint has to move up with it.
 
           The left padding is the page's --edge and 0.0375em more, because
           that is how far the J's swash hangs out to the left of where the
@@ -154,7 +156,7 @@ export function DesignOne() {
           the finer-grained answer, not the coarser one. */}
       <h1
         data-gravity="letters"
-        className="fraktur mb-12 mt-[calc(var(--top-row)+1.5rem)] whitespace-nowrap pl-[calc(var(--edge)+0.0375em)] text-[length:var(--name-size)] leading-none sm:mb-14 min-[900px]:mt-0"
+        className="fraktur mb-12 mt-[calc(var(--top-row)+1.5rem)] whitespace-nowrap pl-[calc(var(--edge)+0.0375em)] text-[length:var(--name-size)] leading-none sm:mb-14 min-[80rem]:mt-0"
       >
         {site.name}
       </h1>
