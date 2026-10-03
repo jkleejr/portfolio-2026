@@ -6,128 +6,12 @@
 
 import { site } from "@/data/site";
 import { entries } from "@/data/projects";
-import { caseStudies, type CaseStudy } from "@/data/case-studies";
-import { StudyBody, StudyFact, poster, studyFacts } from "./case-study";
+import { caseStudies } from "@/data/case-studies";
+import { StudyBody, poster } from "./case-study";
 import { mediaSize } from "./media-size";
-import { ProjectList, ProjectRow, ProjectSection } from "./project-study";
+import { ProjectList, ProjectSection } from "./project-study";
 import { ProjectThumbnail } from "./project-thumbnail";
-import { ProjectTitle } from "./project-title";
 import { CopyEmail } from "./copy-email";
-
-/**
- * When a project was made, what the role was, and how far it went.
- *
- * Out in the margin at the left of the band the page is laid out in — see
- * --page in globals.css — on the line the intro at the top of the page holds,
- * so everything the page says about itself in the margin is ranged off one
- * edge. Nothing else leaves the column. These are notes
- * about the project rather than part of it, and the study under the row, when
- * it is opened, does not have to carry them.
- *
- * They are here whether that study is open or not: a reader deciding which
- * project to open wants to know when it was and what it was before pressing
- * anything.
- *
- * Only where there is a margin to put them in. Under 1000px the window has
- * nothing to spare, and rather than fold them into the column — where they
- * turn every row from a picture and a line into a stack of five — they are
- * not shown at all. They are the smallest thing the page has to say, and the
- * narrower the window the truer that is; the study itself still carries them
- * on its own page. --margin-note is the room out there, --margin-note-x is
- * where it starts; both are in globals.css.
- */
-function StudyFacts({ study }: { study?: CaseStudy }) {
-  if (!study) return null;
-  const lines = studyFacts(study);
-  if (!lines.length) return null;
-
-  return (
-    // In the row, since that is what it is set beside, but not part of the
-    // switch the row is: data-own-hover keeps the row from lighting under a
-    // pointer out here and from opening the study at a click, and the cursor
-    // goes back to the arrow to say so. See row-hover in globals.css.
-    // Centred on the row by stretching to its height and centring what is
-    // inside, and not by top-1/2 and a translate of its own height back up:
-    // a transform makes this box what anything fixed inside it is placed
-    // against, and the link in it is pinned as fixed when the apple is
-    // pressed — see gravity.tsx — so it was pinned half a page from where it
-    // stood.
-    <div
-      data-own-hover
-      className="absolute inset-y-0 left-[var(--margin-note-x)] hidden w-[var(--margin-note)] cursor-auto flex-col justify-center min-[1000px]:flex"
-    >
-      <FactLines study={study} />
-    </div>
-  );
-}
-
-function FactLines({ study }: { study: CaseStudy }) {
-  return studyFacts(study).map((line, i) => (
-    <p key={i} className={`text-base font-bold leading-relaxed ${i ? "mt-1" : ""}`}>
-      <StudyFact {...line} />
-    </p>
-  ));
-}
-
-/**
- * A project shown by its demo video, or its first picture, rather than a
- * square cover: that holds the column, and everything said about the project — its name, the
- * line under it, and the facts — is stacked in the margin to its left, hung
- * from the video's top edge.
- *
- * From 1200px, where the margin is about 210px wide and a name and a line
- * have room in it. Under that it is too narrow to read in, so the name and the
- * line sit over the video in the column and the facts are left out, as
- * StudyFacts leaves them out under 1000px. One block either way, moved by
- * position rather than written twice, so the name is on the page once.
- *
- * In the margin it runs from the margin's left line all the way to 3rem
- * short of the cover, which starts at --text-start — wider than the margin
- * the facts of a square-cover row are held to, since nothing else is beside
- * it here.
- *
- * data-own-hover for the reason StudyFacts has it: the facts carry a link,
- * and the name is a switch of its own.
- */
-function MediaRow({
-  entry,
-  study,
-}: {
-  entry: (typeof entries)[number];
-  study?: CaseStudy;
-}) {
-  const src = entry.media!;
-  return (
-    <ProjectRow className="relative">
-      <div
-        data-own-hover
-        className="mb-6 cursor-auto min-[75rem]:absolute min-[75rem]:left-[var(--margin-note-x)] min-[75rem]:top-0 min-[75rem]:mb-0 min-[75rem]:w-[calc(var(--text-start)-var(--margin-note-x)-3rem)]"
-      >
-        <h2 className="text-xl font-semibold leading-snug tracking-[-0.02em]">
-          <ProjectTitle slug={entry.slug}>{entry.title}</ProjectTitle>
-        </h2>
-        {entry.blurb && (
-          <p className="mt-3 text-base leading-relaxed text-muted">{entry.blurb}</p>
-        )}
-        {study && (
-          <div className="mt-8 hidden min-[75rem]:block">
-            <FactLines study={study} />
-          </div>
-        )}
-      </div>
-      {/* From 1200px, where the name has gone out to the margin, the cover
-          starts where the writing does in a row with a square cover —
-          --text-start — so it stands clear of the margin and on the line the
-          name of every other project is set on. */}
-      <div className="min-[75rem]:ml-[var(--text-start)]">
-        <ProjectThumbnail
-          slug={entry.slug}
-          media={{ src, poster: poster(src), ...mediaSize(src) }}
-        />
-      </div>
-    </ProjectRow>
-  );
-}
 
 export function DesignOne() {
   // The bottom padding is trimmed on a phone so the page fits the screen.
@@ -179,12 +63,12 @@ export function DesignOne() {
           which makes the padding worth as much as the size. There is none on
           the right for that reason: set from the left, the name needs only
           its own left margin, and with nothing reserved at the other end
-          17.5% holds down to a 200px window. What is left over at the right
+          15.5% holds down to a 200px window. What is left over at the right
           is a margin all the same — about 1.5rem of it on a 390px phone.
 
-          17.5% of --page, the band the page is laid out in, rather than of
+          15.5% of --page, the band the page is laid out in, rather than of
           the window: the two are the same up to about 1557px, and past that
-          the band stops growing and is centred, so the name holds at 17rem
+          the band stops growing and is centred, so the name holds at 15rem
           and the whole page goes with it as one block. That is where the
           ceiling comes from — it is the band's cap in globals.css, not a
           number here.
@@ -259,123 +143,52 @@ export function DesignOne() {
         )}
       </header>
 
-      {/* Everything else the page says is one column — a cover, and the writing
-          beside it — and the column sits in the middle of the band rather
-          than against its left edge. The maximum is what keeps a margin on a
-          phone, where the column is wider than the screen. */}
-      <div className="mx-auto w-[var(--column)] max-w-[calc(100%-3rem)]">
-        {/* One row per project: its cover, and beside that the name and the one
-            line that says what the thing is. Pressing the row opens the
-            project's case study under it.
+      {/* Every project's cover, side by side in one row that scrolls sideways
+          when it runs past the window, and under it, when one is pressed,
+          that project's study — see ProjectList and CoverStrip. Pressing a
+          cover opens its study; pressing it again closes it.
 
-            The covers hold the left of the column and the writing the right of
-            it, on the same two lines the header above them keeps.
-
-            One number for the room above the first row and the room between
-            every row after it. The two are not measured from the same kind of
-            edge — the gap under the intro starts at the bottom of a line of
-            text, which carries a few pixels of leading below the letters,
-            where the gaps between projects start at the hard bottom edge of a
-            cover — so the first will read as a touch the larger of the two.
-            Held equal on purpose all the same.
-
-            Beside at every width, and centred on the cover rather than hung
-            from its top edge — a title and a line under it are shorter than
-            the picture beside them, and hung from the top they leave the row
-            bottom-heavy. A phone fits the row by shrinking the cover and the
-            gap rather than by stacking the two; see "The page on a phone" in
-            globals.css. */}
-        {/* Each project is its row and, folded under it, everything written
-            about it. Pressing the cover unfolds that study in place; reading
-            to the end of it folds the row back to the picture and the line it
-            was, with the rest of the list under it again. The studies still
-            have their own pages at /projects/[slug] — that is the permalink
-            for one, and where a cover goes from anywhere but this list.
-
-            The study is rendered here, on the server, and handed to the list
-            as markup: what is in the browser's bundle is the switch, not the
-            writing. See project-study.tsx. */}
-        <ProjectList>
-          {entries.map((entry) => {
+          A cover is the project's demo video, or its first picture where it
+          has no video. The study leaves that one out when it opens here, as
+          the cover above it is already showing it. The studies are rendered
+          here, on the server, and handed to the list as markup: what is in
+          the browser's bundle is the switch, not the writing. See
+          project-study.tsx. */}
+      <ProjectList
+        studies={Object.fromEntries(
+          entries.flatMap((entry) => {
             const study = caseStudies[entry.slug];
-            return (
-              <ProjectSection
-                key={entry.slug}
+            return study
+              ? [[entry.slug, <StudyBody key={entry.slug} study={study} inline cover={entry.media} />]]
+              : [];
+          }),
+        )}
+      >
+        {entries.map((entry) => (
+          <ProjectSection
+            key={entry.slug}
+            slug={entry.slug}
+            hasStudy={!!caseStudies[entry.slug]}
+          >
+            {entry.media ? (
+              <ProjectThumbnail
                 slug={entry.slug}
-                study={study ? <StudyBody study={study} inline cover={entry.media} /> : undefined}
-              >
-                {entry.media ? (
-                  <MediaRow entry={entry} study={study} />
-                ) : (
-                /* The row is the switch that opens the study — see ProjectRow.
-                    relative so the facts about the project can be set out in
-                    the margin beside the cover — see StudyFacts. */
-                <ProjectRow className="relative flex items-center gap-[var(--cover-gap)]">
-                  {(entry.images ?? []).map((image, i) => (
-                    <ProjectThumbnail
-                      key={`${entry.slug}-${i}`}
-                      image={image}
-                      slug={entry.slug}
-                    />
-                  ))}
-                  {/* The writing takes whatever the cover leaves on a phone, and
-                      its own measure from sm up, where there is room for it.
-                      min-w-0 is what lets it be narrower than its longest line —
-                      without it a flex item refuses to shrink past its content and
-                      pushes the row off the side of the screen.
+                media={{
+                  src: entry.media,
+                  poster: poster(entry.media),
+                  ...mediaSize(entry.media),
+                }}
+              />
+            ) : (
+              (entry.images ?? []).slice(0, 1).map((image) => (
+                <ProjectThumbnail key={entry.slug} image={image} slug={entry.slug} />
+              ))
+            )}
+          </ProjectSection>
+        ))}
+      </ProjectList>
 
-                      The measure is where it starts from sm up and not a width
-                      it is held to: the cover, the gap and the measure come to
-                      a little more than a window just over sm has once its
-                      margins are off, and held there the row ran 26px off the
-                      side. It gives that up and no more, and never grows. */}
-                  <div className="min-w-0 flex-1 sm:flex-[0_1_var(--text-width)]">
-                    {/* The name is the same switch the cover is — see
-                        project-title.tsx.
-
-                        The way out to a listing or a site of the project's own
-                        is in the margin, on the line that says the project is
-                        live there, under the App Store's mark or the chain —
-                        see studyFacts in case-study.tsx. */}
-                    <h2 className="text-xl font-semibold leading-snug tracking-[-0.02em]">
-                      <ProjectTitle slug={entry.slug}>
-                        {entry.title}
-                      </ProjectTitle>
-                    </h2>
-                    {/* One line where the window has the room for it, running
-                        off the end of the column into the space at the right
-                        rather than breaking at the measure. The measure
-                        belongs to the study under it, which is a page of
-                        writing and needs a line length it can be read at; a
-                        blurb is one line about one project, and reads better
-                        as one line.
-
-                        It is wider than its box to do that, and how much wider
-                        is measured off the window and not off the blurb: it
-                        runs to where an open study's right edge is, and breaks
-                        there if it has not finished — balanced, so what is
-                        left over is a second line and not two words under a
-                        full one. It was nowrap once, safe
-                        only while the longest blurb was shorter than the room
-                        at 1000px — and then a longer one was written, ran off
-                        the side of the window and took the page with it.
-
-                        Only from 1000px, the width the facts in the margin
-                        appear at. Under that it breaks at the measure, as it
-                        always did. */}
-                    {entry.blurb && (
-                      <p className="mt-3 text-base leading-relaxed text-muted min-[1000px]:w-[calc(var(--study-width)-var(--text-start))] min-[1000px]:text-balance">
-                        {entry.blurb}
-                      </p>
-                    )}
-                    <StudyFacts study={study} />
-                  </div>
-                </ProjectRow>
-                )}
-              </ProjectSection>
-            );
-          })}
-        </ProjectList>
+      <div className="mx-auto w-[var(--column)] max-w-[calc(100%-3rem)]">
 
         {/* What the work was leading to, and the way to answer it. From sm up
             these are not in the column at all: they sit in the band's two

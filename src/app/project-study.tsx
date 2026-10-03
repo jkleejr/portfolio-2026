@@ -60,28 +60,16 @@ export function useCoverToggle() {
 
 // --- the list -------------------------------------------------------------
 
-// How long a study is given to go out before it is taken off the page, and
-// how long the rows around it are marked as arriving. Each is the length of
-// its animation in globals.css, and a beat over for the second so the mark is
-// not taken off a frame before the last row has landed.
+// How long a study is given to go out before it is taken off the page — the
+// length of its animation in globals.css.
 const LEAVE = 120;
-const SETTLE = 420;
-
-/**
- * The rows that have just landed somewhere new and are coming up into place.
- * `after` a study that was closed: the rows under it. `around` one that was
- * opened in place of another: every row but its own, which is under the
- * finger and is held still.
- */
-type Settle = { slug: string; how: "after" | "around" } | null;
 
 const OpenContext = createContext<{
   openSlug: string | null;
   /** The study on its way out, still on the page. */
   leaving: string | null;
-  settle: Settle;
-  /** A press on a project's row: `row` is the section it is in. */
-  press: (slug: string, row: HTMLElement | null) => void;
+  /** A press on a project's cover. */
+  press: (slug: string) => void;
 } | null>(null);
 
 /**
@@ -95,7 +83,15 @@ function slugFromPath(pathname: string): string | null {
   return slug || null;
 }
 
-export function ProjectList({ children }: { children: React.ReactNode }) {
+export function ProjectList({
+  studies,
+  children,
+}: {
+  /** Each project's rendered study, by slug. */
+  studies: Record<string, React.ReactNode>;
+  /** The covers, in order — one ProjectSection each. */
+  children: React.ReactNode;
+}) {
   // The address is the record of which study is open, and the state here is
   // what the page draws from. Two copies rather than one because opening a
   // study has to be instant — the row is measured on the very next frame to
@@ -136,17 +132,11 @@ export function ProjectList({ children }: { children: React.ReactNode }) {
     window.history.pushState(null, "", slug ? `/${slug}` : "/");
   }, []);
 
-  // A press is up to three steps, and the order of them is the whole of how
-  // it feels. Whatever study is open goes out first, while it is still on the
-  // page — `leaving`. Then the page changes, all at once: that study is taken
-  // off it and the pressed one, if it was another, is put on. And then what
-  // has just landed somewhere new comes up into place — `settle`.
-  //
-  // The first step is the same whether the press closes the open study or
-  // opens another in its place. It used to be only the first of those, and a
-  // study closed by another opening was simply gone between two frames.
+  // A press closes whatever study is open and opens the pressed one in its
+  // place, or closes it if it was the one open. Whatever is open goes out
+  // first, while it is still on the page — `leaving` — and the new one comes
+  // up under the strip after it.
   const [leaving, setLeaving] = useState<string | null>(null);
-  const [settle, setSettle] = useState<Settle>(null);
   const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
   useEffect(() => () => timers.current.forEach(clearTimeout), []);
   // What is open now, for a step that runs later to check it still holds: the
@@ -156,69 +146,169 @@ export function ProjectList({ children }: { children: React.ReactNode }) {
     openNow.current = openSlug;
   }, [openSlug]);
 
+  const studyRef = useRef<HTMLDivElement>(null);
+
   const press = useCallback(
-    (slug: string, row: HTMLElement | null) => {
+    (slug: string) => {
       if (leaving) return;
-      const later = (run: () => void, ms: number) =>
-        timers.current.push(setTimeout(run, ms));
-      // Asked for no motion, every step is a cut, as it was before any of this.
       const still = window.matchMedia(
         "(prefers-reduced-motion: reduce)",
       ).matches;
       const was = openSlug;
+      const next = was === slug ? null : slug;
 
-      const swap = (next: string | null, how: "after" | "around" | null) => {
-        // Opening one study closes whatever was open, and if that was a
-        // project above this row, the row is about to jump up the window by
-        // the whole height of a study — under the finger that just pressed
-        // it. So hold it still: where it sat in the window before is where it
-        // sits after, and the study unfolds from under it. flushSync so the
-        // page has changed by the next line, and the scroll is put right in
-        // the same frame rather than the one after.
-        const before = row?.getBoundingClientRect().top;
+      const swap = () => {
         flushSync(() => {
           setOpenSlug(next);
           setLeaving(null);
-          setSettle(how && !still ? { slug, how } : null);
         });
-        const after = row?.getBoundingClientRect().top;
-        if (next && before !== undefined && after !== undefined) {
-          if (after !== before) window.scrollBy(0, after - before);
+        // The study opens under the strip, which may be most of a screen
+        // tall. If the start of it has landed low in the window, bring it up
+        // so the press visibly did something.
+        const box = studyRef.current?.getBoundingClientRect();
+        if (next && box && box.top > window.innerHeight * 0.6) {
+          studyRef.current?.scrollIntoView({
+            behavior: still ? "auto" : "smooth",
+            block: "start",
+          });
         }
-        if (how && !still) later(() => setSettle(null), SETTLE);
       };
 
-      // Nothing to go out first: nothing is open, or no motion is wanted.
-      if (!was || still) return swap(was === slug ? null : slug, null);
-
-      // Or what is open is not in the window to be seen going out. A reader
-      // who has scrolled clear of the open study and pressed another project
-      // would be kept waiting on a fade that is happening off the screen, and
-      // a press that does nothing for a beat is what reads as lag.
-      const showing = document.querySelector("[data-study]");
-      const box = showing?.getBoundingClientRect();
-      const seen = box && box.bottom > 0 && box.top < window.innerHeight;
-      if (!seen) return swap(was === slug ? null : slug, was === slug ? "after" : "around");
+      // Nothing to go out first, or no motion is wanted.
+      if (!was || still) return swap();
 
       setLeaving(was);
-      later(() => {
-        if (openNow.current !== was) return setLeaving(null);
-        // Closing takes away only what is under the row, and the row was
-        // just pressed, so it is on the screen and stays where it is.
-        if (was === slug) swap(null, "after");
-        else swap(slug, "around");
-      }, LEAVE);
+      timers.current.push(
+        setTimeout(() => {
+          if (openNow.current !== was) return setLeaving(null);
+          swap();
+        }, LEAVE),
+      );
     },
     [leaving, openSlug, setOpenSlug],
   );
 
+  // Arriving at an address with a study in it — johnkleejr.com/loot-check —
+  // lands on the list with that study open, and the page starts at the strip
+  // with the study under it. On a hard load the script at the foot of the
+  // body in layout.tsx has done this already, before hydration; this is for an
+  // arrival by navigation.
+  const listRef = useRef<HTMLDivElement>(null);
+  const first = useRef(true);
+  useEffect(() => {
+    if (!first.current) return;
+    first.current = false;
+    if (openSlug) listRef.current?.scrollIntoView({ block: "start" });
+  }, [openSlug]);
+
+  const study = openSlug ? studies[openSlug] : undefined;
+
   return (
-    <OpenContext.Provider value={{ openSlug, leaving, settle, press }}>
-      {/* The spacing of the closed list, unchanged: a study brings its own
-          room above it and the 4rem below is what the next project already
-          sat at. */}
-      <div className="mt-16 flex flex-col items-start gap-16">{children}</div>
+    <OpenContext.Provider value={{ openSlug, leaving, press }}>
+      {/* The strip and the open study under it. The study is a child of
+          this box so that the script at the foot of layout.tsx, which scrolls
+          to the parent of [data-study], lands on the strip. */}
+      <div ref={listRef} className="mt-16 scroll-mt-6">
+        <CoverStrip>{children}</CoverStrip>
+        {study && (
+          // In the column the rest of the page is set in, running wider on
+          // the right from 1000px — see --study-width.
+          <div className="mx-auto w-[var(--column)] max-w-[calc(100%-3rem)]">
+            <div
+              ref={studyRef}
+              // For the layout script to find the open study by.
+              data-study
+              className={`mt-10 w-full scroll-mt-6 min-[1000px]:w-[var(--study-width)] ${
+                leaving ? "study-out" : "study-in"
+              }`}
+            >
+              {study}
+            </div>
+          </div>
+        )}
+      </div>
     </OpenContext.Provider>
+  );
+}
+
+// --- the strip --------------------------------------------------------------
+
+// How far the pointer has to travel, pressed, before it is a drag of the strip
+// rather than a click on a cover.
+const DRAG = 5;
+
+/**
+ * Every project's cover, side by side in one row, in order. Wider than the
+ * page once there are a few of them, and then it scrolls sideways: with a
+ * trackpad's sideways swipe, a mouse's shift-wheel or a finger, natively,
+ * and by pressing and dragging anywhere on it with a mouse. No scrollbar is
+ * drawn — see .cover-strip in globals.css.
+ *
+ * A drag that ends over a cover is not a click on it: the click the browser
+ * sends at the end of one is caught here, on the way down, and stopped before
+ * it reaches the cover.
+ *
+ * Starts at --edge, the line the name and the intro start on, and keeps the
+ * same air at its far end. The padding above and below is room for a cover's
+ * lift under the pointer, which the scroll box would otherwise clip.
+ */
+function CoverStrip({ children }: { children: React.ReactNode }) {
+  const strip = useRef<HTMLDivElement>(null);
+  const drag = useRef<{ x: number; left: number; moved: boolean } | null>(null);
+  const suppress = useRef(false);
+
+  return (
+    <div
+      ref={strip}
+      role="region"
+      aria-label="Projects"
+      tabIndex={0}
+      className="cover-strip flex items-start gap-16 overflow-x-auto px-[var(--edge)] py-4 outline-none"
+      onPointerDown={(e) => {
+        if (e.pointerType !== "mouse" || e.button !== 0) return;
+        if (document.documentElement.classList.contains("gravity-on")) return;
+        drag.current = {
+          x: e.clientX,
+          left: strip.current?.scrollLeft ?? 0,
+          moved: false,
+        };
+      }}
+      onPointerMove={(e) => {
+        const d = drag.current;
+        if (!d || !strip.current) return;
+        const dx = e.clientX - d.x;
+        if (!d.moved && Math.abs(dx) < DRAG) return;
+        if (!d.moved) {
+          d.moved = true;
+          strip.current.setPointerCapture(e.pointerId);
+          strip.current.dataset.dragging = "";
+        }
+        strip.current.scrollLeft = d.left - dx;
+      }}
+      onPointerUp={(e) => {
+        const d = drag.current;
+        drag.current = null;
+        if (!d?.moved || !strip.current) return;
+        strip.current.releasePointerCapture(e.pointerId);
+        delete strip.current.dataset.dragging;
+        suppress.current = true;
+        // A click follows the release only when it lands back on the element
+        // it started on; clear the flag on the next turn either way.
+        setTimeout(() => (suppress.current = false), 0);
+      }}
+      onPointerCancel={() => {
+        drag.current = null;
+        if (strip.current) delete strip.current.dataset.dragging;
+      }}
+      onClickCapture={(e) => {
+        if (!suppress.current) return;
+        suppress.current = false;
+        e.preventDefault();
+        e.stopPropagation();
+      }}
+    >
+      {children}
+    </div>
   );
 }
 
@@ -226,88 +316,29 @@ export function ProjectList({ children }: { children: React.ReactNode }) {
 
 export function ProjectSection({
   slug,
-  study,
+  hasStudy,
   children,
 }: {
   slug: string;
-  /** The rendered study, or nothing for a project without one. */
-  study?: React.ReactNode;
-  /** The project's row: its cover, its title, the line under it. */
+  /** Whether there is a study to open — a project without one is a cover. */
+  hasStudy: boolean;
+  /** The project's cover. */
   children: React.ReactNode;
 }) {
   const list = useContext(OpenContext);
-  const open = !!study && list?.openSlug === slug;
-
-  const sectionRef = useRef<HTMLElement>(null);
-
-  // Arriving at an address with a study in it — johnkleejr.com/loot-check —
-  // lands on the list with that study open, and the page should start at it
-  // rather than at the top with the study somewhere below, or wherever the
-  // page was scrolled to before a reload (the route switches the browser's
-  // own restoration off for that — see app/[slug]/page.tsx). Once, on the
-  // first paint: a study opened by a press is under the finger already and
-  // is held still by the toggle below, and a back or forward that opens one
-  // is a return to where the reader was.
-  //
-  // On a hard load this is the second time the page is put there. An effect
-  // waits for the page to hydrate, and the server's markup is on screen well
-  // before that, so a script at the foot of the body in layout.tsx scrolls to
-  // the row first. This one is for an arrival by navigation, where that
-  // script does not run.
-  const first = useRef(true);
-  useEffect(() => {
-    if (!first.current) return;
-    first.current = false;
-    if (open) sectionRef.current?.scrollIntoView({ block: "start" });
-  }, [open]);
+  const open = hasStudy && list?.openSlug === slug;
 
   // The press itself is the list's to carry out, since it may be another
   // project's study that has to go out first — see ProjectList.
   const toggle = useCallback(() => {
-    if (study) list?.press(slug, sectionRef.current);
-  }, [study, list, slug]);
-
-  const leaving = list?.leaving === slug;
-  const settle = list?.settle;
+    if (hasStudy) list?.press(slug);
+  }, [hasStudy, list, slug]);
 
   return (
-    // scroll-mt is the room left over the row when the page starts at it.
-    <section
-      ref={sectionRef}
-      // The marks the motion in globals.css reads. data-settled is on the row
-      // whose study was just closed, and it is the rows after it that come up
-      // into place. data-arrive is on every row but the one just opened in
-      // place of another: they have all landed somewhere new, where that one
-      // is under the finger and has been held still.
-      data-settled={
-        settle?.how === "after" && settle.slug === slug ? "" : undefined
-      }
-      data-arrive={
-        settle?.how === "around" && settle.slug !== slug ? "" : undefined
-      }
-      className="w-full scroll-mt-6"
-    >
-      <ToggleContext.Provider value={study ? { open, toggle } : null}>
+    <section className="shrink-0">
+      <ToggleContext.Provider value={hasStudy ? { open, toggle } : null}>
         {children}
       </ToggleContext.Provider>
-      {open && (
-        // The study runs wider than the column the list is set in, and wider
-        // on the right only — it keeps the left edge the covers hold and runs
-        // on into the empty half of the window. See --study-width, which is
-        // also what stops it running off the side.
-        //
-        // Only from the width where there is a right side worth having. Under
-        // that it takes the column, which on a phone is the screen.
-        <div
-          // For the list to find the open study by — see `press`.
-          data-study
-          className={`mt-10 w-full min-[1000px]:w-[var(--study-width)] ${
-            leaving ? "study-out" : "study-in"
-          }`}
-        >
-          {study}
-        </div>
-      )}
     </section>
   );
 }

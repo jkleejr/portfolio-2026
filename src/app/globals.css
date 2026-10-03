@@ -61,8 +61,9 @@
      wider than 97.3rem. That number is where the name across the top reached
      its 18rem ceiling when --name-size below was 0.185 — 18rem divided by
      0.185 — so it is the width the page was drawn at. The name has since been
-     taken down to 0.175 and tops out at about 17rem there. Past it the band stops growing and is centred in the
-     window by the wrapper in layout.tsx, and everything that was measured
+     taken down to 0.155 and tops out at about 15rem there. Past it the band
+     stops growing and is centred in the window by the wrapper in layout.tsx,
+     and everything that was measured
      from a window edge — the notes in the margin, the study's right edge,
      the apple in the corner, the links at the foot — is measured from the
      band's edge instead. On a wide monitor that is the whole difference: the
@@ -115,10 +116,10 @@
      the reason the size lives here rather than only in the markup. Where the
      number comes from is in the note on the name in design-one.tsx. It was
      18.5vw, capped at 18rem; then 18.5% of the band, which is the same thing
-     with the cap moved into --page, less the scrollbar; and now 17.5% of it,
-     a touch smaller. The floor is for a window too narrow for the name at
+     with the cap moved into --page, less the scrollbar; and now 15.5% of it,
+     a little smaller. The floor is for a window too narrow for the name at
      all. */
-  --name-size: max(2rem, calc(var(--page) * 0.175));
+  --name-size: max(2rem, calc(var(--page) * 0.155));
   /* The height of the row across the top of the page, which is the apple
      button's box. The homepage reads it to know how far to drop its name
      under 1280px, where the name would otherwise run into the apple. */
@@ -302,19 +303,28 @@ body {
   .study-out {
     animation: study-out 120ms ease-in forwards;
   }
+}
 
-  section[data-settled] ~ section,
-  section[data-arrive] {
-    animation: study-in 360ms cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
-  }
+/* ---------------------------------------------------------------------------
+   The cover strip
+   The homepage's covers in one row that scrolls sideways — see CoverStrip in
+   project-study.tsx. It scrolls without a bar drawn for it: a trackpad, a
+   finger, a shift-wheel or a drag move it. While a drag is on, the cursor is
+   the closed hand, and nothing in the strip is selected by it.
+   --------------------------------------------------------------------------- */
 
-  section[data-settled] + section + section {
-    animation-delay: 30ms;
-  }
-
-  section[data-settled] + section + section + section {
-    animation-delay: 60ms;
-  }
+.cover-strip {
+  scrollbar-width: none;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.cover-strip::-webkit-scrollbar {
+  display: none;
+}
+.cover-strip[data-dragging],
+.cover-strip[data-dragging] * {
+  cursor: grabbing;
 }
 
 /* ---------------------------------------------------------------------------
