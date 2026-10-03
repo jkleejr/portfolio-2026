@@ -62,6 +62,10 @@ const SIDEWAYS_QUIET = 500;
 // the transition on the strip's sections in globals.css.
 const GROW = 650;
 
+// How far a swipe or a drag has to go, in px, to move from one open study to
+// the next.
+const SWIPE_STEP = 60;
+
 const OpenContext = createContext<{
   openSlug: string | null;
   /** A press on a project's cover: opens it, if it is not already open. */
@@ -241,14 +245,24 @@ export function ProjectList({
       const el = sectionOf(slug);
       if (!el) return;
       const i = sections.indexOf(el);
+      // Where it is now: in the strip, or — when one study takes another's
+      // place — put away to one side. Measured with neither, as it lies in
+      // the strip, since that is what the grown place is worked out from;
+      // then put back where it was, to grow from there.
+      const side = el.dataset.away;
+      el.style.transition = "none";
+      delete el.dataset.away;
+      el.style.transform = "";
+      const { transform, heroLeft } = growTo(el, frame);
+      if (moving && side) el.dataset.away = side;
+      void el.offsetWidth;
+      el.style.transition = moving ? "" : "none";
+      delete el.dataset.away;
       sections.forEach((other, j) => {
         if (j === i) return;
         other.dataset.away = j < i ? "left" : "right";
       });
       el.dataset.hero = "";
-      el.style.transition = moving ? "" : "none";
-      el.style.transform = "";
-      const { transform, heroLeft } = growTo(el, frame);
       el.style.transform = transform;
       frame.style.setProperty("--hero-left", `${heroLeft}px`);
       if (!moving) {
@@ -271,11 +285,16 @@ export function ProjectList({
     };
 
     if (now) {
-      // Opening — or, from the back and forward buttons, one study in place
-      // of another, which is a cut.
+      // Opening — or one study in place of another, swiped to or from the
+      // back and forward buttons: the one going shrinks away to its side as
+      // the next grows in from the other.
       if (was) {
-        unplace(was, false);
-        delete sectionOf(was)?.dataset.hero;
+        const old = sectionOf(was);
+        if (old) {
+          old.style.transition = animate ? "" : "none";
+          old.style.transform = "";
+          delete old.dataset.hero;
+        }
       }
       enterClip();
       root.dataset.studyOpen = "";
@@ -315,6 +334,110 @@ export function ProjectList({
       shrink();
     }
   }, [openSlug]);
+
+  // From one open study to the next or the one before, in the order the strip
+  // has them: a sideways swipe on a trackpad, or a drag with a mouse. Only
+  // on the first screen of a study — scrolled down into the writing, the
+  // page is being read, and sideways means nothing. Nothing past either end.
+  //
+  // The direction is the strip's: swiping or dragging the way that would
+  // bring the covers on the right into view brings the next study. The
+  // address is replaced rather than added to, so the back button still goes
+  // home rather than back through every study swiped past.
+  // Held across studies: the listeners are set up again for each one, and a
+  // swipe that has just moved on must not move on again in the next.
+  const swipe = useRef({ busyUntil: 0, travelled: 0, lastAt: -Infinity, fired: false });
+  useEffect(() => {
+    if (!openSlug || closing) return;
+    const order = Object.keys(studies);
+    const root = document.documentElement;
+    const atTop = () => window.scrollY <= 8;
+    const g = swipe.current;
+    const go = (step: 1 | -1) => {
+      if (performance.now() < g.busyUntil) return;
+      const next = order[order.indexOf(openSlug) + step];
+      if (!next) return;
+      g.busyUntil = performance.now() + GROW;
+      setOpen(next);
+      window.history.replaceState(null, "", `/${next}`);
+    };
+
+    // A swipe is one push however long its coasting runs on: it moves on once
+    // it has gone SWIPE_STEP px, and nothing more until the trackpad has been
+    // quiet for a moment.
+    const wheel = (e: WheelEvent) => {
+      if (!atTop() || Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;
+      e.preventDefault();
+      if (e.timeStamp - g.lastAt > 250) {
+        g.travelled = 0;
+        g.fired = false;
+      }
+      g.lastAt = e.timeStamp;
+      if (g.fired) return;
+      g.travelled += e.deltaX;
+      if (Math.abs(g.travelled) < SWIPE_STEP) return;
+      g.fired = true;
+      go(g.travelled > 0 ? 1 : -1);
+    };
+
+    let drag: { x: number; moved: boolean } | null = null;
+    let suppress = false;
+    const down = (e: PointerEvent) => {
+      if (e.pointerType !== "mouse" || e.button !== 0 || !atTop()) return;
+      if (root.classList.contains("gravity-on")) return;
+      // The grown cover is a link, but a press on it does nothing while it is
+      // open, so it is as good a handle as the white. Any other link is left
+      // to be a link.
+      const target = e.target as Element;
+      if (
+        target.closest("button, input, textarea, select, video[controls]") ||
+        (target.closest("a") && !target.closest("[data-hero]"))
+      )
+        return;
+      e.preventDefault();
+      drag = { x: e.clientX, moved: false };
+    };
+    const move = (e: PointerEvent) => {
+      if (!drag) return;
+      if (!drag.moved && Math.abs(e.clientX - drag.x) < DRAG) return;
+      if (!drag.moved) {
+        drag.moved = true;
+        root.dataset.dragging = "";
+      }
+    };
+    const up = (e: PointerEvent) => {
+      const d = drag;
+      drag = null;
+      if (!d?.moved) return;
+      delete root.dataset.dragging;
+      suppress = true;
+      setTimeout(() => (suppress = false), 0);
+      const dx = e.clientX - d.x;
+      if (Math.abs(dx) >= SWIPE_STEP) go(dx < 0 ? 1 : -1);
+    };
+    const click = (e: MouseEvent) => {
+      if (!suppress) return;
+      suppress = false;
+      e.preventDefault();
+      e.stopPropagation();
+    };
+
+    window.addEventListener("wheel", wheel, { passive: false });
+    window.addEventListener("pointerdown", down);
+    window.addEventListener("pointermove", move);
+    window.addEventListener("pointerup", up);
+    window.addEventListener("pointercancel", up);
+    window.addEventListener("click", click, true);
+    return () => {
+      window.removeEventListener("wheel", wheel);
+      window.removeEventListener("pointerdown", down);
+      window.removeEventListener("pointermove", move);
+      window.removeEventListener("pointerup", up);
+      window.removeEventListener("pointercancel", up);
+      window.removeEventListener("click", click, true);
+      delete root.dataset.dragging;
+    };
+  }, [openSlug, closing, studies]);
 
   // A resize while open: the cover is put where it now belongs, at once.
   useEffect(() => {
@@ -397,10 +520,10 @@ export function ProjectList({
           ref={frameRef}
           data-frame
           data-open={openSlug ? "" : undefined}
-          // The white is a handle for the strip while nothing is open — see
-          // useStripDrag — and the cursor says so.
-          className={`relative sm:pb-[calc(24*var(--u))] sm:pt-[var(--frame-top)] ${
-            shown ? "min-h-svh" : "cursor-grab sm:min-h-svh"
+          // The white is a handle — for the strip while nothing is open (see
+          // useStripDrag), and from one study to the next while one is.
+          className={`relative cursor-grab sm:pb-[calc(24*var(--u))] sm:pt-[var(--frame-top)] ${
+            shown ? "min-h-svh" : "sm:min-h-svh"
           }`}
         >
           <div className="relative">
@@ -428,6 +551,7 @@ export function ProjectList({
               the study below it instead. */}
           {intro && (
             <div
+              key={shown}
               data-study-intro
               className="pointer-events-none absolute left-[var(--edge)] top-[50svh] hidden w-[calc(var(--hero-left)-var(--edge)-48*var(--u))] -translate-y-1/2 sm:block"
             >
