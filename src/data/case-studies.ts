@@ -75,8 +75,8 @@ export const caseStudies: Record<string, CaseStudy> = {
   "loot-check": {
     title: "Loot Check",
     appStore: "https://apps.apple.com/us/app/loot-check/id6785767104",
-    date: "Jun 2026–Present",
-    role: "Product Design",
+    date: "2026",
+    role: "0-1 Product",
     scope: "App Store",
     blocks: [
       {
@@ -359,8 +359,8 @@ export const caseStudies: Record<string, CaseStudy> = {
 
   "paper-reader": {
     title: "Paper Reader",
-    date: "Jul–Aug 2026",
-    role: "Product Design & Audio UX",
+    date: "2026",
+    role: "Product Design",
     scope: "iOS Prototype",
     blocks: [
       {
@@ -558,8 +558,8 @@ export const caseStudies: Record<string, CaseStudy> = {
 
   "screen-translator": {
     title: "Screen Translator",
-    date: "Sep 2026",
-    role: "Interaction Design",
+    date: "2026",
+    role: "Product Design",
     scope: "iOS Prototype",
     blocks: [
       {
@@ -821,7 +821,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
   "buy-side-briefings": {
     title: "Buy Side Briefings",
-    date: "May–Sep 2026",
+    date: "2026",
     role: "Information Architecture",
     scope: "Web App",
     href: "https://buy-side-briefings.vercel.app/",
@@ -864,7 +864,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "I designed an automated research pipeline that runs parallel web queries across market data, sentiment indicators, economic calendars, and a fixed set of stocks. The core of the project is the [instructions file](https://github.com/jkleejr/buy-side-briefings/blob/deploy/prompts/markets-website.md), which controls how each report is researched and written and defines the JSON schema the website renders from.",
+        text: "A research pipeline runs parallel web queries across market data, sentiment indicators, economic calendars, and a fixed set of stocks. The instructions file structures reports and defines the JSON schema for the website.",
       },
 
       {
