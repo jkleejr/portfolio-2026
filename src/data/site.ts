@@ -10,9 +10,9 @@ export const site = {
 
   resume: { label: "Resume", href: "/John-Lee-Resume.pdf" },
 
-  closing: "Open to product design and design engineering roles.",
+  closing: "",
 
   intro: [
-    "Design engineer and product designer building iOS and AI native products.",
+    "Design engineer and product designer building AI-native products for mobile and web.",
   ],
 };
