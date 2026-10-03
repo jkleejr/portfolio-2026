@@ -241,7 +241,7 @@ export function DesignOne() {
                     <ProjectTitle slug={entry.slug}>{entry.title}</ProjectTitle>
                   </h2>
                   {entry.blurb && (
-                    <p className="mt-3 text-base leading-relaxed text-muted">{entry.blurb}</p>
+                    <p className="mt-3 text-base leading-relaxed text-foreground">{entry.blurb}</p>
                   )}
                 </div>
               </>
