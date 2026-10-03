@@ -76,7 +76,7 @@ export function DesignOne() {
                 is a margin all the same — about 1.5rem of it on a 390px phone.
 
                 14.5% of --page, the band the page is laid out in, rather than of
-                the window: the two are the same up to about 1557px, and past that
+                the window: the two are the same up to 1333px, and past that
                 the band stops growing and is centred, so the name holds at 14rem
                 and the whole page goes with it as one block. That is where the
                 ceiling comes from — it is the band's cap in globals.css, not a
