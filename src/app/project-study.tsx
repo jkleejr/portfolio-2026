@@ -365,6 +365,12 @@ const MIN_SPEED = 0.02;
 // to HOLD ms of quiet.
 const STRETCH = 100;
 export const SLACK = 400;
+
+// A bounce off an end: BOUNCE px of push for every px/ms the row arrives at,
+// eased out over BOUNCE_OUT ms before it springs back — the length of the
+// "out" transition on .cover-track in globals.css.
+const BOUNCE = 120;
+const BOUNCE_OUT = 110;
 const COASTING = 3;
 const HOLD = 400;
 const NEW_SWIPE = 120;
@@ -429,11 +435,13 @@ function useStripDrag(
     let push = 0;
     let settle = 0;
     let bounce = 0;
-    const show = (springing: boolean) => {
+    // "follow": the row tracks the push frame by frame. "out": it eases out
+    // to a bounce. "back": it springs home. See .cover-track in globals.css.
+    const show = (mode: "follow" | "out" | "back") => {
       const el = track.current;
       if (!el) return;
-      if (springing) el.dataset.spring = "";
-      else delete el.dataset.spring;
+      if (mode === "follow") delete el.dataset.spring;
+      else el.dataset.spring = mode;
       el.style.transform = push
         ? `translate3d(${Math.sign(push) * give(push)}px, 0, 0)`
         : "";
@@ -453,9 +461,19 @@ function useStripDrag(
       recentre();
       if (!push) return;
       push = 0;
-      show(true);
+      show("back");
     };
     const max = (strip: HTMLDivElement) => strip.scrollWidth - strip.clientWidth;
+
+    // Running into an end at `speed` px/ms (signed as the content moves:
+    // positive is the row moving right): the row carries on past it by an
+    // amount that grows with the speed, easing out, and springs home.
+    const bounceAt = (speed: number) => {
+      clearTimeout(bounce);
+      push = Math.max(-MAX_SPEED, Math.min(MAX_SPEED, speed)) * BOUNCE;
+      show("out");
+      bounce = window.setTimeout(release, BOUNCE_OUT);
+    };
 
     const startGlide = (strip: HTMLDivElement, speed: number) => {
       if (still()) return;
@@ -474,9 +492,7 @@ function useStripDrag(
         // Run into an end: the speed it had left goes into a small bounce.
         if (strip.scrollLeft === before) {
           glide = 0;
-          push = v * 120;
-          show(false);
-          bounce = window.setTimeout(release, 120);
+          bounceAt(v);
           return;
         }
         glide = requestAnimationFrame(step);
@@ -515,7 +531,7 @@ function useStripDrag(
       const end = max(strip);
       strip.scrollLeft = Math.max(0, Math.min(end, want));
       push = want < 0 ? -want : want > end ? end - want : 0;
-      show(false);
+      show("follow");
       samples.push({ x: e.clientX, t: e.timeStamp });
       while (samples.length > 2 && e.timeStamp - samples[0].t > VELOCITY_WINDOW)
         samples.shift();
@@ -569,6 +585,7 @@ function useStripDrag(
       const atEnd = strip.scrollLeft >= end - 1 && e.deltaX > 0;
 
       const size = Math.abs(e.deltaX);
+      const prevAt = lastAt;
       if (e.timeStamp - lastAt > NEW_SWIPE) {
         // A new swipe: one that starts pushing at an end goes on to the
         // slack box; any other is the strip's to the end of it.
@@ -589,11 +606,19 @@ function useStripDrag(
         return release();
       }
       if (!latched || (!push && !atStart && !atEnd)) return;
+      // The coasting has carried the row into an end — the fingers are
+      // already off. It bounces with the speed it arrived at, the way the
+      // mouse's glide does, and the rest of the coasting is spent.
+      if (!push && shrinking >= 1) {
+        spent = true;
+        const dt = Math.max(8, e.timeStamp - prevAt);
+        return bounceAt(-e.deltaX / dt);
+      }
       const next = push - e.deltaX;
       // Swiping back the other way takes the give in first, and never past
       // nothing into the other end's.
       push = push > 0 ? Math.max(0, next) : push < 0 ? Math.min(0, next) : next;
-      show(false);
+      show("follow");
       if (!hasScrollEnd) {
         clearTimeout(settle);
         settle = window.setTimeout(release, HOLD);
@@ -606,7 +631,7 @@ function useStripDrag(
       if (!box || resetting || drag) return;
       if (spent || still()) return;
       push = SLACK - box.scrollLeft;
-      show(false);
+      show("follow");
       if (!hasScrollEnd) {
         clearTimeout(settle);
         settle = window.setTimeout(release, HOLD);
