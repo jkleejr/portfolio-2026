@@ -294,7 +294,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         items: [
           {
             src: "/projects/loot-check-ui-home.png",
-            alt: "The Loot Check home screen: the title, a line saying to snap something you want to sell, a green 1,584 items scanned globally badge, Take a photo and Choose from library buttons, and a History list of Calbee Jagapokkuru potato snacks at $4, an Akai MPK Mini at $55, a '47 Brand LA Dodgers cap at $20, and a Louis Vuitton chain bracelet at $300",
+            alt: "The Loot Check home screen: the title, a line saying to snap something you want to sell, a green 1,715 items scanned globally badge, a History list of Calbee Jagapokkuru potato snacks at $4, an Akai MPK Mini at $55, a '47 Brand LA Dodgers cap at $20, and a Louis Vuitton chain bracelet at $300, and Take a photo and Choose from library buttons below it",
           },
           {
             src: "/projects/loot-check-ui-photo-added.png",
