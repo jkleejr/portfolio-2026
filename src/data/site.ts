@@ -13,6 +13,6 @@ export const site = {
   closing: "",
 
   intro: [
-    "Product designer building AI-native products for mobile and web.",
+    //"Product designer building AI-native products for mobile and web.",
   ],
 };
