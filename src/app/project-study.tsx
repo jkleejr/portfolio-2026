@@ -579,8 +579,8 @@ export function ProjectList({
     return () => window.removeEventListener("resize", resize);
   }, [openSlug]);
 
-  // Scrolling down a homepage with nothing open opens a study: the one whose
-  // cover the pointer is over, or the first. The page is the name and the
+  // Scrolling down a homepage with nothing open, with the pointer over a
+  // cover, opens that cover's study. The page is the name and the
   // strip and not much else, so a scroll down is read as going on into the
   // work. Only once the page has nothing further down to show — on a window
   // too short for the whole strip, the first scroll still brings the rest of
@@ -607,8 +607,9 @@ export function ProjectList({
       if (document.documentElement.classList.contains("gravity-on")) return;
       const doc = document.documentElement;
       if (window.scrollY + window.innerHeight < doc.scrollHeight - 2) return;
+      // Only over a cover: a scroll down anywhere else opens nothing.
       const over = (e.target as Element).closest?.("[data-slug]");
-      const slug = over?.getAttribute("data-slug") ?? Object.keys(studies)[0];
+      const slug = over?.getAttribute("data-slug");
       if (slug && studies[slug]) press(slug);
     };
     window.addEventListener("wheel", wheel, { passive: true });
