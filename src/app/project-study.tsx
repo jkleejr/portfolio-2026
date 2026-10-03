@@ -212,17 +212,27 @@ export function ProjectList({
   // strip and not much else, so a scroll down is read as going on into the
   // work. Only once the page has nothing further down to show — on a window
   // too short for the whole strip, the first scroll still brings the rest of
-  // it into view. A wheel or a trackpad only: on a phone a swipe down is how
-  // the page is read, and opens nothing.
+  // it into view.
+  //
+  // With a study open, a scroll down over another project's cover opens that
+  // one in its place. Anywhere else — the open project's own cover, the
+  // white, the study — the scroll is just the page scrolling.
+  //
+  // A wheel or a trackpad only: on a phone a swipe down is how the page is
+  // read, and opens nothing.
   useEffect(() => {
-    if (openSlug) return;
     const wheel = (e: WheelEvent) => {
       if (e.deltaY <= 0 || Math.abs(e.deltaY) < Math.abs(e.deltaX)) return;
       if (document.documentElement.classList.contains("gravity-on")) return;
+      const over = (e.target as Element).closest?.("[data-slug]");
+      const hovered = over?.getAttribute("data-slug");
+      if (openSlug) {
+        if (hovered && hovered !== openSlug && studies[hovered]) press(hovered);
+        return;
+      }
       const doc = document.documentElement;
       if (window.scrollY + window.innerHeight < doc.scrollHeight - 2) return;
-      const over = (e.target as Element).closest?.("[data-slug]");
-      const slug = over?.getAttribute("data-slug") ?? Object.keys(studies)[0];
+      const slug = hovered ?? Object.keys(studies)[0];
       if (slug && studies[slug]) press(slug);
     };
     window.addEventListener("wheel", wheel, { passive: true });
