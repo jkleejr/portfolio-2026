@@ -179,7 +179,7 @@ export function ProjectThumbnail({
   // A video is several times the square's height, so it lifts by a fraction
   // of what the square does or it grows into the rows around it.
   const rowLift = video
-    ? `${lift} rounded-xl hover:scale-[1.02] row-hover:scale-[1.02]`
+    ? `${lift} w-fit max-w-full rounded-xl hover:scale-[1.02] row-hover:scale-[1.02]`
     : `${lift} hover:scale-105 row-hover:scale-105`;
 
   // A throw of the cover is not a click on it — see press.ts.

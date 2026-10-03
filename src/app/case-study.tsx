@@ -135,6 +135,7 @@ export function StudyFact({ text, href, appStore }: Fact) {
 export function StudyBody({
   study,
   inline,
+  cover,
 }: {
   study: CaseStudy;
   /**
@@ -150,7 +151,16 @@ export function StudyBody({
    * project sets that distance.
    */
   inline?: boolean;
+  /**
+   * The film the homepage row already plays as its cover. The study leaves
+   * that block out rather than playing the same recording again right under
+   * it. /projects/[slug] shows no cover, so it passes none and keeps it.
+   */
+  cover?: string;
 }) {
+  const blocks = cover
+    ? study.blocks.filter((b) => !(b.type === "video" && b.src === cover))
+    : study.blocks;
   return (
     // No margins of its own: the page around it puts it in the same column the
     // homepage sets everything else in, and starts it at the height the name
@@ -193,8 +203,8 @@ export function StudyBody({
       )}
 
       <div className={`${inline ? "" : "mt-8 "}space-y-4`}>
-        {study.blocks.map((block, i) => (
-          <Block key={i} block={block} after={study.blocks[i - 1]?.type} />
+        {blocks.map((block, i) => (
+          <Block key={i} block={block} after={blocks[i - 1]?.type} />
         ))}
       </div>
     </article>
