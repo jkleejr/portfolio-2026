@@ -121,7 +121,7 @@
   --name-size: max(2rem, calc(var(--page) * 0.185));
   /* The height of the row across the top of the page, which is the apple
      button's box. The homepage reads it to know how far to drop its name
-     under 900px, where the name would otherwise run into the apple. */
+     under 1280px, where the name would otherwise run into the apple. */
   --top-row: 2.75rem;
 
   /* The width a recording in a study is drawn at — a phone's width. 340px

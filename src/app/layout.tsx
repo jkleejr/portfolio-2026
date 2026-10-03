@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import { site } from "@/data/site";
-// import { AppleButton } from "./apple-button";
+import { AppleButton } from "./apple-button";
 import { card } from "./study-metadata";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
@@ -144,16 +144,13 @@ export default function RootLayout({
         <div className="relative mx-auto max-w-[var(--page)]">
           {/* Holds the apple button in the top-right corner at every width.
               The row is the apple's height, which is what --top-row on the
-              homepage measures to drop the name under it on a phone.
-
-              Off the page for now. AppleButton and gravity.tsx are kept as
-              they are; putting this block back is all it takes to return it. */}
-          {/* <div
+              homepage measures to drop the name under it on a phone. */}
+          <div
             data-gravity="atom"
             className="corner-stack absolute right-[var(--edge)] top-6 z-20 flex flex-row items-center gap-2"
           >
             <AppleButton />
-          </div> */}
+          </div>
           {children}
         </div>
         {/* The scrollbar's width onto :root, for --page in globals.css and
