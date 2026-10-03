@@ -146,9 +146,8 @@ export function StudyBody({
    * scope, which StudyFacts prints while the study is open. So the study
    * starts at its first block, and what is left here is the writing itself.
    *
-   * The space at the foot goes too. It belongs to /projects/[slug], where the
-   * study is the last thing on the page; on the homepage the gap to the next
-   * project sets that distance.
+   * The space at the foot goes too. It belongs to /projects/[slug]; on the
+   * homepage the list puts its own under the open study — see ProjectList.
    */
   inline?: boolean;
   /**

@@ -258,7 +258,9 @@ export function ProjectList({
               ref={studyRef}
               // For the layout script to find the open study by.
               data-study
-              className={`mt-10 w-full scroll-mt-6 min-[1000px]:w-[var(--study-width)] ${
+              // Room at the foot once the study is read: it is the last
+              // thing on the page.
+              className={`mt-10 w-full scroll-mt-6 pb-24 sm:pb-40 min-[1000px]:w-[var(--study-width)] ${
                 leaving ? "study-out" : "study-in"
               }`}
             >
