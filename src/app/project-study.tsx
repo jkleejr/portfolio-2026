@@ -30,7 +30,9 @@ import {
   useLayoutEffect,
   useRef,
   useState,
+  useSyncExternalStore,
 } from "react";
+import { flushSync } from "react-dom";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { caseStudies } from "@/data/case-studies";
@@ -88,6 +90,53 @@ const OpenContext = createContext<{
 function slugFromPath(pathname: string): string | null {
   const slug = pathname.replace(/^\/+|\/+$/g, "");
   return slug || null;
+}
+
+/**
+ * Whether the window is sm or wider: the strip of covers, growing into a
+ * study. Under sm, on a phone, the homepage is the list of rows it was before
+ * the strip — see MobileList — and each of the two leaves the address alone
+ * at the other's widths. On the server, and in the first render after it, it
+ * is taken to be the wide one.
+ */
+const WIDE = "(min-width: 40rem)";
+function useIsWide() {
+  return useSyncExternalStore(
+    (change) => {
+      const q = window.matchMedia(WIDE);
+      q.addEventListener("change", change);
+      return () => q.removeEventListener("change", change);
+    },
+    () => window.matchMedia(WIDE).matches,
+    () => true,
+  );
+}
+
+/** The study the address has open, and a way to change it — shared by the
+ *  strip and the phone's list, which read the same address. */
+function useAddressedSlug() {
+  const pathname = usePathname();
+  const fromUrl = slugFromPath(pathname);
+  const [slug, setSlug] = useState<string | null>(fromUrl);
+  const [seenUrl, setSeenUrl] = useState(fromUrl);
+  if (fromUrl !== seenUrl) {
+    setSeenUrl(fromUrl);
+    setSlug(fromUrl);
+  }
+  // The tab follows the study: "Loot Check - John Lee" while one is open,
+  // the name alone when none is.
+  useEffect(() => {
+    const study = slug ? caseStudies[slug] : undefined;
+    document.title = study ? `${study.title} - ${site.titleName}` : site.titleName;
+  }, [slug]);
+  const write = useCallback((next: string | null) => {
+    setSlug(next);
+    // The native call rather than the router's: Next folds it into its own
+    // history and keeps usePathname in step, and nothing is fetched for it.
+    // A new entry each time, so the back button undoes the last open.
+    window.history.pushState(null, "", next ? `/${next}` : "/");
+  }, []);
+  return [slug, setSlug, write] as const;
 }
 
 const reducedMotion = () =>
@@ -152,31 +201,12 @@ export function ProjectList({
   // written to match; and when the address moves on its own, under the back
   // and forward buttons, the state follows it — set during the render that
   // sees the new address, so the page never draws a frame of the old one.
-  const pathname = usePathname();
-  const fromUrl = slugFromPath(pathname);
-  const [openSlug, setOpen] = useState<string | null>(fromUrl);
-  const [seenUrl, setSeenUrl] = useState(fromUrl);
-  if (fromUrl !== seenUrl) {
-    setSeenUrl(fromUrl);
-    setOpen(fromUrl);
-  }
-
-  // The tab follows the study: "Loot Check - John Lee" while one is open,
-  // the name alone when none is.
-  useEffect(() => {
-    const study = openSlug ? caseStudies[openSlug] : undefined;
-    document.title = study
-      ? `${study.title} - ${site.titleName}`
-      : site.titleName;
-  }, [openSlug]);
-
-  const setOpenSlug = useCallback((slug: string | null) => {
-    setOpen(slug);
-    // The native call rather than the router's: Next folds it into its own
-    // history and keeps usePathname in step, and nothing is fetched for it.
-    // A new entry each time, so the back button undoes the last open.
-    window.history.pushState(null, "", slug ? `/${slug}` : "/");
-  }, []);
+  //
+  // Only from sm up: on a phone the list of rows has the address, and the
+  // strip, out of sight, is left closed.
+  const wide = useIsWide();
+  const [addressed, setOpen, setOpenSlug] = useAddressedSlug();
+  const openSlug = wide ? addressed : null;
 
   // What is on the page: the open study, or while one closes, the one going.
   // It stays until its cover is back in the strip, so the page does not lose
@@ -476,7 +506,7 @@ export function ProjectList({
       window.removeEventListener("click", click, true);
       delete root.dataset.dragging;
     };
-  }, [openSlug, closing, studies]);
+  }, [openSlug, closing, studies, setOpen]);
 
   // Back to the homepage by pulling down from the top of a study's first
   // screen — a swipe up on a trackpad, or the wheel turned up. Not on the
@@ -1231,5 +1261,68 @@ export function ProjectRow({
     >
       {children}
     </article>
+  );
+}
+
+// --- the phone's list -------------------------------------------------------
+
+/**
+ * The homepage on a phone: the list it was before the strip. A row per
+ * project — its square cover, and beside it the name and the line saying what
+ * it is — and pressing a row opens its study under it, pressing again closes
+ * it. One open at a time. The same address as the strip's, so a link to a
+ * study opens it here too.
+ *
+ * The row that was pressed is held where it is on the screen: closing a study
+ * above it would otherwise pull it up the window under the finger.
+ */
+export function MobileList({
+  rows,
+  studies,
+}: {
+  /** Each project's row — its cover and writing — in order, by slug. */
+  rows: { slug: string; row: React.ReactNode }[];
+  /** Each project's rendered study, by slug. */
+  studies: Record<string, React.ReactNode>;
+}) {
+  const wide = useIsWide();
+  const [addressed, , write] = useAddressedSlug();
+  const openSlug = wide ? null : addressed;
+  const refs = useRef<Record<string, HTMLElement | null>>({});
+
+  const toggle = (slug: string) => {
+    const row = refs.current[slug];
+    const before = row?.getBoundingClientRect().top;
+    flushSync(() => write(openSlug === slug ? null : slug));
+    const after = row?.getBoundingClientRect().top;
+    if (before !== undefined && after !== undefined && after !== before)
+      window.scrollBy(0, after - before);
+  };
+
+  return (
+    <div className="mx-auto mt-16 flex w-[var(--column)] max-w-[calc(100%-3rem)] flex-col items-start gap-16">
+      {rows.map(({ slug, row }) => {
+        const study = studies[slug];
+        const open = !!study && openSlug === slug;
+        return (
+          <section
+            key={slug}
+            ref={(el) => {
+              refs.current[slug] = el;
+            }}
+            className="w-full"
+          >
+            <ToggleContext.Provider
+              value={study ? { open, toggle: () => toggle(slug) } : null}
+            >
+              <ProjectRow className="relative flex items-center gap-[var(--cover-gap)]">
+                {row}
+              </ProjectRow>
+            </ToggleContext.Provider>
+            {open && <div className="study-in mt-10 w-full">{study}</div>}
+          </section>
+        );
+      })}
+    </div>
   );
 }
