@@ -155,6 +155,30 @@
      as these. */
   --cover-film: calc(268 * var(--u));
 
+  /* How tall a cover in the strip stands: the film's width less its 1px
+     border each side, at the films' 498 by 1080, and the border back on. */
+  --cover-h: calc((var(--cover-film) - 2px) * 1080 / 498 + 2px);
+
+  /* The white either side of the band on a window wider than it — nothing on
+     one the band fills. The cover strip runs out across it to the window's
+     edges; see ProjectList. */
+  --gutter: calc((100vw - var(--scrollbar) - var(--page)) / 2);
+
+  /* Where the homepage's frame starts, from sm up: its contents are centred
+     in the window, so as the page scales down it draws in towards the middle
+     rather than up to the top. The frame is the name and the strip — the
+     64px above the strip (the name's own 56px under it folds into that one),
+     its 16px of air either side, and a cover —
+     all of it known here, so the top is worked out rather than left to the
+     browser to centre. That lets every page put the corner, the About link
+     and the apple, on this same line: they sit level with the name on the
+     homepage and do not move when another page is opened. Never closer to
+     the top than the 24px of air the page keeps. */
+  --frame-h: calc(
+    var(--name-size) + 64 * var(--u) + 32 * var(--u) + var(--cover-h)
+  );
+  --frame-top: max(24 * var(--u), (100svh - var(--frame-h)) / 2);
+
   color-scheme: light;
 }
 
