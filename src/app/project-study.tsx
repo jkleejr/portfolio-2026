@@ -277,6 +277,17 @@ export function ProjectList({
 // rather than a click on a cover.
 const DRAG = 5;
 
+// The glide after a drag is let go. The strip carries on at the speed the
+// pointer was moving over the last VELOCITY_WINDOW ms, and loses a share of
+// that speed every frame — FRICTION is what is kept per 60th of a second — so
+// a flick runs on further than a slow drag, and both ease to a stop. Kept
+// light: at a brisk 1px/ms the strip runs on about 200px. MAX_SPEED caps a
+// wild flick, and under MIN_SPEED it has stopped.
+const FRICTION = 0.92;
+const VELOCITY_WINDOW = 80;
+const MAX_SPEED = 3;
+const MIN_SPEED = 0.02;
+
 /**
  * Dragging the strip sideways with a mouse. A press on the strip itself
  * always starts one. While no study is open, so does a press anywhere else on
@@ -291,6 +302,9 @@ const DRAG = 5;
  * end of one is caught on the way down and stopped before it reaches the
  * cover. A press out in the white has its default stopped, so dragging over
  * the name does not select it.
+ *
+ * Let go mid-drag and the strip glides on a little and eases to a stop, the
+ * way a touch screen's scroll does — see FRICTION.
  */
 function useStripDrag(
   scroller: React.RefObject<HTMLDivElement | null>,
@@ -300,6 +314,33 @@ function useStripDrag(
     const root = document.documentElement;
     let drag: { x: number; left: number; moved: boolean } | null = null;
     let suppress = false;
+    // The pointer's last few positions, for the speed it is let go at.
+    let samples: { x: number; t: number }[] = [];
+    let glide = 0;
+    const stopGlide = () => {
+      cancelAnimationFrame(glide);
+      glide = 0;
+    };
+
+    const startGlide = (strip: HTMLDivElement, speed: number) => {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      let v = Math.max(-MAX_SPEED, Math.min(MAX_SPEED, speed));
+      let last = performance.now();
+      const step = (now: number) => {
+        const dt = now - last;
+        last = now;
+        const before = strip.scrollLeft;
+        strip.scrollLeft = before - v * dt;
+        v *= Math.pow(FRICTION, dt / (1000 / 60));
+        // Stopped, or up against an end of the strip.
+        if (Math.abs(v) < MIN_SPEED || strip.scrollLeft === before) {
+          glide = 0;
+          return;
+        }
+        glide = requestAnimationFrame(step);
+      };
+      glide = requestAnimationFrame(step);
+    };
 
     const down = (e: PointerEvent) => {
       const strip = scroller.current;
@@ -311,7 +352,10 @@ function useStripDrag(
         if (target.closest("a, button, input, textarea, select, video[controls], [data-study]")) return;
         e.preventDefault();
       }
+      // A press catches a strip that is still gliding.
+      stopGlide();
       drag = { x: e.clientX, left: strip.scrollLeft, moved: false };
+      samples = [{ x: e.clientX, t: e.timeStamp }];
     };
     const move = (e: PointerEvent) => {
       const strip = scroller.current;
@@ -323,12 +367,23 @@ function useStripDrag(
         root.dataset.dragging = "";
       }
       strip.scrollLeft = drag.left - dx;
+      samples.push({ x: e.clientX, t: e.timeStamp });
+      while (samples.length > 2 && e.timeStamp - samples[0].t > VELOCITY_WINDOW)
+        samples.shift();
     };
-    const up = () => {
+    const up = (e: PointerEvent) => {
       const moved = drag?.moved;
       drag = null;
       if (!moved) return;
       delete root.dataset.dragging;
+      // The speed over the last moments of the drag, in px/ms. Held still
+      // before letting go, there is none, and the strip stays where it is.
+      const first = samples[0];
+      const last = samples[samples.length - 1];
+      const span = last.t - first.t;
+      const strip = scroller.current;
+      if (strip && span > 0 && e.timeStamp - last.t < VELOCITY_WINDOW)
+        startGlide(strip, (last.x - first.x) / span);
       suppress = true;
       // A click follows the release only when it lands back on the element
       // it started on; clear the flag on the next turn either way.
@@ -341,13 +396,19 @@ function useStripDrag(
       e.stopPropagation();
     };
 
+    // A wheel or trackpad scroll takes over from a glide.
+    const wheel = () => stopGlide();
+
     window.addEventListener("pointerdown", down);
+    window.addEventListener("wheel", wheel, { passive: true });
     window.addEventListener("pointermove", move);
     window.addEventListener("pointerup", up);
     window.addEventListener("pointercancel", up);
     window.addEventListener("click", click, true);
     return () => {
+      stopGlide();
       window.removeEventListener("pointerdown", down);
+      window.removeEventListener("wheel", wheel);
       window.removeEventListener("pointermove", move);
       window.removeEventListener("pointerup", up);
       window.removeEventListener("pointercancel", up);
