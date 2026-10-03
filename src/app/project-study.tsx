@@ -228,7 +228,12 @@ export function ProjectList({
               ref={stripRef}
               // For the layout script to start an open study's page at.
               data-strip
-              className="mt-16 scroll-mt-6 sm:mt-[calc(64*var(--u))]"
+              // Out to the window's right edge, past the band's: on a window
+              // wider than the band the covers run on into the white beside
+              // it rather than being cut off at the band's edge. The margin
+              // is that white — half of what the window has over the band —
+              // and comes to nothing on a window the band fills.
+              className="mt-16 mr-[calc((var(--page)-100vw+var(--scrollbar))/2)] scroll-mt-6 sm:mt-[calc(64*var(--u))]"
             >
               <CoverStrip>{children}</CoverStrip>
             </div>
