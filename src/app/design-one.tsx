@@ -364,8 +364,8 @@ export function DesignOne() {
             </a>
             {/* Two ways to the address, one at a time. Where the row has room
                 for it (from 70rem, 1120px — the closing line makes way for the
-                longer row there, right-[37rem] above) it is the address
-                itself, and pressing it copies it — see copy-email.tsx. Under
+                longer row there, right-[37rem] above) it reads "Email", and
+                pressing it copies the address — see copy-email.tsx. Under
                 that, on a phone above all, it is the word, and opens a mail
                 app the way it always did. */}
             <a
@@ -378,7 +378,7 @@ export function DesignOne() {
               email={site.email}
               className="hidden transition-colors duration-200 ease-out hover:text-accent min-[70rem]:inline"
             >
-              {site.email}
+              Email
             </CopyEmail>
           </nav>
         </div>
