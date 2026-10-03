@@ -63,8 +63,11 @@ const SIDEWAYS_QUIET = 500;
 const GROW = 650;
 
 // How far a swipe or a drag has to go, in px, to move from one open study to
-// the next.
+// the next, and how long after one move before another is taken — long
+// enough that one swipe does not count twice, short of the whole animation
+// so a quick run of swipes is not held up by it.
 const SWIPE_STEP = 60;
+const SWIPE_REST = 300;
 
 const OpenContext = createContext<{
   openSlug: string | null;
@@ -346,7 +349,17 @@ export function ProjectList({
   // home rather than back through every study swiped past.
   // Held across studies: the listeners are set up again for each one, and a
   // swipe that has just moved on must not move on again in the next.
-  const swipe = useRef({ busyUntil: 0, travelled: 0, lastAt: -Infinity, fired: false });
+  const swipe = useRef({
+    busyUntil: 0,
+    travelled: 0,
+    lastAt: -Infinity,
+    lastSize: 0,
+    lastSign: 0,
+    shrinking: 0,
+    coasting: false,
+    floor: Infinity,
+    fired: false,
+  });
   useEffect(() => {
     if (!openSlug || closing) return;
     const order = Object.keys(studies);
@@ -357,22 +370,44 @@ export function ProjectList({
       if (performance.now() < g.busyUntil) return;
       const next = order[order.indexOf(openSlug) + step];
       if (!next) return;
-      g.busyUntil = performance.now() + GROW;
+      g.busyUntil = performance.now() + SWIPE_REST;
       setOpen(next);
       window.history.replaceState(null, "", `/${next}`);
     };
 
     // A swipe is one push however long its coasting runs on: it moves on once
-    // it has gone SWIPE_STEP px, and nothing more until the trackpad has been
-    // quiet for a moment.
+    // it has gone SWIPE_STEP px, and not again for the rest of that swipe.
+    // The coasting after the fingers lift runs on for up to a second, and the
+    // next swipe often starts inside it, so a new swipe is not waited for as a
+    // gap: it is a push that grows where coasting only ever shrinks, or one the
+    // other way — or, failing both, a moment of quiet.
     const wheel = (e: WheelEvent) => {
       if (!atTop() || Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;
       e.preventDefault();
-      if (e.timeStamp - g.lastAt > 250) {
+      const size = Math.abs(e.deltaX);
+      const sign = Math.sign(e.deltaX);
+      // Coasting is two shrinking pushes in a row or more, and from then on
+      // its lowest push is kept: a new swipe climbs well back above it. A
+      // swipe getting up to speed grows too, before it has coasted at all,
+      // and is not mistaken for a new one.
+      const fresh =
+        e.timeStamp - g.lastAt > 250 ||
+        sign !== g.lastSign ||
+        (g.coasting && size > 6 && size > g.floor * 2);
+      if (fresh) {
         g.travelled = 0;
         g.fired = false;
+        g.shrinking = 0;
+        g.coasting = false;
+        g.floor = Infinity;
+      } else {
+        g.shrinking = size < g.lastSize ? g.shrinking + 1 : 0;
+        if (g.shrinking >= 2) g.coasting = true;
+        if (g.coasting) g.floor = Math.min(g.floor, size);
       }
       g.lastAt = e.timeStamp;
+      g.lastSize = size;
+      g.lastSign = sign;
       if (g.fired) return;
       g.travelled += e.deltaX;
       if (Math.abs(g.travelled) < SWIPE_STEP) return;
