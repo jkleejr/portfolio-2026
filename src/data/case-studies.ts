@@ -277,8 +277,8 @@ export const caseStudies: Record<string, CaseStudy> = {
 
        {
         type: "heading",
-        text: "UI Design",
-        note: "Interaction Flow",
+        text: "Current UI Design",
+        note: "Screen Flow",
       },
 
       {
@@ -696,7 +696,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "heading",
         text: "Translation Region",
-        note: "Design Decisions",
+        note: "Features",
       },
 
       {
