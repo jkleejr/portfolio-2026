@@ -6,11 +6,39 @@
 
 import { site } from "@/data/site";
 import { entries } from "@/data/projects";
-import { caseStudies } from "@/data/case-studies";
-import { StudyBody, poster } from "./case-study";
+import { caseStudies, type CaseStudy } from "@/data/case-studies";
+import { StudyBody, StudyFact, poster, studyFacts } from "./case-study";
 import { mediaSize } from "./media-size";
 import { ProjectList, ProjectSection } from "./project-study";
 import { ProjectThumbnail } from "./project-thumbnail";
+
+/**
+ * What an open study says about itself before its first section: the
+ * project's name and the line saying what it is, and out in the margin the
+ * facts — where it lives, the role, the year. The homepage's strip shows only the covers, so this is
+ * the first place a reader is told which project they have opened.
+ */
+function StudyIntro({ study, blurb }: { study: CaseStudy; blurb?: string }) {
+  return (
+    <header className="relative mb-10">
+      <h2 className="text-2xl font-bold tracking-[-0.02em]">{study.title}</h2>
+      {blurb && <p className="mt-2 text-base leading-relaxed text-muted">{blurb}</p>}
+      {/* Out in the margin at the left, level with the name, from 1000px —
+          where the study's section notes are set (see the heading case in
+          case-study.tsx). Under that there is no margin, and they follow the
+          line under the name. Set in the notes' size and weight: the margin's
+          offset is worked out in ch, which is the width of this box's own
+          type, so anything else would put it a few pixels off theirs. */}
+      <div className="mt-4 text-base font-bold min-[1000px]:absolute min-[1000px]:left-[var(--margin-note-x)] min-[1000px]:top-0 min-[1000px]:mt-0 min-[1000px]:w-[var(--margin-note)]">
+        {studyFacts(study).map((line, i) => (
+          <p key={i} className={`text-base font-bold leading-relaxed ${i ? "mt-1" : ""}`}>
+            <StudyFact {...line} />
+          </p>
+        ))}
+      </div>
+    </header>
+  );
+}
 
 export function DesignOne() {
   // On a phone, 1.5rem of air at the top and a little at the foot. From sm
@@ -156,7 +184,15 @@ export function DesignOne() {
           entries.flatMap((entry) => {
             const study = caseStudies[entry.slug];
             return study
-              ? [[entry.slug, <StudyBody key={entry.slug} study={study} inline cover={entry.media} />]]
+              ? [
+                  [
+                    entry.slug,
+                    <div key={entry.slug}>
+                      <StudyIntro study={study} blurb={entry.blurb} />
+                      <StudyBody study={study} inline cover={entry.media} />
+                    </div>,
+                  ],
+                ]
               : [];
           }),
         )}
