@@ -3,11 +3,11 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-  /* Three steps of text. --foreground is the headings, the facts and notes
-     beside them, and whatever else leads; --text-body is a paragraph, a
-     shade gentler than a heading so a page of it does not glare; --muted is
-     a description beside something else — the line under a project's name. */
-  --text-body: #404040;
+  /* The steps of text. --foreground is the headings, the facts and notes
+     beside them, and whatever else leads; --text-body is a paragraph, set in
+     the same near-black as a heading; --muted is a description beside
+     something else — the line under a project's name. */
+  --text-body: #171717;
   --muted: #525252;
   /* The lapis blue a link turns under the pointer. The same hue in both
      themes, a shade deeper here: the pale one dark mode uses looks washed out
