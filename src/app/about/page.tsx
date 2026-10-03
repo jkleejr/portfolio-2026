@@ -27,7 +27,7 @@ export default function AboutPage() {
         <nav aria-label="Breadcrumb" className="text-base leading-relaxed">
           <Link
             href="/"
-            className="text-muted transition-colors duration-200 ease-out hover:text-foreground"
+            className="text-muted transition-colors duration-200 ease-out hover:text-accent"
           >
             Home
           </Link>
@@ -36,7 +36,7 @@ export default function AboutPage() {
           </span>
           About
         </nav>
-        <h1 className="mt-2 text-2xl font-bold tracking-[-0.02em]">About</h1>
+        <h1 className="mt-2 text-2xl font-bold tracking-[-0.02em]">John Lee is a designer building AI-native products for mobile and web.</h1>
 
         {site.intro.some(Boolean) && (
           <div className="mt-6 space-y-3">

@@ -172,12 +172,13 @@
      all of it known here, so the top is worked out rather than left to the
      browser to centre. That lets every page put the corner, the About link
      and the apple, on this same line: they sit level with the name on the
-     homepage and do not move when another page is opened. Never closer to
-     the top than the 24px of air the page keeps. */
+     homepage and do not move when another page is opened. Set 14px above
+     true centre, which reads as centred where the middle itself sits low.
+     Never closer to the top than the 24px of air the page keeps. */
   --frame-h: calc(
     var(--name-size) + 64 * var(--u) + 32 * var(--u) + var(--cover-h)
   );
-  --frame-top: max(24 * var(--u), (100svh - var(--frame-h)) / 2);
+  --frame-top: max(24 * var(--u), (100svh - var(--frame-h)) / 2 - 14 * var(--u));
 
   color-scheme: light;
 }
