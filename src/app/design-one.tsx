@@ -92,7 +92,7 @@ export function DesignOne() {
           row's height from the variable rather than writing 44px here means
           the two cannot fall out of step.
 
-          The left padding is the page's 1.5rem and 0.0375em more, because
+          The left padding is the page's --edge and 0.0375em more, because
           that is how far the J's swash hangs out to the left of where the
           face says the letter starts — measured, off the ink. With it the
           swash stops on the same line the intro and the notes in the margin
@@ -155,7 +155,7 @@ export function DesignOne() {
           the finer-grained answer, not the coarser one. */}
       <h1
         data-gravity="letters"
-        className="fraktur mb-12 mt-[calc(var(--top-row)+1.5rem)] whitespace-nowrap pl-[calc(1.5rem+0.0375em)] text-[length:var(--name-size)] leading-none sm:mb-14 min-[900px]:mt-0"
+        className="fraktur mb-12 mt-[calc(var(--top-row)+1.5rem)] whitespace-nowrap pl-[calc(var(--edge)+0.0375em)] text-[length:var(--name-size)] leading-none sm:mb-14 min-[900px]:mt-0"
       >
         {site.name}
       </h1>
@@ -165,7 +165,7 @@ export function DesignOne() {
           starts on, rather than in the column with the projects: the name
           holds that corner, and a line about whose name it is reads as part of
           it there, where out in the middle it read as the first of the
-          projects. px-6 is the page's margin — the same 1.5rem the notes in
+          projects. --edge is the page's margin — the same the notes in
           the margin further down start at.
 
           Not held to the column's measure: the sentence runs on toward the
@@ -175,7 +175,7 @@ export function DesignOne() {
           The apple button is in the opposite corner at every width, so the
           header doesn't need to leave room for it — see "The page on a
           phone" in globals.css. */}
-      <header className="px-6">
+      <header className="px-[var(--edge)]">
         {/* Who that is. A paragraph per line of site.intro, so a sentence that
             should start fresh does, rather than being wrapped into the one
             above it. A step up from the page's other lines — still far
@@ -329,14 +329,14 @@ export function DesignOne() {
             rather than running under them. */}
         <div className="mt-16 flex flex-col gap-7 sm:mt-0 sm:block">
           {site.closing && (
-            <p className="text-xl font-medium leading-relaxed text-foreground sm:absolute sm:bottom-6 sm:left-6 sm:right-100 min-[70rem]:right-[37rem]">
+            <p className="text-xl font-medium leading-relaxed text-foreground sm:absolute sm:bottom-6 sm:left-[var(--edge)] sm:right-100 min-[70rem]:right-[37rem]">
               {site.closing}
             </p>
           )}
           {/* The other places to find him, his resume, then the way to write
               to him. One line, so it is the line that is pinned and not each
               link. */}
-          <nav className="flex gap-5 self-end text-lg font-medium sm:gap-6 sm:text-xl text-foreground sm:absolute sm:bottom-6 sm:right-6">
+          <nav className="flex gap-5 self-end text-lg font-medium sm:gap-6 sm:text-xl text-foreground sm:absolute sm:bottom-6 sm:right-[var(--edge)]">
             <ThemeToggle />
             {site.links.map(
               (link) =>

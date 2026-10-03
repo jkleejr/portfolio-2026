@@ -71,6 +71,12 @@
      band is the window, and nothing moves. */
   --page: min(100vw - var(--scrollbar), 97.3rem);
 
+  /* The air between the band's side edges and what is set against them: the
+     name and the intro at the top, the notes in the margin, the links at the
+     foot. 2rem here and 1.5rem on a phone, where the name across the top has
+     no room to give — see "The page on a phone" below. */
+  --edge: 2rem;
+
   /* The strip of band left over beside the column, less the air held at
      each end of it — the room a note set out in the margin has to live in.
      Read by the facts about a project, which move out there while its study
@@ -79,16 +85,16 @@
      --page and not 100%, because it is measured against the band rather than
      against whatever box the note is written in. The column is centred in
      the band, so half of what the column leaves is the strip on each side.
-     The 3rem is then only air: 1.5rem at the band's edge, and the 1.5rem
-     the note is held off the cover by. */
-  --margin-note: calc((var(--page) - var(--column)) / 2 - 3rem);
+     The rest is only air: --edge at the band's edge, and the 1.5rem the note
+     is held off the cover by. */
+  --margin-note: calc((var(--page) - var(--column)) / 2 - var(--edge) - 1.5rem);
 
   /* And where it starts, measured from the left edge of the column it is set
-     beside — a negative number, since it is out to the left of it. 1.5rem
+     beside — a negative number, since it is out to the left of it. --edge
      from the band's own edge, which is where the intro at the top of the
      page starts, so a note in the margin lines up under it rather than
      floating somewhere between it and the column. */
-  --margin-note-x: calc(1.5rem - (var(--page) - var(--column)) / 2);
+  --margin-note-x: calc(var(--edge) - (var(--page) - var(--column)) / 2);
 
   /* How wide a study runs when it is opened under its project. Wider than the
      column the list is set in, and wider on the right only: it starts at the
@@ -96,13 +102,13 @@
      that side. The left edge of the page is spoken for — the facts are set
      out there — and the right is empty.
 
-     All of it: the column plus the whole margin at its right, less 1.5rem of
+     All of it: the column plus the whole margin at its right, less --edge of
      air at the band's edge and the 1.5rem the note on the other side is
-     held off by. The band caps it: at 97.3rem it comes to about 1044px, a
+     held off by. The band caps it: at 97.3rem it comes to about 1036px, a
      hundred and ten characters or so, which is the length the page was
      drawn at. Wider than that a line was hard to come back from at the end
      of it, and the band is what now holds it. */
-  --study-width: calc((var(--page) + var(--column)) / 2 - 3rem);
+  --study-width: calc((var(--page) + var(--column)) / 2 - var(--edge) - 1.5rem);
 
   /* The name across the top of the homepage. It sets solid, so its type size
      is also its height — which is what the line beneath it has to clear, and
@@ -326,6 +332,7 @@ body {
 
 @media (width < 40rem) {
   :root {
+    --edge: 1.5rem;
     --cover: 104px;
     --cover-gap: 1rem;
   }

@@ -163,7 +163,7 @@ export default function RootLayout({
               they are; putting this block back is all it takes to return it. */}
           {/* <div
             data-gravity="atom"
-            className="corner-stack absolute right-6 top-6 z-20 flex flex-row items-center gap-2"
+            className="corner-stack absolute right-[var(--edge)] top-6 z-20 flex flex-row items-center gap-2"
           >
             <AppleButton />
           </div> */}
