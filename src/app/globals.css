@@ -58,19 +58,14 @@
   --scrollbar: 0px;
 
   /* The band the page is laid out in: the window less its scrollbar, and no
-     wider than 97.3rem. That number is where the name across the top reached
-     its 18rem ceiling when --name-size below was 0.185 — 18rem divided by
-     0.185 — so it is the width the page was drawn at. The name has since been
-     taken down to 0.145 and tops out at about 14rem there. Past it the band
-     stops growing and is centred in the window by the wrapper in layout.tsx,
-     and everything that was measured
-     from a window edge — the notes in the margin, the study's right edge,
-     the apple in the corner, the links at the foot — is measured from the
-     band's edge instead. On a wide monitor that is the whole difference: the
-     page keeps the shape it has on a laptop, with the room left over split
-     evenly either side rather than opening up inside it. Under 97.3rem the
-     band is the window, and nothing moves. */
-  --page: min(100vw - var(--scrollbar), 97.3rem);
+     wider than 1333px. That is the homepage at its largest — the width it
+     was settled at on a laptop, name, corner and covers together. Past it the
+     band stops growing and is centred in the window by the wrapper in
+     layout.tsx, and since everything on the homepage is measured from the
+     band (see --u), nothing on it grows any further: a wider window only
+     adds white either side. Under 1333px the band is the window, and the
+     whole page scales down with it. */
+  --page: min(100vw - var(--scrollbar), 1333px);
 
   /* One pixel of the homepage as it was drawn at 1440px — the band's width
      over 1440. From sm up everything in the homepage's frame is measured in
@@ -115,7 +110,7 @@
 
      All of it: the column plus the whole margin at its right, less --edge of
      air at the band's edge and the 1.5rem the note on the other side is
-     held off by. The band caps it: at 97.3rem it comes to about 1020px, a
+     held off by. The band caps it: at 1333px it comes to about 900px, a
      hundred and ten characters or so, which is the length the page was
      drawn at. Wider than that a line was hard to come back from at the end
      of it, and the band is what now holds it. */

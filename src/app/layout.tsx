@@ -128,7 +128,7 @@ export default function RootLayout({
           }}
         />
         {/* The band the page is laid out in — see --page in globals.css. It
-            is the window up to about 1557px and a centred box of that width
+            is the window up to 1333px and a centred box of that width
             past it, so the apple in the corner, the name, the notes in the
             margin, the column and the links at the foot all keep their
             places against the same edges at any window size. relative so
