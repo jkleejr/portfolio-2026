@@ -142,7 +142,9 @@ export function ProjectThumbnail({
           // The cover is inside the link that opens its study, and that link
           // cancels the clicks it is given. Grown, the film's own clicks —
           // play, pause, scrub, volume — go no further than the film, so the
-          // browser carries them out and the link never sees them.
+          // browser carries them out and the link never sees them. The link
+          // drops its href then too, or the browser would follow it — see
+          // below.
           onClick={grown ? (e) => e.stopPropagation() : undefined}
           onPointerDown={grown ? (e) => e.stopPropagation() : undefined}
           className="block h-auto w-full"
@@ -229,11 +231,17 @@ export function ProjectThumbnail({
   // is a link to the open study's address all the same, for the clicks that
   // ask for another tab — see the note at the top of project-title.tsx, which
   // is the same switch and the same link.
+  //
+  // Grown, it has no href. A click on the film's controls stops short of the
+  // onClick below, so nothing cancels it, and the browser would follow the
+  // link — reloading the page it is already on. With no href there is
+  // nothing to follow. A plain <a> rather than Link, which needs an href; it
+  // stays the same element either way, so the film is not remounted and plays
+  // on.
   if (study && toggle) {
     return (
-      <Link
-        href={`/${slug}`}
-        prefetch={false}
+      <a
+        href={toggle.open ? undefined : `/${slug}`}
         draggable={false}
         aria-expanded={toggle.open}
         aria-label={`${toggle.open ? "Close" : "Read"} the ${study.title} case study`}
@@ -247,7 +255,7 @@ export function ProjectThumbnail({
         }}
       >
         {inner}
-      </Link>
+      </a>
     );
   }
 
