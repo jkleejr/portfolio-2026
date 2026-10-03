@@ -697,7 +697,7 @@ export function ProjectList({
           {/* The open study's name, line and facts, on the left of its grown
               cover and level with the middle of it — the room up to the
               cover's left edge, --hero-left, less the page's air either side.
-              Set 8px of the 1440px page above true middle, which reads as
+              Set 16px of the 1440px page above true middle, which reads as
               level where the middle itself sits low.
               From sm up: on a phone the cover takes the width, and these lead
               the study below it instead. */}
@@ -705,7 +705,7 @@ export function ProjectList({
             <div
               key={shown}
               data-study-intro
-              className="pointer-events-none absolute left-[var(--edge)] top-[calc(50svh-8*var(--u))] hidden w-[calc(var(--hero-left)-var(--edge)-48*var(--u))] -translate-y-1/2 sm:block"
+              className="pointer-events-none absolute left-[var(--edge)] top-[calc(50svh-16*var(--u))] hidden w-[calc(var(--hero-left)-var(--edge)-48*var(--u))] -translate-y-1/2 sm:block"
             >
               <div className="pointer-events-auto">{intro}</div>
             </div>
