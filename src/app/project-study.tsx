@@ -213,27 +213,29 @@ export function ProjectList({
           the open study under it.
 
           From sm up the frame is at least a window tall and its contents are
-          centred in it. Everything in it is measured in --u, so as the window
+          centred in it, starting at --frame-top. Everything in it is measured in --u, so as the window
           narrows the whole picture shrinks, and centred it shrinks towards the
           middle of the window rather than up to the top of it. The study is
           outside the frame, so opening one does not move it.
 
-          The corner sits at the top of the frame's inner box, on the name's
-          line, so it moves with the name. */}
+          The frame's top is --frame-top, worked out in globals.css rather
+          than left to flex to centre, so the layout can put the corner on the
+          same line on every page — see corner.tsx. */}
       <div>
-        <div className="flex flex-col sm:min-h-svh sm:justify-center sm:py-[calc(24*var(--u))]">
+        <div className="sm:min-h-svh sm:pb-[calc(24*var(--u))] sm:pt-[var(--frame-top)]">
           <div className="relative">
             {header}
             <div
               ref={stripRef}
               // For the layout script to start an open study's page at.
               data-strip
-              // Out to the window's right edge, past the band's: on a window
-              // wider than the band the covers run on into the white beside
-              // it rather than being cut off at the band's edge. The margin
-              // is that white — half of what the window has over the band —
-              // and comes to nothing on a window the band fills.
-              className="mt-16 mr-[calc((var(--page)-100vw+var(--scrollbar))/2)] scroll-mt-6 sm:mt-[calc(64*var(--u))]"
+              // Out to both of the window's edges, past the band's: on a
+              // window wider than the band the covers run on into the white
+              // beside it rather than being cut off at the band's edge. The
+              // margins are that white — --gutter — and come to nothing on a
+              // window the band fills. The strip pads its start by the same
+              // amount, so the first cover still starts on the name's line.
+              className="-mx-[var(--gutter)] mt-16 scroll-mt-6 sm:mt-[calc(64*var(--u))]"
             >
               <CoverStrip>{children}</CoverStrip>
             </div>
@@ -277,8 +279,10 @@ const DRAG = 5;
  * sends at the end of one is caught here, on the way down, and stopped before
  * it reaches the cover.
  *
- * Starts at --edge, the line the name and the intro start on, and keeps the
- * same air at its far end. The padding above and below is room for a cover's
+ * The first cover starts at --edge, the line the name starts on, and the
+ * last keeps the same air at the far end. On a window wider than the band
+ * the strip itself runs out to both of the window's edges and pads its start
+ * by --gutter to keep that line — see ProjectList. The padding above and below is room for a cover's
  * lift under the pointer, which the scroll box would otherwise clip.
  */
 function CoverStrip({ children }: { children: React.ReactNode }) {
@@ -292,7 +296,7 @@ function CoverStrip({ children }: { children: React.ReactNode }) {
       role="region"
       aria-label="Projects"
       tabIndex={0}
-      className="cover-strip flex items-start gap-28 overflow-x-auto px-[var(--edge)] py-4 outline-none sm:gap-[calc(112*var(--u))] sm:py-[calc(16*var(--u))]"
+      className="cover-strip flex items-start gap-28 overflow-x-auto py-4 pl-[calc(var(--edge)+var(--gutter))] pr-[var(--edge)] outline-none sm:gap-[calc(112*var(--u))] sm:py-[calc(16*var(--u))]"
       onPointerDown={(e) => {
         if (e.pointerType !== "mouse" || e.button !== 0) return;
         if (document.documentElement.classList.contains("gravity-on")) return;

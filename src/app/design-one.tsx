@@ -11,7 +11,6 @@ import { StudyBody, poster } from "./case-study";
 import { mediaSize } from "./media-size";
 import { ProjectList, ProjectSection } from "./project-study";
 import { ProjectThumbnail } from "./project-thumbnail";
-import { Corner } from "./corner";
 
 export function DesignOne() {
   // On a phone, 1.5rem of air at the top and a little at the foot. From sm
@@ -141,7 +140,7 @@ export function DesignOne() {
                   short of the name, so only the name leads.
 
                   One margin at every width. */}
-              {site.intro.length > 0 && (
+              {site.intro.some(Boolean) && (
                 <div className="mt-8 space-y-3 sm:mt-[calc(32*var(--u))]">
                   {site.intro.map((line) => (
                     <p key={line} className="text-[30px] font-black leading-relaxed text-foreground sm:text-[calc(30*var(--u))]">
@@ -151,9 +150,6 @@ export function DesignOne() {
                 </div>
               )}
             </header>
-            {/* The About link and the apple, on the name's line — see
-                corner.tsx. */}
-            <Corner className="top-0" />
           </>
         }
         studies={Object.fromEntries(

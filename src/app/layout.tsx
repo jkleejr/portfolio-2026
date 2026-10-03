@@ -142,9 +142,8 @@ export default function RootLayout({
             resolves against. The two scripts at the foot of the body stay
             outside it; neither looks inside a particular box. */}
         <div className="relative mx-auto max-w-[var(--page)]">
-          {/* The About link and the apple in the top-right corner, on every
-              page but the homepage, which draws its own inside its frame —
-              see corner.tsx. */}
+          {/* The About link and the apple in the top-right corner, in the
+              same place on every page — see corner.tsx. */}
           <SiteCorner />
           {children}
         </div>
