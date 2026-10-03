@@ -81,6 +81,11 @@ function FactLines({ study }: { study: CaseStudy }) {
  * StudyFacts leaves them out under 1000px. One block either way, moved by
  * position rather than written twice, so the name is on the page once.
  *
+ * In the margin it runs from the margin's left line all the way to 3rem
+ * short of the cover, which starts at --text-start — wider than the margin
+ * the facts of a square-cover row are held to, since nothing else is beside
+ * it here.
+ *
  * data-own-hover for the reason StudyFacts has it: the facts carry a link,
  * and the name is a switch of its own.
  */
@@ -96,7 +101,7 @@ function MediaRow({
     <ProjectRow className="relative">
       <div
         data-own-hover
-        className="mb-6 cursor-auto min-[75rem]:absolute min-[75rem]:left-[var(--margin-note-x)] min-[75rem]:top-0 min-[75rem]:mb-0 min-[75rem]:w-[var(--margin-note)]"
+        className="mb-6 cursor-auto min-[75rem]:absolute min-[75rem]:left-[var(--margin-note-x)] min-[75rem]:top-0 min-[75rem]:mb-0 min-[75rem]:w-[calc(var(--text-start)-var(--margin-note-x)-3rem)]"
       >
         <h2 className="text-xl font-semibold leading-snug tracking-[-0.02em]">
           <ProjectTitle slug={entry.slug}>{entry.title}</ProjectTitle>
@@ -174,12 +179,12 @@ export function DesignOne() {
           which makes the padding worth as much as the size. There is none on
           the right for that reason: set from the left, the name needs only
           its own left margin, and with nothing reserved at the other end
-          18.5% holds down to a 200px window. What is left over at the right
+          17.5% holds down to a 200px window. What is left over at the right
           is a margin all the same — about 1.5rem of it on a 390px phone.
 
-          18.5% of --page, the band the page is laid out in, rather than of
+          17.5% of --page, the band the page is laid out in, rather than of
           the window: the two are the same up to about 1557px, and past that
-          the band stops growing and is centred, so the name holds at 18rem
+          the band stops growing and is centred, so the name holds at 17rem
           and the whole page goes with it as one block. That is where the
           ceiling comes from — it is the band's cap in globals.css, not a
           number here.
