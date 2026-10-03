@@ -207,6 +207,28 @@ export function ProjectList({
 
   const study = openSlug ? studies[openSlug] : undefined;
 
+  // Scrolling down a homepage with nothing open opens a study: the one whose
+  // cover the pointer is over, or the first. The page is the name and the
+  // strip and not much else, so a scroll down is read as going on into the
+  // work. Only once the page has nothing further down to show — on a window
+  // too short for the whole strip, the first scroll still brings the rest of
+  // it into view. A wheel or a trackpad only: on a phone a swipe down is how
+  // the page is read, and opens nothing.
+  useEffect(() => {
+    if (openSlug) return;
+    const wheel = (e: WheelEvent) => {
+      if (e.deltaY <= 0 || Math.abs(e.deltaY) < Math.abs(e.deltaX)) return;
+      if (document.documentElement.classList.contains("gravity-on")) return;
+      const doc = document.documentElement;
+      if (window.scrollY + window.innerHeight < doc.scrollHeight - 2) return;
+      const over = (e.target as Element).closest?.("[data-slug]");
+      const slug = over?.getAttribute("data-slug") ?? Object.keys(studies)[0];
+      if (slug && studies[slug]) press(slug);
+    };
+    window.addEventListener("wheel", wheel, { passive: true });
+    return () => window.removeEventListener("wheel", wheel);
+  }, [openSlug, press, studies]);
+
   const scrollerRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const slackRef = useRef<HTMLDivElement>(null);
@@ -680,7 +702,9 @@ export function ProjectSection({
   }, [hasStudy, list, slug]);
 
   return (
-    <section className="shrink-0">
+    // data-slug for a scroll over the cover to know which project it is over —
+    // see the scroll-to-open in ProjectList.
+    <section data-slug={slug} className="shrink-0">
       <ToggleContext.Provider value={hasStudy ? { open, toggle } : null}>
         {children}
       </ToggleContext.Provider>
