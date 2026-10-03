@@ -7,7 +7,8 @@
 import { site } from "@/data/site";
 import { entries } from "@/data/projects";
 import { caseStudies, type CaseStudy } from "@/data/case-studies";
-import { StudyBody, StudyFact, studyFacts } from "./case-study";
+import { StudyBody, StudyFact, poster, studyFacts } from "./case-study";
+import { mediaSize } from "./media-size";
 import { ProjectList, ProjectRow, ProjectSection } from "./project-study";
 import { ProjectThumbnail } from "./project-thumbnail";
 import { ProjectTitle } from "./project-title";
@@ -55,12 +56,65 @@ function StudyFacts({ study }: { study?: CaseStudy }) {
       data-own-hover
       className="absolute inset-y-0 left-[var(--margin-note-x)] hidden w-[var(--margin-note)] cursor-auto flex-col justify-center min-[1000px]:flex"
     >
-      {lines.map((line, i) => (
-        <p key={i} className={`text-base font-bold leading-relaxed ${i ? "mt-1" : ""}`}>
-          <StudyFact {...line} />
-        </p>
-      ))}
+      <FactLines study={study} />
     </div>
+  );
+}
+
+function FactLines({ study }: { study: CaseStudy }) {
+  return studyFacts(study).map((line, i) => (
+    <p key={i} className={`text-base font-bold leading-relaxed ${i ? "mt-1" : ""}`}>
+      <StudyFact {...line} />
+    </p>
+  ));
+}
+
+/**
+ * A project shown by its demo video rather than a square cover: the video
+ * holds the column, and everything said about the project — its name, the
+ * line under it, and the facts — is stacked in the margin to its left, hung
+ * from the video's top edge.
+ *
+ * From 1200px, where the margin is about 210px wide and a name and a line
+ * have room in it. Under that it is too narrow to read in, so the name and the
+ * line sit over the video in the column and the facts are left out, as
+ * StudyFacts leaves them out under 1000px. One block either way, moved by
+ * position rather than written twice, so the name is on the page once.
+ *
+ * data-own-hover for the reason StudyFacts has it: the facts carry a link,
+ * and the name is a switch of its own.
+ */
+function VideoRow({
+  entry,
+  study,
+}: {
+  entry: (typeof entries)[number];
+  study?: CaseStudy;
+}) {
+  const src = entry.video!;
+  return (
+    <ProjectRow className="relative">
+      <div
+        data-own-hover
+        className="mb-6 cursor-auto min-[75rem]:absolute min-[75rem]:left-[var(--margin-note-x)] min-[75rem]:top-0 min-[75rem]:mb-0 min-[75rem]:w-[var(--margin-note)]"
+      >
+        <h2 className="text-xl font-semibold leading-snug tracking-[-0.02em]">
+          <ProjectTitle slug={entry.slug}>{entry.title}</ProjectTitle>
+        </h2>
+        {entry.blurb && (
+          <p className="mt-3 text-base leading-relaxed text-muted">{entry.blurb}</p>
+        )}
+        {study && (
+          <div className="mt-8 hidden min-[75rem]:block">
+            <FactLines study={study} />
+          </div>
+        )}
+      </div>
+      <ProjectThumbnail
+        slug={entry.slug}
+        video={{ src, poster: poster(src), ...mediaSize(src) }}
+      />
+    </ProjectRow>
   );
 }
 
@@ -239,9 +293,12 @@ export function DesignOne() {
                 slug={entry.slug}
                 study={study ? <StudyBody study={study} inline /> : undefined}
               >
-                {/* The row is the switch that opens the study — see ProjectRow.
+                {entry.video ? (
+                  <VideoRow entry={entry} study={study} />
+                ) : (
+                /* The row is the switch that opens the study — see ProjectRow.
                     relative so the facts about the project can be set out in
-                    the margin beside the cover — see StudyFacts. */}
+                    the margin beside the cover — see StudyFacts. */
                 <ProjectRow className="relative flex items-center gap-[var(--cover-gap)]">
                   {(entry.images ?? []).map((image, i) => (
                     <ProjectThumbnail
@@ -303,6 +360,7 @@ export function DesignOne() {
                     <StudyFacts study={study} />
                   </div>
                 </ProjectRow>
+                )}
               </ProjectSection>
             );
           })}
