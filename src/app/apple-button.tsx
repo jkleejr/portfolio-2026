@@ -42,8 +42,8 @@ export function AppleButton() {
       className="apple-button flex h-11 w-11 shrink-0 items-center justify-center text-foreground"
     >
       <svg
-        width="22"
-        height="22"
+        width="26"
+        height="26"
         viewBox="0 0 24 24"
         fill="currentColor"
         aria-hidden
