@@ -105,16 +105,16 @@ export function ProjectThumbnail({
   // soft cover on every retina screen.
   const film = media && /\.mp4$/i.test(media.src);
   const inner = media ? (
-    // The recording, playing, at the width a study draws its films at —
-    // --film in globals.css, which gives way on a short window so the whole
-    // phone stays on the screen. A picture is drawn as tall as the films, so
+    // The recording, playing, a little under the width a study draws its
+    // films at — --cover-film in globals.css, which follows --film and so
+    // gives way on a short window too. A picture is drawn as tall as the films, so
     // the covers in the strip share one top and one bottom. No tilt:
     // turned 14 degrees, something this size swings a hundred pixels at its
     // ends. Marked for gravity so it falls as one piece.
     <div
       data-gravity="piece"
       className={`overflow-hidden rounded-xl border border-foreground/10 ${
-        film ? "w-[var(--film)]" : "w-fit"
+        film ? "w-[var(--cover-film)]" : "w-fit"
       }`}
     >
       {film ? (
@@ -137,14 +137,14 @@ export function ProjectThumbnail({
           alt=""
           width={media.width ?? 1200}
           height={media.height ?? 900}
-          sizes="(width < 40rem) 1020px, 940px"
+          sizes="(width < 40rem) 870px, 800px"
           quality={90}
           loading="eager"
           draggable={false}
-          // As tall as a film beside it in the strip — --film wide less the
+          // As tall as a film beside it in the strip — --cover-film wide less the
           // 2px of its border, at the films' 498 by 1080 — and as wide as
           // that makes it.
-          className="block h-[calc((var(--film)-2px)*1080/498)] w-auto max-w-none"
+          className="block h-[calc((var(--cover-film)-2px)*1080/498)] w-auto max-w-none"
         />
       )}
     </div>

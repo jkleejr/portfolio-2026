@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
+import Link from "next/link";
 import { site } from "@/data/site";
 import { AppleButton } from "./apple-button";
 import { card } from "./study-metadata";
@@ -142,13 +143,20 @@ export default function RootLayout({
             resolves against. The two scripts at the foot of the body stay
             outside it; neither looks inside a particular box. */}
         <div className="relative mx-auto max-w-[var(--page)]">
-          {/* Holds the apple button in the top-right corner at every width.
-              The row is the apple's height, which is what --top-row on the
-              homepage measures to drop the name under it on a phone. */}
+          {/* Holds the About link and the apple button in the top-right
+              corner at every width. The row is the apple's height, which is
+              what --top-row on the homepage measures to drop the name under
+              it on a phone. */}
           <div
             data-gravity="atom"
-            className="corner-stack absolute right-[var(--edge)] top-6 z-20 flex flex-row items-center gap-2"
+            className="corner-stack absolute right-[var(--edge)] top-6 z-20 flex flex-row items-center gap-4 sm:top-[calc(24*var(--u))] sm:gap-[calc(16*var(--u))]"
           >
+            <Link
+              href="/about"
+              className="text-lg font-medium text-foreground transition-colors duration-200 ease-out hover:text-accent sm:text-[calc(20*var(--u))]"
+            >
+              About
+            </Link>
             <AppleButton />
           </div>
           {children}

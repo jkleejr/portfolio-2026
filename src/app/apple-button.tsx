@@ -39,11 +39,13 @@ export function AppleButton() {
       }}
       aria-pressed={on}
       aria-label="Turn gravity on and off"
-      className="apple-button flex h-11 w-11 shrink-0 items-center justify-center text-foreground"
+      className="apple-button flex h-11 w-11 shrink-0 items-center justify-center text-foreground sm:size-[calc(44*var(--u))]"
     >
       <svg
         width="26"
         height="26"
+        // Scales with the page from sm up — see --u in globals.css.
+        className="sm:size-[calc(26*var(--u))]"
         viewBox="0 0 24 24"
         fill="currentColor"
         aria-hidden

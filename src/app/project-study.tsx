@@ -208,7 +208,7 @@ export function ProjectList({
       {/* The strip and the open study under it. The study is a child of
           this box so that the script at the foot of layout.tsx, which scrolls
           to the parent of [data-study], lands on the strip. */}
-      <div ref={listRef} className="mt-16 scroll-mt-6">
+      <div ref={listRef} className="mt-16 scroll-mt-6 sm:mt-[calc(64*var(--u))]">
         <CoverStrip>{children}</CoverStrip>
         {study && (
           // In the column the rest of the page is set in, running wider on
@@ -263,7 +263,7 @@ function CoverStrip({ children }: { children: React.ReactNode }) {
       role="region"
       aria-label="Projects"
       tabIndex={0}
-      className="cover-strip flex items-start gap-16 overflow-x-auto px-[var(--edge)] py-4 outline-none"
+      className="cover-strip flex items-start gap-28 overflow-x-auto px-[var(--edge)] py-4 outline-none sm:gap-[calc(112*var(--u))] sm:py-[calc(16*var(--u))]"
       onPointerDown={(e) => {
         if (e.pointerType !== "mouse" || e.button !== 0) return;
         if (document.documentElement.classList.contains("gravity-on")) return;
