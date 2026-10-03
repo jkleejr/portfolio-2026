@@ -209,7 +209,8 @@ export function ProjectList({
 
   const scrollerRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
-  useStripDrag(scrollerRef, trackRef, !!study);
+  const slackRef = useRef<HTMLDivElement>(null);
+  useStripDrag(scrollerRef, trackRef, slackRef, !!study);
 
   return (
     <OpenContext.Provider value={{ openSlug, leaving, press }}>
@@ -247,7 +248,7 @@ export function ProjectList({
               // amount, so the first cover still starts on the name's line.
               className="-mx-[var(--gutter)] mt-16 scroll-mt-6 sm:mt-[calc(64*var(--u))]"
             >
-              <CoverStrip scroller={scrollerRef} track={trackRef}>
+              <CoverStrip scroller={scrollerRef} track={trackRef} slack={slackRef}>
                 {children}
               </CoverStrip>
             </div>
@@ -299,18 +300,32 @@ const MIN_SPEED = 0.02;
 // lets it past STRETCH, and springs back once let go; the spring itself is
 // .cover-track in globals.css.
 //
-// A mouse lets go when its button comes up. A trackpad does not say when the
-// fingers leave it, so it is read off the swipe: fingers that lift while
-// moving leave a run of steadily shrinking events behind them — the
-// coasting — and COASTING of those in a row is a let-go, sprung back from at
-// once. Fingers held still past the end send nothing at all, and the row is
-// held out for HOLD ms of that quiet before it is counted as let go. A new
-// swipe is told from the tail of the last one by a gap of NEW_SWIPE ms or a
-// push harder than the event before it.
+// A mouse lets go when its button comes up. A trackpad's let-go is the
+// browser's scrollend, which it holds back for as long as the fingers are
+// down — held still past the end, the row stays out until they lift, and
+// then it springs straight back. scrollend comes only to something that has
+// scrolled, so the strip sits in a wider box with SLACK px of room to scroll
+// into at either end (see CoverStrip): a swipe that starts at an end is
+// handed on to that box, scrolls it, and how far it went is the push. A
+// swipe that runs into an end part-way is kept by the strip itself — the
+// browser holds a swipe to the box it started in — and pushes by its own
+// movement; the strip has scrolled in it, so its own scrollend marks the lift.
+//
+// Fingers that lift while moving leave a run of steadily shrinking events
+// behind them — the coasting — and COASTING of those in a row is a let-go
+// too, read without waiting for the coasting to finish. A swipe is told from
+// the last by a gap of NEW_SWIPE ms. A browser with no scrollend falls back
+// to HOLD ms of quiet.
 const STRETCH = 100;
+export const SLACK = 400;
 const COASTING = 3;
 const HOLD = 400;
 const NEW_SWIPE = 120;
+
+/** Puts a scroll box at `left`. */
+const scrollTo = (el: HTMLElement, left: number) => {
+  el.scrollLeft = left;
+};
 
 /** How far the row shows for a push of `x` px past its end — iOS's curve:
  *  nearly one for one at first, flattening out towards STRETCH. */
@@ -339,10 +354,15 @@ const give = (x: number) => STRETCH * (1 - 1 / ((Math.abs(x) * 0.55) / STRETCH +
 function useStripDrag(
   scroller: React.RefObject<HTMLDivElement | null>,
   track: React.RefObject<HTMLDivElement | null>,
+  slack: React.RefObject<HTMLDivElement | null>,
   studyOpen: boolean,
 ) {
   useEffect(() => {
     const root = document.documentElement;
+    // The box the strip scrolls past its ends in — see SLACK.
+    const box = slack.current;
+    // A browser that cannot say when a swipe is let go — see HOLD.
+    const hasScrollEnd = "onscrollend" in window;
     const still = () =>
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     let drag: { x: number; left: number; moved: boolean } | null = null;
@@ -371,9 +391,19 @@ function useStripDrag(
         ? `translate3d(${Math.sign(push) * give(push)}px, 0, 0)`
         : "";
     };
+    // Set while the slack box is put back to its middle, so the scroll that
+    // makes is not read as a push.
+    let resetting = false;
+    const recentre = () => {
+      if (!box || box.scrollLeft === SLACK) return;
+      resetting = true;
+      scrollTo(box, SLACK);
+      requestAnimationFrame(() => (resetting = false));
+    };
     const release = () => {
       clearTimeout(settle);
       clearTimeout(bounce);
+      recentre();
       if (!push) return;
       push = 0;
       show(true);
@@ -471,54 +501,88 @@ function useStripDrag(
     };
 
     // A trackpad's sideways swipe. In the middle of the strip the browser
-    // scrolls it as it always does. Pushed past an end — or while the row is
-    // already out past one — the swipe goes into the give instead, and the
-    // row springs back on a let-go, read as COASTING and HOLD describe.
+    // scrolls it as it always does. At an end, the swipe pushes — handed on
+    // to the slack box if it started there, or kept by the strip if it ran
+    // into the end part-way (`latched`). Either way the row springs back on
+    // the let-go: scrollend, or the coasting.
     let lastSize = 0;
     let lastAt = 0;
     let shrinking = 0;
-    // Set once a let-go has been read: the rest of that swipe's coasting is
-    // swallowed rather than pushing the row back out.
+    let latched = false;
+    // Set once the coasting has been read: the rest of it is not a push.
     let spent = false;
     const wheel = (e: WheelEvent) => {
       stopGlide();
       const strip = scroller.current;
       if (!strip || drag) return;
       if (Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;
-      const size = Math.abs(e.deltaX);
-      const fresh = e.timeStamp - lastAt > NEW_SWIPE || size > lastSize;
-      shrinking = fresh || size >= lastSize ? 0 : shrinking + 1;
-      lastSize = size;
-      lastAt = e.timeStamp;
-      if (fresh) spent = false;
-
       const end = max(strip);
       const atStart = strip.scrollLeft <= 0 && e.deltaX < 0;
       const atEnd = strip.scrollLeft >= end - 1 && e.deltaX > 0;
-      if (!push && !atStart && !atEnd) return;
-      e.preventDefault();
+
+      const size = Math.abs(e.deltaX);
+      if (e.timeStamp - lastAt > NEW_SWIPE) {
+        // A new swipe: one that starts pushing at an end goes on to the
+        // slack box; any other is the strip's to the end of it.
+        latched = !atStart && !atEnd;
+        spent = false;
+        shrinking = 0;
+        recentre();
+      } else {
+        shrinking = size < lastSize ? shrinking + 1 : 0;
+      }
+      lastSize = size;
+      lastAt = e.timeStamp;
       if (still() || spent) return;
+
       // Coasting: the fingers have left the trackpad. Back at once.
       if (push && shrinking >= COASTING) {
         spent = true;
         return release();
       }
+      if (!latched || (!push && !atStart && !atEnd)) return;
       const next = push - e.deltaX;
       // Swiping back the other way takes the give in first, and never past
       // nothing into the other end's.
       push = push > 0 ? Math.max(0, next) : push < 0 ? Math.min(0, next) : next;
       show(false);
-      clearTimeout(settle);
-      settle = window.setTimeout(release, HOLD);
+      if (!hasScrollEnd) {
+        clearTimeout(settle);
+        settle = window.setTimeout(release, HOLD);
+      }
+    };
+
+    // The slack box scrolling: a swipe handed on from an end of the strip.
+    // Its distance from the middle is the push.
+    const slackScroll = () => {
+      if (!box || resetting || drag) return;
+      if (spent || still()) return;
+      push = SLACK - box.scrollLeft;
+      show(false);
+      if (!hasScrollEnd) {
+        clearTimeout(settle);
+        settle = window.setTimeout(release, HOLD);
+      }
+    };
+    // The fingers are off the trackpad, or a touch has let go and come to
+    // rest.
+    const letGo = () => {
+      spent = false;
+      release();
     };
 
     const strip = scroller.current;
+    // The strip starts in the middle of its slack.
+    recentre();
     window.addEventListener("pointerdown", down);
     window.addEventListener("pointermove", move);
     window.addEventListener("pointerup", up);
     window.addEventListener("pointercancel", up);
     window.addEventListener("click", click, true);
-    strip?.addEventListener("wheel", wheel, { passive: false });
+    strip?.addEventListener("wheel", wheel, { passive: true });
+    strip?.addEventListener("scrollend", letGo);
+    box?.addEventListener("scroll", slackScroll, { passive: true });
+    box?.addEventListener("scrollend", letGo);
     return () => {
       stopGlide();
       clearTimeout(settle);
@@ -529,9 +593,12 @@ function useStripDrag(
       window.removeEventListener("pointercancel", up);
       window.removeEventListener("click", click, true);
       strip?.removeEventListener("wheel", wheel);
+      strip?.removeEventListener("scrollend", letGo);
+      box?.removeEventListener("scroll", slackScroll);
+      box?.removeEventListener("scrollend", letGo);
       delete root.dataset.dragging;
     };
-  }, [scroller, track, studyOpen]);
+  }, [scroller, track, slack, studyOpen]);
 }
 
 /**
@@ -555,25 +622,36 @@ function useStripDrag(
 function CoverStrip({
   scroller,
   track,
+  slack,
   children,
 }: {
   scroller: React.RefObject<HTMLDivElement | null>;
   track: React.RefObject<HTMLDivElement | null>;
+  slack: React.RefObject<HTMLDivElement | null>;
   children: React.ReactNode;
 }) {
   return (
-    <div
-      ref={scroller}
-      role="region"
-      aria-label="Projects"
-      tabIndex={0}
-      className="cover-strip flex overflow-x-auto py-4 pl-[calc(var(--edge)+var(--gutter))] pr-[var(--edge)] outline-none sm:py-[calc(16*var(--u))]"
-    >
-      <div
-        ref={track}
-        className="cover-track flex shrink-0 items-start gap-28 sm:gap-[calc(112*var(--u))]"
-      >
-        {children}
+    // The slack box: as wide as the strip, with SLACK px more to scroll
+    // through at either end. The strip is stuck to its left edge, so
+    // scrolling the box does not move the strip at all — it is only there to
+    // be scrolled, for the push and the scrollend at the ends. See SLACK.
+    <div ref={slack} className="cover-slack overflow-x-auto">
+      <div style={{ width: `calc(100% + ${2 * SLACK}px)` }}>
+        <div
+          ref={scroller}
+          role="region"
+          aria-label="Projects"
+          tabIndex={0}
+          style={{ width: `calc(100% - ${2 * SLACK}px)` }}
+          className="cover-strip sticky left-0 flex overflow-x-auto py-4 pl-[calc(var(--edge)+var(--gutter))] pr-[var(--edge)] outline-none sm:py-[calc(16*var(--u))]"
+        >
+          <div
+            ref={track}
+            className="cover-track flex shrink-0 items-start gap-28 sm:gap-[calc(112*var(--u))]"
+          >
+            {children}
+          </div>
+        </div>
       </div>
     </div>
   );
