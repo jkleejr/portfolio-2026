@@ -3,26 +3,19 @@
 // ---------------------------------------------------------------------------
 // Opening a study on the homepage.
 //
-// A project's row is the switch — its cover, its name, and the room around
-// them: press it and that project's study unfolds under it, press it again
-// and the row folds back to the picture and the line it was. A study stays open for as long as it is wanted — nothing but another
-// press closes it. The list is never left behind, and no page is ever loaded
-// to read one.
-//
-// Neither way is a cut. A study comes up into place under its row as it
-// appears, and goes out before it is taken away, with the rows that were under
-// it coming up after — see "Opening a study" in globals.css for the motion and
-// ProjectSection for the order of it. The height is not what moves: a study is
-// thousands of pixels of pictures, and unrolling that is the whole page laid
-// out again for every frame of it, to show rows leaving at a speed that reads
-// as a cut anyway.
+// The homepage is the strip of covers. Press one and it grows: the cover
+// itself moves and scales, right where it is, up to a large place right of
+// centre — a recording playing on through it — while the covers either side
+// slide away and the name and corner fade. The study's name and facts come
+// up on the left of it, and the study itself is below, a scroll away. The
+// arrow at the top left puts it all back: the cover shrinks into its place
+// in the strip and the rest returns round it. See ProjectList.
 //
 // The open study is in the address — "/" plus its slug — so it can be shared
 // and comes back on reload, and the back button closes it. See ProjectList.
 //
 // One at a time. The state is a single slug held for the whole list rather
-// than a flag on each project, so opening the second closes the first: two
-// studies open at once is a page with no list left in it.
+// than a flag on each project.
 //
 // The writing itself stays on the server. What is passed in as `study` is the
 // StudyBody the server already rendered; this file only decides whether it is
@@ -34,10 +27,10 @@ import {
   useCallback,
   useContext,
   useEffect,
+  useLayoutEffect,
   useRef,
   useState,
 } from "react";
-import { flushSync } from "react-dom";
 import { usePathname } from "next/navigation";
 import { caseStudies } from "@/data/case-studies";
 import { site } from "@/data/site";
@@ -60,19 +53,17 @@ export function useCoverToggle() {
 
 // --- the list -------------------------------------------------------------
 
-// How long a study is given to go out before it is taken off the page — the
-// length of its animation in globals.css.
-const LEAVE = 120;
-
 // How long after a sideways swipe a scroll down is still taken to be part of
 // it, rather than a scroll down to open a study.
 const SIDEWAYS_QUIET = 500;
 
+// How long the cover takes to grow into place, or shrink back — the length of
+// the transition on the strip's sections in globals.css.
+const GROW = 650;
+
 const OpenContext = createContext<{
   openSlug: string | null;
-  /** The study on its way out, still on the page. */
-  leaving: string | null;
-  /** A press on a project's cover. */
+  /** A press on a project's cover: opens it, if it is not already open. */
   press: (slug: string) => void;
 } | null>(null);
 
@@ -87,28 +78,68 @@ function slugFromPath(pathname: string): string | null {
   return slug || null;
 }
 
+const reducedMotion = () =>
+  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/**
+ * Where an opened cover grows to, as the transform that takes it there from
+ * where it sits in the strip. Large — most of the window's height, or a bit
+ * over half the page's width for a wide picture — and right of centre, leaving
+ * the left of the window to the study's name and facts. On a phone, centred
+ * and a little smaller. Worked out against the frame's top, not the window's,
+ * so it holds wherever the page is scrolled to.
+ */
+function growTo(el: HTMLElement, frame: HTMLElement) {
+  const r = el.getBoundingClientRect();
+  const root = document.documentElement;
+  const vw = root.clientWidth;
+  const vh = window.innerHeight;
+  const page = Math.min(vw, 1333);
+  const bandLeft = (vw - page) / 2;
+  const edge = parseFloat(getComputedStyle(root).getPropertyValue("--edge")) || 24;
+  const phone = vw < 640;
+  const scale = Math.min(
+    (vh * (phone ? 0.7 : 0.8)) / r.height,
+    (phone ? vw - 2 * edge : page * 0.58) / r.width,
+  );
+  const w = r.width * scale;
+  const h = r.height * scale;
+  const cx = phone
+    ? vw / 2
+    : Math.min(bandLeft + page * 0.62, bandLeft + page - edge - w / 2);
+  const frameTop = frame.getBoundingClientRect().top + window.scrollY;
+  const left = cx - w / 2;
+  const top = frameTop + vh / 2 - h / 2;
+  return {
+    transform: `translate(${left - r.left}px, ${top - (r.top + window.scrollY)}px) scale(${scale})`,
+    // Where the cover's left edge lands, from the band's — the room the
+    // study's name has to its left.
+    heroLeft: left - bandLeft,
+  };
+}
+
 export function ProjectList({
   header,
+  intros,
   studies,
   children,
 }: {
   /** The name, the intro and the corner — everything in the frame above the
    *  strip. */
   header: React.ReactNode;
+  /** Each project's name, line and facts, by slug — set beside its cover
+   *  when it is open. */
+  intros: Record<string, React.ReactNode>;
   /** Each project's rendered study, by slug. */
   studies: Record<string, React.ReactNode>;
   /** The covers, in order — one ProjectSection each. */
   children: React.ReactNode;
 }) {
   // The address is the record of which study is open, and the state here is
-  // what the page draws from. Two copies rather than one because opening a
-  // study has to be instant — the row is measured on the very next frame to
-  // hold it still, see ProjectSection — and a change that went through the
-  // router first would land a beat later than that. So the state is set
-  // directly and the address is written to match; and when the address moves
-  // on its own, under the back and forward buttons, the state follows it —
-  // set during the render that sees the new address rather than in an effect
-  // after it, so the page never draws a frame of the old one.
+  // what the page draws from. The state is set directly and the address
+  // written to match; and when the address moves on its own, under the back
+  // and forward buttons, the state follows it — set during the render that
+  // sees the new address, so the page never draws a frame of the old one.
   const pathname = usePathname();
   const fromUrl = slugFromPath(pathname);
   const [openSlug, setOpen] = useState<string | null>(fromUrl);
@@ -119,10 +150,7 @@ export function ProjectList({
   }
 
   // The tab follows the study: "Loot Check - John Lee" while one is open,
-  // the name alone when none is. A visit straight to /loot-check arrives
-  // with that title already set by the route's metadata; this keeps it in
-  // step from then on, across presses and the back button alike, which
-  // move the address without asking the router for a new head.
+  // the name alone when none is.
   useEffect(() => {
     const study = openSlug ? caseStudies[openSlug] : undefined;
     document.title = study
@@ -130,101 +158,196 @@ export function ProjectList({
       : site.titleName;
   }, [openSlug]);
 
-
   const setOpenSlug = useCallback((slug: string | null) => {
     setOpen(slug);
     // The native call rather than the router's: Next folds it into its own
-    // history and keeps usePathname in step, and nothing is fetched or
-    // re-rendered for it — the study is already on the page. A new entry each
-    // time, so the back button undoes the last open or close.
+    // history and keeps usePathname in step, and nothing is fetched for it.
+    // A new entry each time, so the back button undoes the last open.
     window.history.pushState(null, "", slug ? `/${slug}` : "/");
   }, []);
 
-  // A press closes whatever study is open and opens the pressed one in its
-  // place, or closes it if it was the one open. Whatever is open goes out
-  // first, while it is still on the page — `leaving` — and the new one comes
-  // up under the strip after it.
-  const [leaving, setLeaving] = useState<string | null>(null);
-  const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
-  useEffect(() => () => timers.current.forEach(clearTimeout), []);
-  // What is open now, for a step that runs later to check it still holds: the
-  // back button can change it in the 120ms between a press and its swap.
-  const openNow = useRef(openSlug);
-  useEffect(() => {
-    openNow.current = openSlug;
-  }, [openSlug]);
-
-  const studyRef = useRef<HTMLDivElement>(null);
+  // What is on the page: the open study, or while one closes, the one going.
+  // It stays until its cover is back in the strip, so the page does not lose
+  // its height under the reader mid-way.
+  const [closing, setClosing] = useState<string | null>(null);
+  const shown = openSlug ?? closing;
 
   const press = useCallback(
     (slug: string) => {
-      if (leaving) return;
-      const still = window.matchMedia(
-        "(prefers-reduced-motion: reduce)",
-      ).matches;
-      const was = openSlug;
-      const next = was === slug ? null : slug;
-
-      const swap = () => {
-        flushSync(() => {
-          setOpenSlug(next);
-          setLeaving(null);
-        });
-        // The study opens under the strip, which may be most of a screen
-        // tall. If the start of it has landed low in the window, bring it up
-        // so the press visibly did something.
-        const box = studyRef.current?.getBoundingClientRect();
-        if (next && box && box.top > window.innerHeight * 0.6) {
-          studyRef.current?.scrollIntoView({
-            behavior: still ? "auto" : "smooth",
-            block: "start",
-          });
-        }
-      };
-
-      // Nothing to go out first, or no motion is wanted.
-      if (!was || still) return swap();
-
-      setLeaving(was);
-      timers.current.push(
-        setTimeout(() => {
-          if (openNow.current !== was) return setLeaving(null);
-          swap();
-        }, LEAVE),
-      );
+      if (slug === openSlug || closing) return;
+      setOpenSlug(slug);
     },
-    [leaving, openSlug, setOpenSlug],
+    [openSlug, closing, setOpenSlug],
   );
+  const close = useCallback(() => setOpenSlug(null), [setOpenSlug]);
 
-  // Arriving at an address with a study in it — johnkleejr.com/loot-check —
-  // lands on the list with that study open, and the page starts at the strip
-  // with the study under it. On a hard load the script at the foot of the
-  // body in layout.tsx has done this already, before hydration; this is for an
-  // arrival by navigation.
-  const stripRef = useRef<HTMLDivElement>(null);
-  const first = useRef(true);
-  useEffect(() => {
-    if (!first.current) return;
-    first.current = false;
-    if (openSlug) stripRef.current?.scrollIntoView({ block: "start" });
+  const frameRef = useRef<HTMLDivElement>(null);
+  const scrollerRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const slackRef = useRef<HTMLDivElement>(null);
+  useStripDrag(scrollerRef, trackRef, slackRef, !!shown);
+
+  // --- growing a cover into place, and back ---
+  //
+  // The cover is not swapped for a larger copy: the one in the strip is moved
+  // and scaled where it is, so a recording plays on through it without a
+  // break. While a study is open the strip stops clipping what is in it —
+  // overflow: clip rather than a scroll box — so the grown cover is not cut
+  // off by the strip's edges; that drops the strip's scroll position, and the
+  // track is shifted by the same amount to hold everything where it was. The
+  // covers either side slide away and fade, and the name and the corner fade
+  // with them.
+  const prev = useRef<string | null>(null);
+  const savedLeft = useRef(0);
+  const firstRun = useRef(true);
+  const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
+  useEffect(() => () => timers.current.forEach(clearTimeout), []);
+
+  useLayoutEffect(() => {
+    const frame = frameRef.current;
+    const strip = scrollerRef.current;
+    const track = trackRef.current;
+    const slack = slackRef.current;
+    if (!frame || !strip || !track || !slack) return;
+    const root = document.documentElement;
+    const was = prev.current;
+    const now = openSlug;
+    prev.current = now;
+    const animate = !firstRun.current && !reducedMotion();
+    firstRun.current = false;
+    if (was === now) return;
+
+    const sections = [...strip.querySelectorAll<HTMLElement>("section[data-slug]")];
+    const sectionOf = (slug: string) =>
+      sections.find((el) => el.dataset.slug === slug);
+
+    const enterClip = () => {
+      if (strip.dataset.clip !== undefined) return;
+      savedLeft.current = strip.scrollLeft;
+      delete track.dataset.spring;
+      strip.dataset.clip = "";
+      slack.dataset.clip = "";
+      track.style.transform = `translate3d(${-savedLeft.current}px, 0, 0)`;
+    };
+    const leaveClip = () => {
+      delete strip.dataset.clip;
+      delete slack.dataset.clip;
+      track.style.transform = "";
+      strip.scrollLeft = savedLeft.current;
+      slack.scrollLeft = SLACK;
+    };
+    const place = (slug: string, moving: boolean) => {
+      const el = sectionOf(slug);
+      if (!el) return;
+      const i = sections.indexOf(el);
+      sections.forEach((other, j) => {
+        if (j === i) return;
+        other.dataset.away = j < i ? "left" : "right";
+      });
+      el.dataset.hero = "";
+      el.style.transition = moving ? "" : "none";
+      el.style.transform = "";
+      const { transform, heroLeft } = growTo(el, frame);
+      el.style.transform = transform;
+      frame.style.setProperty("--hero-left", `${heroLeft}px`);
+      if (!moving) {
+        // Let the jump land before transitions come back on.
+        void el.offsetWidth;
+        el.style.transition = "";
+      }
+      frame.dataset.placed = "";
+    };
+    const unplace = (slug: string, moving: boolean) => {
+      const el = sectionOf(slug);
+      sections.forEach((other) => delete other.dataset.away);
+      if (!el) return;
+      el.style.transition = moving ? "" : "none";
+      el.style.transform = "";
+      if (!moving) {
+        void el.offsetWidth;
+        el.style.transition = "";
+      }
+    };
+
+    if (now) {
+      // Opening — or, from the back and forward buttons, one study in place
+      // of another, which is a cut.
+      if (was) {
+        unplace(was, false);
+        delete sectionOf(was)?.dataset.hero;
+      }
+      enterClip();
+      root.dataset.studyOpen = "";
+      if (window.scrollY > 0)
+        window.scrollTo({ top: 0, behavior: animate ? "smooth" : "auto" });
+      place(now, animate);
+      return;
+    }
+
+    // Closing: back to the top of the page first, then the cover shrinks back
+    // into the strip and everything else comes back round it.
+    setClosing(was);
+    const shrink = () => {
+      delete root.dataset.studyOpen;
+      unplace(was!, animate);
+      timers.current.push(
+        setTimeout(
+          () => {
+            delete sectionOf(was!)?.dataset.hero;
+            leaveClip();
+            setClosing(null);
+          },
+          animate ? GROW : 0,
+        ),
+      );
+    };
+    if (window.scrollY > 2 && animate) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      const startedAt = performance.now();
+      const wait = () => {
+        if (window.scrollY <= 2 || performance.now() - startedAt > 900) shrink();
+        else requestAnimationFrame(wait);
+      };
+      requestAnimationFrame(wait);
+    } else {
+      window.scrollTo({ top: 0 });
+      shrink();
+    }
   }, [openSlug]);
 
-  const study = openSlug ? studies[openSlug] : undefined;
+  // A resize while open: the cover is put where it now belongs, at once.
+  useEffect(() => {
+    if (!openSlug) return;
+    const resize = () => {
+      const frame = frameRef.current;
+      const el = scrollerRef.current?.querySelector<HTMLElement>(
+        `section[data-slug="${openSlug}"]`,
+      );
+      if (!frame || !el) return;
+      el.style.transition = "none";
+      el.style.transform = "";
+      const { transform, heroLeft } = growTo(el, frame);
+      el.style.transform = transform;
+      frame.style.setProperty("--hero-left", `${heroLeft}px`);
+      void el.offsetWidth;
+      el.style.transition = "";
+    };
+    window.addEventListener("resize", resize);
+    return () => window.removeEventListener("resize", resize);
+  }, [openSlug]);
 
   // Scrolling down a homepage with nothing open opens a study: the one whose
   // cover the pointer is over, or the first. The page is the name and the
   // strip and not much else, so a scroll down is read as going on into the
   // work. Only once the page has nothing further down to show — on a window
   // too short for the whole strip, the first scroll still brings the rest of
-  // it into view.
-  //
-  // With a study open, a scroll down over another project's cover opens that
-  // one in its place. Anywhere else — the open project's own cover, the
-  // white, the study — the scroll is just the page scrolling.
+  // it into view. With a study open, scrolling is just the page scrolling,
+  // down into the study.
   //
   // A wheel or a trackpad only: on a phone a swipe down is how the page is
   // read, and opens nothing.
   useEffect(() => {
+    if (shown) return;
     // A sideways swipe on a trackpad drifts up and down a little as it goes,
     // and that drift is not a scroll down. So a scroll down has to be clearly
     // more down than sideways, and none counts for SIDEWAYS_QUIET ms after
@@ -239,82 +362,119 @@ export function ProjectList({
       if (e.deltaY <= 0) return;
       if (e.timeStamp - sidewaysAt < SIDEWAYS_QUIET) return;
       if (document.documentElement.classList.contains("gravity-on")) return;
-      const over = (e.target as Element).closest?.("[data-slug]");
-      const hovered = over?.getAttribute("data-slug");
-      if (openSlug) {
-        if (hovered && hovered !== openSlug && studies[hovered]) press(hovered);
-        return;
-      }
       const doc = document.documentElement;
       if (window.scrollY + window.innerHeight < doc.scrollHeight - 2) return;
-      const slug = hovered ?? Object.keys(studies)[0];
+      const over = (e.target as Element).closest?.("[data-slug]");
+      const slug = over?.getAttribute("data-slug") ?? Object.keys(studies)[0];
       if (slug && studies[slug]) press(slug);
     };
     window.addEventListener("wheel", wheel, { passive: true });
     return () => window.removeEventListener("wheel", wheel);
-  }, [openSlug, press, studies]);
+  }, [shown, press, studies]);
 
-  const scrollerRef = useRef<HTMLDivElement>(null);
-  const trackRef = useRef<HTMLDivElement>(null);
-  const slackRef = useRef<HTMLDivElement>(null);
-  useStripDrag(scrollerRef, trackRef, slackRef, !!study);
+  const study = shown ? studies[shown] : undefined;
+  const intro = shown ? intros[shown] : undefined;
 
   return (
-    <OpenContext.Provider value={{ openSlug, leaving, press }}>
-      {/* The frame — the name, the intro, the corner and the strip — and
-          the open study under it.
+    <OpenContext.Provider value={{ openSlug, press }}>
+      {/* The frame — the name, the intro, the corner and the strip — and,
+          below it, the open study.
 
           From sm up the frame is at least a window tall and its contents are
-          centred in it, starting at --frame-top. Everything in it is measured in --u, so as the window
-          narrows the whole picture shrinks, and centred it shrinks towards the
-          middle of the window rather than up to the top of it. The study is
-          outside the frame, so opening one does not move it.
+          centred in it, starting at --frame-top. Everything in it is measured
+          in --u, so as the window narrows the whole picture shrinks, and
+          centred it shrinks towards the middle of the window. The frame's top
+          is --frame-top, worked out in globals.css rather than left to flex to
+          centre, so the layout can put the corner on the same line on every
+          page — see corner.tsx.
 
-          The frame's top is --frame-top, worked out in globals.css rather
-          than left to flex to centre, so the layout can put the corner on the
-          same line on every page — see corner.tsx. */}
+          With a study open the frame is the first screen of it: the cover
+          grown large on the right, its name and facts on the left, and the
+          study itself below, a scroll away. */}
       <div>
         <div
+          ref={frameRef}
+          data-frame
+          data-open={openSlug ? "" : undefined}
           // The white is a handle for the strip while nothing is open — see
           // useStripDrag — and the cursor says so.
-          className={`sm:min-h-svh sm:pb-[calc(24*var(--u))] sm:pt-[var(--frame-top)] ${
-            study ? "" : "cursor-grab"
+          className={`relative sm:pb-[calc(24*var(--u))] sm:pt-[var(--frame-top)] ${
+            shown ? "min-h-svh" : "cursor-grab sm:min-h-svh"
           }`}
         >
           <div className="relative">
-            {header}
+            <div data-home-header>{header}</div>
             <div
-              ref={stripRef}
-              // For the layout script to start an open study's page at.
-              data-strip
               // Out to both of the window's edges, past the band's: on a
               // window wider than the band the covers run on into the white
               // beside it rather than being cut off at the band's edge. The
               // margins are that white — --gutter — and come to nothing on a
               // window the band fills. The strip pads its start by the same
               // amount, so the first cover still starts on the name's line.
-              className="-mx-[var(--gutter)] mt-16 scroll-mt-6 sm:mt-[calc(64*var(--u))]"
+              data-strip
+              className="-mx-[var(--gutter)] mt-16 sm:mt-[calc(64*var(--u))]"
             >
               <CoverStrip scroller={scrollerRef} track={trackRef} slack={slackRef}>
                 {children}
               </CoverStrip>
             </div>
           </div>
+
+          {/* The open study's name, line and facts, on the left of its grown
+              cover and level with the middle of it — the room up to the
+              cover's left edge, --hero-left, less the page's air either side.
+              From sm up: on a phone the cover takes the width, and these lead
+              the study below it instead. */}
+          {intro && (
+            <div
+              data-study-intro
+              className="pointer-events-none absolute left-[var(--edge)] top-[50svh] hidden w-[calc(var(--hero-left)-var(--edge)-48*var(--u))] -translate-y-1/2 sm:block"
+            >
+              <div className="pointer-events-auto">{intro}</div>
+            </div>
+          )}
         </div>
+
+        {/* The way back to the strip: top left, where the name was. It is
+            part of the first screen and scrolls away with it, rather than
+            sitting over the study's notes in the margin below. */}
+        {shown && (
+          <button
+            type="button"
+            data-study-back
+            onClick={close}
+            aria-label="Back to all projects"
+            className="absolute left-[var(--edge)] top-6 z-30 flex h-11 w-11 -translate-x-3 cursor-pointer items-center justify-center text-foreground transition-colors duration-200 ease-out hover:text-accent sm:top-[var(--frame-top)]"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              width="26"
+              height="26"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden
+            >
+              <path d="M15 5l-7 7 7 7" />
+            </svg>
+          </button>
+        )}
+
         {study && (
           // In the column the rest of the page is set in, running wider on
           // the right from 1000px — see --study-width.
           <div className="mx-auto w-[var(--column)] max-w-[calc(100%-3rem)]">
             <div
-              ref={studyRef}
-              // For the layout script to find the open study by.
               data-study
               // Room at the foot once the study is read: it is the last
               // thing on the page.
-              className={`mt-10 w-full scroll-mt-6 pb-24 sm:pb-40 min-[1000px]:w-[var(--study-width)] ${
-                leaving ? "study-out" : "study-in"
-              }`}
+              className="mt-10 w-full pb-24 sm:mt-0 sm:pb-40 min-[1000px]:w-[var(--study-width)]"
             >
+              {/* On a phone the name and facts lead the study, since there is
+                  no room for them beside the cover. */}
+              {intro && <div className="mb-10 sm:hidden">{intro}</div>}
               {study}
             </div>
           </div>
@@ -503,10 +663,12 @@ function useStripDrag(
     const down = (e: PointerEvent) => {
       const strip = scroller.current;
       if (!strip || e.pointerType !== "mouse" || e.button !== 0) return;
+      // With a study open the strip is put away — its cover grown — and
+      // does not drag.
+      if (studyOpen) return;
       if (root.classList.contains("gravity-on")) return;
       const target = e.target as Element;
       if (!strip.contains(target)) {
-        if (studyOpen) return;
         if (target.closest("a, button, input, textarea, select, video[controls], [data-study]")) return;
         e.preventDefault();
       }
@@ -576,6 +738,7 @@ function useStripDrag(
     // until the next swipe: the rest of this one is not a push.
     let spent = false;
     const wheel = (e: WheelEvent) => {
+      if (studyOpen) return;
       stopGlide();
       const strip = scroller.current;
       if (!strip || drag) return;
