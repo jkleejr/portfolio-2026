@@ -84,9 +84,13 @@ function slugFromPath(pathname: string): string | null {
 }
 
 export function ProjectList({
+  header,
   studies,
   children,
 }: {
+  /** The name, the intro and the corner — everything in the frame above the
+   *  strip. */
+  header: React.ReactNode;
   /** Each project's rendered study, by slug. */
   studies: Record<string, React.ReactNode>;
   /** The covers, in order — one ProjectSection each. */
@@ -193,23 +197,43 @@ export function ProjectList({
   // with the study under it. On a hard load the script at the foot of the
   // body in layout.tsx has done this already, before hydration; this is for an
   // arrival by navigation.
-  const listRef = useRef<HTMLDivElement>(null);
+  const stripRef = useRef<HTMLDivElement>(null);
   const first = useRef(true);
   useEffect(() => {
     if (!first.current) return;
     first.current = false;
-    if (openSlug) listRef.current?.scrollIntoView({ block: "start" });
+    if (openSlug) stripRef.current?.scrollIntoView({ block: "start" });
   }, [openSlug]);
 
   const study = openSlug ? studies[openSlug] : undefined;
 
   return (
     <OpenContext.Provider value={{ openSlug, leaving, press }}>
-      {/* The strip and the open study under it. The study is a child of
-          this box so that the script at the foot of layout.tsx, which scrolls
-          to the parent of [data-study], lands on the strip. */}
-      <div ref={listRef} className="mt-16 scroll-mt-6 sm:mt-[calc(64*var(--u))]">
-        <CoverStrip>{children}</CoverStrip>
+      {/* The frame — the name, the intro, the corner and the strip — and
+          the open study under it.
+
+          From sm up the frame is at least a window tall and its contents are
+          centred in it. Everything in it is measured in --u, so as the window
+          narrows the whole picture shrinks, and centred it shrinks towards the
+          middle of the window rather than up to the top of it. The study is
+          outside the frame, so opening one does not move it.
+
+          The corner sits at the top of the frame's inner box, on the name's
+          line, so it moves with the name. */}
+      <div>
+        <div className="flex flex-col sm:min-h-svh sm:justify-center sm:py-[calc(24*var(--u))]">
+          <div className="relative">
+            {header}
+            <div
+              ref={stripRef}
+              // For the layout script to start an open study's page at.
+              data-strip
+              className="mt-16 scroll-mt-6 sm:mt-[calc(64*var(--u))]"
+            >
+              <CoverStrip>{children}</CoverStrip>
+            </div>
+          </div>
+        </div>
         {study && (
           // In the column the rest of the page is set in, running wider on
           // the right from 1000px — see --study-width.
