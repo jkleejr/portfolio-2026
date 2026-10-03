@@ -9,7 +9,8 @@ import { entries } from "@/data/projects";
 import { caseStudies, type CaseStudy } from "@/data/case-studies";
 import { StudyBody, StudyFact, poster, studyFacts } from "./case-study";
 import { mediaSize } from "./media-size";
-import { ProjectList, ProjectSection } from "./project-study";
+import { MobileList, ProjectList, ProjectSection } from "./project-study";
+import { ProjectTitle } from "./project-title";
 import { ProjectThumbnail } from "./project-thumbnail";
 
 /**
@@ -34,6 +35,130 @@ function StudyIntro({ study, blurb }: { study: CaseStudy; blurb?: string }) {
 }
 
 export function DesignOne() {
+  // The name and the intro: the top of the homepage at every width.
+  const header = (
+    <>
+      {/* The name, set in the blackletter — see .fraktur in globals.css, which
+          carries the face and pins the weight. It is the one thing on the page
+          that is not in the column: it holds the page's top left corner and
+          runs most of the width of the window from there, rather than lining
+          up with the covers below it. It is the only thing up there on the
+          left — the role that used to be pinned in that corner is the first
+          words of the intro now.
+
+          From sm up it starts at the very top, on the same line as the About
+          link and the apple in the opposite corner. Everything up there is
+          measured in --u, a fraction of the band, so the room between the
+          name and the corner is the same share of the page at every width
+          and never closes. On a phone the corner keeps its fixed size and
+          there is not that room, so the name takes --top-row plus a gap as a
+          top margin and sits under the apple instead. Reading the row's
+          height from the variable rather than writing 44px here means the
+          two cannot fall out of step.
+
+          The left padding is the page's --edge and 0.0375em more, because
+          that is how far the J's swash hangs out to the left of where the
+          face says the letter starts — measured, off the ink. With it the
+          swash stops on the same line the intro and the notes in the margin
+          start on, where set flush the name stood 10px out into the margin
+          at full size. In em, so it holds at every size the name is set at.
+
+          One row at every width, which is why whitespace-nowrap carries no
+          breakpoint. It is also why the name is out here rather than in the
+          column: "JOHN LEE" is far wider than the column's 628px at any
+          display size worth using, so in there it always broke in two.
+
+          Which makes the window what the size has to fit, and the whole
+          string, not its longest word. There is no give to spare: nowrap
+          cannot break, so going over does not wrap, it scrolls the page
+          sideways.
+
+          4.71em of text against the window less the padding is the whole sum,
+          which makes the padding worth as much as the size. There is none on
+          the right for that reason: set from the left, the name needs only
+          its own left margin, and with nothing reserved at the other end
+          14.5% holds down to a 200px window. What is left over at the right
+          is a margin all the same — about 1.5rem of it on a 390px phone.
+
+          14.5% of --page, the band the page is laid out in, rather than of
+          the window: the two are the same up to 1333px, and past that
+          the band stops growing and is centred, so the name holds at 14rem
+          and the whole page goes with it as one block. That is where the
+          ceiling comes from — it is the band's cap in globals.css, not a
+          number here.
+
+          The other cost is worth naming. Letting the name break gave the
+          phone a much larger one — only "JOHN" at 2.62em had to fit, which
+          allowed 28vw, so a 375px screen ran 105px where one row runs 69px.
+          One row is the ask; this is what it takes.
+
+          These numbers are cut to Old London and do not carry over to another
+          face. Two measurements move them: "JOHN LEE" is 4.71em wide in it,
+          which sets the vw, and its capitals ink only 0.80em tall inside the
+          em, which is why the ceiling is as high as 18rem — a face with taller
+          capitals reaches the same apparent size at a smaller number. Measure
+          both before swapping the face; neither is guessable from the look of
+          it.
+
+          leading-none because a single row of capitals has nothing to collide
+          with, and this face inks only 0.80em inside a 1em box.
+
+          The bottom margin is the room between the name and the intro under
+          it — the intro's own margin collapses into this one, so this is the
+          whole of it. Measured from the ink again: the capitals stop ~16px
+          short of the box's bottom at full size and the intro's ink starts
+          ~8px into its line, so 3.5rem is ~80px of black. A phone shows less,
+          in step with its smaller name.
+
+          data-gravity="letters" is for when the apple is pressed: the name
+          comes apart a character at a time rather than as "JOHN" and "LEE",
+          so each letter waits for its own hover. It is the only thing on the
+          page marked that way, and the reason is the size — at 18rem a word
+          is a slab, and two of them falling barely reads as the page coming
+          apart. Everywhere else the text is small enough that whole words are
+          the finer-grained answer, not the coarser one. */}
+      <h1
+        data-gravity="letters"
+        className="fraktur mb-12 mt-[calc(var(--top-row)+1.5rem)] whitespace-nowrap pl-[calc(var(--edge)+0.0375em)] text-[length:var(--name-size)] leading-none sm:mb-[calc(56*var(--u))] sm:mt-0"
+      >
+        {site.name}
+      </h1>
+
+      {/* The writing at the top of the page, which is the intro. It is set from
+          the page's left edge, under the name and on the line the name's ink
+          starts on, rather than in the column with the projects: the name
+          holds that corner, and a line about whose name it is reads as part of
+          it there, where out in the middle it read as the first of the
+          projects. --edge is the page's margin — the same the notes in
+          the margin further down start at.
+
+          Not held to the column's measure: the sentence runs on toward the
+          right margin rather than breaking early, and only wraps where the
+          page itself runs out.
+
+          The apple button is in the opposite corner at every width, so the
+          header doesn't need to leave room for it — see "The page on a
+          phone" in globals.css. */}
+      <header className="px-[var(--edge)]">
+        {/* Who that is. A paragraph per line of site.intro, so a sentence that
+            should start fresh does, rather than being wrapped into the one
+            above it. A step up from the page's other lines — still far
+            short of the name, so only the name leads.
+
+            One margin at every width. */}
+        {site.intro.some(Boolean) && (
+          <div className="mt-8 space-y-3 sm:mt-[calc(32*var(--u))]">
+            {site.intro.map((line) => (
+              <p key={line} className="text-[30px] font-black leading-relaxed text-foreground sm:text-[calc(30*var(--u))]">
+                {line}
+              </p>
+            ))}
+          </div>
+        )}
+      </header>
+    </>
+  );
+
   // On a phone, 1.5rem of air at the top and a little at the foot. From sm
   // up the frame in ProjectList holds its own air, measured in --u, and is
   // centred in the window — so main adds none.
@@ -50,129 +175,9 @@ export function DesignOne() {
           here, on the server, and handed to the list as markup: what is in
           the browser's bundle is the switch, not the writing. See
           project-study.tsx. */}
+      <div className="max-sm:hidden">
       <ProjectList
-        header={
-          <>
-            {/* The name, set in the blackletter — see .fraktur in globals.css, which
-                carries the face and pins the weight. It is the one thing on the page
-                that is not in the column: it holds the page's top left corner and
-                runs most of the width of the window from there, rather than lining
-                up with the covers below it. It is the only thing up there on the
-                left — the role that used to be pinned in that corner is the first
-                words of the intro now.
-
-                From sm up it starts at the very top, on the same line as the About
-                link and the apple in the opposite corner. Everything up there is
-                measured in --u, a fraction of the band, so the room between the
-                name and the corner is the same share of the page at every width
-                and never closes. On a phone the corner keeps its fixed size and
-                there is not that room, so the name takes --top-row plus a gap as a
-                top margin and sits under the apple instead. Reading the row's
-                height from the variable rather than writing 44px here means the
-                two cannot fall out of step.
-
-                The left padding is the page's --edge and 0.0375em more, because
-                that is how far the J's swash hangs out to the left of where the
-                face says the letter starts — measured, off the ink. With it the
-                swash stops on the same line the intro and the notes in the margin
-                start on, where set flush the name stood 10px out into the margin
-                at full size. In em, so it holds at every size the name is set at.
-
-                One row at every width, which is why whitespace-nowrap carries no
-                breakpoint. It is also why the name is out here rather than in the
-                column: "JOHN LEE" is far wider than the column's 628px at any
-                display size worth using, so in there it always broke in two.
-
-                Which makes the window what the size has to fit, and the whole
-                string, not its longest word. There is no give to spare: nowrap
-                cannot break, so going over does not wrap, it scrolls the page
-                sideways.
-
-                4.71em of text against the window less the padding is the whole sum,
-                which makes the padding worth as much as the size. There is none on
-                the right for that reason: set from the left, the name needs only
-                its own left margin, and with nothing reserved at the other end
-                14.5% holds down to a 200px window. What is left over at the right
-                is a margin all the same — about 1.5rem of it on a 390px phone.
-
-                14.5% of --page, the band the page is laid out in, rather than of
-                the window: the two are the same up to 1333px, and past that
-                the band stops growing and is centred, so the name holds at 14rem
-                and the whole page goes with it as one block. That is where the
-                ceiling comes from — it is the band's cap in globals.css, not a
-                number here.
-
-                The other cost is worth naming. Letting the name break gave the
-                phone a much larger one — only "JOHN" at 2.62em had to fit, which
-                allowed 28vw, so a 375px screen ran 105px where one row runs 69px.
-                One row is the ask; this is what it takes.
-
-                These numbers are cut to Old London and do not carry over to another
-                face. Two measurements move them: "JOHN LEE" is 4.71em wide in it,
-                which sets the vw, and its capitals ink only 0.80em tall inside the
-                em, which is why the ceiling is as high as 18rem — a face with taller
-                capitals reaches the same apparent size at a smaller number. Measure
-                both before swapping the face; neither is guessable from the look of
-                it.
-
-                leading-none because a single row of capitals has nothing to collide
-                with, and this face inks only 0.80em inside a 1em box.
-
-                The bottom margin is the room between the name and the intro under
-                it — the intro's own margin collapses into this one, so this is the
-                whole of it. Measured from the ink again: the capitals stop ~16px
-                short of the box's bottom at full size and the intro's ink starts
-                ~8px into its line, so 3.5rem is ~80px of black. A phone shows less,
-                in step with its smaller name.
-
-                data-gravity="letters" is for when the apple is pressed: the name
-                comes apart a character at a time rather than as "JOHN" and "LEE",
-                so each letter waits for its own hover. It is the only thing on the
-                page marked that way, and the reason is the size — at 18rem a word
-                is a slab, and two of them falling barely reads as the page coming
-                apart. Everywhere else the text is small enough that whole words are
-                the finer-grained answer, not the coarser one. */}
-            <h1
-              data-gravity="letters"
-              className="fraktur mb-12 mt-[calc(var(--top-row)+1.5rem)] whitespace-nowrap pl-[calc(var(--edge)+0.0375em)] text-[length:var(--name-size)] leading-none sm:mb-[calc(56*var(--u))] sm:mt-0"
-            >
-              {site.name}
-            </h1>
-
-            {/* The writing at the top of the page, which is the intro. It is set from
-                the page's left edge, under the name and on the line the name's ink
-                starts on, rather than in the column with the projects: the name
-                holds that corner, and a line about whose name it is reads as part of
-                it there, where out in the middle it read as the first of the
-                projects. --edge is the page's margin — the same the notes in
-                the margin further down start at.
-
-                Not held to the column's measure: the sentence runs on toward the
-                right margin rather than breaking early, and only wraps where the
-                page itself runs out.
-
-                The apple button is in the opposite corner at every width, so the
-                header doesn't need to leave room for it — see "The page on a
-                phone" in globals.css. */}
-            <header className="px-[var(--edge)]">
-              {/* Who that is. A paragraph per line of site.intro, so a sentence that
-                  should start fresh does, rather than being wrapped into the one
-                  above it. A step up from the page's other lines — still far
-                  short of the name, so only the name leads.
-
-                  One margin at every width. */}
-              {site.intro.some(Boolean) && (
-                <div className="mt-8 space-y-3 sm:mt-[calc(32*var(--u))]">
-                  {site.intro.map((line) => (
-                    <p key={line} className="text-[30px] font-black leading-relaxed text-foreground sm:text-[calc(30*var(--u))]">
-                      {line}
-                    </p>
-                  ))}
-                </div>
-              )}
-            </header>
-          </>
-        }
+        header={header}
         intros={Object.fromEntries(
           entries.flatMap((entry) => {
             const study = caseStudies[entry.slug];
@@ -213,6 +218,42 @@ export function DesignOne() {
           </ProjectSection>
         ))}
       </ProjectList>
+      </div>
+
+      {/* On a phone, the homepage as it was before the strip: the name, and a
+          list of rows — a square cover, and the name and line beside it —
+          each opening its study under it. See MobileList. */}
+      <div className="sm:hidden">
+        {header}
+        <MobileList
+          rows={entries.map((entry) => ({
+            slug: entry.slug,
+            row: (
+              <>
+                {(entry.images ?? []).slice(0, 1).map((image) => (
+                  <ProjectThumbnail key={entry.slug} image={image} slug={entry.slug} />
+                ))}
+                <div className="min-w-0 flex-1">
+                  <h2 className="text-xl font-semibold leading-snug tracking-[-0.02em]">
+                    <ProjectTitle slug={entry.slug}>{entry.title}</ProjectTitle>
+                  </h2>
+                  {entry.blurb && (
+                    <p className="mt-3 text-base leading-relaxed text-muted">{entry.blurb}</p>
+                  )}
+                </div>
+              </>
+            ),
+          }))}
+          studies={Object.fromEntries(
+            entries.flatMap((entry) => {
+              const study = caseStudies[entry.slug];
+              return study
+                ? [[entry.slug, <StudyBody key={entry.slug} study={study} inline />]]
+                : [];
+            }),
+          )}
+        />
+      </div>
 
     </main>
   );
