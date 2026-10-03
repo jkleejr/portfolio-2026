@@ -1136,7 +1136,7 @@ function CoverStrip({
         >
           <div
             ref={track}
-            className="cover-track flex shrink-0 items-start gap-28 sm:gap-[calc(112*var(--u))]"
+            className="cover-track flex shrink-0 items-start gap-[120px] sm:gap-[calc(121*var(--u))]"
           >
             {children}
           </div>
