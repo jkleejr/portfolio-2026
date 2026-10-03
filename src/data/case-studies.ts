@@ -400,8 +400,8 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "heading",
         text: "Generating Audio in Groups",
-        note: "Latency UX",
-      },
+        note: "Managing Delays",
+      }, // Latency UX
 
       // network lag - more API requests can cause delays, or hit Gemini's rate limit
       // Gemini - Free Tier so thats 15 requests per minute
