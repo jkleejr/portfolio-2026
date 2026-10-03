@@ -186,7 +186,7 @@ export function DesignOne() {
         {site.intro.length > 0 && (
           <div className="mt-8 space-y-3">
             {site.intro.map((line) => (
-              <p key={line} className="text-[22px] font-medium leading-relaxed text-foreground">
+              <p key={line} className="text-[30px] font-black leading-relaxed text-foreground">
                 {line}
               </p>
             ))}
