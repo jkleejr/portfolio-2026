@@ -73,9 +73,9 @@
 
   /* The air between the band's side edges and what is set against them: the
      name and the intro at the top, the notes in the margin, the links at the
-     foot. 2rem here and 1.5rem on a phone, where the name across the top has
+     foot. 3rem here and 1.5rem on a phone, where the name across the top has
      no room to give — see "The page on a phone" below. */
-  --edge: 2rem;
+  --edge: 3rem;
 
   /* The strip of band left over beside the column, less the air held at
      each end of it — the room a note set out in the margin has to live in.
@@ -104,7 +104,7 @@
 
      All of it: the column plus the whole margin at its right, less --edge of
      air at the band's edge and the 1.5rem the note on the other side is
-     held off by. The band caps it: at 97.3rem it comes to about 1036px, a
+     held off by. The band caps it: at 97.3rem it comes to about 1020px, a
      hundred and ten characters or so, which is the length the page was
      drawn at. Wider than that a line was hard to come back from at the end
      of it, and the band is what now holds it. */
