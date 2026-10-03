@@ -204,7 +204,13 @@ export function StudyBody({
         </header>
       )}
 
-      <div className={`${inline ? "" : "mt-8 "}space-y-4`}>
+      {/* A picture, film or demo stands a little further off the words
+          around it than one paragraph does from the next. The margins
+          collapse with the 16px between blocks, so the gap is 20px whichever
+          side the text is on, and two pictures in a row are 20px apart too. */}
+      <div
+        className={`${inline ? "" : "mt-8 "}space-y-4 [&>figure:not(:first-child)]:mt-5 [&>figure:not(:last-child)]:mb-5`}
+      >
         {blocks.map((block, i) => (
           <Block key={i} block={block} after={blocks[i - 1]?.type} />
         ))}
