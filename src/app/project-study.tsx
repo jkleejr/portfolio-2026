@@ -64,6 +64,10 @@ export function useCoverToggle() {
 // length of its animation in globals.css.
 const LEAVE = 120;
 
+// How long after a sideways swipe a scroll down is still taken to be part of
+// it, rather than a scroll down to open a study.
+const SIDEWAYS_QUIET = 500;
+
 const OpenContext = createContext<{
   openSlug: string | null;
   /** The study on its way out, still on the page. */
@@ -221,8 +225,19 @@ export function ProjectList({
   // A wheel or a trackpad only: on a phone a swipe down is how the page is
   // read, and opens nothing.
   useEffect(() => {
+    // A sideways swipe on a trackpad drifts up and down a little as it goes,
+    // and that drift is not a scroll down. So a scroll down has to be clearly
+    // more down than sideways, and none counts for SIDEWAYS_QUIET ms after
+    // any sideways movement.
+    let sidewaysAt = -Infinity;
     const wheel = (e: WheelEvent) => {
-      if (e.deltaY <= 0 || Math.abs(e.deltaY) < Math.abs(e.deltaX)) return;
+      const across = Math.abs(e.deltaX);
+      if (across > 0 && across * 1.5 >= Math.abs(e.deltaY)) {
+        sidewaysAt = e.timeStamp;
+        return;
+      }
+      if (e.deltaY <= 0) return;
+      if (e.timeStamp - sidewaysAt < SIDEWAYS_QUIET) return;
       if (document.documentElement.classList.contains("gravity-on")) return;
       const over = (e.target as Element).closest?.("[data-slug]");
       const hovered = over?.getAttribute("data-slug");
@@ -541,7 +556,8 @@ function useStripDrag(
     let lastAt = 0;
     let shrinking = 0;
     let latched = false;
-    // Set once the coasting has been read: the rest of it is not a push.
+    // Set once a let-go has been read — the coasting, or scrollend — and
+    // until the next swipe: the rest of this one is not a push.
     let spent = false;
     const wheel = (e: WheelEvent) => {
       stopGlide();
@@ -597,9 +613,12 @@ function useStripDrag(
       }
     };
     // The fingers are off the trackpad, or a touch has let go and come to
-    // rest.
+    // rest. At an end the browser can say so while the swipe's coasting is
+    // still arriving, so the rest of that swipe is spent: it must not push
+    // the row back out, or the row shakes between out and back. Only a new
+    // swipe pushes again.
     const letGo = () => {
-      spent = false;
+      if (push) spent = true;
       release();
     };
 
