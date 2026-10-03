@@ -107,8 +107,10 @@ export function DesignOne() {
           it — the intro's own margin collapses into this one, so this is the
           whole of it. Measured from the ink again: the capitals stop ~16px
           short of the box's bottom at full size and the intro's ink starts
-          ~8px into its line, so 3.5rem is ~80px of black. A phone shows less,
-          in step with its smaller name.
+          ~8px into its line, so 3.5rem is ~80px of black. On a phone it is
+          27px, which with the ~14px the face leaves under its capitals puts
+          the first row as far below the name's ink as the About link is above
+          it — about 41px each way on a 390px phone.
 
           data-gravity="letters" is for when the apple is pressed: the name
           comes apart a character at a time rather than as "JOHN" and "LEE",
@@ -119,7 +121,7 @@ export function DesignOne() {
           the finer-grained answer, not the coarser one. */}
       <h1
         data-gravity="letters"
-        className="fraktur mb-12 mt-[calc(var(--top-row)+1.5rem)] whitespace-nowrap pl-[calc(var(--edge)+0.0375em)] text-[length:var(--name-size)] leading-none sm:mb-[calc(56*var(--u))] sm:mt-0"
+        className="fraktur mb-12 mt-[calc(var(--top-row)+1.5rem)] whitespace-nowrap pl-[calc(var(--edge)+0.0375em)] max-sm:mb-[27px] max-sm:pl-0 max-sm:text-center text-[length:var(--name-size)] leading-none sm:mb-[calc(56*var(--u))] sm:mt-0"
       >
         {site.name}
       </h1>

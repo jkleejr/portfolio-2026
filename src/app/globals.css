@@ -482,6 +482,10 @@ html[data-dragging] * {
 
 @media (width < 40rem) {
   :root {
+    /* The name a size up on a phone, where it is centred on its own line
+       rather than sharing the top with the corner. 17% still leaves it room
+       either side on the narrowest phones. */
+    --name-size: max(2rem, calc(var(--page) * 0.17));
     --edge: 1.5rem;
     --cover-film: calc(var(--film) * 0.85);
     --cover: 104px;

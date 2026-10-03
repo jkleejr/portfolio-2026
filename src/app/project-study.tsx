@@ -1300,7 +1300,11 @@ export function MobileList({
   };
 
   return (
-    <div className="mx-auto mt-16 flex w-[var(--column)] max-w-[calc(100%-3rem)] flex-col items-start gap-16">
+    // No top margin: the name's own sets the room above the first row, held
+    // equal to the room between the corner and the name — see the h1 in
+    // design-one.tsx. pb-6: a little more air after the last row, before the
+    // foot of the page.
+    <div className="mx-auto flex w-[var(--column)] max-w-[calc(100%-3rem)] flex-col items-start gap-16 pb-6">
       {rows.map(({ slug, row }) => {
         const study = studies[slug];
         const open = !!study && openSlug === slug;
