@@ -415,6 +415,11 @@ body {
 .corner-stack {
   transition: opacity 300ms ease;
 }
+/* With a study open a sideways swipe moves between studies (see ProjectList),
+   and never turns into the browser's back or forward. */
+html[data-study-open] {
+  overscroll-behavior-x: none;
+}
 html[data-study-open] [data-home-header],
 html[data-study-open] .corner-stack {
   opacity: 0;
