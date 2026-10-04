@@ -44,7 +44,9 @@ export default function AboutPage() {
         </span>
         <span aria-current="page">About</span>
       </nav>
-      <div className="mx-auto w-[var(--column)] max-w-[calc(100%-3rem)]">
+      {/* 120px wider than the column a study is set in, 60px out each side,
+          and centred, so the white either side of it matches. */}
+      <div className="mx-auto w-[calc(var(--column)+120px)] max-w-[calc(100%-3rem)]">
         <h1 className=" text-2xl font-bold tracking-[-0.02em]">John Lee is a designer building AI-native products for mobile and web.</h1>
 
         {site.intro.some(Boolean) && (
