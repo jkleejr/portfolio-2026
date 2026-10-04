@@ -65,7 +65,7 @@
      band (see --u), nothing on it grows any further: a wider window only
      adds white either side. Under 1333px the band is the window, and the
      whole page scales down with it. */
-  --page: min(100vw - var(--scrollbar), 1333px);
+  --page: min(100vw - var(--scrollbar), 1287px);
 
   /* One pixel of the homepage as it was drawn at 1440px — the band's width
      over 1440. From sm up everything in the homepage's frame is measured in
@@ -74,7 +74,7 @@
      shrinks with the window as one picture, keeping its proportions, rather
      than each part following a rule of its own. On a phone the page keeps the
      layout it has there instead — see "The page on a phone". */
-  --u: calc(var(--page) / 1440);
+  --u: calc(var(--page) / 1390);
 
   /* The air between the band's side edges and what is set against them: the
      name and the intro at the top, the notes in the margin, the links at the
@@ -124,7 +124,7 @@
      with the cap moved into --page, less the scrollbar; and now 14.5% of it,
      a little smaller. The floor is for a window too narrow for the name at
      all. */
-  --name-size: max(2rem, calc(var(--page) * 0.145));
+  --name-size: max(2rem, calc(var(--page) * 0.145 * 1440 / 1390));
   /* The height of the row across the top of the page, which is the apple
      button's box. The homepage reads it to know how far to drop its name
      on a phone, where the name would otherwise run into the apple. */

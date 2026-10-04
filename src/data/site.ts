@@ -8,8 +8,6 @@ export const site = {
     { label: "LinkedIn", href: "https://www.linkedin.com/in/john-lee-779329401/" },
   ],
 
-  resume: { label: "Resume", href: "/John-Lee-Resume.pdf" },
-
   closing: "",
 
   intro: [

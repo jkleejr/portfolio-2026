@@ -155,7 +155,7 @@ function growTo(el: HTMLElement, frame: HTMLElement) {
   const root = document.documentElement;
   const vw = root.clientWidth;
   const vh = window.innerHeight;
-  const page = Math.min(vw, 1333);
+  const page = Math.min(vw, 1287);
   const bandLeft = (vw - page) / 2;
   const edge = parseFloat(getComputedStyle(root).getPropertyValue("--edge")) || 24;
   const phone = vw < 640;

@@ -1,10 +1,11 @@
 // ---------------------------------------------------------------------------
-// The About page: the ways to get in touch — LinkedIn, the resume, and email.
+// The About page: the ways to get in touch — LinkedIn and email.
 //
-// Set out the way a study's own page is (see projects/[slug]/page.tsx): the
-// same column, the same way back above the title, and the title on the line
-// the homepage's name starts on. Reached from the "About" link beside the
-// apple in the top-right corner — see layout.tsx.
+// Set out in the column a study's own page uses (see projects/[slug]/page.tsx),
+// with the title on the line the homepage's name starts on. The way back is
+// where an open study puts its own (see project-study.tsx): top left, at the
+// page's --edge, level with the apple in the opposite corner. Reached from
+// the "About" link in the top-right corner of the homepage — see corner.tsx.
 // ---------------------------------------------------------------------------
 
 import type { Metadata } from "next";
@@ -21,22 +22,30 @@ const link = "transition-colors duration-200 ease-out hover:text-accent";
 
 export default function AboutPage() {
   return (
-    // The same padding a study's page has — see the note on it there.
-    <main className="pb-8 pt-6 sm:pb-28 sm:pt-[102px]">
+    // The title starts 32px under the corner row the way back shares with the
+    // apple: 44px tall, 1.5rem down on a phone and at --frame-top from sm up.
+    // Tied to the row rather than set in pixels, since --frame-top drops on a
+    // tall window and the title has to go down with it.
+    <main className="relative pb-8 pt-[100px] sm:pb-28 sm:pt-[calc(var(--frame-top)+76px)]">
+      {/* Placed exactly as the open study's "Home > Loot Check" is, so the
+          way back is in the same spot on every page that has one. */}
+      <nav
+        aria-label="Breadcrumb"
+        className="absolute left-[var(--edge)] top-6 z-30 flex h-11 items-center text-base leading-relaxed sm:top-[var(--frame-top)]"
+      >
+        <Link
+          href="/"
+          className="text-muted transition-colors duration-200 ease-out hover:text-accent"
+        >
+          Home
+        </Link>
+        <span aria-hidden className="px-2 text-muted">
+          &gt;
+        </span>
+        <span aria-current="page">About</span>
+      </nav>
       <div className="mx-auto w-[var(--column)] max-w-[calc(100%-3rem)]">
-        <nav aria-label="Breadcrumb" className="text-base leading-relaxed">
-          <Link
-            href="/"
-            className="text-muted transition-colors duration-200 ease-out hover:text-accent"
-          >
-            Home
-          </Link>
-          <span aria-hidden className="px-2 text-muted">
-            &gt;
-          </span>
-          About
-        </nav>
-        <h1 className="mt-2 text-2xl font-bold tracking-[-0.02em]">John Lee is a designer building AI-native products for mobile and web.</h1>
+        <h1 className=" text-2xl font-bold tracking-[-0.02em]">John Lee is a designer building AI-native products for mobile and web.</h1>
 
         {site.intro.some(Boolean) && (
           <div className="mt-6 space-y-3">
@@ -53,11 +62,10 @@ export default function AboutPage() {
           </p>
         )}
 
-        {/* The other places to find him, his resume, then the way to write
-            to him. The arrow after LinkedIn and Resume says they open in a
-            new tab: a no-break space so it never starts a line of its own,
-            and hidden from a screen reader, which would read it out as a
-            direction. */}
+        {/* The other places to find him, then the way to write to him. The
+            arrow after LinkedIn says it opens in a new tab: a no-break space
+            so it never starts a line of its own, and hidden from a screen
+            reader, which would read it out as a direction. */}
         <nav
           aria-label="Contact"
           className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-lg font-medium text-foreground sm:text-xl"
@@ -71,12 +79,6 @@ export default function AboutPage() {
                 </a>
               ),
           )}
-          {/* Opens the PDF in a new tab, where the browser shows it, rather
-              than saving it to the computer. */}
-          <a href={site.resume.href} target="_blank" rel="noreferrer" className={link}>
-            {site.resume.label}
-            <span aria-hidden className="text-[0.75em]">{" "}↗</span>
-          </a>
           {/* From sm up, "Email" copies the address — see copy-email.tsx.
               On a phone it opens a mail app instead. */}
           <a href={`mailto:${site.email}`} className={`${link} sm:hidden`}>
