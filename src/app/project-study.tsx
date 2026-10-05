@@ -452,40 +452,108 @@ export function ProjectList({
       go(g.travelled > 0 ? 1 : -1);
     };
 
-    let drag: { x: number; moved: boolean } | null = null;
+    // A drag with a mouse on the first screen — the white, the grown cover,
+    // the name and facts — goes one of two ways, settled by which way it
+    // first moves. Sideways, on the first screen with the page at its top,
+    // it moves between studies as above. Up or down it scrolls the page, the
+    // page following the pointer as if held, and carries on gliding after a
+    // flick as the strip does — FRICTION and the rest, below. The study's
+    // writing is left alone, so its text can still be selected.
+    let drag: {
+      x: number;
+      y: number;
+      top: number;
+      sideways: boolean;
+      axis: "x" | "y" | null;
+    } | null = null;
+    let samples: { y: number; t: number }[] = [];
+    let glide = 0;
     let suppress = false;
+    const stopGlide = () => {
+      cancelAnimationFrame(glide);
+      glide = 0;
+    };
+    const scrollToY = (y: number) =>
+      window.scrollTo({ top: y, behavior: "instant" });
+    const startGlide = (speed: number) => {
+      if (reducedMotion()) return;
+      let v = Math.max(-MAX_SPEED, Math.min(MAX_SPEED, speed));
+      let last = performance.now();
+      const step = (now: number) => {
+        const dt = now - last;
+        last = now;
+        const before = window.scrollY;
+        scrollToY(before - v * dt);
+        v *= Math.pow(FRICTION, dt / (1000 / 60));
+        // Stopped, or run into the top or the foot of the page.
+        if (Math.abs(v) < MIN_SPEED || window.scrollY === before) {
+          glide = 0;
+          return;
+        }
+        glide = requestAnimationFrame(step);
+      };
+      glide = requestAnimationFrame(step);
+    };
     const down = (e: PointerEvent) => {
-      if (e.pointerType !== "mouse" || e.button !== 0 || !atTop()) return;
+      if (e.pointerType !== "mouse" || e.button !== 0) return;
       if (root.classList.contains("gravity-on")) return;
       // The grown cover is a link, but a press on it does nothing while it is
       // open, so it is as good a handle as the white. Any other link is left
       // to be a link.
       const target = e.target as Element;
       if (
+        !frameRef.current?.contains(target) ||
         target.closest("button, input, textarea, select, video[controls]") ||
         (target.closest("a") && !target.closest("[data-hero]"))
       )
         return;
       e.preventDefault();
-      drag = { x: e.clientX, moved: false };
+      // A press catches a page that is still gliding.
+      stopGlide();
+      drag = {
+        x: e.clientX,
+        y: e.clientY,
+        top: window.scrollY,
+        sideways: atTop(),
+        axis: null,
+      };
+      samples = [{ y: e.clientY, t: e.timeStamp }];
     };
     const move = (e: PointerEvent) => {
       if (!drag) return;
-      if (!drag.moved && Math.abs(e.clientX - drag.x) < DRAG) return;
-      if (!drag.moved) {
-        drag.moved = true;
+      const dx = e.clientX - drag.x;
+      const dy = e.clientY - drag.y;
+      if (!drag.axis) {
+        if (Math.max(Math.abs(dx), Math.abs(dy)) < DRAG) return;
+        drag.axis = Math.abs(dx) > Math.abs(dy) ? "x" : "y";
         root.dataset.dragging = "";
       }
+      if (drag.axis !== "y") return;
+      scrollToY(drag.top - dy);
+      samples.push({ y: e.clientY, t: e.timeStamp });
+      while (samples.length > 2 && e.timeStamp - samples[0].t > VELOCITY_WINDOW)
+        samples.shift();
     };
     const up = (e: PointerEvent) => {
       const d = drag;
       drag = null;
-      if (!d?.moved) return;
+      if (!d?.axis) return;
       delete root.dataset.dragging;
       suppress = true;
       setTimeout(() => (suppress = false), 0);
-      const dx = e.clientX - d.x;
-      if (Math.abs(dx) >= SWIPE_STEP) go(dx < 0 ? 1 : -1);
+      if (d.axis === "x") {
+        // Scrolled down into the writing, sideways means nothing.
+        const dx = e.clientX - d.x;
+        if (d.sideways && Math.abs(dx) >= SWIPE_STEP) go(dx < 0 ? 1 : -1);
+        return;
+      }
+      // The speed over the last moments of the drag, in px/ms as the page
+      // moves under the pointer; a pointer held still before letting go has
+      // none.
+      const first = samples[0];
+      const dt = e.timeStamp - first.t;
+      if (e.type === "pointerup" && dt > 0 && dt <= VELOCITY_WINDOW * 2)
+        startGlide((e.clientY - first.y) / dt);
     };
     const click = (e: MouseEvent) => {
       if (!suppress) return;
@@ -508,6 +576,7 @@ export function ProjectList({
       window.removeEventListener("pointercancel", up);
       window.removeEventListener("click", click, true);
       delete root.dataset.dragging;
+      stopGlide();
     };
   }, [openSlug, closing, studies, setOpen]);
 
