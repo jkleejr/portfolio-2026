@@ -710,6 +710,32 @@ export function ProjectList({
               <div className="pointer-events-auto">{intro}</div>
             </div>
           )}
+
+          {/* A down arrow under the name and facts, centred in the same room,
+              saying there is more below — the study is a scroll away and
+              nothing on the first screen otherwise shows it. Left to the
+              white's drag rather than taking presses of its own. */}
+          {intro && (
+            <div
+              key={`${shown}-hint`}
+              aria-hidden
+              data-study-hint
+              className="pointer-events-none absolute left-[var(--edge)] top-[80svh] hidden w-[calc(var(--hero-left)-var(--edge)-48*var(--u))] -translate-y-1/2 justify-center text-foreground sm:flex"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="size-[calc(32*var(--u))]"
+              >
+                <path d="M12 4v16" />
+                <path d="m5 13 7 7 7-7" />
+              </svg>
+            </div>
+          )}
         </div>
 
         {/* Where this is, and the way back: "Home > Loot Check", top left

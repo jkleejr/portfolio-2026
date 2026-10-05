@@ -434,10 +434,12 @@ html[data-study-open] .corner-stack {
 }
 
 [data-study-intro],
+[data-study-hint],
 [data-study-back] {
   animation: study-in 450ms cubic-bezier(0.2, 0.8, 0.2, 1) 250ms backwards;
 }
 html:not([data-study-open]) [data-study-intro],
+html:not([data-study-open]) [data-study-hint],
 html:not([data-study-open]) [data-study-back] {
   opacity: 0;
   transition: opacity 200ms ease;
