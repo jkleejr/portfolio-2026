@@ -17,7 +17,12 @@ import { useRef } from "react";
 import { useGravity } from "./gravity";
 import { usePress } from "./press";
 
-export function AppleButton() {
+/**
+ * `fixed` holds it at the size it has with the page at full width, at every
+ * window width — the About page, where it does not scale. Otherwise it
+ * scales with the page from sm up.
+ */
+export function AppleButton({ fixed = false }: { fixed?: boolean }) {
   // Handed to the simulation so it can drop this button on the press, rather
   // than leaving it hanging under the cursor that just pressed it.
   const button = useRef<HTMLButtonElement>(null);
@@ -39,13 +44,16 @@ export function AppleButton() {
       }}
       aria-pressed={on}
       aria-label="Turn gravity on and off"
-      className="apple-button flex h-11 w-11 shrink-0 items-center justify-center text-foreground sm:size-[calc(44*var(--u))]"
+      className={`apple-button flex shrink-0 items-center justify-center text-foreground ${
+        fixed ? "size-[calc(44*var(--u-full))]" : "h-11 w-11 sm:size-[calc(44*var(--u))]"
+      }`}
     >
       <svg
         width="26"
         height="26"
-        // Scales with the page from sm up — see --u in globals.css.
-        className="sm:size-[calc(26*var(--u))]"
+        // Scales with the page from sm up, unless fixed — see --u and
+        // --u-full in globals.css.
+        className={fixed ? "size-[calc(26*var(--u-full))]" : "sm:size-[calc(26*var(--u))]"}
         viewBox="0 0 24 24"
         fill="currentColor"
         aria-hidden

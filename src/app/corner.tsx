@@ -13,7 +13,8 @@
 //
 // The About page drops the link to itself and keeps the apple, in the same
 // place as everywhere else — level with its "Home > About" in the opposite
-// corner, which is set where an open study's way back is.
+// corner, which is set where an open study's way back is. There it holds one
+// size at every window width, as the page's contact links do.
 // ---------------------------------------------------------------------------
 
 import Link from "next/link";
@@ -46,7 +47,7 @@ export function SiteCorner() {
           About
         </Link>
       )}
-      {!onHome && <AppleButton />}
+      {!onHome && <AppleButton fixed={onAbout} />}
     </div>
   );
 }

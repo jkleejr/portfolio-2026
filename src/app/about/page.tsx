@@ -47,7 +47,12 @@ export default function AboutPage() {
       {/* 120px wider than the column a study is set in, 60px out each side,
           and centred, so the white either side of it matches. */}
       <div className="mx-auto w-[calc(var(--column)+120px)] max-w-[calc(100%-3rem)]">
-        <h1 className=" text-2xl font-bold tracking-[-0.02em]">John Lee is a designer building AI-native products for mobile and web.</h1>
+        {/* No heading on show: the page opens straight into its body text.
+            The h1 is for a screen reader, which uses it to say where it is. */}
+        <h1 className="sr-only">About</h1>
+        <p className="text-lg leading-relaxed text-foreground">
+          I'm a designer building AI-native products from 0 to 1. My background in cognitive science and music production allows me to approach problems through both UI/UX design thinking and the intuition of an artist. I'm driven by curiosity and entrepreneurship, so I spent time exploring my interests by building apps, producing music, and trading/investing, which developed my skills as a creative problem solver. 
+        </p>
 
         {site.intro.some(Boolean) && (
           <div className="mt-6 space-y-3">
@@ -64,13 +69,15 @@ export default function AboutPage() {
           </p>
         )}
 
-        {/* The other places to find him, then the way to write to him. The
+        {/* The other places to find him, then the way to write to him, at
+            the size the homepage's About link has at full width, and held
+            there at every window width rather than scaling. The
             arrow after LinkedIn says it opens in a new tab: a no-break space
             so it never starts a line of its own, and hidden from a screen
             reader, which would read it out as a direction. */}
         <nav
           aria-label="Contact"
-          className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-lg font-medium text-foreground sm:text-xl"
+          className="mt-8 flex flex-wrap gap-x-6 gap-y-2 font-medium text-foreground text-[calc(20*var(--u-full))]"
         >
           {site.links.map(
             (l) =>

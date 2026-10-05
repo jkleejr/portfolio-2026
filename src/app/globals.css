@@ -75,6 +75,11 @@
      than each part following a rule of its own. On a phone the page keeps the
      layout it has there instead — see "The page on a phone". */
   --u: calc(var(--page) / 1390);
+  /* --u at its largest, once the band has reached its cap — the same 1287px
+     as --page's, so the two cannot drift apart. For what holds one size at
+     every window width rather than scaling: the apple and the contact links
+     on the About page. */
+  --u-full: calc(1287px / 1390);
 
   /* The air between the band's side edges and what is set against them: the
      name and the intro at the top, the notes in the margin, the links at the

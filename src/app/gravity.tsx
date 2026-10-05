@@ -251,12 +251,17 @@ function snapshotWords(root: HTMLElement, atoms: HTMLElement[]): Snapshot[] {
 
   // Text that is in the layout but not on the screen — a line held at zero
   // opacity to reserve the space something else is drawn into, say. Nothing
-  // invisible should fall: it would arrive as words out of nowhere.
+  // invisible should fall: it would arrive as words out of nowhere. The same
+  // goes for text kept only for a screen reader: .sr-only clips its box to a
+  // pixel, but a Range still measures the words at full size, so the copy
+  // would turn up drawn over the line it sits beside — the About page's
+  // hidden heading over the start of its first sentence.
   const faded = new Map<Element, boolean>();
   const invisible = (el: Element) => {
     let value = faded.get(el);
     if (value === undefined) {
-      value = getComputedStyle(el).opacity === "0";
+      value =
+        getComputedStyle(el).opacity === "0" || el.closest(".sr-only") !== null;
       faded.set(el, value);
     }
     return value;
