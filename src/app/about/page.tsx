@@ -71,13 +71,14 @@ export default function AboutPage() {
 
         {/* The other places to find him, then the way to write to him, at
             the size the homepage's About link has at full width, and held
-            there at every window width rather than scaling. The
+            there at every window width rather than scaling. Set flush
+            with the right edge of the column the text above runs in. The
             arrow after LinkedIn says it opens in a new tab: a no-break space
             so it never starts a line of its own, and hidden from a screen
             reader, which would read it out as a direction. */}
         <nav
           aria-label="Contact"
-          className="mt-8 flex flex-wrap gap-x-6 gap-y-2 font-medium text-foreground text-[calc(20*var(--u-full))]"
+          className="mt-8 flex flex-wrap justify-end gap-x-6 gap-y-2 font-medium text-foreground text-[calc(20*var(--u-full))]"
         >
           {site.links.map(
             (l) =>
