@@ -295,8 +295,11 @@ export function ProjectList({
       void el.offsetWidth;
       el.style.transition = moving ? "" : "none";
       delete el.dataset.away;
+      // Arriving straight at a study, the covers either side go at once
+      // rather than sliding and fading away in front of the reader.
       sections.forEach((other, j) => {
         if (j === i) return;
+        if (!moving) other.style.transition = "none";
         other.dataset.away = j < i ? "left" : "right";
       });
       el.dataset.hero = "";
@@ -305,7 +308,7 @@ export function ProjectList({
       if (!moving) {
         // Let the jump land before transitions come back on.
         void el.offsetWidth;
-        el.style.transition = "";
+        sections.forEach((other) => (other.style.transition = ""));
       }
       frame.dataset.placed = "";
     };

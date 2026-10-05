@@ -451,6 +451,12 @@ html:not([data-study-open]) [data-study-back] {
 [data-frame][data-open]:not([data-placed]) [data-strip] {
   visibility: hidden;
 }
+/* Nor are the name, the intro and the corner: the page is served with them
+   showing, and without this they would be seen first and then fade out. */
+[data-frame][data-open]:not([data-placed]) [data-home-header],
+html:has([data-frame][data-open]:not([data-placed])) .corner-stack {
+  opacity: 0;
+}
 
 @media (prefers-reduced-motion: reduce) {
   .cover-strip section {

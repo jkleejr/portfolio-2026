@@ -10,6 +10,7 @@
 // project with nothing written about it yet is just the picture.
 // ---------------------------------------------------------------------------
 
+import { useState } from "react";
 import { motion, useMotionValue, useSpring } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -109,6 +110,13 @@ export function ProjectThumbnail({
   const toggle = useCoverToggle();
   // Whether this cover is the one grown into an open study.
   const grown = !!toggle?.open;
+  // Whether the film is under way. Until it is, a browser shows its controls
+  // over it — "0:00 / 0:16" and a play bar, up while the film loads on a
+  // study opened straight from its address — so they wait for it. Its clock
+  // moving rather than its "playing" event, which comes while it still sits
+  // at 0:00 with the bar up; once it has run a little the controls come on
+  // out of sight, and show only under the pointer.
+  const [started, setStarted] = useState(false);
   const inner = media ? (
     // The recording, playing, a little under the width a study draws its
     // films at — --cover-film in globals.css, which follows --film and so
@@ -135,8 +143,14 @@ export function ProjectThumbnail({
           disablePictureInPicture
           // Grown into an open study, it takes the controls a study's films
           // have — play, scrub and volume, and nothing else the browser puts
-          // there. In the strip it is a cover, and has none.
-          controls={grown}
+          // there. In the strip it is a cover, and has none. Not before it
+          // has started — see `started`.
+          controls={grown && started}
+          onTimeUpdate={
+            started
+              ? undefined
+              : (e) => e.currentTarget.currentTime > 0.5 && setStarted(true)
+          }
           controlsList="nodownload noplaybackrate"
           aria-hidden={!grown}
           // The cover is inside the link that opens its study, and that link
