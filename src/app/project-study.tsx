@@ -711,16 +711,17 @@ export function ProjectList({
             </div>
           )}
 
-          {/* A down arrow under the name and facts, centred in the same room,
-              saying there is more below — the study is a scroll away and
-              nothing on the first screen otherwise shows it. Left to the
-              white's drag rather than taking presses of its own. */}
+          {/* A down arrow under the name and facts, about under the middle
+              of the study's line, saying there is more below — the study is
+              a scroll away and nothing on the first screen otherwise shows
+              it. Left to the white's drag rather than taking presses of its
+              own. */}
           {intro && (
             <div
               key={`${shown}-hint`}
               aria-hidden
               data-study-hint
-              className="pointer-events-none absolute left-[var(--edge)] top-[80svh] hidden w-[calc(var(--hero-left)-var(--edge)-48*var(--u))] -translate-y-1/2 justify-center text-foreground sm:flex"
+              className="pointer-events-none absolute left-[calc(var(--edge)+204*var(--u))] top-[77svh] hidden -translate-x-1/2 -translate-y-1/2 text-foreground sm:block"
             >
               <svg
                 viewBox="0 0 24 24"
