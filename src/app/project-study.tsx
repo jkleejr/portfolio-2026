@@ -726,7 +726,7 @@ export function ProjectList({
               key={`${shown}-hint`}
               aria-hidden
               data-study-hint
-              className="pointer-events-none absolute left-[calc(var(--edge)+204*var(--u))] top-[80svh] hidden -translate-x-1/2 -translate-y-1/2 text-black sm:block [[data-theme=dark]_&]:text-foreground"
+              className="pointer-events-none absolute left-[calc(var(--edge)+204*var(--u))] top-[85svh] hidden -translate-x-1/2 -translate-y-1/2 text-black sm:block [[data-theme=dark]_&]:text-foreground"
             >
               <svg
                 viewBox="0 0 24 24"
