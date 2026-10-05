@@ -717,14 +717,16 @@ export function ProjectList({
           {/* A down arrow under the name and facts, about under the middle
               of the study's line, saying there is more below — the study is
               a scroll away and nothing on the first screen otherwise shows
-              it. Left to the white's drag rather than taking presses of its
+              it. Pure black rather than the text's near-black, and the
+              text's colour again on the dark theme, where black would vanish.
+              Left to the white's drag rather than taking presses of its
               own. */}
           {intro && (
             <div
               key={`${shown}-hint`}
               aria-hidden
               data-study-hint
-              className="pointer-events-none absolute left-[calc(var(--edge)+204*var(--u))] top-[77svh] hidden -translate-x-1/2 -translate-y-1/2 text-foreground sm:block"
+              className="pointer-events-none absolute left-[calc(var(--edge)+204*var(--u))] top-[80svh] hidden -translate-x-1/2 -translate-y-1/2 text-black sm:block [[data-theme=dark]_&]:text-foreground"
             >
               <svg
                 viewBox="0 0 24 24"
@@ -733,7 +735,7 @@ export function ProjectList({
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                className="size-[calc(32*var(--u))]"
+                className="size-[calc(40*var(--u))]"
               >
                 <path d="M12 4v16" />
                 <path d="m5 13 7 7 7-7" />
