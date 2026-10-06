@@ -51,7 +51,7 @@ export default function AboutPage() {
             The h1 is for a screen reader, which uses it to say where it is. */}
         <h1 className="sr-only">About</h1>
         <p className="text-lg leading-relaxed text-foreground">
-          I'm a designer building AI-native products from 0 to 1. My background in cognitive science and music production allows me to approach problems through both UI/UX design thinking and the intuition of an artist. I'm driven by curiosity and entrepreneurship, so I spent time exploring my interests by building apps, producing music, and trading/investing, which developed my skills as a creative problem solver. 
+          I’m a designer building AI-native products from 0 to 1. My background in cognitive science and music production allows me to approach problems through both UI/UX design thinking and the intuition of an artist. I’m driven by curiosity and entrepreneurship, so I spent time exploring my interests by building apps, producing music, and trading/investing, which developed my skills as a creative problem solver. 
         </p>
 
         {site.intro.some(Boolean) && (
