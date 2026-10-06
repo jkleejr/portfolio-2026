@@ -546,6 +546,40 @@ html[data-dragging] * {
 }
 
 /* ---------------------------------------------------------------------------
+   The About page
+   From sm up the text, the photo and the links keep their sizes at every
+   window width, and the block is centred in the window, so a smaller window
+   closes in on it from every side rather than pushing it down. Centred on
+   the photo, the tallest thing in it at 400px — but never so high that it
+   comes within 32px of the corner row the way back sits in, which is 44px
+   tall at --frame-top. On a phone the page just runs down from the top.
+   --------------------------------------------------------------------------- */
+
+@media (width >= 40rem) {
+  /* And the corner row comes down with the window the way the homepage's
+     does, but stops 32px over the centred block rather than running into it
+     and pushing it down: the homepage's --frame-top, or the block's top less
+     the row and that gap, whichever is higher. The way back, the apple and
+     the undo all read it, so they move as one. */
+  :root:has(.about-page) {
+    --frame-top: max(
+      24 * var(--u),
+      min(
+        (100svh - var(--frame-h)) / 2 - 14 * var(--u),
+        (100svh - 400px) / 2 - 76px
+      )
+    );
+  }
+  .about-page {
+    padding-top: max(
+      calc(var(--frame-top) + 76px),
+      calc((100svh - 400px) / 2)
+    );
+    padding-bottom: 76px;
+  }
+}
+
+/* ---------------------------------------------------------------------------
    A recording that fits the window
    The films are 498 by 1080, so at 340px wide one stands 737px tall, and once
    a study is scrolled to its first film starts 264px down — 24px of scroll-mt,
