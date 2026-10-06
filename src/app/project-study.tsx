@@ -740,6 +740,10 @@ export function ProjectList({
   // come up into the window. Read on every scroll, a frame at a time.
   const [endSeen, setEndSeen] = useState(false);
   const atEnd = !!openSlug && endSeen;
+  // And whether the study's name and its line, beside the cover, have gone
+  // up past the window's top — the reader is into the study, and the arrow
+  // under them saying there is more below has done its job.
+  const [introGone, setIntroGone] = useState(false);
   useEffect(() => {
     if (!openSlug) return;
     let frame = 0;
@@ -747,6 +751,10 @@ export function ProjectList({
       frame = 0;
       const end = document.querySelector("[data-study] [data-study-end]");
       setEndSeen(!!end && end.getBoundingClientRect().top < window.innerHeight);
+      const title = document.querySelector("[data-study-intro] h2");
+      const line =
+        title?.nextElementSibling?.tagName === "P" ? title.nextElementSibling : title;
+      setIntroGone(!!line && line.getBoundingClientRect().bottom < 0);
     };
     const onScroll = () => {
       if (!frame) frame = requestAnimationFrame(check);
@@ -760,6 +768,7 @@ export function ProjectList({
       window.removeEventListener("resize", onScroll);
       // The next study opens at its top, not at its end.
       setEndSeen(false);
+      setIntroGone(false);
     };
   }, [openSlug]);
 
@@ -856,7 +865,8 @@ export function ProjectList({
           {/* A down arrow under the name and facts, about under the middle
               of the study's line, saying there is more below — the study is
               a scroll away and nothing on the first screen otherwise shows
-              it. Pure black rather than the text's near-black, and the
+              it. It fades once the name and line above it have gone up out
+              of the window, and back if the reader returns. Pure black rather than the text's near-black, and the
               text's colour again on the dark theme, where black would vanish.
               Left to the white's drag rather than taking presses of its
               own. */}
@@ -865,6 +875,7 @@ export function ProjectList({
               key={`${shown}-hint`}
               aria-hidden
               data-study-hint
+              data-gone={introGone ? "" : undefined}
               className="pointer-events-none absolute left-[calc(var(--edge)+204*var(--u))] top-[85svh] hidden -translate-x-1/2 -translate-y-1/2 text-black sm:block [[data-theme=dark]_&]:text-foreground"
             >
               <svg

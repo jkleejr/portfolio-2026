@@ -445,6 +445,15 @@ html:not([data-study-open]) [data-study-back] {
   transition: opacity 200ms ease;
 }
 
+/* The arrow under an open study's name, gone once the reader has scrolled
+   the name out of the window — the same fade as the way back below. */
+[data-study-hint] {
+  transition: opacity 500ms ease;
+}
+[data-study-hint][data-gone] {
+  opacity: 0;
+}
+
 /* The way back held in the corner at a study's end — see ProjectList. A
    slower fade than the rest, so it eases in rather than appearing. */
 [data-study-back-end] {
