@@ -85,6 +85,12 @@ type Snapshot = {
   // Split off one character at a time, which today means it came out of the
   // name. Only these are measured down to their ink — see inkBox.
   letter: boolean;
+  // The run of text it was taken from, which stays in the page, laid out
+  // but unseen — read again to find where the word has gone when the window
+  // is resized. See relayout in run().
+  node: Text;
+  start: number;
+  end: number;
 };
 
 // Mouse.setElement attaches these handlers and matter-js offers no teardown
@@ -319,7 +325,16 @@ function snapshotWords(root: HTMLElement, atoms: HTMLElement[]): Snapshot[] {
         range.setEnd(node, at + match[0].length);
         const r = range.getBoundingClientRect();
         if (!drawn(r)) continue;
-        out.push({ text: match[0], left: r.left, top: r.top, css, letter });
+        out.push({
+          text: match[0],
+          left: r.left,
+          top: r.top,
+          css,
+          letter,
+          node,
+          start: at,
+          end: at + match[0].length,
+        });
       }
     }
 
@@ -469,21 +484,21 @@ function run(
 
   const pieces: Piece[] = [];
 
-  // Atoms: the real elements, taken out of flow where they already sit.
-  const restores = atoms.map((el, i) => {
-    const rect = atomRects[i];
-    const before = el.getAttribute("style");
-    // An atom that was running inline in a line of text — the breadcrumb's
-    // "Home" is the one on the page — needs its leading taken off before it is
-    // pinned. The box measured above is the inline one, which is only as tall
-    // as the letters; position: fixed turns the element into a block, and a
-    // block lays its line out at the full line-height, splitting the extra
-    // above and below the letters and dropping them a couple of pixels down
-    // their own box. Setting the leading to the height that was measured
-    // leaves nothing to split, so the letters stay where they were standing.
-    const leading = inlineLeading(el, rect);
+  // Takes an atom out of flow at `rect`, its box in the window. Once as
+  // gravity starts, and again for each one still standing whenever the window
+  // is resized — see relayout.
+  //
+  // An atom that was running inline in a line of text — the breadcrumb's
+  // "Home" is the one on the page — needs its leading taken off before it is
+  // pinned. The box measured is the inline one, which is only as tall as the
+  // letters; position: fixed turns the element into a block, and a block lays
+  // its line out at the full line-height, splitting the extra above and below
+  // the letters and dropping them a couple of pixels down their own box.
+  // Setting the leading to the height that was measured leaves nothing to
+  // split, so the letters stay where they were standing. `leading` is read by
+  // the caller, while the atom is still in flow — see inlineLeading.
+  function pin(el: HTMLElement, rect: DOMRect, leading: number | null) {
     if (leading !== null) el.style.lineHeight = `${leading}px`;
-    el.classList.add("gravity-atom");
     el.style.position = "fixed";
     el.style.left = "0";
     el.style.top = "0";
@@ -491,6 +506,21 @@ function run(
     el.style.height = `${rect.height}px`;
     el.style.margin = "0";
     el.style.transform = `translate3d(${rect.left}px, ${rect.top}px, 0)`;
+  }
+
+  // What each atom's style attribute was before any of this, to put back.
+  const befores = atoms.map((el) => el.getAttribute("style"));
+  const unpin = (el: HTMLElement, i: number) => {
+    const before = befores[i];
+    if (before === null) el.removeAttribute("style");
+    else el.setAttribute("style", before);
+  };
+
+  // Atoms: the real elements, taken out of flow where they already sit.
+  const restores = atoms.map((el, i) => {
+    const rect = atomRects[i];
+    el.classList.add("gravity-atom");
+    pin(el, rect, inlineLeading(el, rect));
     pieces.push({
       el,
       body: makeBody(
@@ -509,8 +539,7 @@ function run(
     });
     return () => {
       el.classList.remove("gravity-atom");
-      if (before === null) el.removeAttribute("style");
-      else el.setAttribute("style", before);
+      unpin(el, i);
     };
   });
 
@@ -858,7 +887,152 @@ function run(
     frame = requestAnimationFrame(paint);
   });
 
-  // Keep the floor and walls on the viewport edges when the window changes.
+  // A piece moved to a new place, and given a new body if it has changed
+  // size — the page's type can be set in units of the window, and a body the
+  // old size would stand out past the word or leave a gap round it. Static
+  // either way: only what is still standing is ever moved here.
+  function settle(piece: Piece, x: number, y: number, w: number, h: number) {
+    if (Math.abs(w - piece.w) > 0.5 || Math.abs(h - piece.h) > 0.5) {
+      const body = makeBody(x, y, w, h, isDisc(piece.el, w, h));
+      Matter.Composite.remove(world, piece.body);
+      Matter.Composite.add(world, body);
+      piece.body = body;
+      piece.w = w;
+      piece.h = h;
+    } else {
+      Matter.Body.setPosition(piece.body, { x: x + w / 2, y: y + h / 2 });
+    }
+    piece.pageX = x + window.scrollX;
+    piece.pageY = y + window.scrollY;
+  }
+
+  // The window has changed size, and the page under the pieces has been laid
+  // out again for it: lines wrap in new places, the corner has moved, type
+  // set in units of the window has grown or shrunk. Everything still standing
+  // goes to where its part of the page now is, so the page keeps reading as
+  // itself rather than staying pinned where it stood and being cut off by the
+  // window's edge. What has fallen belongs to the window and stays where it
+  // lies.
+  //
+  // Measured the way it was the first time: every atom put back in flow —
+  // the fallen ones too, since a gap where one stood would move what is
+  // beside it — and the page's height let go, then everything read, then
+  // everything pinned again, all before the frame is drawn.
+  const atomPieces = pieces.slice(0, atoms.length);
+  const wordPieces = pieces
+    .slice(atoms.length)
+    .map((piece, i) => ({ piece, word: words[i] }));
+  const fontRange = document.createRange();
+  const relayout = () => {
+    const pinned = atoms.map((el) => el.getAttribute("style"));
+    atoms.forEach(unpin);
+    panel.style.height = heldHeight;
+
+    const rects = atoms.map((el) => el.getBoundingClientRect());
+    const leadings = atoms.map((el, i) =>
+      atomPieces[i].body.isStatic ? inlineLeading(el, rects[i]) : null,
+    );
+    const anchors = atomAnchors.map((read) => (read ? read() : null));
+    const height = panel.getBoundingClientRect().height;
+    const standing = wordPieces.filter(({ piece }) => piece.body.isStatic);
+    const wordRects = standing.map(({ word }) => {
+      fontRange.setStart(word.node, word.start);
+      fontRange.setEnd(word.node, word.end);
+      return fontRange.getBoundingClientRect();
+    });
+    // The type, read again per line it sits in: set in units of the window,
+    // it is a different size now.
+    const type = new Map<Element, Partial<WordStyle>>();
+    for (const { word } of standing) {
+      const parent = word.node.parentElement;
+      if (!parent || type.has(parent)) continue;
+      const cs = getComputedStyle(parent);
+      type.set(parent, {
+        fontSize: cs.fontSize,
+        lineHeight: cs.lineHeight,
+        letterSpacing: cs.letterSpacing,
+      });
+    }
+
+    panel.style.height = `${height}px`;
+    atoms.forEach((el, i) => {
+      const piece = atomPieces[i];
+      if (!piece.body.isStatic) {
+        // Fallen: back exactly as the engine had it.
+        const was = pinned[i];
+        if (was === null) el.removeAttribute("style");
+        else el.setAttribute("style", was);
+        return;
+      }
+      pin(el, rects[i], leadings[i]);
+    });
+    // And what is inside each one, read again now that it is pinned — see
+    // the drift pass above.
+    atoms.forEach((el, i) => {
+      const piece = atomPieces[i];
+      if (!piece.body.isStatic) return;
+      const rect = rects[i];
+      const was = anchors[i];
+      const read = atomAnchors[i];
+      const now = read && was && drawn(was) ? read() : null;
+      const dx = now && was ? now.left - was.left : 0;
+      const dy = now && was ? now.top - was.top : 0;
+      const off = Math.abs(dx) >= 0.05 || Math.abs(dy) >= 0.05;
+      piece.ox = off ? dx : 0;
+      piece.oy = off ? dy : 0;
+      el.style.transformOrigin = off
+        ? `${dx + rect.width / 2}px ${dy + rect.height / 2}px`
+        : "";
+      settle(piece, rect.left, rect.top, rect.width, rect.height);
+    });
+
+    // Words: the new type onto each copy first, then every copy measured,
+    // then every one placed — one layout for the set.
+    standing.forEach(({ word, piece }) => {
+      const parent = word.node.parentElement;
+      const t = parent ? type.get(parent) : undefined;
+      if (t) {
+        Object.assign(word.css, t);
+        Object.assign(piece.el.style, t);
+      }
+    });
+    const measured = standing.map(({ word, piece }) => {
+      const { el } = piece;
+      const box = { w: el.offsetWidth, h: el.offsetHeight };
+      const at = el.getBoundingClientRect();
+      const text = el.firstChild;
+      let inset = { left: 0, top: 0 };
+      if (text) {
+        fontRange.selectNodeContents(text);
+        const g = fontRange.getBoundingClientRect();
+        inset = { left: g.left - at.left, top: g.top - at.top };
+      }
+      const ink = word.letter
+        ? inkBox(ctx, word.css, word.text, inset, box)
+        : null;
+      return { box, inset, ink };
+    });
+    standing.forEach(({ piece }, i) => {
+      const r = wordRects[i];
+      if (!drawn(r)) return;
+      const { box, inset, ink } = measured[i];
+      const left = r.left - inset.left;
+      const top = r.top - inset.top;
+      const ox = ink ? ink.ox : 0;
+      const oy = ink ? ink.oy : 0;
+      const w = ink ? ink.w : box.w;
+      const h = ink ? ink.h : box.h;
+      piece.ox = ox;
+      piece.oy = oy;
+      if (ink) piece.el.style.transformOrigin = `${ox + w / 2}px ${oy + h / 2}px`;
+      settle(piece, left + ox, top + oy, w, h);
+    });
+  };
+
+  // Keep the floor and walls on the viewport edges when the window changes,
+  // and the page that is still standing laid out for it — once a frame at
+  // most, however many resize events the frame brings.
+  let relaying = 0;
   const resize = () => {
     const w = window.innerWidth;
     const h = window.innerHeight;
@@ -866,11 +1040,18 @@ function run(
     Matter.Body.setPosition(left, { x: -WALL / 2, y: h / 2 });
     Matter.Body.setPosition(right, { x: w + WALL / 2, y: h / 2 });
     Matter.Body.setPosition(ceiling, { x: w / 2, y: -WALL / 2 });
+    if (!relaying) {
+      relaying = requestAnimationFrame(() => {
+        relaying = 0;
+        relayout();
+      });
+    }
   };
   window.addEventListener("resize", resize);
 
   return () => {
     cancelAnimationFrame(frame);
+    cancelAnimationFrame(relaying);
     window.removeEventListener("resize", resize);
     window.removeEventListener("mousemove", onMove, true);
     window.removeEventListener("mousedown", onDown, true);
