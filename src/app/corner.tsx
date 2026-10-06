@@ -14,12 +14,16 @@
 // The About page drops the link to itself and keeps the apple, in the same
 // place as everywhere else — level with its "Home > About" in the opposite
 // corner, which is set where an open study's way back is. There it holds one
-// size at every window width, as the page's contact links do.
+// size at every window width, as the page's contact links do. Once it has
+// been pressed, an undo arrow turns up in its place — see undo-button.tsx.
 // ---------------------------------------------------------------------------
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useRef } from "react";
 import { AppleButton } from "./apple-button";
+import { useGravity } from "./gravity";
+import { UndoButton } from "./undo-button";
 
 /**
  * The row is the apple's height, held there where the apple is left out so the
@@ -34,20 +38,29 @@ export function SiteCorner() {
   // with a study open — the same reading as the script in layout.tsx.
   const onHome =
     path === "" || (!onAbout && path.split("/").filter(Boolean).length === 1);
+  // The switch is held here rather than in the apple, so the undo beside the
+  // stack can throw it back too.
+  const apple = useRef<HTMLButtonElement>(null);
+  const { on, toggle } = useGravity(apple);
   return (
-    <div
-      data-gravity="atom"
-      className="corner-stack absolute right-[var(--edge)] top-6 z-20 flex min-h-11 flex-row items-center gap-4 sm:top-[var(--frame-top)] sm:min-h-[calc(44*var(--u))] sm:gap-[calc(16*var(--u))]"
-    >
-      {!onAbout && (
-        <Link
-          href="/about"
-          className="text-lg font-medium text-foreground transition-colors duration-200 ease-out hover:text-accent sm:text-[calc(20*var(--u))]"
-        >
-          About
-        </Link>
-      )}
-      {!onHome && <AppleButton fixed={onAbout} />}
-    </div>
+    <>
+      <div
+        data-gravity="atom"
+        className="corner-stack absolute right-[var(--edge)] top-6 z-20 flex min-h-11 flex-row items-center gap-4 sm:top-[var(--frame-top)] sm:min-h-[calc(44*var(--u))] sm:gap-[calc(16*var(--u))]"
+      >
+        {!onAbout && (
+          <Link
+            href="/about"
+            className="text-lg font-medium text-foreground transition-colors duration-200 ease-out hover:text-accent sm:text-[calc(20*var(--u))]"
+          >
+            About
+          </Link>
+        )}
+        {!onHome && (
+          <AppleButton fixed={onAbout} button={apple} on={on} toggle={toggle} />
+        )}
+      </div>
+      {onAbout && <UndoButton on={on} undo={toggle} />}
+    </>
   );
 }

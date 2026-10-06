@@ -13,21 +13,30 @@
 // in currentColor and read as one silhouette.
 // ---------------------------------------------------------------------------
 
-import { useRef } from "react";
-import { useGravity } from "./gravity";
+import type { RefObject } from "react";
 import { usePress } from "./press";
 
 /**
  * `fixed` holds it at the size it has with the page at full width, at every
  * window width — the About page, where it does not scale. Otherwise it
  * scales with the page from sm up.
+ *
+ * The switch itself is held by SiteCorner, which also gives the way back —
+ * see UndoButton — so this is handed the state rather than owning it.
+ * `button` goes to the simulation so it can drop this button on the press,
+ * rather than leaving it hanging under the cursor that just pressed it.
  */
-export function AppleButton({ fixed = false }: { fixed?: boolean }) {
-  // Handed to the simulation so it can drop this button on the press, rather
-  // than leaving it hanging under the cursor that just pressed it.
-  const button = useRef<HTMLButtonElement>(null);
-  const { on, toggle } = useGravity(button);
-
+export function AppleButton({
+  fixed = false,
+  button,
+  on,
+  toggle,
+}: {
+  fixed?: boolean;
+  button: RefObject<HTMLButtonElement | null>;
+  on: boolean;
+  toggle: () => void;
+}) {
   // Once gravity is on the apple can be picked up and thrown, and the throw
   // ends with the pointer released over the apple it was carrying — which the
   // browser reports as a click, switching off the very thing being played

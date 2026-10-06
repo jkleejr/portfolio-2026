@@ -445,6 +445,19 @@ html:not([data-study-open]) [data-study-back] {
   transition: opacity 200ms ease;
 }
 
+/* The undo on the About page fades in over the time and curve an open
+   study's way back does, but where it stands rather than rising into place,
+   and without the wait: it already waits its two seconds — see
+   undo-button.tsx. */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+[data-gravity-undo] {
+  animation: fade-in 450ms cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
+}
+
 /* The arrow under an open study's name, gone once the reader has scrolled
    the name out of the window — the same fade as the way back below. */
 [data-study-hint] {
