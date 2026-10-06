@@ -1087,7 +1087,7 @@ export function useGravity(trigger: RefObject<HTMLElement | null>): {
 } {
   // The switch does not remember that it is on; it remembers WHERE it was
   // thrown, and it is on only while you are still there. Leaving the page ends
-  // the game, and this is how, without a single line spent on noticing.
+  // the game, and this is how.
   //
   // It has to end. The switch lives in the layout, so it survives a navigation
   // that the page under it does not: the pieces stand in for a page that has
@@ -1096,11 +1096,13 @@ export function useGravity(trigger: RefObject<HTMLElement | null>): {
   // That is what made a cover vanish instead of opening. It did open; it opened
   // onto a page held invisible by the simulation of the page before it.
   //
-  // Come back to the page you threw it on and it is still thrown, which is the
-  // same rule read the other way round: the switch belongs to the page, and
-  // walking out of the room does not put the weight back into the world.
+  // And it is forgotten on the way out, so coming back to the page you threw
+  // it on finds the page standing and the apple waiting to be pressed again.
+  // The switch is cleared while rendering the new address, rather than in an
+  // effect after it, so the apple never arrives back still ripe for a frame.
   const pathname = usePathname();
   const [thrownAt, setThrownAt] = useState<string | null>(null);
+  if (thrownAt !== null && thrownAt !== pathname) setThrownAt(null);
   const on = thrownAt === pathname;
   const teardown = useRef<(() => void) | null>(null);
 
