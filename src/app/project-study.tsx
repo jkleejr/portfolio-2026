@@ -718,8 +718,61 @@ export function ProjectList({
     return () => window.removeEventListener("wheel", wheel);
   }, [shown, press, studies]);
 
+  // Whether the reader is down at the open study's end: its last section,
+  // the results and reflection (marked data-study-end in case-study.tsx), has
+  // come up into the window. Read on every scroll, a frame at a time.
+  const [endSeen, setEndSeen] = useState(false);
+  const atEnd = !!openSlug && endSeen;
+  useEffect(() => {
+    if (!openSlug) return;
+    let frame = 0;
+    const check = () => {
+      frame = 0;
+      const end = document.querySelector("[data-study] [data-study-end]");
+      setEndSeen(!!end && end.getBoundingClientRect().top < window.innerHeight);
+    };
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(check);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      // The next study opens at its top, not at its end.
+      setEndSeen(false);
+    };
+  }, [openSlug]);
+
   const study = shown ? studies[shown] : undefined;
   const intro = shown ? intros[shown] : undefined;
+
+  // "Home > Loot Check": where this is, and the way back. Home is a link to
+  // the homepage for anything that wants one — a new tab, a screen reader —
+  // and a plain press puts the cover back into the strip rather than loading
+  // the page again.
+  const crumbs = shown && (
+    <>
+      <Link
+        href="/"
+        prefetch={false}
+        onClick={(e) => {
+          if (modified(e)) return;
+          e.preventDefault();
+          close();
+        }}
+        className="text-muted transition-colors duration-200 ease-out hover:text-accent"
+      >
+        Home
+      </Link>
+      <span aria-hidden className="px-2 text-muted">
+        &gt;
+      </span>
+      <span aria-current="page">{caseStudies[shown]?.title}</span>
+    </>
+  );
 
   return (
     <OpenContext.Provider value={{ openSlug, press }}>
@@ -826,22 +879,25 @@ export function ProjectList({
             data-study-back
             className="absolute left-[var(--edge)] top-6 z-30 flex h-11 items-center text-base leading-relaxed sm:top-[var(--frame-top)]"
           >
-            <Link
-              href="/"
-              prefetch={false}
-              onClick={(e) => {
-                if (modified(e)) return;
-                e.preventDefault();
-                close();
-              }}
-              className="text-muted transition-colors duration-200 ease-out hover:text-accent"
-            >
-              Home
-            </Link>
-            <span aria-hidden className="px-2 text-muted">
-              &gt;
-            </span>
-            <span aria-current="page">{caseStudies[shown]?.title}</span>
+            {crumbs}
+          </nav>
+        )}
+
+        {/* The same way back again, held in the window's top left once the
+            reader is down at the study's end — its results and reflection —
+            so getting home does not mean scrolling all the way back up. It
+            fades in as that section comes into view and out again above it.
+            Out of reach while hidden, so it is not pressed or tabbed to. */}
+        {shown && (
+          <nav
+            aria-label="Breadcrumb"
+            aria-hidden={!atEnd}
+            inert={!atEnd}
+            data-study-back-end
+            data-shown={atEnd ? "" : undefined}
+            className="fixed left-[var(--edge)] top-6 z-30 hidden h-11 items-center text-base leading-relaxed sm:top-[var(--frame-top)] sm:flex"
+          >
+            {crumbs}
           </nav>
         )}
 

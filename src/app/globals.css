@@ -445,6 +445,16 @@ html:not([data-study-open]) [data-study-back] {
   transition: opacity 200ms ease;
 }
 
+/* The way back held in the corner at a study's end — see ProjectList. A
+   slower fade than the rest, so it eases in rather than appearing. */
+[data-study-back-end] {
+  opacity: 0;
+  transition: opacity 500ms ease;
+}
+[data-study-back-end][data-shown] {
+  opacity: 1;
+}
+
 /* Arriving straight at a study's address: the strip is kept out of sight
    until its cover has been put in its grown place, so it is never seen in
    the strip first. */

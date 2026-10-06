@@ -297,6 +297,10 @@ function Block({
         const lead = after && PICTURES.has(after) ? "pt-2" : "pt-4";
         return (
           <h2
+            // The results and reflection close every study. Marked so the
+            // open study can bring its way back home into the corner once
+            // the reader reaches them — see ProjectList.
+            data-study-end={block.note === "Reflection" ? "" : undefined}
             className={`${lead} relative mb-2 text-xl font-bold leading-snug tracking-[-0.02em]`}
           >
             {/* A line about the section, out in the margin at the left of the
