@@ -158,14 +158,17 @@ export default function RootLayout({
             parsed, which is late enough to be right and still before the
             first paint.
 
-            innerWidth counts the scrollbar and the documentElement's
-            clientWidth does not, so the gap between them is the scrollbar —
-            0 on a platform drawing an overlay one, which is the answer that
-            leaves every measure exactly as it was. */}
+            Measured on a box of its own made to scroll, rather than on the
+            page, so it is the platform's scrollbar whether this page has one
+            or not — the body is laid out a scrollbar narrower than the window
+            on every page, so nothing moves between a page that scrolls and
+            one that does not (see body in globals.css). 0 on a platform
+            drawing an overlay one, which is the answer that leaves every
+            measure exactly as it was. */}
         <script
           dangerouslySetInnerHTML={{
             __html:
-              "(function(){var m=function(){var w=window.innerWidth-document.documentElement.clientWidth;document.documentElement.style.setProperty('--scrollbar',(w>0?w:0)+'px')};m();addEventListener('resize',m)})();",
+              "(function(){var m=function(){var d=document.createElement('div');d.style.cssText='position:absolute;top:-999px;width:100px;height:100px;overflow:scroll';document.body.appendChild(d);var w=d.offsetWidth-d.clientWidth;d.remove();document.documentElement.style.setProperty('--scrollbar',(w>0?w:0)+'px')};m();addEventListener('resize',m)})();",
           }}
         />
         <Analytics />

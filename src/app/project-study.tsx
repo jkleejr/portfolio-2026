@@ -836,8 +836,10 @@ export function ProjectList({
               // margins are that white — --gutter — and come to nothing on a
               // window the band fills. The strip pads its start by the same
               // amount, so the first cover still starts on the name's line.
+              // A scrollbar further on the right, since the body stops that
+              // short of the window — see body in globals.css.
               data-strip
-              className="-mx-[var(--gutter)] mt-16 sm:mt-[calc(64*var(--u))]"
+              className="-ml-[var(--gutter)] -mr-[calc(var(--gutter)+var(--scrollbar))] mt-16 sm:mt-[calc(64*var(--u))]"
             >
               <CoverStrip scroller={scrollerRef} track={trackRef} slack={slackRef}>
                 {children}

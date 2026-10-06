@@ -264,7 +264,14 @@
   background-color: var(--background);
 }
 
+/* As wide as the window less a scrollbar, on every page, whether the page
+   has one or not — --scrollbar is the platform's scrollbar, not this page's.
+   The homepage does not scroll and an open study does, so without this the
+   width changed between them, and the name and the About link, laid out
+   from it, slid sideways on the way back. The background still fills the
+   window, since the body's is the canvas's. */
 body {
+  width: calc(100vw - var(--scrollbar));
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-satoshi), system-ui, sans-serif;
@@ -579,6 +586,10 @@ html[data-dragging] * {
 
 html {
   overscroll-behavior-y: none;
+  /* The cover strip runs a scrollbar's width past the page on the right —
+     see body below — which on a page that does scroll goes under the
+     scrollbar, and would otherwise widen the page by that much. */
+  overflow-x: hidden;
 }
 
 body {
