@@ -32,7 +32,9 @@ export const card = {
 /** `path` is the address being described, from the root: "/loot-check". */
 export function studyMetadata(slug: string, path: string): Metadata {
   const study = caseStudies[slug];
-  if (!study) return {};
+  // No such study: the page is the not-found one, and its tab says so — the
+  // not-found page's own title gives way to whatever the route says here.
+  if (!study) return { title: `Page not found - ${site.titleName}` };
 
   // The project first, then the name, joined by a plain hyphen — the tab is
   // read from the left, and the project is what the page is about.
