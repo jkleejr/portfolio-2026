@@ -580,6 +580,23 @@ export function ProjectList({
     };
   }, [openSlug, closing, studies, setOpen]);
 
+  // Escape puts the open study away and goes back to the homepage, the way
+  // the "Home" in the corner does. Not while the press belongs to something
+  // else: typing in a field, or a film shown full screen, which Escape takes
+  // out of full screen first.
+  useEffect(() => {
+    if (!openSlug || closing) return;
+    const key = (e: KeyboardEvent) => {
+      if (e.key !== "Escape" || e.defaultPrevented || document.fullscreenElement)
+        return;
+      if ((e.target as Element).closest?.("input, textarea, select, [contenteditable]"))
+        return;
+      close();
+    };
+    window.addEventListener("keydown", key);
+    return () => window.removeEventListener("keydown", key);
+  }, [openSlug, closing, close]);
+
   // Back to the homepage by pulling down from the top of a study's first
   // screen — a swipe up on a trackpad, or the wheel turned up. Not on the
   // first touch: the first screen comes down with the pull, against a
