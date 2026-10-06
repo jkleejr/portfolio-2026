@@ -31,7 +31,7 @@ export default function AboutPage() {
           way back is in the same spot on every page that has one. */}
       <nav
         aria-label="Breadcrumb"
-        className="absolute left-[var(--edge)] top-6 z-30 flex h-11 items-center text-base leading-relaxed sm:top-[var(--frame-top)]"
+        className="absolute left-[var(--edge)] top-6 z-30 flex h-11 items-center text-lg leading-relaxed sm:top-[var(--frame-top)]"
       >
         <Link
           href="/"

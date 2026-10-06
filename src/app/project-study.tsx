@@ -905,7 +905,7 @@ export function ProjectList({
           <nav
             aria-label="Breadcrumb"
             data-study-back
-            className="absolute left-[var(--edge)] top-6 z-30 flex h-11 items-center text-base leading-relaxed sm:top-[var(--frame-top)]"
+            className="absolute left-[var(--edge)] top-6 z-30 flex h-11 items-center text-lg leading-relaxed sm:top-[var(--frame-top)]"
           >
             {crumbs}
           </nav>
@@ -923,7 +923,7 @@ export function ProjectList({
             inert={!atEnd}
             data-study-back-end
             data-shown={atEnd ? "" : undefined}
-            className="fixed left-[var(--edge)] top-6 z-30 hidden h-11 items-center text-base leading-relaxed sm:top-[var(--frame-top)] sm:flex"
+            className="fixed left-[var(--edge)] top-6 z-30 hidden h-11 items-center text-lg leading-relaxed sm:top-[var(--frame-top)] sm:flex"
           >
             {crumbs}
           </nav>

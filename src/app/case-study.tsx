@@ -196,7 +196,7 @@ export function StudyBody({
           {studyFacts(study).map((line, i) => (
             <p
               key={i}
-              className={`${i ? "mt-1" : "mt-2"} text-base leading-relaxed`}
+              className={`${i ? "mt-1" : "mt-2"} text-lg leading-relaxed`}
             >
               <StudyFact {...line} />
             </p>
@@ -318,7 +318,7 @@ function Block({
                 heading stands on its own. */}
             {block.note && (
               <span
-                className={`absolute ${lead.replace("pt-", "top-")} left-[var(--margin-note-x)] hidden w-[var(--margin-note)] text-base font-bold leading-relaxed min-[1000px]:block`}
+                className={`absolute ${lead.replace("pt-", "top-")} left-[var(--margin-note-x)] hidden w-[var(--margin-note)] text-lg font-bold leading-relaxed min-[1000px]:block`}
               >
                 {block.note}
               </span>
@@ -330,7 +330,7 @@ function Block({
 
     case "text":
       return (
-        <p className="text-base leading-relaxed text-body">
+        <p className="text-lg leading-relaxed text-body">
           <Inline text={block.text} />
         </p>
       );
@@ -345,7 +345,7 @@ function Block({
           {block.items.map((item, i) => (
             <li
               key={i}
-              className={`text-base leading-relaxed marker:text-muted ${
+              className={`text-lg leading-relaxed marker:text-muted ${
                 block.ordered ? "list-decimal" : "list-disc"
               }`}
             >
