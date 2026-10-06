@@ -605,19 +605,32 @@ body {
     stroke 0.2s ease-out;
 }
 
-.apple-button:hover .apple-body,
+/* Under the pointer only where there is one to hover with. A phone keeps a
+   tap's hover on the spot it landed, and the About link is in the corner the
+   apple takes on the About page — so tapping it would hand its hover to the
+   apple there, and the apple would arrive ripe without being touched. */
+@media (hover: hover) {
+  .apple-button:hover .apple-body {
+    fill: #dd2025;
+  }
+  .apple-button:hover .apple-leaf {
+    fill: #5ea338;
+  }
+  .apple-button:hover .apple-stem {
+    stroke: #8b5a2b;
+  }
+}
+
 .apple-button:active .apple-body,
 .apple-button[aria-pressed="true"] .apple-body {
   fill: #dd2025;
 }
 
-.apple-button:hover .apple-leaf,
 .apple-button:active .apple-leaf,
 .apple-button[aria-pressed="true"] .apple-leaf {
   fill: #5ea338;
 }
 
-.apple-button:hover .apple-stem,
 .apple-button:active .apple-stem,
 .apple-button[aria-pressed="true"] .apple-stem {
   stroke: #8b5a2b;
