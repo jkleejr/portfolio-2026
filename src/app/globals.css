@@ -121,15 +121,11 @@
      of it, and the band is what now holds it. */
   --study-width: calc((var(--page) + var(--column)) / 2 - var(--edge) - 1.5rem);
 
-  /* The name across the top of the homepage. It sets solid, so its type size
-     is also its height — which is what the line beneath it has to clear, and
-     the reason the size lives here rather than only in the markup. Where the
-     number comes from is in the note on the name in design-one.tsx. It was
-     18.5vw, capped at 18rem; then 18.5% of the band, which is the same thing
-     with the cap moved into --page, less the scrollbar; and now 14.5% of it,
-     a little smaller. The floor is for a window too narrow for the name at
-     all. */
-  --name-size: max(2rem, calc(var(--page) * 0.145 * 1440 / 1390));
+  /* The name in the homepage's top left corner, on the corner row opposite
+     the About link — 48px of the 1440px page, in --u like the rest of the
+     row. It used to run most of the width of the window; see the note on the
+     name in design-one.tsx. */
+  --name-size: calc(48 * var(--u));
   /* The height of the row across the top of the page, which is the apple
      button's box. The homepage reads it to know how far to drop its name
      on a phone, where the name would otherwise run into the apple. */
@@ -154,11 +150,11 @@
   --shot: calc(var(--film) / 340);
 
   /* The width a demo video is drawn at as a cover in the homepage's strip —
-     268px of the 1440px page, so the covers scale with the rest of it — see
+     310px of the 1440px page, so the covers scale with the rest of it — see
      --u. On a phone, where that would be a thumbnail, it is a little under
      the film a study draws instead. The picture in the strip is drawn as tall
      as these. */
-  --cover-film: calc(268 * var(--u));
+  --cover-film: calc(310 * var(--u));
 
   /* How tall a cover in the strip stands: the film's width less its 1px
      border each side, at the films' 498 by 1080, and the border back on. */
@@ -171,7 +167,8 @@
 
   /* Where the homepage's frame starts, from sm up: its contents are centred
      in the window, so as the page scales down it draws in towards the middle
-     rather than up to the top. The frame is the name and the strip — the
+     rather than up to the top. The frame is the name's row and the strip —
+     the row is 44px, the corner's height, and then the
      64px above the strip (the name's own 56px under it folds into that one),
      its 16px of air either side, and a cover —
      all of it known here, so the top is worked out rather than left to the
@@ -181,7 +178,7 @@
      true centre, which reads as centred where the middle itself sits low.
      Never closer to the top than the 24px of air the page keeps. */
   --frame-h: calc(
-    var(--name-size) + 64 * var(--u) + 32 * var(--u) + var(--cover-h)
+    44 * var(--u) + 64 * var(--u) + 32 * var(--u) + var(--cover-h)
   );
   --frame-top: max(24 * var(--u), (100svh - var(--frame-h)) / 2 - 14 * var(--u));
 
@@ -534,10 +531,9 @@ html[data-dragging] * {
 
 @media (width < 40rem) {
   :root {
-    /* The name a size up on a phone, where it is centred on its own line
-       rather than sharing the top with the corner. 17% still leaves it room
-       either side on the narrowest phones. */
-    --name-size: max(2rem, calc(var(--page) * 0.17));
+    /* The name holds a fixed size on a phone, where --u would make it
+       tiny, as the corner row it sits on does. */
+    --name-size: 2rem;
     --edge: 1.5rem;
     --cover-film: calc(var(--film) * 0.85);
     --cover: 104px;
