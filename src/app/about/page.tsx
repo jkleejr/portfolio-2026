@@ -2,7 +2,7 @@
 // The About page: the ways to get in touch — LinkedIn and email.
 //
 // Set out in the column a study's own page uses (see projects/[slug]/page.tsx),
-// with the title on the line the homepage's name starts on. The way back is
+// under the name in blackletter at the top middle of the page. The way back is
 // where an open study puts its own (see project-study.tsx): top left, at the
 // page's --edge, level with the apple in the opposite corner. Reached from
 // the "About" link in the top-right corner of the homepage — see corner.tsx.
@@ -23,10 +23,30 @@ const link = "transition-colors duration-200 ease-out hover:text-accent";
 
 export default function AboutPage() {
   return (
-    // On a phone the text starts 32px under the corner row the way back
-    // shares with the apple: 44px tall, 1.5rem down. From sm up the block is
-    // centred in the window — see .about-page in globals.css.
-    <main className="about-page relative pb-8 pt-[100px]">
+    // On a phone the text starts 32px under the name's row, which is 1rem
+    // under the corner row the way back shares with the apple: 44px tall,
+    // 1.5rem down. From sm up the block is centred in the window — see
+    // .about-page in globals.css.
+    <main className="about-page relative pb-8 pt-[160px]">
+      {/* The name, set in the blackletter — see .fraktur in globals.css. At
+          the top middle of the page: from sm up on the corner row, between
+          the way back and the apple, and on a phone on a row of its own under
+          it, where the three would not fit across. The line-height is the
+          row's height, so it sits level with the corner without being
+          measured against it. Centred by spanning the page and centring the
+          text rather than by a transform, which would become what gravity's
+          pinned letters resolve position: fixed against. Before the way back
+          in the markup, and under it, so the stretch of it over the way back
+          does not take that link's presses.
+
+          data-gravity="letters" is for when the apple is pressed: the name
+          comes apart a character at a time rather than as "JOHN" and "LEE". */}
+      <p
+        data-gravity="letters"
+        className="fraktur absolute inset-x-0 top-[calc(1.5rem+var(--top-row)+1rem)] whitespace-nowrap text-center text-[length:var(--name-size)] leading-[var(--top-row)] sm:top-[var(--frame-top)] sm:leading-[calc(44*var(--u))]"
+      >
+        {site.name}
+      </p>
       {/* Placed exactly as the open study's "Home > Loot Check" is, so the
           way back is in the same spot on every page that has one. */}
       <nav

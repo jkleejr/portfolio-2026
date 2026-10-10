@@ -1,5 +1,5 @@
 // ---------------------------------------------------------------------------
-// The homepage: the name, the intro, and the projects. The ways to get in
+// The homepage: the intro and the projects. The ways to get in
 // touch are on the About page — see about/page.tsx. The same page is served at / and, with one study open, at
 // /[slug] — see [slug]/page.tsx.
 // ---------------------------------------------------------------------------
@@ -35,41 +35,20 @@ function StudyIntro({ study, blurb }: { study: CaseStudy; blurb?: string }) {
 }
 
 export function DesignOne() {
-  // The name and the intro: the top of the homepage at every width.
+  // The name's row and the intro: the top of the homepage at every width.
   const header = (
     <>
-      {/* The name, set in the blackletter — see .fraktur in globals.css, which
-          carries the face and pins the weight. A small mark in the page's top
-          left corner, on the same row as the About link and the apple in the
-          opposite one. It used to run most of the width of the window; at this
-          size it is the page's signature rather than its headline, and the
-          covers below it lead.
-
-          The row is the corner's: --top-row tall on a phone, 44 of --u from sm
-          up, and the line-height is that height, so the name sits level with
-          the corner without being measured against it. A line-height rather
-          than flex centring, which would drop the space between "JOHN" and
-          "LEE" once gravity splits the name into letters. --name-size, in
-          globals.css, is the type size.
-
-          The left padding is the page's --edge and 0.0375em more, because
-          that is how far the J's swash hangs out to the left of where the
-          face says the letter starts — measured, off the ink. With it the
-          swash stops on the line the covers below start on. In em, so it
-          holds at either size.
-
-          The bottom margin is the room between the name and what is under it.
-          From sm up it folds into the strip's own margin — see --frame-h in
-          globals.css, which counts the row and not this.
-
-          data-gravity="letters" is for when the apple is pressed: the name
-          comes apart a character at a time rather than as "JOHN" and "LEE". */}
-      <h1
-        data-gravity="letters"
-        className="fraktur mb-8 whitespace-nowrap pl-[calc(var(--edge)+0.0375em)] text-[length:var(--name-size)] leading-[var(--top-row)] sm:mb-[calc(56*var(--u))] sm:leading-[calc(44*var(--u))]"
-      >
-        {site.name}
-      </h1>
+      {/* The name, for a screen reader: on show it is on the About page now —
+          see about/page.tsx. The row it stood on in the top left corner is
+          kept empty, the corner's height — --top-row on a phone, 44 of --u
+          from sm up — so the About link still has its row to itself and the
+          covers start where they did. --frame-h in globals.css counts the
+          row. Its bottom margin folds into the strip's own from sm up. */}
+      <h1 className="sr-only">{site.name}</h1>
+      <div
+        aria-hidden
+        className="mb-8 h-[var(--top-row)] sm:mb-[calc(56*var(--u))] sm:h-[calc(44*var(--u))]"
+      />
 
       {/* The writing at the top of the page, which is the intro. It is set from
           the page's left edge, under the name and on the line the name's ink

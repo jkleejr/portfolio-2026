@@ -32,7 +32,7 @@ const satoshi = localFont({
 // more plainly, the O with an upright and a bar crossed in its counter. None
 // of the three changed width. Its metrics are the original's — "JOHN LEE" is
 // 4.713em wide, the capitals ink 0.80em tall and the J hangs 0.0375em to the
-// left — so the name's sizing, which design-one.tsx notes was cut to the
+// left — so the name's sizing, which globals.css notes was cut to the
 // original, holds as it is.
 //
 // Shipped as it came rather than converted: the copyright reads "All rights

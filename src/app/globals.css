@@ -121,14 +121,14 @@
      of it, and the band is what now holds it. */
   --study-width: calc((var(--page) + var(--column)) / 2 - var(--edge) - 1.5rem);
 
-  /* The name in the homepage's top left corner, on the corner row opposite
-     the About link — 48px of the 1440px page, in --u like the rest of the
-     row. It used to run most of the width of the window; see the note on the
-     name in design-one.tsx. */
-  --name-size: calc(48 * var(--u));
+  /* The name at the top middle of the About page, on the corner row there —
+     80px of the 1440px page, in --u like the rest of the row. See the name
+     in about/page.tsx. */
+  --name-size: calc(80 * var(--u));
   /* The height of the row across the top of the page, which is the apple
-     button's box. The homepage reads it to know how far to drop its name
-     on a phone, where the name would otherwise run into the apple. */
+     button's box. The homepage holds an empty row this tall under it, and
+     the About page drops the name under it on a phone, where the name would
+     otherwise run into the way back and the apple. */
   --top-row: 2.75rem;
 
   /* The width a recording in a study is drawn at — a phone's width. 340px
@@ -292,8 +292,8 @@ body {
 
    Old London is the only blackletter loaded now, so this line names it
    directly. Swapping it for another face is not the whole switch — the name's
-   size in design-one.tsx is cut to whichever one is showing, and the note
-   there says what has to be measured to move it. */
+   size in --name-size is cut to whichever one is showing: "JOHN LEE" is
+   4.71em wide in Old London and its capitals ink 0.80em tall. */
 .fraktur {
   font-family: var(--font-old-london), var(--font-satoshi), system-ui, sans-serif;
   font-weight: 400;
@@ -532,8 +532,8 @@ html[data-dragging] * {
 @media (width < 40rem) {
   :root {
     /* The name holds a fixed size on a phone, where --u would make it
-       tiny, as the corner row it sits on does. */
-    --name-size: 2rem;
+       tiny, as the corner row does. */
+    --name-size: 2.75rem;
     --edge: 1.5rem;
     --cover-film: calc(var(--film) * 0.85);
     --cover: 104px;
