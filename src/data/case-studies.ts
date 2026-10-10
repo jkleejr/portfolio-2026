@@ -382,7 +382,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "A text-to-speech app that parses text from a .PDF file, removes unnecessary information, and reads it aloud in a natural voice. I designed it around a user paying for their own API usage due to the costs of audio generation at ~$1-3 per paper. Gemini 3.1 Flash was the best option because it could clean up text and had text-to-speech with eight voices.",
+        text: "A text-to-speech app that parses text from a .PDF file, removes unnecessary information, and reads it aloud in a natural voice. I designed it around a user paying for their own API usage due to the costs of audio generation at $1-3 per paper. Gemini 3.1 Flash was the best option because it could clean up text and had text-to-speech with eight voices.",
       },
 
       {
@@ -417,7 +417,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "Generating audio for the entire paper was unnecessary if someone only wanted to listen briefly. I organized text from a paper into groups of about 750 characters, which made ~50 seconds of audio. Making groups shorter would require more API requests and could reach Gemini's free-tier rate limit, while making groups longer would increase the initial wait time. At 50 seconds, the first group takes ~20 seconds to generate and the next group loads in the background.",
+        text: "Generating audio for the entire paper was unnecessary if someone only wanted to listen briefly. I organized text from a paper into groups of about 750 characters, which made 50 seconds of audio. Making groups shorter would require more API requests and could reach Gemini's free-tier rate limit, while making groups longer would increase the initial wait time. At 50 seconds, the first group takes 20 seconds to generate and the next group loads in the background.",
       },
 
       {
