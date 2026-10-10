@@ -772,6 +772,19 @@ html.gravity-on main {
   pointer-events: none;
 }
 
+/* An atom that falls as its ink is only there to be touched where it is drawn.
+   Its body is the fruit, so what lands beside it comes to rest in what used to
+   be the button's padding, and an invisible button lying over that would take
+   the tap meant for whatever is resting there. The icon still bubbles its
+   presses up to the button, so the switch works the same. */
+.gravity-atom[data-gravity-body="ink"] {
+  pointer-events: none;
+}
+
+.gravity-atom[data-gravity-body="ink"] svg {
+  pointer-events: auto;
+}
+
 .gravity-word:active,
 .gravity-atom:active {
   cursor: grabbing;

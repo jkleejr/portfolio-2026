@@ -151,6 +151,39 @@ function isDisc(el: HTMLElement, w: number, h: number): boolean {
   return radius.endsWith("%") ? value >= 50 : value >= w / 2 - 0.5;
 }
 
+/**
+ * Where the drawing inside an atom marked data-gravity-body="ink" puts ink,
+ * from the top left corner of `rect`, the atom's box. Null for every other
+ * atom, which falls as its whole box.
+ *
+ * The apple is the one marked: a 44px button round a 26px icon, and the icon
+ * round an apple narrower still. Falling as the button, it came to rest on a
+ * cushion of nothing a good few pixels deep on every side, and held whatever
+ * landed on it that far off the fruit. Its body is the fruit instead.
+ */
+function inkInset(
+  el: HTMLElement,
+  rect: DOMRect,
+): { ix: number; iy: number; w: number; h: number } | null {
+  if (el.dataset.gravityBody !== "ink") return null;
+  const svg = el.querySelector("svg");
+  const view = svg?.viewBox.baseVal;
+  if (!svg || !view || !view.width || !view.height) return null;
+  const r = svg.getBoundingClientRect();
+  const ink = svg.getBBox();
+  const sx = r.width / view.width;
+  const sy = r.height / view.height;
+  const w = ink.width * sx;
+  const h = ink.height * sy;
+  if (!(w > 0 && h > 0)) return null;
+  return {
+    ix: r.left - rect.left + (ink.x - view.x) * sx,
+    iy: r.top - rect.top + (ink.y - view.y) * sy,
+    w,
+    h,
+  };
+}
+
 /** Something that occupies space, and so has somewhere to fall from. */
 function drawn(r: DOMRect): boolean {
   return Boolean(r.width && r.height);
@@ -444,6 +477,7 @@ function run(
   }
 
   const atomRects = atoms.map((el) => el.getBoundingClientRect());
+  const atomInks = atoms.map((el, i) => inkInset(el, atomRects[i]));
   // And where what is inside each one stands, to be read again once it is
   // pinned — see anchorOf.
   const atomAnchors = atoms.map(anchorOf);
@@ -519,23 +553,32 @@ function run(
   // Atoms: the real elements, taken out of flow where they already sit.
   const restores = atoms.map((el, i) => {
     const rect = atomRects[i];
+    const ink = atomInks[i];
     el.classList.add("gravity-atom");
     pin(el, rect, inlineLeading(el, rect));
+    // The body, which is the box unless the atom falls as its ink — and then
+    // it sits inset in the box by ox and oy, the same two numbers a letter
+    // carries, and the element turns about the middle of it.
+    const ox = ink ? ink.ix : 0;
+    const oy = ink ? ink.iy : 0;
+    const w = ink ? ink.w : rect.width;
+    const h = ink ? ink.h : rect.height;
+    if (ink) el.style.transformOrigin = `${ox + w / 2}px ${oy + h / 2}px`;
     pieces.push({
       el,
       body: makeBody(
-        rect.left,
-        rect.top,
-        rect.width,
-        rect.height,
-        isDisc(el, rect.width, rect.height),
+        rect.left + ox,
+        rect.top + oy,
+        w,
+        h,
+        !ink && isDisc(el, rect.width, rect.height),
       ),
-      w: rect.width,
-      h: rect.height,
-      ox: 0,
-      oy: 0,
-      pageX: rect.left + window.scrollX,
-      pageY: rect.top + window.scrollY,
+      w,
+      h,
+      ox,
+      oy,
+      pageX: rect.left + ox + window.scrollX,
+      pageY: rect.top + oy + window.scrollY,
     });
     return () => {
       el.classList.remove("gravity-atom");
@@ -561,10 +604,10 @@ function run(
     if (!d) return;
     const piece = pieces[i];
     const rect = atomRects[i];
-    piece.ox = d.dx;
-    piece.oy = d.dy;
-    piece.el.style.transformOrigin = `${d.dx + rect.width / 2}px ${
-      d.dy + rect.height / 2
+    piece.ox += d.dx;
+    piece.oy += d.dy;
+    piece.el.style.transformOrigin = `${piece.ox + piece.w / 2}px ${
+      piece.oy + piece.h / 2
     }px`;
     piece.el.style.transform = `translate3d(${rect.left - d.dx}px, ${
       rect.top - d.dy
@@ -929,6 +972,9 @@ function run(
     panel.style.height = heldHeight;
 
     const rects = atoms.map((el) => el.getBoundingClientRect());
+    const inks = atoms.map((el, i) =>
+      atomPieces[i].body.isStatic ? inkInset(el, rects[i]) : null,
+    );
     const leadings = atoms.map((el, i) =>
       atomPieces[i].body.isStatic ? inlineLeading(el, rects[i]) : null,
     );
@@ -978,12 +1024,16 @@ function run(
       const dx = now && was ? now.left - was.left : 0;
       const dy = now && was ? now.top - was.top : 0;
       const off = Math.abs(dx) >= 0.05 || Math.abs(dy) >= 0.05;
-      piece.ox = off ? dx : 0;
-      piece.oy = off ? dy : 0;
-      el.style.transformOrigin = off
-        ? `${dx + rect.width / 2}px ${dy + rect.height / 2}px`
-        : "";
-      settle(piece, rect.left, rect.top, rect.width, rect.height);
+      const ink = inks[i];
+      const ix = ink ? ink.ix : 0;
+      const iy = ink ? ink.iy : 0;
+      const w = ink ? ink.w : rect.width;
+      const h = ink ? ink.h : rect.height;
+      piece.ox = ix + (off ? dx : 0);
+      piece.oy = iy + (off ? dy : 0);
+      el.style.transformOrigin =
+        off || ink ? `${piece.ox + w / 2}px ${piece.oy + h / 2}px` : "";
+      settle(piece, rect.left + ix, rect.top + iy, w, h);
     });
 
     // Words: the new type onto each copy first, then every copy measured,

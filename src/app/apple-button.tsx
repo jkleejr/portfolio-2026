@@ -53,6 +53,8 @@ export function AppleButton({
       }}
       aria-pressed={on}
       aria-label="Turn gravity on and off"
+      // Falls as the fruit, not the button round it — see inkInset.
+      data-gravity-body="ink"
       className={`apple-button flex shrink-0 items-center justify-center text-foreground ${
         fixed ? "size-[calc(44*var(--u-full))]" : "h-11 w-11 sm:size-[calc(44*var(--u))]"
       }`}
