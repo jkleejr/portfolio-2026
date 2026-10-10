@@ -133,6 +133,7 @@ export function DesignOne() {
                 media={{
                   src: entry.media,
                   poster: poster(entry.media),
+                  scale: entry.mediaScale,
                   ...mediaSize(entry.media),
                 }}
               />

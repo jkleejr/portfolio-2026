@@ -150,11 +150,19 @@
   --shot: calc(var(--film) / 340);
 
   /* The width a demo video is drawn at as a cover in the homepage's strip —
-     310px of the 1440px page, so the covers scale with the rest of it — see
+     350px of the 1440px page, so the covers scale with the rest of it — see
      --u. On a phone, where that would be a thumbnail, it is a little under
      the film a study draws instead. The picture in the strip is drawn as tall
-     as these. */
-  --cover-film: calc(310 * var(--u));
+     as these.
+
+     At that size the frame stands taller than a short window, so it is also
+     held to what the window has room for: its height less the rest of the
+     frame — the name's row and the 96px under it, see --frame-h — and 24px
+     of air above and below, turned into a width by the films' 498 by 1080. */
+  --cover-film: min(
+    calc(350 * var(--u)),
+    (100svh - 188 * var(--u)) * 498 / 1080
+  );
 
   /* How tall a cover in the strip stands: the film's width less its 1px
      border each side, at the films' 498 by 1080, and the border back on. */
