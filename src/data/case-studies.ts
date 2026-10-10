@@ -166,7 +166,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "I chose Claude Sonnet 5.5 due to its low costs and high accuracy at ~$0.024 per scan. I considered slightly cheaper options like Sonnet 4.6, but I wanted the results to be as trustworthy as possible.",
+        text: "I chose Claude Sonnet 5.5 due to its low costs and high accuracy at $0.024 per scan. I considered slightly cheaper options like Sonnet 4.6, but I wanted the results to be as trustworthy as possible.",
       },
       // Sonnet 4.6 ~$0.013 per scan
       // Sonnet 5.5 ~$0.024
@@ -174,7 +174,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "A key product decision was determining how items were valued. Using a web search for every scan increased accuracy, but because it raised API costs by 3-4x and quadrupled the total latency from ~6 to ~25 seconds, I chose to rely on Sonnet's pre-trained data for most items.",
+        text: "A key product decision was determining how items were valued. Using a web search for every scan increased accuracy, but because it raised API costs by 3-4x and quadrupled the total latency from 6 to 24 seconds, I chose to rely on Sonnet's pre-trained data for most items.",
       },
 
       {
@@ -212,7 +212,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       // managing inference latency - time budgeted fallback, trying to reduce errors
       {
         type: "text",
-        text: "While most scans took ~6 seconds, a scan with web searches took ~14 to 27 seconds in testing, so I capped searches at 45 seconds and the loading state displays an estimated wait time. If the first API call times out, it automatically tries again with the remaining time. If both attempts fail, no price estimate is shown and the user can retry or start over.",
+        text: "While most scans took 6 seconds, a scan with web searches took 14 to 27 seconds in testing, so I capped searches at 45 seconds and the loading state displays an estimated wait time. If the first API call times out, it automatically tries again with the remaining time. If both attempts fail, no price estimate is shown and the user can retry or start over.",
       },
 
       {
@@ -330,7 +330,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "Loot Check is live on the [App Store](https://apps.apple.com/us/app/loot-check/id6785767104). The app gained 200+ organic downloads and ~14K App Store impressions in the first two months, with 1,375 items scanned. Requests didn't get lost, keys stayed secure, and there were no runaway API costs or crashes.",
+        text: "Loot Check is live on the [App Store](https://apps.apple.com/us/app/loot-check/id6785767104). The app gained 300+ organic downloads in two months and users scanned 2,000+ items. Requests didn't get lost, keys stayed secure, and there were no runaway API costs or crashes.",
       },
 
       // the first scan matters - how fast it is, if the price is believable
@@ -352,7 +352,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "I wanted to automate the listing process, but because marketplaces don't have a public listing API, the app creates a title and description to copy and paste. The next steps are continuing to test the app and learning which use cases provide the most value.",
+        text: "Because marketplaces don't have a public API to create a listing, the app writes a title and description to copy and paste. The next steps are continuing to test the app, learning which use cases provide the most value, and developing a monetization strategy.",
       },
     ],
   },
