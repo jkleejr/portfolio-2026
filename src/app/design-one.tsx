@@ -77,10 +77,10 @@ export function DesignOne() {
           which makes the padding worth as much as the size. There is none on
           the right for that reason: set from the left, the name needs only
           its own left margin, and with nothing reserved at the other end
-          14.5% holds down to a 200px window. What is left over at the right
+          12.5% holds down to a 200px window. What is left over at the right
           is a margin all the same — about 1.5rem of it on a 390px phone.
 
-          14.5% of --page, the band the page is laid out in, rather than of
+          12.5% of --page, the band the page is laid out in, rather than of
           the window: the two are the same up to 1333px, and past that
           the band stops growing and is centred, so the name holds at 14rem
           and the whole page goes with it as one block. That is where the
@@ -203,6 +203,9 @@ export function DesignOne() {
             key={entry.slug}
             slug={entry.slug}
             hasStudy={!!caseStudies[entry.slug]}
+            // A picture is drawn shorter than the films, and sits on their
+            // bottom line — see --cover-picture-film in globals.css.
+            bottom={!!entry.media && !/\.mp4$/i.test(entry.media)}
           >
             {entry.media ? (
               <ProjectThumbnail

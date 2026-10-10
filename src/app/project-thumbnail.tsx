@@ -120,8 +120,8 @@ export function ProjectThumbnail({
   const inner = media ? (
     // The recording, playing, a little under the width a study draws its
     // films at — --cover-film in globals.css, which follows --film and so
-    // gives way on a short window too. A picture is drawn as tall as the films, so
-    // the covers in the strip share one top and one bottom. No tilt:
+    // gives way on a short window too. A picture is drawn a little shorter
+    // than the films, and sits on their bottom line in the strip. No tilt:
     // turned 14 degrees, something this size swings a hundred pixels at its
     // ends. Marked for gravity so it falls as one piece.
     <div
@@ -173,10 +173,10 @@ export function ProjectThumbnail({
           quality={90}
           loading="eager"
           draggable={false}
-          // As tall as a film beside it in the strip — --cover-film wide less the
-          // 2px of its border, at the films' 498 by 1080 — and as wide as
-          // that makes it.
-          className="block h-[calc((var(--cover-film)-2px)*1080/498)] w-auto max-w-none"
+          // As tall as a film --cover-picture-film wide, less the 2px of its
+          // border, at the films' 498 by 1080 — a little short of the films, see
+          // globals.css — and as wide as that makes it.
+          className="block h-[calc((var(--cover-picture-film)-2px)*1080/498)] w-auto max-w-none"
         />
       )}
     </div>

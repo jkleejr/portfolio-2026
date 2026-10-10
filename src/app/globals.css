@@ -126,10 +126,10 @@
      the reason the size lives here rather than only in the markup. Where the
      number comes from is in the note on the name in design-one.tsx. It was
      18.5vw, capped at 18rem; then 18.5% of the band, which is the same thing
-     with the cap moved into --page, less the scrollbar; and now 14.5% of it,
-     a little smaller. The floor is for a window too narrow for the name at
+     with the cap moved into --page, less the scrollbar; then 14.5% of it; and
+     now 12.5%, a little smaller again. The floor is for a window too narrow for the name at
      all. */
-  --name-size: max(2rem, calc(var(--page) * 0.145 * 1440 / 1390));
+  --name-size: max(2rem, calc(var(--page) * 0.125 * 1440 / 1390));
   /* The height of the row across the top of the page, which is the apple
      button's box. The homepage reads it to know how far to drop its name
      on a phone, where the name would otherwise run into the apple. */
@@ -158,11 +158,13 @@
   --shot: calc(var(--film) / 340);
 
   /* The width a demo video is drawn at as a cover in the homepage's strip —
-     268px of the 1440px page, so the covers scale with the rest of it — see
+     302px of the 1440px page, so the covers scale with the rest of it — see
      --u. On a phone, where that would be a thumbnail, it is a little under
-     the film a study draws instead. The picture in the strip is drawn as tall
-     as these. */
-  --cover-film: calc(268 * var(--u));
+     the film a study draws instead. */
+  --cover-film: calc(302 * var(--u));
+  /* The width a picture in the strip is drawn as tall as a film of — 240px,
+     a little short of the films, so the picture does not outweigh them. */
+  --cover-picture-film: calc(240 * var(--u));
 
   /* How tall a cover in the strip stands: the film's width less its 1px
      border each side, at the films' 498 by 1080, and the border back on. */
@@ -539,9 +541,9 @@ html[data-dragging] * {
 @media (width < 40rem) {
   :root {
     /* The name a size up on a phone, where it is centred on its own line
-       rather than sharing the top with the corner. 17% still leaves it room
+       rather than sharing the top with the corner. 15% still leaves it room
        either side on the narrowest phones. */
-    --name-size: max(2rem, calc(var(--page) * 0.17));
+    --name-size: max(2rem, calc(var(--page) * 0.15));
     /* A fixed size on a phone, where --u would make it tiny, as the corner
        row does. */
     --about-name-size: 2.75rem;

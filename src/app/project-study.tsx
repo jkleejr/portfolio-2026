@@ -1370,11 +1370,17 @@ function CoverStrip({
 export function ProjectSection({
   slug,
   hasStudy,
+  bottom,
   children,
 }: {
   slug: string;
   /** Whether there is a study to open — a project without one is a cover. */
   hasStudy: boolean;
+  /** Set on the strip's bottom line rather than its top, for a cover shorter
+   *  than the films beside it. The section itself rather than a margin inside
+   *  it, since the section is what grows when its study opens, and is sized
+   *  off its own box. */
+  bottom?: boolean;
   /** The project's cover. */
   children: React.ReactNode;
 }) {
@@ -1390,7 +1396,7 @@ export function ProjectSection({
   return (
     // data-slug for a scroll over the cover to know which project it is over —
     // see the scroll-to-open in ProjectList.
-    <section data-slug={slug} className="shrink-0">
+    <section data-slug={slug} className={`shrink-0 ${bottom ? "self-end" : ""}`}>
       <ToggleContext.Provider value={hasStudy ? { open, toggle } : null}>
         {children}
       </ToggleContext.Provider>
