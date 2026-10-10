@@ -606,12 +606,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "Because iOS controls how and when the Dynamic Island is displayed, I designed for states I couldn't choose and updates I couldn't guarantee."
-      },
-
-      {
-        type: "text",
-        text: "The island has three states: minimal, compact, and expanded. iOS treats Live Activities as occasional status updates rather than a live display, so I could not keep the expanded state on screen, and the user has to long press the island to see the translation. I also had to design UI elements around the front-facing camera in the top-center area of the screen."
+        text: "I designed for three states: minimal, compact, and expanded. iOS treats Live Activities as occasional status updates rather than a live display, so I could not keep the expanded state on screen, and the user has to long press the island to see the translation. I designed UI elements around the phone's front-facing camera."
       },
 
       // dynamic island has no published refresh rate, and iOS silently limits background updates
@@ -677,21 +672,8 @@ export const caseStudies: Record<string, CaseStudy> = {
         captionCenter: true,
       },
 
-      {
-        type: "heading",
-        text: "Translation Models",
-        note: "",
-      },
-
-      {
-        type: "text",
-        text: "I used DeepL for sentence translations and Claude Opus 5 for word definitions. DeepL was excellent for full sentences, but unreliable for individual words. Opus 5 was more accurate for words because it could define each word as it's used in the context of the sentence."
-      },
-
-      {
-        type: "text",
-        text: "I benchmarked Opus 5 against DeepL on sentence translations. Opus 5 had a median latency of 2.07 seconds vs. 0.73 seconds for DeepL, and was about 5x more expensive ($0.0031 vs. $0.0006 per sentence)."
-      },
+   //I used DeepL for sentence translations and Claude Opus 5 for word definitions. DeepL was best for full sentences, but unreliable for individual words. Opus 5 was more accurate for words because it could define each word as it's used in the context of the sentence."
+    //  Opus 5 against DeepL on sentence translations. Opus 5 had a median latency of 2.07 seconds vs. 0.73 seconds for DeepL, and was about 5x more expensive ($0.0031 vs. $0.0006 per sentence)
 
       {
         type: "heading",
@@ -802,13 +784,6 @@ export const caseStudies: Record<string, CaseStudy> = {
         type: "text",
         text: "The biggest lesson from this project was learning to design with system constraints. Every decision had to account for iOS limitations, which pushed me to find different solutions. It was difficult to make the user experience feel seamless when there was so much out of my control, like the Dynamic Island's current state and when Live Activities update."
       },
-
-      {
-        type: "text",
-        text: "If I continued this project, I would work on the UI/UX so the island feels more responsive and aligned with the user's intent. I would also improve translations for visual diagrams and make it work with any app. Currently only Korean is translated, but I could add more languages and test whether other people find it helpful for learning."
-      },
-      // could try making it vocabulary focused, only translating difficult words from a sentence, not the entire sentence
-      // so it would show only a few difficult or new words in the dynamic island not the sentence
     ],
   },
 
