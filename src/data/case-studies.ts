@@ -352,7 +352,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "Because marketplaces don't have a public API to create a listing, the app writes a title and description to copy and paste. The next steps are continuing to test the app, learning which use cases provide the most value, and developing a monetization strategy.",
+        text: "Because marketplaces don't have a public API to create a listing, the app writes a title and description to copy and paste. The next steps are continuing to test the app, learning which use cases provide the most value, and monetizing the product.",
       },
     ],
   },
