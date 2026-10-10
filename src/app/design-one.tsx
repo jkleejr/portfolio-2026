@@ -1,5 +1,5 @@
 // ---------------------------------------------------------------------------
-// The homepage: the intro and the projects. The ways to get in
+// The homepage: the name, the intro, and the projects. The ways to get in
 // touch are on the About page — see about/page.tsx. The same page is served at / and, with one study open, at
 // /[slug] — see [slug]/page.tsx.
 // ---------------------------------------------------------------------------
@@ -35,20 +35,97 @@ function StudyIntro({ study, blurb }: { study: CaseStudy; blurb?: string }) {
 }
 
 export function DesignOne() {
-  // The name's row and the intro: the top of the homepage at every width.
+  // The name and the intro: the top of the homepage at every width.
   const header = (
     <>
-      {/* The name, for a screen reader: on show it is on the About page now —
-          see about/page.tsx. The row it stood on in the top left corner is
-          kept empty, the corner's height — --top-row on a phone, 44 of --u
-          from sm up — so the About link still has its row to itself and the
-          covers start where they did. --frame-h in globals.css counts the
-          row. Its bottom margin folds into the strip's own from sm up. */}
-      <h1 className="sr-only">{site.name}</h1>
-      <div
-        aria-hidden
-        className="mb-8 h-[var(--top-row)] sm:mb-[calc(56*var(--u))] sm:h-[calc(44*var(--u))]"
-      />
+      {/* The name, set in the blackletter — see .fraktur in globals.css, which
+          carries the face and pins the weight. It is the one thing on the page
+          that is not in the column: it holds the page's top left corner and
+          runs most of the width of the window from there, rather than lining
+          up with the covers below it. It is the only thing up there on the
+          left — the role that used to be pinned in that corner is the first
+          words of the intro now.
+
+          From sm up it starts at the very top, on the same line as the About
+          link and the apple in the opposite corner. Everything up there is
+          measured in --u, a fraction of the band, so the room between the
+          name and the corner is the same share of the page at every width
+          and never closes. On a phone the corner keeps its fixed size and
+          there is not that room, so the name takes --top-row plus a gap as a
+          top margin and sits under the apple instead. Reading the row's
+          height from the variable rather than writing 44px here means the
+          two cannot fall out of step.
+
+          The left padding is the page's --edge and 0.0375em more, because
+          that is how far the J's swash hangs out to the left of where the
+          face says the letter starts — measured, off the ink. With it the
+          swash stops on the same line the intro and the notes in the margin
+          start on, where set flush the name stood 10px out into the margin
+          at full size. In em, so it holds at every size the name is set at.
+
+          One row at every width, which is why whitespace-nowrap carries no
+          breakpoint. It is also why the name is out here rather than in the
+          column: "JOHN LEE" is far wider than the column's 628px at any
+          display size worth using, so in there it always broke in two.
+
+          Which makes the window what the size has to fit, and the whole
+          string, not its longest word. There is no give to spare: nowrap
+          cannot break, so going over does not wrap, it scrolls the page
+          sideways.
+
+          4.71em of text against the window less the padding is the whole sum,
+          which makes the padding worth as much as the size. There is none on
+          the right for that reason: set from the left, the name needs only
+          its own left margin, and with nothing reserved at the other end
+          14.5% holds down to a 200px window. What is left over at the right
+          is a margin all the same — about 1.5rem of it on a 390px phone.
+
+          14.5% of --page, the band the page is laid out in, rather than of
+          the window: the two are the same up to 1333px, and past that
+          the band stops growing and is centred, so the name holds at 14rem
+          and the whole page goes with it as one block. That is where the
+          ceiling comes from — it is the band's cap in globals.css, not a
+          number here.
+
+          The other cost is worth naming. Letting the name break gave the
+          phone a much larger one — only "JOHN" at 2.62em had to fit, which
+          allowed 28vw, so a 375px screen ran 105px where one row runs 69px.
+          One row is the ask; this is what it takes.
+
+          These numbers are cut to Old London and do not carry over to another
+          face. Two measurements move them: "JOHN LEE" is 4.71em wide in it,
+          which sets the vw, and its capitals ink only 0.80em tall inside the
+          em, which is why the ceiling is as high as 18rem — a face with taller
+          capitals reaches the same apparent size at a smaller number. Measure
+          both before swapping the face; neither is guessable from the look of
+          it.
+
+          leading-none because a single row of capitals has nothing to collide
+          with, and this face inks only 0.80em inside a 1em box.
+
+          The bottom margin is the room between the name and the intro under
+          it — the intro's own margin collapses into this one, so this is the
+          whole of it. Measured from the ink again: the capitals stop ~16px
+          short of the box's bottom at full size and the intro's ink starts
+          ~8px into its line, so 3.5rem is ~80px of black. On a phone it is
+          37px — the name sits 2px higher than --top-row puts it, and the 2px
+          are given back here so the rows below stay put — which with the ~14px the face leaves under its capitals puts
+          the first row about 49px below the name's ink on a 390px phone — a
+          touch more than the 41px between the About link and the name above.
+
+          data-gravity="letters" is for when the apple is pressed: the name
+          comes apart a character at a time rather than as "JOHN" and "LEE",
+          so each letter waits for its own hover. It is the only thing on the
+          page marked that way, and the reason is the size — at 18rem a word
+          is a slab, and two of them falling barely reads as the page coming
+          apart. Everywhere else the text is small enough that whole words are
+          the finer-grained answer, not the coarser one. */}
+      <h1
+        data-gravity="letters"
+        className="fraktur mb-12 mt-[calc(var(--top-row)+1.5rem)] whitespace-nowrap pl-[calc(var(--edge)+0.0375em)] max-sm:mb-[37px] max-sm:mt-[calc(var(--top-row)+1.5rem-2px)] max-sm:pl-0 max-sm:text-center text-[length:var(--name-size)] leading-none sm:mb-[calc(56*var(--u))] sm:mt-0"
+      >
+        {site.name}
+      </h1>
 
       {/* The writing at the top of the page, which is the intro. It is set from
           the page's left edge, under the name and on the line the name's ink
@@ -133,7 +210,6 @@ export function DesignOne() {
                 media={{
                   src: entry.media,
                   poster: poster(entry.media),
-                  scale: entry.mediaScale,
                   ...mediaSize(entry.media),
                 }}
               />

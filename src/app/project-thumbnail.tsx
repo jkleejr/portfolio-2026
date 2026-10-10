@@ -66,9 +66,6 @@ export type CoverMedia = {
   poster?: string;
   width?: number;
   height?: number;
-  /** A picture's height as a fraction of the films' — see mediaScale in
-   *  projects.ts. */
-  scale?: number;
 };
 
 export function ProjectThumbnail({
@@ -177,14 +174,9 @@ export function ProjectThumbnail({
           loading="eager"
           draggable={false}
           // As tall as a film beside it in the strip — --cover-film wide less the
-          // 2px of its border, at the films' 498 by 1080 — or the share of
-          // that its entry asks for, and as wide as that makes it.
-          className="block h-[calc((var(--cover-film)-2px)*1080/498*var(--media-scale,1))] w-auto max-w-none"
-          style={
-            media.scale
-              ? ({ "--media-scale": media.scale } as React.CSSProperties)
-              : undefined
-          }
+          // 2px of its border, at the films' 498 by 1080 — and as wide as
+          // that makes it.
+          className="block h-[calc((var(--cover-film)-2px)*1080/498)] w-auto max-w-none"
         />
       )}
     </div>

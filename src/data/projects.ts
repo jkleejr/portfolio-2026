@@ -16,9 +16,6 @@ export type Entry = {
   images?: EntryImage[];
   // demo video or picture shown as the cover on the homepage, in place of images
   media?: string;
-  // a picture `media` drawn at this fraction of the films' height beside it
-  // in the strip; 1 when left out
-  mediaScale?: number;
 };
 
 // Projects shown in order
@@ -73,7 +70,6 @@ export const entries: Entry[] = [
       "Automated, daily stock market reports",
     slug: "buy-side-briefings",
     media: "/projects/buy-side-site-today-5.png",
-    mediaScale: 0.85,
     images: [
       {
         cover: "/projects/buy-side-briefings-swing.png",

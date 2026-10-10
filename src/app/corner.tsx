@@ -3,8 +3,8 @@
 // ---------------------------------------------------------------------------
 // The About link and the apple, in the top-right corner of every page.
 //
-// From sm up it sits at --frame-top, the top of the homepage's frame
-// once it is centred in the window (see globals.css), and every page
+// From sm up it sits at --frame-top, the line the homepage's name starts on
+// once its frame is centred in the window (see globals.css), and every page
 // puts it there — so opening the About page, or coming back, leaves it where
 // it was. On a phone it is 1.5rem from the top, as the page's own air is.
 //
@@ -28,7 +28,7 @@ import { UndoButton } from "./undo-button";
 /**
  * The row is the apple's height, held there where the apple is left out so the
  * About link stays put, which is what --top-row on the homepage
- * and the About page measures the rows under it by on a phone. From sm up everything in it
+ * measures to drop the name under it on a phone. From sm up everything in it
  * is measured in --u, so it scales with the page.
  */
 export function SiteCorner() {

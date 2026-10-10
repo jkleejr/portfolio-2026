@@ -43,7 +43,7 @@ export default function AboutPage() {
           comes apart a character at a time rather than as "JOHN" and "LEE". */}
       <p
         data-gravity="letters"
-        className="fraktur absolute inset-x-0 top-[calc(1.5rem+var(--top-row)+1rem)] whitespace-nowrap text-center text-[length:var(--name-size)] leading-[var(--top-row)] sm:top-[var(--frame-top)] sm:leading-[calc(44*var(--u))]"
+        className="fraktur absolute inset-x-0 top-[calc(1.5rem+var(--top-row)+1rem)] whitespace-nowrap text-center text-[length:var(--about-name-size)] leading-[var(--top-row)] sm:top-[var(--frame-top)] sm:leading-[calc(44*var(--u))]"
       >
         {site.name}
       </p>
