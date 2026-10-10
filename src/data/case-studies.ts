@@ -723,13 +723,6 @@ export const caseStudies: Record<string, CaseStudy> = {
         text: "Pinning a sentence saves it to the \"Learn\" page and breaks it into individual words. Tapping a word shows its definition as used in that sentence."
       },
 
-      {
-        type: "video",
-        src: "/projects/screen-translator-pin-and-learn.mp4",
-        controls: true,
-        caption: "",
-      },
-
        // had claude do a benchmark test with claude and deepl
       // using claude for sentence translations had higher latency and was more expensive than deepl
       // claude was about 3x slower
