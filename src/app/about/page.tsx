@@ -27,14 +27,13 @@ export default function AboutPage() {
     // shares with the apple: 44px tall, 1.5rem down. From sm up the block is
     // centred in the window — see .about-page in globals.css.
     <main className="about-page relative pb-8 pt-[100px]">
-      {/* Placed across as the open study's "Home > Loot Check" is, at the
-          window's --edge. Down the page it holds one height at every window
-          size — where the study's sits on a laptop — rather than following
-          --frame-top, so resizing the window moves it only from side to
-          side; the apple across from it does the same. */}
+      {/* On a phone only, placed as the open study's "Home > Loot Check" is,
+          at the window's --edge. From sm up the Projects / About toggle in
+          the corner is the way back, and the apple takes this spot — see
+          corner.tsx. */}
       <nav
         aria-label="Breadcrumb"
-        className="absolute left-[calc(var(--edge)-(100vw-var(--scrollbar)-var(--page))/2)] top-6 z-30 flex h-11 items-center text-lg font-medium leading-relaxed sm:top-[calc(24*var(--u-full))]"
+        className="absolute left-[calc(var(--edge)-(100vw-var(--scrollbar)-var(--page))/2)] top-6 z-30 flex h-11 items-center text-lg font-medium leading-relaxed sm:hidden"
       >
         <Link
           href="/"

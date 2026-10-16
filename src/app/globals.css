@@ -365,7 +365,8 @@ body {
   border-radius: 9999px;
   background: color-mix(in srgb, var(--foreground) 6%, transparent);
   box-shadow: inset 0 1px 2px color-mix(in srgb, black 7%, transparent);
-  font-size: calc(20 * var(--u-full));
+  /* The size of "Home > Loot Check" in an open study. */
+  font-size: 1.125rem;
   font-weight: 500;
   line-height: 1;
 }

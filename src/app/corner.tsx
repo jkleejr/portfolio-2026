@@ -50,12 +50,8 @@ export function SiteCorner() {
         // From sm up the row keeps to the band's --edge on every page, so the
         // Projects / About toggle at its end is in the same place on both.
         // On the About page it is held at one height from the window's top at
-        // every window size, level with "Home > About". On a phone the About
-        // page has only the apple there, held as far in from the window's
-        // right edge as "Home > About" is from its left — measured to the
-        // ink: the apple's starts 13 --u-full inside its button, and the H's
-        // 1.5px inside its box.
-        className={`corner-stack absolute ${onAbout ? "right-[calc(var(--edge)+1.5px-13*var(--u-full)-(100vw-var(--scrollbar)-var(--page))/2-var(--scrollbar))] sm:right-[var(--edge)]" : "right-[var(--edge)]"} top-6 z-20 flex min-h-11 flex-row items-center gap-4 ${onAbout ? "sm:top-[calc(24*var(--u-full))]" : "sm:top-[var(--frame-top)] sm:min-h-[calc(44*var(--u))]"} sm:gap-[calc(16*var(--u))]`}
+        // every window size.
+        className={`corner-stack absolute right-[var(--edge)] top-6 z-20 flex min-h-11 flex-row items-center gap-4 ${onAbout ? "sm:top-[calc(24*var(--u-full))]" : "sm:top-[var(--frame-top)] sm:min-h-[calc(44*var(--u))]"} sm:gap-[calc(16*var(--u))]`}
       >
         {/* A phone keeps the plain link, beside the name; the toggle is
             from sm up. */}
@@ -67,11 +63,25 @@ export function SiteCorner() {
             About
           </Link>
         )}
-        {!onHome && (
-          <AppleButton fixed={onAbout} button={apple} on={on} toggle={toggle} />
+        {!onHome && !onAbout && (
+          <AppleButton fixed={false} button={apple} on={on} toggle={toggle} />
         )}
         <PageToggle about={onAbout} home={path === ""} />
       </div>
+      {/* The About page's apple, on its own. On a phone in the top right,
+          as far in from the window's right edge as "Home > About" is from
+          its left; from sm up, where the About page has no "Home > About",
+          in its place at the top left. Measured to the ink both ways: the
+          apple's starts 13 --u-full inside its button, and the H's 1.5px
+          inside its box. A piece of its own for gravity, as the row is. */}
+      {onAbout && (
+        <div
+          data-gravity="atom"
+          className="absolute right-[calc(var(--edge)+1.5px-13*var(--u-full)-(100vw-var(--scrollbar)-var(--page))/2-var(--scrollbar))] top-6 z-20 flex min-h-11 items-center sm:right-auto sm:left-[calc(var(--edge)+1.5px-13*var(--u-full)-(100vw-var(--scrollbar)-var(--page))/2)] sm:top-[calc(24*var(--u-full))]"
+        >
+          <AppleButton fixed button={apple} on={on} toggle={toggle} />
+        </div>
+      )}
       {onAbout && <UndoButton on={on} undo={toggle} />}
     </>
   );
