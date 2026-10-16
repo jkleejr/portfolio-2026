@@ -43,7 +43,7 @@ export function UndoButton({ on, undo }: { on: boolean; undo: () => void }) {
     // corner.tsx.
     <div
       data-gravity-undo
-      className="absolute left-[calc(var(--edge)+1.5px-13*var(--u-full))] sm:left-[calc(var(--edge)+var(--scrollbar)-13*var(--u-soft))] top-6 z-[60] flex min-h-11 items-center sm:top-[var(--frame-top)] sm:min-h-[calc(44*var(--u))]"
+      className="absolute left-[calc(var(--edge)+1.5px-13*var(--u-full))] sm:left-[calc(var(--edge)+var(--scrollbar)-13*var(--u-soft))] top-6 z-[60] flex min-h-11 items-center sm:top-[calc(var(--frame-top)+12*var(--u))] sm:min-h-[calc(44*var(--u))]"
     >
       <button
         type="button"

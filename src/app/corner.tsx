@@ -49,10 +49,11 @@ export function SiteCorner() {
         data-gravity="atom"
         // From sm up the row keeps to the band's --edge and sits on the
         // homepage's --frame-top on every page — the row the homepage's name
-        // starts on — so the Projects / About toggle at its end is level with
-        // the name, and in exactly the same place on every page. It moves
-        // with the name as the window is resized.
-        className={`corner-stack absolute right-[var(--edge)] top-6 z-20 flex min-h-11 flex-row items-center gap-4 sm:top-[var(--frame-top)] sm:min-h-[calc(44*var(--u))] sm:gap-[calc(16*var(--u))]`}
+        // starts on, let down 12 --u to sit with the name's capitals rather
+        // than above them — so the Projects / About toggle at its end is level
+        // with the name, and in exactly the same place on every page. It
+        // moves with the name as the window is resized.
+        className={`corner-stack absolute right-[var(--edge)] top-6 z-20 flex min-h-11 flex-row items-center gap-4 sm:top-[calc(var(--frame-top)+12*var(--u))] sm:min-h-[calc(44*var(--u))] sm:gap-[calc(16*var(--u))]`}
       >
         {!onHome && !onAbout && (
           <AppleButton fixed={false} button={apple} on={on} toggle={toggle} />
@@ -73,7 +74,7 @@ export function SiteCorner() {
       {onAbout && (
         <div
           data-gravity="atom"
-          className="absolute left-[calc(var(--edge)+1.5px-13*var(--u-full))] top-6 z-20 flex min-h-11 items-center sm:left-[calc(var(--edge)+var(--scrollbar)-13*var(--u-soft))] sm:top-[var(--frame-top)] sm:min-h-[calc(44*var(--u))]"
+          className="absolute left-[calc(var(--edge)+1.5px-13*var(--u-full))] top-6 z-20 flex min-h-11 items-center sm:left-[calc(var(--edge)+var(--scrollbar)-13*var(--u-soft))] sm:top-[calc(var(--frame-top)+12*var(--u))] sm:min-h-[calc(44*var(--u))]"
         >
           <AppleButton fixed button={apple} on={on} toggle={toggle} />
         </div>
