@@ -31,9 +31,11 @@ export default function AboutPage() {
       {/* The name, set in the blackletter — see .fraktur in globals.css. At
           the top middle of the page: from sm up on the corner row, between
           the way back and the apple, and on a phone on a row of its own under
-          it, where the three would not fit across. The line-height is the
-          row's height, so it sits level with the corner without being
-          measured against it. Centred by spanning the page and centring the
+          it, where the three would not fit across. From sm up it is let down
+          from the row's top so the top of its letters is level with the top
+          of "Home > About": 15.5px for where the way back's capitals start
+          in its 44px row, and 8.5 --u for how far the blackletter's ink
+          rises above its own line box, which scales with the name. Centred by spanning the page and centring the
           text rather than by a transform, which would become what gravity's
           pinned letters resolve position: fixed against. Before the way back
           in the markup, and under it, so the stretch of it over the way back
@@ -43,7 +45,7 @@ export default function AboutPage() {
           comes apart a character at a time rather than as "JOHN" and "LEE". */}
       <p
         data-gravity="letters"
-        className="fraktur absolute inset-x-0 top-[calc(1.5rem+var(--top-row)+1rem)] whitespace-nowrap text-center text-[length:var(--about-name-size)] leading-[var(--top-row)] sm:top-[var(--frame-top)] sm:leading-[calc(44*var(--u))]"
+        className="fraktur absolute inset-x-0 top-[calc(1.5rem+var(--top-row)+1rem)] whitespace-nowrap text-center text-[length:var(--about-name-size)] leading-[var(--top-row)] sm:top-[calc(var(--frame-top)+15.5px+8.5*var(--u))] sm:leading-[calc(44*var(--u))]"
       >
         {site.name}
       </p>
