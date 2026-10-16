@@ -135,7 +135,7 @@ export const caseStudies: Record<string, CaseStudy> = {
   "loot-check": {
     title: "Loot Check",
     appStore: "https://apps.apple.com/us/app/loot-check/id6785767104",
-    intro: "When early testers got confidently wrong prices, I designed keyword hints and confidence ratings so people know when to trust an estimate. Live on the App Store with 300+ organic downloads and 2,000+ items scanned in two months.",
+    intro: "Live on the App Store with 300+ organic downloads and 2,000+ items scanned in two months.",
     date: "Time: Jun 2026 - Present",
     role: "Role: Founder, Product Designer, Engineer",
     scope: "Scope: iOS, App Store",
