@@ -1,8 +1,8 @@
 // ---------------------------------------------------------------------------
 // The About page: the ways to get in touch — LinkedIn and email.
 //
-// Set out in the column a study's own page uses (see projects/[slug]/page.tsx),
-// under the name in blackletter at the top middle of the page. The way back is
+// Set out in the column a study's own page uses (see projects/[slug]/page.tsx).
+// The way back is
 // where an open study puts its own (see project-study.tsx): top left, at the
 // page's --edge, level with the apple in the opposite corner. Reached from
 // the "About" link in the top-right corner of the homepage — see corner.tsx.
@@ -23,32 +23,10 @@ const link = "transition-colors duration-200 ease-out hover:text-accent";
 
 export default function AboutPage() {
   return (
-    // On a phone the text starts 32px under the name's row, which is 1rem
-    // under the corner row the way back shares with the apple: 44px tall,
-    // 1.5rem down. From sm up the block is centred in the window — see
-    // .about-page in globals.css.
-    <main className="about-page relative pb-8 pt-[160px]">
-      {/* The name, set in the blackletter — see .fraktur in globals.css. At
-          the top middle of the page: from sm up on the corner row, between
-          the way back and the apple, and on a phone on a row of its own under
-          it, where the three would not fit across. From sm up it is let down
-          from the row's top so the top of its letters is level with the top
-          of "Home > About": 15.5px for where the way back's capitals start
-          in its 44px row, and 8.5 --u for how far the blackletter's ink
-          rises above its own line box, which scales with the name. Centred by spanning the page and centring the
-          text rather than by a transform, which would become what gravity's
-          pinned letters resolve position: fixed against. Before the way back
-          in the markup, and under it, so the stretch of it over the way back
-          does not take that link's presses.
-
-          data-gravity="letters" is for when the apple is pressed: the name
-          comes apart a character at a time rather than as "JOHN" and "LEE". */}
-      <p
-        data-gravity="letters"
-        className="fraktur absolute inset-x-0 top-[calc(1.5rem+var(--top-row)+1rem)] whitespace-nowrap text-center text-[length:var(--about-name-size)] leading-[var(--top-row)] sm:top-[calc(var(--frame-top)+15.5px+8.5*var(--u))] sm:leading-[calc(44*var(--u))]"
-      >
-        {site.name}
-      </p>
+    // On a phone the text starts 32px under the corner row the way back
+    // shares with the apple: 44px tall, 1.5rem down. From sm up the block is
+    // centred in the window — see .about-page in globals.css.
+    <main className="about-page relative pb-8 pt-[100px]">
       {/* Placed exactly as the open study's "Home > Loot Check" is, so the
           way back is in the same spot on every page that has one. */}
       <nav

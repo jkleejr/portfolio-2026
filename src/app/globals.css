@@ -109,10 +109,6 @@
      button's box. The homepage reads it to know how far to drop its name
      on a phone, where the name would otherwise run into the apple. */
   --top-row: 2.75rem;
-  /* The name at the top middle of the About page, on the corner row there —
-     80px of the 1440px page, in --u like the rest of the row. See the name
-     in about/page.tsx. */
-  --about-name-size: calc(80 * var(--u));
 
   /* The width a recording in a study is drawn at — a phone's width. 340px
      against files 498px wide; see the video case in case-study.tsx, which
@@ -508,9 +504,6 @@ html[data-dragging] * {
        rather than sharing the top with the corner. 15% still leaves it room
        either side on the narrowest phones. */
     --name-size: max(2rem, calc(var(--page) * 0.15));
-    /* A fixed size on a phone, where --u would make it tiny, as the corner
-       row does. */
-    --about-name-size: 2.75rem;
     --edge: 1.5rem;
     --cover-film: calc(var(--film) * 0.85);
     --cover: 104px;
