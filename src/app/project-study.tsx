@@ -608,6 +608,68 @@ export function ProjectList({
     };
   }, [openSlug, closing]);
 
+  // On the homepage with nothing open, the left and right arrows, or A and
+  // D, glide the strip of covers the way W and S glide an open study:
+  // for as long as the key is down, starting at an easy pace and picking up
+  // to a quicker one over half a second — a little quicker throughout than
+  // the browser's own key scrolling, which also steps in jumps — and a tap
+  // is a short nudge. Not while the press belongs to something else, as for
+  // the keys in a study, nor with gravity on.
+  useEffect(() => {
+    if (shown) return;
+    let dir: 1 | -1 | 0 = 0;
+    let since = 0;
+    let last = 0;
+    let frame = 0;
+    const which = (e: KeyboardEvent) => {
+      const k = e.key.toLowerCase();
+      return k === "d" || k === "arrowright" ? 1 : k === "a" || k === "arrowleft" ? -1 : 0;
+    };
+    const step = (now: number) => {
+      const dt = Math.min(now - last, 50);
+      last = now;
+      // px per ms: 1 at the press, rising to 1.8 over 500ms — against the
+      // 1.3 or so a held arrow key scrolls by itself on a Mac.
+      const speed = 1 + 0.8 * Math.min((now - since) / 500, 1);
+      scrollerRef.current?.scrollBy({ left: dir * speed * dt, behavior: "instant" });
+      frame = requestAnimationFrame(step);
+    };
+    const stop = () => {
+      dir = 0;
+      cancelAnimationFrame(frame);
+      frame = 0;
+    };
+    const down = (e: KeyboardEvent) => {
+      if (e.defaultPrevented || e.metaKey || e.ctrlKey || e.altKey) return;
+      const d = which(e);
+      if (!d || !scrollerRef.current || document.fullscreenElement) return;
+      if (document.documentElement.classList.contains("gravity-on")) return;
+      if ((e.target as Element).closest?.("input, textarea, select, video, [contenteditable]"))
+        return;
+      e.preventDefault();
+      if (dir === d) return;
+      dir = d;
+      since = last = performance.now();
+      if (!frame) frame = requestAnimationFrame(step);
+    };
+    const up = (e: KeyboardEvent) => {
+      const d = which(e);
+      if (!d || d !== dir) return;
+      const tap = performance.now() - since < 150 ? dir : 0;
+      stop();
+      if (tap) scrollerRef.current?.scrollBy({ left: tap * 160, behavior: "smooth" });
+    };
+    window.addEventListener("keydown", down);
+    window.addEventListener("keyup", up);
+    window.addEventListener("blur", stop);
+    return () => {
+      window.removeEventListener("keydown", down);
+      window.removeEventListener("keyup", up);
+      window.removeEventListener("blur", stop);
+      stop();
+    };
+  }, [shown]);
+
   // Back to the homepage by pulling down from the top of a study's first
   // screen — a swipe up on a trackpad, or the wheel turned up. Not on the
   // first touch: the first screen comes down with the pull, against a
