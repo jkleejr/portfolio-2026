@@ -841,7 +841,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "A research pipeline runs parallel web queries across market data, sentiment indicators, economic calendars, and a fixed set of stocks. The instructions file structures reports and defines the JSON schema for the website.",
+        text: "A research pipeline runs parallel web queries across market data, sentiment indicators, economic calendars, and a list of stocks. The instructions file structures the report and defines the JSON schema for the website.",
       },
 
       {
@@ -878,7 +878,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "I used market data from Yahoo Finance (delayed quotes) and FRED to visualize price action.",
+        text: "I used market data from Yahoo Finance and FRED to visualize price action.",
       },
       // delay only applies during the trading session, since outside market hours the last price is the close for most stocks. us stocks and etfs are delayed by ~15 minutes, crypto is closer to current
       // data for chart comes from Yahoo Finance API
@@ -897,7 +897,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "Instead of using a calendar list, I designed a timeline for upcoming earnings calls up to 90 days out. Solid dots represent confirmed dates, and hollow dots represent unconfirmed ones.",
+        text: "I designed a timeline for upcoming earnings calls up to 90 days out. Solid dots represent confirmed dates, and hollow dots represent unconfirmed ones.",
       },
 
       {
