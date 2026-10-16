@@ -21,7 +21,7 @@ import { ProjectThumbnail } from "./project-thumbnail";
 function StudyIntro({ study, blurb }: { study: CaseStudy; blurb?: string }) {
   return (
     <header>
-      <h2 className="text-2xl font-bold tracking-[-0.02em]">{study.title}</h2>
+      <h2 className="text-[48px] font-bold leading-[1.1] tracking-[-0.02em]">{study.title}</h2>
       {blurb && <p className="mt-2 text-lg leading-relaxed text-foreground">{blurb}</p>}
       <div className="mt-6 text-lg font-bold">
         {studyFacts(study).map((line, i) => (
