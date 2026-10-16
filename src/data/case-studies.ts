@@ -607,6 +607,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "image",
         beside: "I designed minimal, compact, and expanded states because iOS decides which view is shown. The app appears in the minimal state by default because the iOS recording indicator always shares the island. Considering the lack of space and front-facing camera, I kept the UI simple and used emojis to represent the language.",
+        besideRight: true,
         src: "/projects/screen-translator-island-minimal.png",
         max: 455,
         height: 204,
