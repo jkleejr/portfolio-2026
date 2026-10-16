@@ -28,8 +28,9 @@ import { UndoButton } from "./undo-button";
 /**
  * The row is the apple's height, held there where the apple is left out so the
  * About link stays put, which is what --top-row on the homepage
- * measures to drop the name under it on a phone. From sm up everything in it
- * is measured in --u, so it scales with the page.
+ * measures to drop the name under it on a phone. From sm up the row is
+ * measured in --u, so it scales with the page — all but the About link's
+ * type, which holds the size it has at full width, as the apple does.
  */
 export function SiteCorner() {
   const path = usePathname().replace(/\/+$/, "");
@@ -53,7 +54,7 @@ export function SiteCorner() {
             href="/about"
             // Not on a phone's homepage, which puts it at the foot of the
             // list instead — see design-one.tsx.
-            className={`${onHome ? "max-sm:hidden " : ""}text-lg font-medium text-muted transition-colors duration-200 ease-out hover:text-accent sm:text-[calc(20*var(--u))]`}
+            className={`${onHome ? "max-sm:hidden " : ""}text-lg font-medium text-muted transition-colors duration-200 ease-out hover:text-accent sm:text-[calc(20*var(--u-full))]`}
           >
             About
           </Link>
