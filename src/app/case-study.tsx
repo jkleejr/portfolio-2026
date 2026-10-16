@@ -250,6 +250,20 @@ function Caption({
 const rowShape = (ratio?: string, crop?: string): React.CSSProperties | undefined =>
   ratio ? { aspectRatio: ratio, objectFit: "cover", objectPosition: crop } : undefined;
 
+/**
+ * A heading set over a paragraph beside a picture, with the 8px under it a
+ * heading has anywhere else. On a phone it comes after a picture, so it takes
+ * the room a heading takes there; from sm up it is centred on the picture
+ * with its paragraph and needs none.
+ */
+function BesideHeading({ text }: { text: string }) {
+  return (
+    <h2 className="mb-2 pt-2 text-xl font-bold leading-snug tracking-[-0.02em] sm:pt-0">
+      {text}
+    </h2>
+  );
+}
+
 /** Blocks a heading needs less room after — see the heading case below. */
 const PICTURES = new Set(["image", "images", "video", "region-demo"]);
 
@@ -413,13 +427,16 @@ function Block({
       // being a box in it, so the three can be placed against one another.
       return (
         <div className="sm:grid sm:grid-cols-2 sm:items-center sm:gap-x-10">
-          <p
-            className={`mb-5 text-lg leading-relaxed text-body sm:row-start-1 sm:mb-0 ${
+          <div
+            className={`mb-5 sm:row-start-1 sm:mb-0 ${
               block.besideRight ? "sm:col-start-2" : "sm:col-start-1"
             }`}
           >
-            <Inline text={block.beside} />
-          </p>
+            {block.besideHeading && <BesideHeading text={block.besideHeading} />}
+            <p className="text-lg leading-relaxed text-body">
+              <Inline text={block.beside} />
+            </p>
+          </div>
           <figure className="sm:contents">
             {media}
             <Caption
@@ -462,11 +479,7 @@ function Block({
       return (
         <div className="sm:grid sm:grid-cols-2 sm:items-center sm:gap-x-10">
           <div className="mb-5 sm:mb-0">
-            {block.besideHeading && (
-              <h2 className="mb-2 pt-2 text-xl font-bold leading-snug tracking-[-0.02em] sm:pt-0">
-                {block.besideHeading}
-              </h2>
-            )}
+            {block.besideHeading && <BesideHeading text={block.besideHeading} />}
             <p className="text-lg leading-relaxed text-body">
               <Inline text={block.beside} />
             </p>

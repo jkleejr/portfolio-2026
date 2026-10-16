@@ -29,6 +29,8 @@ export type CaseStudyBlock =
       // besideRight to put it on the picture's right instead.
       beside?: string;
       besideRight?: boolean;
+      // A heading over the beside paragraph, centred on the picture with it.
+      besideHeading?: string;
       // Wrap the paragraph round the picture once it runs taller than it,
       // rather than keeping the two in columns — see beside-wrap.tsx.
       wrap?: boolean;
@@ -684,13 +686,9 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
 
       {
-        type: "heading",
-        text: "Saving Sentences for Learning",
-      },
-
-      {
         type: "image",
         src: "/projects/screen-translator-learn-vocab.mp4",
+        besideHeading: "Saving Sentences for Learning",
         alt: "The Learn page with two pinned Korean sentences broken into word chips; tapping 첫째주 highlights it and shows its meaning, first week, in a bubble above it",
         beside: "Pinning a sentence saves it to the \"Learn\" page and breaks it into individual words. Tapping a word shows its definition as used in that sentence.",
         besideRight: true,
