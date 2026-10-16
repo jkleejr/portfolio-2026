@@ -933,8 +933,10 @@ export function ProjectList({
 
         {study && (
           // Across the band from sm up, with nothing in the margins beside
-          // it — see --study-width.
-          <div className="mx-auto w-[var(--column)] max-w-[calc(100%-3rem)] sm:w-[var(--study-width)] sm:max-w-none">
+          // it — see --study-width. Widened on the right by the scrollbar, so
+          // the white either side of it is the same measured to the window's
+          // edges, the bar counted in the right one.
+          <div className="mx-auto w-[var(--column)] max-w-[calc(100%-3rem)] sm:ml-[calc((100%-var(--study-width))/2)] sm:w-[calc(var(--study-width)+var(--scrollbar))] sm:max-w-none">
             <div
               data-study
               // Room at the foot once the study is read: it is the last

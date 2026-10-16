@@ -91,7 +91,9 @@
   /* How wide a study runs from sm up, on the homepage and on its own page:
      the whole band, less --edge of air at either side. Nothing is set out
      in the margins beside a study, so the writing takes both of them, and
-     its left edge is the one the intro at the top of the page starts at. */
+     its left edge is the one the intro at the top of the page starts at.
+     The study adds --scrollbar to it on the right, where the band stops
+     short of the window by the bar — see the study in project-study.tsx. */
   --study-width: calc(var(--page) - 2 * var(--edge));
 
   /* The name across the top of the homepage. It sets solid, so its type size

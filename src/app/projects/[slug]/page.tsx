@@ -46,7 +46,7 @@ export default async function ProjectPage({ params }: Params) {
     <main className="pb-8 pt-6 sm:pb-28 sm:pt-[102px]">
       {/* As wide as a study opened on the homepage runs, so the two read as
           the same page — see --study-width. */}
-      <div className="mx-auto w-[var(--column)] max-w-[calc(100%-3rem)] sm:w-[var(--study-width)] sm:max-w-none">
+      <div className="mx-auto w-[var(--column)] max-w-[calc(100%-3rem)] sm:ml-[calc((100%-var(--study-width))/2)] sm:w-[calc(var(--study-width)+var(--scrollbar))] sm:max-w-none">
         {/* Where this page sits, and the way back. It sits above the line the
             name holds on the homepage, leaving that line to the title of the
             study — so the first heading of either page is at the same height,
