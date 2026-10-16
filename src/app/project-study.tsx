@@ -597,6 +597,38 @@ export function ProjectList({
     return () => window.removeEventListener("keydown", key);
   }, [openSlug, closing, close]);
 
+  // The left and right arrows, or A and D, go to the study before or after
+  // the open one, in the strip's order — the swipe between studies above, on
+  // the keyboard, and from anywhere in the study rather than only its first
+  // screen. The next study starts at its top: the page is put back there at
+  // once, before the covers move, so it is not seen scrolling up through
+  // the study being left. Nothing past either end, and a key held down moves
+  // once. Not while the press belongs to something else: a field being typed
+  // in, a film whose controls take the arrows to scrub, or a shortcut.
+  useEffect(() => {
+    if (!openSlug || closing) return;
+    const order = Object.keys(studies);
+    const g = swipe.current;
+    const key = (e: KeyboardEvent) => {
+      if (e.defaultPrevented || e.metaKey || e.ctrlKey || e.altKey) return;
+      const k = e.key.toLowerCase();
+      const step = k === "arrowright" || k === "d" ? 1 : k === "arrowleft" || k === "a" ? -1 : 0;
+      if (!step || document.fullscreenElement) return;
+      if ((e.target as Element).closest?.("input, textarea, select, video, [contenteditable]"))
+        return;
+      const next = order[order.indexOf(openSlug) + step];
+      if (!next) return;
+      e.preventDefault();
+      if (e.repeat || performance.now() < g.busyUntil) return;
+      g.busyUntil = performance.now() + SWIPE_REST;
+      window.scrollTo({ top: 0 });
+      setOpen(next);
+      window.history.replaceState(null, "", `/${next}`);
+    };
+    window.addEventListener("keydown", key);
+    return () => window.removeEventListener("keydown", key);
+  }, [openSlug, closing, studies, setOpen]);
+
   // Back to the homepage by pulling down from the top of a study's first
   // screen — a swipe up on a trackpad, or the wheel turned up. Not on the
   // first touch: the first screen comes down with the pull, against a
