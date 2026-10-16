@@ -37,7 +37,7 @@ export const entries: Entry[] = [
   {
     title: "Screen Translator",
     blurb:
-      "Use the Dynamic Island to translate text on your screen in real time",
+      "Use the Dynamic Island to translate text on your screen in real time.",
     slug: "screen-translator",
     media: "/projects/screen-translator-demo.mp4",
     images: [
@@ -53,7 +53,7 @@ export const entries: Entry[] = [
   {
     title: "Paper Reader",
     blurb:
-      "Upload a PDF to hear it in a natural voice with citations filtered out",
+      "Upload a PDF to hear it in a natural voice with citations filtered out.",
     slug: "paper-reader",
     media: "/projects/paper-reader-add-and-listen.mp4",
     images: [
@@ -67,7 +67,7 @@ export const entries: Entry[] = [
   {
     title: "Buy Side Briefings",
     blurb:
-      "Automated, daily stock market reports",
+      "Automated, daily stock market reports.",
     slug: "buy-side-briefings",
     media: "/projects/buy-side-site-today-5.png",
     images: [
