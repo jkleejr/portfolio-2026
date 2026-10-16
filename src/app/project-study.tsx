@@ -767,18 +767,16 @@ export function ProjectList({
     return () => window.removeEventListener("wheel", wheel);
   }, [shown, press, studies]);
 
-  // Whether the reader is down at the open study's end: its last section,
-  // the results and reflection (marked data-study-end in case-study.tsx), has
-  // come up into the window. Read on every scroll, a frame at a time.
-  const [endSeen, setEndSeen] = useState(false);
-  const atEnd = !!openSlug && endSeen;
+  // Whether the open study has been scrolled at all — the way back in the
+  // corner then stands over the study's writing, and takes a glass backing
+  // to be read against it. Read on every scroll, a frame at a time.
+  const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
     if (!openSlug) return;
     let frame = 0;
     const check = () => {
       frame = 0;
-      const end = document.querySelector("[data-study] [data-study-end]");
-      setEndSeen(!!end && end.getBoundingClientRect().top < window.innerHeight);
+      setScrolled(window.scrollY > 4);
     };
     const onScroll = () => {
       if (!frame) frame = requestAnimationFrame(check);
@@ -790,8 +788,8 @@ export function ProjectList({
       cancelAnimationFrame(frame);
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
-      // The next study opens at its top, not at its end.
-      setEndSeen(false);
+      // The next study opens at its top.
+      setScrolled(false);
     };
   }, [openSlug]);
 
@@ -893,34 +891,17 @@ export function ProjectList({
             where the name was, set the way the About page's is. Home is a
             link to the homepage for anything that wants one — a new tab, a
             screen reader — and a plain press puts the cover back into the
-            strip rather than loading the page again. Part of the first screen,
-            it scrolls away with it rather than sitting over the study below.
-            Measured from the window's left edge rather than the band's, so it
-            is where the copy held at the study's end is, on a window wider
-            than the band too. */}
+            strip rather than loading the page again. Held in the window's top
+            left the whole way down the study, so the way home is never a
+            scroll back up; once the page moves it sits on a glass backing,
+            to be read over the writing passing under it — see
+            [data-study-back] in globals.css. */}
         {shown && (
           <nav
             aria-label="Breadcrumb"
             data-study-back
-            className="absolute left-[calc(var(--edge)-(100vw-var(--scrollbar)-var(--page))/2)] top-6 z-30 flex h-11 items-center text-lg font-medium leading-relaxed sm:top-[var(--frame-top)]"
-          >
-            {crumbs}
-          </nav>
-        )}
-
-        {/* The same way back again, held in the window's top left once the
-            reader is down at the study's end — its results and reflection —
-            so getting home does not mean scrolling all the way back up. It
-            fades in as that section comes into view and out again above it.
-            Out of reach while hidden, so it is not pressed or tabbed to. */}
-        {shown && (
-          <nav
-            aria-label="Breadcrumb"
-            aria-hidden={!atEnd}
-            inert={!atEnd}
-            data-study-back-end
-            data-shown={atEnd ? "" : undefined}
-            className="fixed left-[var(--edge)] top-6 z-30 hidden h-11 items-center text-lg font-medium leading-relaxed sm:top-[var(--frame-top)] sm:flex"
+            data-scrolled={scrolled ? "" : undefined}
+            className="fixed left-[var(--edge)] top-6 z-30 flex h-11 items-center text-lg font-medium leading-relaxed sm:top-[var(--frame-top)]"
           >
             {crumbs}
           </nav>

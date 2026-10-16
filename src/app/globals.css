@@ -440,14 +440,37 @@ html:not([data-study-open]) [data-study-back] {
   animation: fade-in 450ms cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
 }
 
-/* The way back held in the corner at a study's end — see ProjectList. A
-   slower fade than the rest, so it eases in rather than appearing. */
-[data-study-back-end] {
+/* An open study's way back, held in the window's top left — see ProjectList.
+   Bare over the first screen, and on a pill of frosted glass once the page
+   is scrolled, so it reads over the writing passing under it: the page's own
+   colour over most of it, blurred and lifted in saturation, with a lit top
+   edge and a soft shadow under it. Drawn behind the words rather than as
+   padding on them, so the words do not move when it comes in. */
+[data-study-back]::before {
+  content: "";
+  position: absolute;
+  inset: 4px -14px;
+  z-index: -1;
+  border-radius: 9999px;
+  background: color-mix(in srgb, var(--background) 72%, transparent);
+  -webkit-backdrop-filter: blur(20px) saturate(1.6);
+  backdrop-filter: blur(20px) saturate(1.6);
+  border: 1px solid color-mix(in srgb, var(--foreground) 8%, transparent);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, white 55%, transparent),
+    0 4px 18px color-mix(in srgb, black 8%, transparent);
   opacity: 0;
-  transition: opacity 500ms ease;
+  transition: opacity 250ms ease;
 }
-[data-study-back-end][data-shown] {
+[data-study-back][data-scrolled]::before {
   opacity: 1;
+}
+/* On the dark page the lit edge is a glint rather than a line, and the
+   shadow has to be deeper to be seen at all. */
+[data-theme="dark"] [data-study-back]::before {
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, white 12%, transparent),
+    0 4px 18px color-mix(in srgb, black 45%, transparent);
 }
 
 /* Arriving straight at a study's address: the strip is kept out of sight
