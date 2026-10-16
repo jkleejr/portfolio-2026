@@ -64,9 +64,11 @@ const SIDEWAYS_QUIET = 500;
 // the transition on the strip's sections in globals.css.
 const GROW = 650;
 
-// How long after the arrow keys move from one open study to the next before
-// another move is taken — short of the whole animation, so a quick run of
-// presses is not held up by it.
+// How far a sideways swipe has to go, in px, to move from one open study to
+// the next, and how long after a move, by a swipe or the arrow keys, before
+// another is taken — long enough that one swipe does not count twice, short
+// of the whole animation so a quick run of swipes is not held up by it.
+const SWIPE_STEP = 60;
 const SWIPE_REST = 300;
 
 // How far a pull down from the top of a study's first screen has to go, in
@@ -407,10 +409,95 @@ export function ProjectList({
     }
   }, [openSlug, wide]);
 
-  // Held across studies, so a study the arrow keys have just moved to is not
-  // moved on from again before it has come up into place — see the keys
-  // below.
-  const swipe = useRef({ busyUntil: 0 });
+  // From one open study to the next or the one before, in the order the strip
+  // has them, by a sideways swipe on a trackpad. Only while the whole of the
+  // grown cover is still in the window — scrolled far enough that some of it
+  // has gone off the top, the page is being read, and sideways means
+  // nothing. Nothing past either end.
+  //
+  // The direction is the strip's: swiping the way that would bring the
+  // covers on the right into view brings the next study. The next study
+  // starts at its top, as with the arrow keys below. The address is replaced
+  // rather than added to, so the back button still goes home rather than
+  // back through every study swiped past.
+  // Held across studies: the listener is set up again for each one, and a
+  // swipe that has just moved on must not move on again in the next — nor
+  // the arrow keys before the study they moved to has come up into place.
+  const swipe = useRef({
+    busyUntil: 0,
+    travelled: 0,
+    lastAt: -Infinity,
+    lastSize: 0,
+    lastSign: 0,
+    shrinking: 0,
+    coasting: false,
+    floor: Infinity,
+    fired: false,
+  });
+  useEffect(() => {
+    if (!openSlug || closing) return;
+    const order = Object.keys(studies);
+    const g = swipe.current;
+    const coverInView = () => {
+      const hero = scrollerRef.current?.querySelector("section[data-hero]");
+      if (!hero) return false;
+      const { top, bottom } = hero.getBoundingClientRect();
+      return top >= -1 && bottom <= window.innerHeight + 1;
+    };
+    const go = (step: 1 | -1) => {
+      if (performance.now() < g.busyUntil) return;
+      const next = order[order.indexOf(openSlug) + step];
+      if (!next) return;
+      g.busyUntil = performance.now() + SWIPE_REST;
+      window.scrollTo({ top: 0 });
+      setOpen(next);
+      window.history.replaceState(null, "", `/${next}`);
+    };
+
+    // A swipe is one push however long its coasting runs on: it moves on once
+    // it has gone SWIPE_STEP px, and not again for the rest of that swipe.
+    // The coasting after the fingers lift runs on for up to a second, and the
+    // next swipe often starts inside it, so a new swipe is not waited for as a
+    // gap: it is a push that grows where coasting only ever shrinks, or one the
+    // other way — or, failing both, a moment of quiet.
+    const wheel = (e: WheelEvent) => {
+      if (Math.abs(e.deltaX) <= Math.abs(e.deltaY) || !coverInView()) return;
+      if (document.documentElement.classList.contains("gravity-on")) return;
+      // Kept from the browser, whose own sideways swipe goes back a page.
+      e.preventDefault();
+      const size = Math.abs(e.deltaX);
+      const sign = Math.sign(e.deltaX);
+      // Coasting is two shrinking pushes in a row or more, and from then on
+      // its lowest push is kept: a new swipe climbs well back above it. A
+      // swipe getting up to speed grows too, before it has coasted at all,
+      // and is not mistaken for a new one.
+      const fresh =
+        e.timeStamp - g.lastAt > 250 ||
+        sign !== g.lastSign ||
+        (g.coasting && size > 6 && size > g.floor * 2);
+      if (fresh) {
+        g.travelled = 0;
+        g.fired = false;
+        g.shrinking = 0;
+        g.coasting = false;
+        g.floor = Infinity;
+      } else {
+        g.shrinking = size < g.lastSize ? g.shrinking + 1 : 0;
+        if (g.shrinking >= 2) g.coasting = true;
+        if (g.coasting) g.floor = Math.min(g.floor, size);
+      }
+      g.lastAt = e.timeStamp;
+      g.lastSize = size;
+      g.lastSign = sign;
+      if (g.fired) return;
+      g.travelled += e.deltaX;
+      if (Math.abs(g.travelled) < SWIPE_STEP) return;
+      g.fired = true;
+      go(g.travelled > 0 ? 1 : -1);
+    };
+    window.addEventListener("wheel", wheel, { passive: false });
+    return () => window.removeEventListener("wheel", wheel);
+  }, [openSlug, closing, studies, setOpen]);
 
   // Escape puts the open study away and goes back to the homepage, the way
   // the "Home" in the corner does. Not while the press belongs to something
@@ -430,7 +517,9 @@ export function ProjectList({
   }, [openSlug, closing, close]);
 
   // The left and right arrows, or A and D, go to the study before or after
-  // the open one, in the strip's order, from anywhere in the study. The next study starts at its top: the page is put back there at
+  // the open one, in the strip's order — the swipe between studies above, on
+  // the keyboard, and from anywhere in the study rather than only while its
+  // cover is whole. The next study starts at its top: the page is put back there at
   // once, before the covers move, so it is not seen scrolling up through
   // the study being left. Nothing past either end, and a key held down moves
   // once. Not while the press belongs to something else: a field being typed
