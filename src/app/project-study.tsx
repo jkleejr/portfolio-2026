@@ -425,6 +425,64 @@ export function ProjectList({
     return () => window.removeEventListener("keydown", key);
   }, [openSlug, closing, studies, setOpen]);
 
+  // W and S scroll the open study up and down, the way A and D move between
+  // studies. Held, the page glides for as long as the key is down, starting
+  // at an easy reading pace and picking up to a quicker one over half a
+  // second, and stops the moment it is let go; a tap is a short nudge. One
+  // frame at a time rather than the browser's own key scrolling, which steps
+  // in jumps. Not while the press belongs to something else, as for A and D.
+  useEffect(() => {
+    if (!openSlug || closing) return;
+    let dir: 1 | -1 | 0 = 0;
+    let since = 0;
+    let last = 0;
+    let frame = 0;
+    const step = (now: number) => {
+      const dt = Math.min(now - last, 50);
+      last = now;
+      // px per ms: 0.6 at the press, rising to 1.6 over 500ms.
+      const speed = 0.6 + Math.min((now - since) / 500, 1);
+      window.scrollBy({ top: dir * speed * dt, behavior: "instant" });
+      frame = requestAnimationFrame(step);
+    };
+    const stop = () => {
+      dir = 0;
+      cancelAnimationFrame(frame);
+      frame = 0;
+    };
+    const down = (e: KeyboardEvent) => {
+      if (e.defaultPrevented || e.metaKey || e.ctrlKey || e.altKey) return;
+      const k = e.key.toLowerCase();
+      const d = k === "s" ? 1 : k === "w" ? -1 : 0;
+      if (!d || document.fullscreenElement) return;
+      if ((e.target as Element).closest?.("input, textarea, select, video, [contenteditable]"))
+        return;
+      e.preventDefault();
+      if (dir === d) return;
+      dir = d;
+      since = last = performance.now();
+      if (!frame) frame = requestAnimationFrame(step);
+    };
+    const up = (e: KeyboardEvent) => {
+      const k = e.key.toLowerCase();
+      if (!((k === "s" && dir === 1) || (k === "w" && dir === -1))) return;
+      // A tap is over before the glide has gone anywhere: it is a nudge of
+      // about two lines instead.
+      const tap = performance.now() - since < 150 ? dir : 0;
+      stop();
+      if (tap) window.scrollBy({ top: tap * 120, behavior: "smooth" });
+    };
+    window.addEventListener("keydown", down);
+    window.addEventListener("keyup", up);
+    window.addEventListener("blur", stop);
+    return () => {
+      window.removeEventListener("keydown", down);
+      window.removeEventListener("keyup", up);
+      window.removeEventListener("blur", stop);
+      stop();
+    };
+  }, [openSlug, closing]);
+
   // Back to the homepage by pulling down from the top of a study's first
   // screen — a swipe up on a trackpad, or the wheel turned up. Not on the
   // first touch: the first screen comes down with the pull, against a
