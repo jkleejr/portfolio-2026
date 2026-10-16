@@ -38,6 +38,9 @@ export type CaseStudyBlock =
       width?: number;
       max?: number;
       height?: number;
+      // As wide as the study's cover at the top of the page, from sm up —
+      // see .film-cover in globals.css.
+      cover?: boolean;
     }
 
   | {
@@ -68,9 +71,6 @@ export type CaseStudyBlock =
       captionAlign?: "higher" | "highest";
       captionHiddenOnPhone?: boolean;
       captionLeftHiddenOnPhone?: boolean;
-      // As wide as the study's cover at the top of the page, from sm up,
-      // rather than a phone's width — see .film-cover in globals.css.
-      cover?: boolean;
     }
   | { type: "divider" };
 
@@ -689,14 +689,11 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
 
       {
-        type: "text",
-        text: "Pinning a sentence saves it to the \"Learn\" page and breaks it into individual words. Tapping a word shows its definition as used in that sentence."
-      },
-
-      {
-        type: "video",
+        type: "image",
         src: "/projects/screen-translator-learn-vocab.mp4",
-        controls: true,
+        alt: "The Learn page with two pinned Korean sentences broken into word chips; tapping 첫째주 highlights it and shows its meaning, first week, in a bubble above it",
+        beside: "Pinning a sentence saves it to the \"Learn\" page and breaks it into individual words. Tapping a word shows its definition as used in that sentence.",
+        besideRight: true,
         cover: true,
       },
 

@@ -356,6 +356,8 @@ function Block({
               }
             : { alt: block.alt, ...LATER })}
           className={`mx-auto w-full max-w-full rounded-xl border border-foreground/10 ${
+            block.cover ? "film-cover" : ""
+          } ${
             block.beside && !block.wrap
               ? block.besideRight
                 ? "sm:col-start-1 sm:row-start-1"
@@ -368,6 +370,7 @@ function Block({
           style={{
             ...(block.width ? { width: shot(block.width) } : null),
             ...(block.max ? { maxWidth: shot(block.max) } : null),
+            ...(block.cover ? { maxWidth: "var(--film)" } : null),
             ...(block.crop ? { objectPosition: block.crop } : null),
             // With a max, the height is the height at that width and the
             // shot keeps the proportion below it: a phone's column is
@@ -586,11 +589,7 @@ function Block({
         // off its right edge, so the pair read as sitting right of a shot
         // centred on its own. Shifted as a whole so the captions keep their
         // place against the video's edges.
-        <figure
-          className={`sm:grid sm:grid-cols-[1fr_var(--film)_1fr] sm:items-center sm:-translate-x-1.5 ${
-            block.cover ? "film-cover" : ""
-          }`}
-        >
+        <figure className="sm:grid sm:grid-cols-[1fr_var(--film)_1fr] sm:items-center sm:-translate-x-1.5">
           <video
             src={block.src}
             // Its shape, before a byte of it has arrived. Without it a film
