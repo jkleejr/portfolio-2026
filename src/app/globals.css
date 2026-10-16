@@ -412,9 +412,15 @@ body {
   border-color: color-mix(in srgb, white 10%, transparent);
   box-shadow: 0 1px 4px color-mix(in srgb, black 50%, transparent);
 }
-/* From sm up only: a phone keeps the plain About link. */
+/* From sm up only: a phone keeps the plain About link. On the homepage from
+   45rem, where the name leaves room for it. */
 @media (width < 40rem) {
   .page-toggle {
+    display: none;
+  }
+}
+@media (width < 45rem) {
+  .page-toggle-wide {
     display: none;
   }
 }

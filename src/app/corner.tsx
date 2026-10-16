@@ -47,19 +47,23 @@ export function SiteCorner() {
     <>
       <div
         data-gravity="atom"
-        // From sm up the row keeps to the band's --edge on every page, and
-        // one height from the window's top at every window size — where
-        // --frame-top puts the homepage's name on a laptop. So the Projects /
-        // About toggle at its end is in exactly the same place on every page,
-        // and resizing the window moves it only from side to side.
-        className={`corner-stack absolute right-[var(--edge)] top-6 z-20 flex min-h-11 flex-row items-center gap-4 sm:top-[calc(24*var(--u-full))] sm:gap-[calc(16*var(--u))]`}
+        // From sm up the row keeps to the band's --edge and sits on the
+        // homepage's --frame-top on every page — the row the homepage's name
+        // starts on — so the Projects / About toggle at its end is level with
+        // the name, and in exactly the same place on every page. It moves
+        // with the name as the window is resized.
+        className={`corner-stack absolute right-[var(--edge)] top-6 z-20 flex min-h-11 flex-row items-center gap-4 sm:top-[var(--frame-top)] sm:min-h-[calc(44*var(--u))] sm:gap-[calc(16*var(--u))]`}
       >
         {/* A phone keeps the plain link, beside the name; the toggle is
-            from sm up. */}
+            from sm up — and on the homepage only from 45rem, since under
+            that the name runs too far across for the toggle to fit beside
+            it, and the plain link stays. */}
         {!onAbout && (
           <Link
             href="/about"
-            className="text-lg font-medium text-muted transition-colors duration-200 ease-out hover:text-accent sm:hidden"
+            className={`text-lg font-medium text-muted transition-colors duration-200 ease-out hover:text-accent ${
+              onHome ? "min-[45rem]:hidden sm:text-[calc(20*var(--u-full))]" : "sm:hidden"
+            }`}
           >
             About
           </Link>
@@ -67,7 +71,7 @@ export function SiteCorner() {
         {!onHome && !onAbout && (
           <AppleButton fixed={false} button={apple} on={on} toggle={toggle} />
         )}
-        <PageToggle about={onAbout} home={path === ""} />
+        <PageToggle about={onAbout} home={path === ""} narrowHidden={onHome} />
       </div>
       {/* The About page's apple, on its own. On a phone in the top right,
           as far in from the window's right edge as "Home > About" is from
@@ -82,7 +86,7 @@ export function SiteCorner() {
       {onAbout && (
         <div
           data-gravity="atom"
-          className="absolute right-[calc(var(--edge)+1.5px-13*var(--u-full)-(100vw-var(--scrollbar)-var(--page))/2-var(--scrollbar))] top-6 z-20 flex min-h-11 items-center sm:right-auto sm:left-[calc(var(--edge)+var(--scrollbar)-13*var(--u-full))] sm:top-[calc(24*var(--u-full))]"
+          className="absolute right-[calc(var(--edge)+1.5px-13*var(--u-full)-(100vw-var(--scrollbar)-var(--page))/2-var(--scrollbar))] top-6 z-20 flex min-h-11 items-center sm:right-auto sm:left-[calc(var(--edge)+var(--scrollbar)-13*var(--u-full))] sm:top-[var(--frame-top)] sm:min-h-[calc(44*var(--u))]"
         >
           <AppleButton fixed button={apple} on={on} toggle={toggle} />
         </div>
@@ -104,7 +108,16 @@ export function SiteCorner() {
  * state. Sized in --u-full, as the link it stands in for was, so it holds one
  * size at every window width.
  */
-function PageToggle({ about, home }: { about: boolean; home: boolean }) {
+function PageToggle({
+  about,
+  home,
+  narrowHidden,
+}: {
+  about: boolean;
+  home: boolean;
+  /** Left out under 45rem, where the homepage's name leaves it no room. */
+  narrowHidden?: boolean;
+}) {
   // Where the pill is headed, ahead of the address catching up with it —
   // good only while the page it was pressed on is still the one showing.
   const [going, setGoing] = useState<{ to: "projects" | "about"; from: boolean } | null>(
@@ -117,7 +130,11 @@ function PageToggle({ about, home }: { about: boolean; home: boolean }) {
     setGoing({ to, from: about });
   };
   return (
-    <nav aria-label="Pages" data-on={on} className="page-toggle">
+    <nav
+      aria-label="Pages"
+      data-on={on}
+      className={`page-toggle ${narrowHidden ? "page-toggle-wide" : ""}`}
+    >
       <span aria-hidden className="page-toggle-pill" />
       <Link
         href="/"
