@@ -821,7 +821,7 @@ export function ProjectList({
  */
 function Key({ children, label }: { children: React.ReactNode; label?: string }) {
   return (
-    <kbd aria-label={label} className="mx-[0.2em] inline-flex h-[1.45em] min-w-[1.45em] -translate-y-[0.06em] items-center justify-center rounded-[0.3em] border border-b-2 border-foreground/20 bg-foreground/[0.04] px-[0.3em] font-sans text-[0.8em] font-semibold not-italic leading-none">
+    <kbd aria-label={label} className="mx-[0.2em] inline-flex size-[1.45em] -translate-y-[0.06em] items-center justify-center rounded-[0.3em] border border-b-2 border-foreground/20 bg-foreground/[0.04] font-sans text-[0.8em] font-semibold not-italic leading-none">
       {children}
     </kbd>
   );
@@ -839,7 +839,7 @@ function Arrow({ left }: { left?: boolean }) {
       strokeWidth="2.5"
       strokeLinecap="round"
       strokeLinejoin="round"
-      className={`size-[1em] ${left ? "-scale-x-100" : ""}`}
+      className={`size-[0.9em] ${left ? "-scale-x-100" : ""}`}
     >
       <path d="M4 12h16" />
       <path d="m13 5 7 7-7 7" />
