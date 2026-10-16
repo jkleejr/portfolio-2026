@@ -676,7 +676,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         max: 400,
         radius: 34,
         shift: 6,
-        drop: 6,
+        drop: 16,
         alt: "The Translation region card: a crop icon and title with a Custom dropdown at the right, a note that only text inside the box is translated, a phone outline with a blue box dragged over the top of its screen and a resize handle at the corner, and Subtitle band and Full screen presets along the bottom",
       },
 
@@ -688,6 +688,12 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "text",
         text: "Pinning a sentence saves it to the \"Learn\" page and breaks it into individual words. Tapping a word shows its definition as used in that sentence."
+      },
+
+      {
+        type: "video",
+        src: "/projects/screen-translator-learn-vocab.mp4",
+        controls: true,
       },
 
        // had claude do a benchmark test with claude and deepl
