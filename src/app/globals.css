@@ -347,6 +347,81 @@ body {
   user-select: none;
   -webkit-user-select: none;
 }
+/* The Projects / About switch in the corner — see PageToggle in corner.tsx.
+   A rounded track a shade off the page, two equal halves, and a pill in the
+   page's own colour under the one being shown, sliding to the other on a
+   press. One width at every window size, in --u-full, which the undo on the
+   About page reads to stand clear of it. */
+:root {
+  --toggle-w: calc(224 * var(--u-full));
+}
+.page-toggle {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: var(--toggle-w);
+  height: calc(42 * var(--u-full));
+  padding: 3px;
+  border-radius: 9999px;
+  background: color-mix(in srgb, var(--foreground) 6%, transparent);
+  box-shadow: inset 0 1px 2px color-mix(in srgb, black 7%, transparent);
+  font-size: calc(20 * var(--u-full));
+  font-weight: 500;
+  line-height: 1;
+}
+.page-toggle a {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  color: var(--muted);
+  transition: color 250ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.page-toggle a:hover,
+.page-toggle a[aria-current="page"] {
+  color: var(--foreground);
+}
+.page-toggle-pill {
+  position: absolute;
+  top: 3px;
+  bottom: 3px;
+  left: 3px;
+  width: calc(50% - 3px);
+  border-radius: 9999px;
+  background: var(--background);
+  border: 1px solid color-mix(in srgb, var(--foreground) 8%, transparent);
+  box-shadow: 0 1px 4px color-mix(in srgb, black 12%, transparent);
+  transition: transform 300ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.page-toggle[data-on="about"] .page-toggle-pill {
+  transform: translateX(100%);
+}
+/* On the dark page the pill is lifted a shade above the track rather than
+   cut out of it in the page's black. */
+[data-theme="dark"] .page-toggle {
+  background: color-mix(in srgb, var(--foreground) 8%, transparent);
+  box-shadow: inset 0 1px 2px color-mix(in srgb, black 40%, transparent);
+}
+[data-theme="dark"] .page-toggle-pill {
+  background: color-mix(in srgb, var(--foreground) 18%, var(--background));
+  border-color: color-mix(in srgb, white 10%, transparent);
+  box-shadow: 0 1px 4px color-mix(in srgb, black 50%, transparent);
+}
+/* From sm up only: a phone keeps the plain About link. */
+@media (width < 40rem) {
+  .page-toggle {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .page-toggle-pill,
+  .page-toggle a {
+    transition: none;
+  }
+}
+
 /* With a study open the strip is only the grown cover, and is not dragged. */
 html[data-study-open] .cover-strip {
   cursor: auto;

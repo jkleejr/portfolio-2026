@@ -39,11 +39,12 @@ export function UndoButton({ on, undo }: { on: boolean; undo: () => void }) {
   if (!on || !ready) return null;
 
   return (
-    // In the apple's place, which on the About page is held in from the
-    // window's right edge — see the corner row in corner.tsx.
+    // In the apple's place — see the corner row in corner.tsx: on a phone held
+    // in from the window's right edge, and from sm up to the left of the
+    // Projects / About toggle, the row's gap clear of it.
     <div
       data-gravity-undo
-      className="absolute right-[calc(var(--edge)+1.5px-13*var(--u-full)-(100vw-var(--scrollbar)-var(--page))/2-var(--scrollbar))] top-6 z-[60] flex min-h-11 items-center sm:top-[calc(24*var(--u-full))]"
+      className="absolute right-[calc(var(--edge)+1.5px-13*var(--u-full)-(100vw-var(--scrollbar)-var(--page))/2-var(--scrollbar))] sm:right-[calc(var(--edge)+var(--toggle-w)+16*var(--u))] top-6 z-[60] flex min-h-11 items-center sm:top-[calc(24*var(--u-full))]"
     >
       <button
         type="button"
