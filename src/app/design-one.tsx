@@ -4,6 +4,7 @@
 // /[slug] — see [slug]/page.tsx.
 // ---------------------------------------------------------------------------
 
+import Link from "next/link";
 import { site } from "@/data/site";
 import { entries } from "@/data/projects";
 import { caseStudies, type CaseStudy } from "@/data/case-studies";
@@ -263,6 +264,17 @@ export function DesignOne() {
             }),
           )}
         />
+        {/* The way to the About page, at the foot of the list on the right
+            rather than up in the corner — see corner.tsx, which leaves it out
+            on a phone's homepage. Set as the corner sets it. */}
+        <div className="mx-auto flex w-[var(--column)] max-w-[calc(100%-3rem)] justify-end pb-8 pt-4">
+          <Link
+            href="/about"
+            className="text-lg font-medium text-muted transition-colors duration-200 ease-out hover:text-accent"
+          >
+            About
+          </Link>
+        </div>
       </div>
 
     </main>
