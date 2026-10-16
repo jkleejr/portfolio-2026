@@ -69,7 +69,7 @@ export const entries: Entry[] = [
     blurb:
       "Automated, daily stock market reports.",
     slug: "buy-side-briefings",
-    media: "/projects/buy-side-site-today-5.png",
+    media: "/projects/buy-side-site-today-6.png",
     images: [
       {
         cover: "/projects/buy-side-briefings-swing.png",

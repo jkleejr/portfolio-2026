@@ -169,16 +169,20 @@ function growTo(el: HTMLElement, frame: HTMLElement) {
   const bandLeft = (vw - page) / 2;
   const edge = parseFloat(getComputedStyle(root).getPropertyValue("--edge")) || 24;
   const phone = vw < 640;
+  const study = caseStudies[el.dataset.slug ?? ""];
   const scale = Math.min(
     (vh * (phone ? 0.7 : 0.8)) / r.height,
-    (phone ? vw - 2 * edge : page * 0.58) / r.width,
+    (phone ? vw - 2 * edge : page * 0.58 * (study?.coverGrow ?? 1)) / r.width,
   );
   const w = r.width * scale;
   const h = r.height * scale;
-  const shift = (caseStudies[el.dataset.slug ?? ""]?.coverShift ?? 0) * (page / 1287);
+  const shift = (study?.coverShift ?? 0) * (page / 1287);
+  // Never more than the band's own margin and half an --edge, so on a window
+  // no wider than the band the cover still keeps clear of the window's edge.
+  const past = Math.min((study?.coverPastEdge ?? 0) * (page / 1287), bandLeft + edge / 2);
   const cx = phone
     ? vw / 2
-    : Math.min(bandLeft + page * 0.62 + shift, bandLeft + page - edge - w / 2);
+    : Math.min(bandLeft + page * 0.62 + shift, bandLeft + page - edge - w / 2 + past);
   const frameTop = frame.getBoundingClientRect().top + window.scrollY;
   const left = cx - w / 2;
   const top = frameTop + vh / 2 - h / 2;

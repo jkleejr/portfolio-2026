@@ -103,6 +103,12 @@ export type CaseStudy = {
   // on the 1287px band and in step with it below that — room for a name
   // that would otherwise wrap beside it. Never past the band's edge.
   coverShift?: number;
+  // How many px past the band's right edge, less --edge, the grown cover may
+  // go — on the 1287px band and in step with it below that.
+  coverPastEdge?: number;
+  // The grown cover's width from sm up as a multiple of its usual share of
+  // the band: 1.06 makes it 6% wider. The cover in the strip is untouched.
+  coverGrow?: number;
   blocks: CaseStudyBlock[];
 };
 
@@ -795,7 +801,9 @@ export const caseStudies: Record<string, CaseStudy> = {
     role: "Role: Web Designer & Developer",
     scope: "Scope: Web App",
     href: "https://buy-side-briefings.vercel.app/",
-    coverShift: 64,
+    coverShift: 92,
+    coverGrow: 1.07,
+    coverPastEdge: 28,
     blocks: [
       {
         type: "heading",
@@ -820,30 +828,22 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "image",
-        src: "/projects/buy-side-site-today-5.png",
+        src: "/projects/buy-side-site-today-6.png",
         max: 1000,
-        alt: "The Today page with the toggle on AM: a live ticker strip under the nav, then the morning report of Monday, September 14, filed at 8:21 AM ET, its headline on frontier AI labs calling for a slowdown and chip stocks dropping before the open, the paragraph that argues it, a link out to the full six-minute read, and the charts panel opening underneath",
+        alt: "The Today page with the toggle on AM: a live ticker strip under the nav, then the morning report of Friday, October 16, filed at 8:16 AM ET, its headline on the Fed chair giving no hint of an October hike and the odds halving while AI stocks get little relief, the paragraph that argues it, a link out to the full five-minute read, and the charts panel opening underneath",
       },
 
-      {
-        type: "heading",
-        text: "Curating Market Context with AI",
-      }, // how content is organized
-
-      {
-        type: "text",
-        text: "A research pipeline runs parallel web queries across market data, sentiment indicators, economic calendars, and a list of stocks. The instructions file structures the report and defines the JSON schema for the website.",
-      },
-
-      {
-        type: "text",
-        text: "Because LLMs don't have long-term memory, the agent calibrates itself by reading reports from the last few days before writing. The historical data simulates continuity and allows the report to distinguish between ongoing and new market trends."
-      },
-
+      // how content is organized
       {
         type: "image",
+        besideHeading: "Curating Market Context with AI",
+        beside: [
+          "A research pipeline runs parallel web queries across market data, sentiment indicators, economic calendars, and a list of stocks. The instructions file structures the report and defines the JSON schema for the website.",
+          "Because LLMs don't have long-term memory, the agent calibrates itself by reading reports from the last few days before writing. The historical data simulates continuity and allows the report to distinguish between ongoing and new market trends.",
+        ],
         src: "/projects/buy-side-briefings-authoring-loop.svg",
-        max: 752.4,
+        max: 781,
+        grow: 1.089,
         alt: "Authoring loop. A cron trigger starts the agent, which researches the session on the web and then writes two files: a structured verdict JSON and a written report. The JSON is parsed and checked against the schema. If it fails, the agent rewrites it. If it passes, a script stamps the generated-at timestamp from the clock, and the files are committed and pushed.",
       },
 

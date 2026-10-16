@@ -224,8 +224,11 @@ export function ProjectThumbnail({
           alt=""
           width={media.width ?? 1200}
           height={media.height ?? 900}
-          sizes="(width < 40rem) 870px, 800px"
-          quality={90}
+          // The file itself rather than a re-encoded variant: this is the
+          // cover that grows into the open study, ~800px across, and the
+          // optimizer's lossy copy blurs the small text in the screenshot.
+          // It is only a ~2x downscale, which the browser draws cleanly.
+          unoptimized
           loading="eager"
           draggable={false}
           // As tall as a film --cover-picture-film wide, less the 2px of its
