@@ -49,7 +49,7 @@ export default function AboutPage() {
           <div className="min-w-0 flex-1 sm:grid sm:grid-rows-[1fr_auto_1fr]">
             <div className="sm:row-start-2">
               <p className="text-lg leading-relaxed text-foreground">
-                I’m a designer building AI-native products from 0&nbsp;to&nbsp;1. My background in cognitive science and music production allows me to approach problems through both UI/UX design thinking and the intuition of an artist. I’m driven by curiosity and entrepreneurship, so I spent time exploring my interests by building apps, producing music, and trading/investing, which developed my skills as a creative problem solver. 
+                I’m a designer building AI-native products from 0&nbsp;to&nbsp;1. My background in cognitive science and music production allows me to approach problems through both UI/UX design thinking and the intuition of an artist. I’m driven by curiosity and entrepreneurship, so I’ve spent time exploring my interests by building apps, producing music, and trading/investing, which developed my skills as a creative problem solver.
               </p>
 
               {site.intro.some(Boolean) && (

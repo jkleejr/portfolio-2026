@@ -118,7 +118,7 @@ export const caseStudies: Record<string, CaseStudy> = {
     title: "Loot Check",
     appStore: "https://apps.apple.com/us/app/loot-check/id6785767104",
     date: "Time: Jun 2026 - Present",
-    role: "Role: Founder, Product designer",
+    role: "Role: Founder, Product Designer",
     scope: "Scope: 0-1, App Store",
     blocks: [
       {
@@ -349,7 +349,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "Privacy choices also impacted the design. Photos are sent to Claude to identify the item, but past scans, photos, and results are saved only on the user's device. Considering the user's privacy, I decided to keep an anonymous record of each scan, like how the price was worked out and how confident the estimate was to find ways to improve the app.",
+        text: "Privacy choices also impacted the design. Photos are sent to Claude to identify the item, but past scans, photos, and results are saved only on the user's device. To find ways to improve and monetize the app, I decided to keep an anonymous record of each scan, like how the price was worked out and how confident the estimate was.",
       },
 
       {
@@ -390,7 +390,7 @@ export const caseStudies: Record<string, CaseStudy> = {
   "paper-reader": {
     title: "Paper Reader",
     date: "Time: Jul - Aug 2026",
-    role: "Role: Sole Product designer",
+    role: "Role: Sole Product Designer",
     scope: "Scope: iOS Prototype",
     blocks: [
       {
@@ -452,7 +452,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "image",
         besideHeading: "Highlighting",
-        beside: "Because Gemini only returns audio and no timestamps, the app has to estimate which sentence is being spoken to highlight it. Each group is sent to Gemini TTS and returns an audio clip. The app divides the audio proportionally by character count, so a sentence with 5% of a group's characters is assumed to take 5% of the audio. As audio plays, the app tracks the time passed and highlights a sentence based on its estimate. Sentences are re-synced at the start of every group to minimize errors.",
+        beside: "Because Gemini only returns audio and no timestamps, the app has to estimate which sentence is being spoken to highlight it. Each group is sent to Gemini TTS, which returns an audio clip. The app divides the audio proportionally by character count, so a sentence with 5% of a group's characters is assumed to take 5% of the audio. As audio plays, the app tracks the time passed and highlights a sentence based on its estimate. Sentences are re-synced at the start of every group to minimize errors.",
         wrap: true,
         src: "/projects/paper-reader-highlight.mp4",
         width: 420,
@@ -574,7 +574,7 @@ export const caseStudies: Record<string, CaseStudy> = {
   "screen-translator": {
     title: "Screen Translator",
     date: "Time: Sep - Oct 2026",
-    role: "Role: Sole Product designer",
+    role: "Role: Sole Product Designer",
     scope: "Scope: iOS Prototype",
     blocks: [
       {
@@ -583,7 +583,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "Constantly switching apps to translate Korean is time-consuming and makes learning words less efficient due to context switching.",
+        text: "Constantly switching apps to translate Korean is time consuming and makes learning words less efficient due to context switching.",
       },
       {
         type: "heading",
@@ -632,7 +632,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "image",
-        beside: "iOS keeps Live Activities in the minimal view so users have to long press the island to expand it and see a translation. Although this was a major limitation, combining the long press with the region selector allowed the user to decide when and what text they want to translate.",
+        beside: "iOS keeps Live Activities in the minimal view so users have to long press the island to expand it and see a translation. Although this was a major limitation, combining the long press with the region selector allowed the user to decide when and what text they wanted to translate.",
         src: "/projects/screen-translator-island-expanded.mp4",
         max: 489,
         height: 219,
