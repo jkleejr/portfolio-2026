@@ -452,7 +452,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       // Apple NLTokenizer splits text
       {
         type: "image",
-        beside: "Because Gemini only returns audio and no timestamps, the app has to estimate which sentence is being spoken to highlight it. I used Apple's NLTokenizer to find the end of each sentence instead of splitting text on periods, so abbreviations like \"et al.\" or \"Fig. 1\" don't break sentences. The app groups the sentences, sends them to Gemini TTS, and receives an audio clip. Since the app knows the duration of the clip, it divides a group's audio proportionally by character count, so a sentence with 5% of a group's characters is assumed to take 5% of the audio. As audio plays, the app tracks the time passed and highlights a sentence based on its estimate. This is not always accurate, so sentences are re-synced at the start of every group to minimize errors.",
+        beside: "Because Gemini only returns audio and no timestamps, the app has to estimate which sentence is being spoken to highlight it. Each group is sent to Gemini TTS and returns an audio clip. The app divides the audio proportionally by character count, so a sentence with 5% of a group's characters is assumed to take 5% of the audio. As audio plays, the app tracks the time passed and highlights a sentence based on its estimate. Sentences are re-synced at the start of every group to minimize errors.",
         wrap: true,
         src: "/projects/paper-reader-highlight.mp4",
         width: 420,
