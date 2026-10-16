@@ -443,36 +443,20 @@ html:not([data-study-open]) [data-study-keys] {
 }
 
 /* An open study's way back, held in the window's top left — see ProjectList.
-   Bare over the first screen, and on a pill of liquid glass once the page is
-   scrolled, so it reads over the writing passing under it. Clear rather than
-   frosted: a thin wash of the page's colour, and a blur that leaves the
-   writing underneath a faint smear rather than wiping it out, brightened and
-   lifted in saturation the way glass catches the light. What makes it read as
-   glass is the edge: a lit rim along the top, a dimmer one returning along the
-   bottom, a hairline all the way round, and a soft shadow lifting it off the
-   page. Drawn behind the words rather than as padding on them, so the words
-   do not move when it comes in. */
+   Bare over the first screen, and on a solid pill once the page is scrolled,
+   so it reads over the writing passing under it: the page's own colour, with
+   nothing showing through, a hairline round it and a soft shadow lifting it
+   off the page. Drawn behind the words rather than as padding on them, so the
+   words do not move when it comes in. */
 [data-study-back]::before {
   content: "";
   position: absolute;
   inset: 4px -14px;
   z-index: -1;
   border-radius: 9999px;
-  background:
-    linear-gradient(
-      to bottom,
-      color-mix(in srgb, white 22%, transparent),
-      transparent 55%
-    ),
-    color-mix(in srgb, var(--background) 35%, transparent);
-  -webkit-backdrop-filter: blur(5px) saturate(1.8) brightness(1.04);
-  backdrop-filter: blur(5px) saturate(1.8) brightness(1.04);
-  border: 1px solid color-mix(in srgb, white 60%, transparent);
-  box-shadow:
-    inset 0 1px 1px color-mix(in srgb, white 85%, transparent),
-    inset 0 -1px 1px color-mix(in srgb, white 35%, transparent),
-    0 0 0 0.5px color-mix(in srgb, black 8%, transparent),
-    0 6px 20px color-mix(in srgb, black 10%, transparent);
+  background: var(--background);
+  border: 1px solid color-mix(in srgb, var(--foreground) 10%, transparent);
+  box-shadow: 0 4px 16px color-mix(in srgb, black 8%, transparent);
   opacity: 0;
   transition: opacity 400ms cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -486,24 +470,9 @@ html:not([data-study-open]) [data-study-keys] {
 [data-study-keys][data-scrolled] {
   opacity: 0;
 }
-/* On the dark page the wash is the dark page's colour, the rims are glints
-   rather than lines, and the shadow has to be deeper to be seen at all. */
+/* On the dark page the shadow has to be deeper to be seen at all. */
 [data-theme="dark"] [data-study-back]::before {
-  background:
-    linear-gradient(
-      to bottom,
-      color-mix(in srgb, white 7%, transparent),
-      transparent 55%
-    ),
-    color-mix(in srgb, var(--background) 45%, transparent);
-  -webkit-backdrop-filter: blur(6px) saturate(1.6) brightness(0.85);
-  backdrop-filter: blur(6px) saturate(1.6) brightness(0.85);
-  border-color: color-mix(in srgb, white 14%, transparent);
-  box-shadow:
-    inset 0 1px 1px color-mix(in srgb, white 22%, transparent),
-    inset 0 -1px 1px color-mix(in srgb, white 8%, transparent),
-    0 0 0 0.5px color-mix(in srgb, black 40%, transparent),
-    0 6px 20px color-mix(in srgb, black 45%, transparent);
+  box-shadow: 0 4px 16px color-mix(in srgb, black 45%, transparent);
 }
 
 /* Arriving straight at a study's address: the strip is kept out of sight
