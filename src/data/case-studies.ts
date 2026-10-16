@@ -811,7 +811,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
   "buy-side-briefings": {
     title: "Buy Side",
-    intro: "A morning report prepares you for market open and a night report reviews the day. Buy Side started as a crypto trading bot on Discord and turned into a website that curates information to help retail investors understand the stock market.",
+    intro: "A morning report prepares you for market open and a night report reviews the day. Buy Side started as a crypto trading bot on Discord and turned into a website that curates information to help retail investors understand the market.",
     date: "Time: May - Sep 2026",
     role: "Role: Sole Designer, Engineer",
     scope: "Scope: Website",
