@@ -54,12 +54,9 @@ export function DesignOne() {
           link and the apple in the opposite corner. Everything up there is
           measured in --u, a fraction of the band, so the room between the
           name and the corner is the same share of the page at every width
-          and never closes. On a phone it shares the corner row with the
-          About link too, set from the left with the link at the other end:
-          its top margin puts the top of its ink level with the top of the
-          link's capitals — the row's 24px, plus 1rem, less the 0.12em the
-          face leaves above its capitals — and --name-size there is held
-          small enough to clear the link; see globals.css.
+          and never closes. On a phone it is centred across the top on its
+          own, the top of its ink 40px down — the page's 24px, plus 1rem,
+          less the 0.12em the face leaves above its capitals.
 
           The left padding is the page's --edge and 0.0375em more, because
           that is how far the J's swash hangs out to the left of where the
@@ -125,7 +122,7 @@ export function DesignOne() {
           the finer-grained answer, not the coarser one. */}
       <h1
         data-gravity="letters"
-        className="fraktur mb-12 mt-[calc(var(--top-row)+1.5rem)] whitespace-nowrap pl-[calc(var(--edge)+0.0375em)] max-sm:mb-[37px] max-sm:mt-[calc(1rem-0.12em)] text-[length:var(--name-size)] leading-none sm:mb-[calc(56*var(--u))] sm:mt-0"
+        className="fraktur mb-12 mt-[calc(var(--top-row)+1.5rem)] whitespace-nowrap pl-[calc(var(--edge)+0.0375em)] max-sm:mb-[37px] max-sm:mt-[calc(1rem-0.12em)] max-sm:pl-0 max-sm:text-center text-[length:var(--name-size)] leading-none sm:mb-[calc(56*var(--u))] sm:mt-0"
       >
         {site.name}
       </h1>
@@ -169,7 +166,9 @@ export function DesignOne() {
   // up the frame in ProjectList holds its own air, measured in --u, and is
   // centred in the window — so main adds none.
   return (
-    <main className="relative pb-8 pt-6 sm:pb-0 sm:pt-0">
+    // On a phone the foot keeps clear of the Projects / About switch held
+    // over the bottom of the screen — see .page-toggle in globals.css.
+    <main className="relative pb-28 pt-6 sm:pb-0 sm:pt-0">
       {/* Every project's cover, side by side in one row that scrolls sideways
           when it runs past the window, and under it, when one is pressed,
           that project's study — see ProjectList and CoverStrip. Pressing a

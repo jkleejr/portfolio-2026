@@ -54,16 +54,13 @@ export function SiteCorner() {
         // with the name as the window is resized.
         className={`corner-stack absolute right-[var(--edge)] top-6 z-20 flex min-h-11 flex-row items-center gap-4 sm:top-[var(--frame-top)] sm:min-h-[calc(44*var(--u))] sm:gap-[calc(16*var(--u))]`}
       >
-        {/* A phone keeps the plain link, beside the name; the toggle is
-            from sm up — and on the homepage only from 45rem, since under
-            that the name runs too far across for the toggle to fit beside
-            it, and the plain link stays. */}
-        {!onAbout && (
+        {/* The plain link, on the homepage between a phone's width and 45rem
+            — the one stretch where the name leaves no room for the switch
+            beside it, and the switch is not yet at the foot of the screen. */}
+        {onHome && (
           <Link
             href="/about"
-            className={`text-lg font-medium text-muted transition-colors duration-200 ease-out hover:text-accent ${
-              onHome ? "min-[45rem]:hidden sm:text-[calc(20*var(--u-full))]" : "sm:hidden"
-            }`}
+            className="hidden text-lg font-medium text-muted transition-colors duration-200 ease-out hover:text-accent sm:inline sm:text-[calc(20*var(--u-soft))] min-[45rem]:hidden"
           >
             About
           </Link>
@@ -71,12 +68,13 @@ export function SiteCorner() {
         {!onHome && !onAbout && (
           <AppleButton fixed={false} button={apple} on={on} toggle={toggle} />
         )}
+        {/* From sm up at the end of the corner row; on a phone held over the
+            foot of the screen instead — see .page-toggle in globals.css. */}
         <PageToggle about={onAbout} home={path === ""} narrowHidden={onHome} />
       </div>
-      {/* The About page's apple, on its own. On a phone in the top right,
-          as far in from the window's right edge as "Home > About" is from
-          its left; from sm up, where the About page has no "Home > About",
-          in its place at the top left, level with the toggle across from it
+      {/* The About page's apple, on its own, at the top left. On a phone
+          its ink starts at the page's --edge, where the text below starts;
+          from sm up level with the toggle across from it
           and as far in from the window's left edge as the toggle is from its
           right — the band's --edge, plus the half of the window the band
           leaves on each side, plus the scrollbar on the right. Measured to the
@@ -86,7 +84,7 @@ export function SiteCorner() {
       {onAbout && (
         <div
           data-gravity="atom"
-          className="absolute right-[calc(var(--edge)+1.5px-13*var(--u-full)-(100vw-var(--scrollbar)-var(--page))/2-var(--scrollbar))] top-6 z-20 flex min-h-11 items-center sm:right-auto sm:left-[calc(var(--edge)+var(--scrollbar)-13*var(--u-soft))] sm:top-[var(--frame-top)] sm:min-h-[calc(44*var(--u))]"
+          className="absolute left-[calc(var(--edge)+1.5px-13*var(--u-full))] top-6 z-20 flex min-h-11 items-center sm:left-[calc(var(--edge)+var(--scrollbar)-13*var(--u-soft))] sm:top-[var(--frame-top)] sm:min-h-[calc(44*var(--u))]"
         >
           <AppleButton fixed button={apple} on={on} toggle={toggle} />
         </div>

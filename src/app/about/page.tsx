@@ -2,15 +2,13 @@
 // The About page: the ways to get in touch — LinkedIn and email.
 //
 // Set out in the column a study's own page uses (see projects/[slug]/page.tsx).
-// The way back is
-// where an open study puts its own (see project-study.tsx): top left, at the
-// page's --edge, level with the apple in the opposite corner. Reached from
-// the "About" link in the top-right corner of the homepage — see corner.tsx.
+// The way back is the Projects / About switch — in the top-right corner from
+// sm up, held over the foot of the screen on a phone — with the apple at the
+// top left. See corner.tsx.
 // ---------------------------------------------------------------------------
 
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
 import { site } from "@/data/site";
 import { CopyEmail } from "../copy-email";
 
@@ -23,29 +21,11 @@ const link = "transition-colors duration-200 ease-out hover:text-accent";
 
 export default function AboutPage() {
   return (
-    // On a phone the text starts 32px under the corner row the way back
-    // shares with the apple: 44px tall, 1.5rem down. From sm up the block is
-    // centred in the window — see .about-page in globals.css.
-    <main className="about-page relative pb-8 pt-[100px]">
-      {/* On a phone only, placed as the open study's "Home > Loot Check" is,
-          at the window's --edge. From sm up the Projects / About toggle in
-          the corner is the way back, and the apple takes this spot — see
-          corner.tsx. */}
-      <nav
-        aria-label="Breadcrumb"
-        className="absolute left-[calc(var(--edge)-(100vw-var(--scrollbar)-var(--page))/2)] top-6 z-30 flex h-11 items-center text-lg font-medium leading-relaxed sm:hidden"
-      >
-        <Link
-          href="/"
-          className="text-muted transition-colors duration-200 ease-out hover:text-accent"
-        >
-          Home
-        </Link>
-        <span aria-hidden className="px-2 text-muted">
-          &gt;
-        </span>
-        <span aria-current="page">About</span>
-      </nav>
+    // On a phone the text starts 32px under the apple's row, 44px tall and
+    // 1.5rem down, and the foot keeps clear of the Projects / About switch
+    // held over the bottom of the screen. From sm up the block is centred in
+    // the window — see .about-page in globals.css.
+    <main className="about-page relative pb-28 pt-[100px]">
       {/* 120px wider than the column a study is set in, 60px out each side,
           and centred, so the white either side of it matches. */}
       <div className="mx-auto w-[calc(var(--column)+120px)] max-w-[calc(100%-3rem)]">

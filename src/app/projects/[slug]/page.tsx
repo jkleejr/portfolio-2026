@@ -43,7 +43,7 @@ export default async function ProjectPage({ params }: Params) {
     // A phone keeps the small padding it had. There is no room to lift a title
     // 66px there, and the breadcrumb is level with the corner buttons at that
     // width, which is where the homepage puts its name too.
-    <main className="pb-8 pt-6 sm:pb-28 sm:pt-[102px]">
+    <main className="pb-28 pt-6 sm:pt-[102px]">
       {/* As wide as a study opened on the homepage runs, so the two read as
           the same page — see --study-width. */}
       <div className="mx-auto w-[var(--column)] max-w-[calc(100%-3rem)] sm:ml-[calc((100%-var(--study-width))/2)] sm:w-[calc(var(--study-width)+var(--scrollbar))] sm:max-w-none">
