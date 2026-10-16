@@ -202,11 +202,19 @@ function Inline({ text }: { text: string }) {
   return <>{parts}</>;
 }
 
-function Caption({ text, center }: { text?: string; center?: boolean }) {
+function Caption({
+  text,
+  center,
+  className = "",
+}: {
+  text?: string;
+  center?: boolean;
+  className?: string;
+}) {
   if (!text) return null;
   return (
     <figcaption
-      className={`mt-3 text-base italic leading-relaxed ${center ? "text-center" : ""}`}
+      className={`mt-3 text-base italic leading-relaxed ${center ? "text-center" : ""} ${className}`}
     >
       <Inline text={text} />
     </figcaption>
@@ -302,49 +310,75 @@ function Block({
       // below — and sized and placed as the picture it stands in for.
       const film = /\.mp4$/i.test(block.src);
       const Media = film ? "video" : "img";
+      const media = (
+        <Media
+          src={block.src}
+          // The file's own width and height, so the room it takes is held
+          // before it loads — see media-size.ts. The classes still set how
+          // wide it is drawn; these only give it a shape.
+          {...mediaSize(block.src)}
+          {...(film
+            ? {
+                "aria-label": block.alt,
+                poster: poster(block.src),
+                autoPlay: true,
+                muted: true,
+                loop: true,
+                playsInline: true,
+                controls: true,
+                controlsList: "nodownload noplaybackrate",
+                disablePictureInPicture: true,
+              }
+            : { alt: block.alt, ...LATER })}
+          className={`mx-auto w-full max-w-full rounded-xl border border-foreground/10 ${
+            block.beside ? "sm:col-start-2 sm:row-start-1" : ""
+          }`}
+          // Every size in pixels goes through shot(), so the picture
+          // shrinks with the film on a short window rather than holding
+          // its size beside a film that has given way.
+          style={{
+            ...(block.width ? { width: shot(block.width) } : null),
+            ...(block.max ? { maxWidth: shot(block.max) } : null),
+            ...(block.crop ? { objectPosition: block.crop } : null),
+            // With a max, the height is the height at that width and the
+            // shot keeps the proportion below it: a phone's column is
+            // narrower than the max, and a fixed height there would zoom
+            // the shot to fill it and crop the sides away. The proportion
+            // is a ratio of two sizes, so it needs no scaling of its own.
+            ...(block.height
+              ? block.max
+                ? { aspectRatio: `${block.max} / ${block.height}`, objectFit: "cover" }
+                : { height: shot(block.height), objectFit: "cover" }
+              : null),
+          }}
+        />
+      );
+      if (!block.beside)
+        return (
+          <figure>
+            {media}
+            <Caption text={block.caption} center={block.captionCenter} />
+          </figure>
+        );
+      // The paragraph and the picture side by side, half the column each,
+      // and the paragraph centred on the picture alone: the caption has a row
+      // of its own under it, so it does not pull the middle of the pair down.
+      // The figure lends its picture and caption to the grid, rather than
+      // being a box in it, so the three can be placed against one another.
       return (
-        <figure>
-          <Media
-            src={block.src}
-            // The file's own width and height, so the room it takes is held
-            // before it loads — see media-size.ts. The classes still set how
-            // wide it is drawn; these only give it a shape.
-            {...mediaSize(block.src)}
-            {...(film
-              ? {
-                  "aria-label": block.alt,
-                  poster: poster(block.src),
-                  autoPlay: true,
-                  muted: true,
-                  loop: true,
-                  playsInline: true,
-                  controls: true,
-                  controlsList: "nodownload noplaybackrate",
-                  disablePictureInPicture: true,
-                }
-              : { alt: block.alt, ...LATER })}
-            className="mx-auto w-full max-w-full rounded-xl border border-foreground/10"
-            // Every size in pixels goes through shot(), so the picture
-            // shrinks with the film on a short window rather than holding
-            // its size beside a film that has given way.
-            style={{
-              ...(block.width ? { width: shot(block.width) } : null),
-              ...(block.max ? { maxWidth: shot(block.max) } : null),
-              ...(block.crop ? { objectPosition: block.crop } : null),
-              // With a max, the height is the height at that width and the
-              // shot keeps the proportion below it: a phone's column is
-              // narrower than the max, and a fixed height there would zoom
-              // the shot to fill it and crop the sides away. The proportion
-              // is a ratio of two sizes, so it needs no scaling of its own.
-              ...(block.height
-                ? block.max
-                  ? { aspectRatio: `${block.max} / ${block.height}`, objectFit: "cover" }
-                  : { height: shot(block.height), objectFit: "cover" }
-                : null),
-            }}
-          />
-          <Caption text={block.caption} center={block.captionCenter} />
-        </figure>
+        <div className="sm:grid sm:grid-cols-2 sm:items-center sm:gap-x-10">
+          <p className="mb-5 text-lg leading-relaxed text-body sm:col-start-1 sm:row-start-1 sm:mb-0">
+            <Inline text={block.beside} />
+          </p>
+          <figure className="sm:contents">
+            {media}
+            <Caption
+              text={block.caption}
+              center={block.captionCenter}
+              className="sm:col-start-2 sm:row-start-2"
+            />
+          </figure>
+        </div>
       );
     }
 

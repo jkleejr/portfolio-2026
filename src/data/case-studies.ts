@@ -17,6 +17,9 @@ export type CaseStudyBlock =
       type: "image";
       src: string;
       alt: string;
+      // A paragraph set to the left of the picture from sm up, centred on it
+      // down the page; above it on a phone, as a paragraph would be.
+      beside?: string;
       caption?: string;
       captionCenter?: boolean;
       crop?: string;
