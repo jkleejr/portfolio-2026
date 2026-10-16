@@ -47,12 +47,14 @@ export function SiteCorner() {
     <>
       <div
         data-gravity="atom"
-        // On the About page the apple is held as far in from the window's
-        // right edge, scrollbar and all, as "Home > About" is from its left —
+        // On the About page the row is held at one height from the window's
+        // top at every window size, level with "Home > About", and the apple
+        // as far in from the window's right edge, scrollbar and all, as
+        // "Home > About" is from its left —
         // measured to the ink: the apple's starts 13 --u-full inside its
         // button, and the H's 1.5px inside its box. Everywhere else the row
         // keeps to the band's --edge.
-        className={`corner-stack absolute ${onAbout ? "right-[calc(var(--edge)+1.5px-13*var(--u-full)-(100vw-var(--scrollbar)-var(--page))/2-var(--scrollbar))]" : "right-[var(--edge)]"} top-6 z-20 flex min-h-11 flex-row items-center gap-4 sm:top-[var(--frame-top)] sm:min-h-[calc(44*var(--u))] sm:gap-[calc(16*var(--u))]`}
+        className={`corner-stack absolute ${onAbout ? "right-[calc(var(--edge)+1.5px-13*var(--u-full)-(100vw-var(--scrollbar)-var(--page))/2-var(--scrollbar))]" : "right-[var(--edge)]"} top-6 z-20 flex min-h-11 flex-row items-center gap-4 ${onAbout ? "sm:top-[calc(24*var(--u-full))]" : "sm:top-[var(--frame-top)] sm:min-h-[calc(44*var(--u))]"} sm:gap-[calc(16*var(--u))]`}
       >
         {!onAbout && (
           <Link
