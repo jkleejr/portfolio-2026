@@ -712,7 +712,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         ],
         besideRight: true,
         cover: true,
-        wider: 6,
+        wider: 9.5,
       },
 
        // had claude do a benchmark test with claude and deepl
