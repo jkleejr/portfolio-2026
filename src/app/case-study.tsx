@@ -441,6 +441,13 @@ function Block({
           }`}
           style={
             {
+              ...(block.grow
+                ? {
+                    gridTemplateColumns: block.besideRight
+                      ? `minmax(0, ${block.grow}fr) minmax(0, ${2 - block.grow}fr)`
+                      : `minmax(0, ${2 - block.grow}fr) minmax(0, ${block.grow}fr)`,
+                  }
+                : null),
               ...(block.above ? { "--above": shot(block.above) } : null),
               ...(block.below ? { "--below": shot(block.below) } : null),
               ...(block.lift ? { "--lift": shot(block.lift) } : null),

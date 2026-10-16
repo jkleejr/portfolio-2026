@@ -55,6 +55,10 @@ export type CaseStudyBlock =
       // see .film-cover in globals.css — and wider by that many px.
       cover?: boolean;
       wider?: number;
+      // Beside a paragraph, the picture's share of the row from sm up as a
+      // multiple of the half it otherwise takes: 1.02 gives it 2% more room
+      // and the paragraph that much less. max still caps it.
+      grow?: number;
     }
 
   | {
@@ -145,25 +149,19 @@ export const caseStudies: Record<string, CaseStudy> = {
         caption: "Finding the potential value of a painting",
       },
 
-      {
-        type: "heading",
-        text: "System Architecture",
-      },
-
-      {
-        type: "text",
-        text: "The app routes requests through a Vercel endpoint so API keys aren't stored on the device. To keep the app free without risking runaway costs, I used Upstash Redis to cap usage at 100 scans per device and 1,000 scans globally per day.",
-        // risks using claude api and making the app free: my api keys need to be secure, and i need to create spending limits to minimize the cost and plan for a worst case scenario.
-      },
-
       // system architecture and data flow diagrams
       // photo captured to the result and estimated price range
 
       // native client, serverless orchestrator, AI inference, rate limiting, returned payload
       {
         type: "image",
+        besideHeading: "System Architecture",
+        beside: "The app routes requests through a Vercel endpoint so API keys aren't stored on the device. To keep the app free without risking runaway costs, I used Upstash Redis to cap usage at 100 scans per device and 1,000 scans globally per day.",
+        // risks using claude api and making the app free: my api keys need to be secure, and i need to create spending limits to minimize the cost and plan for a worst case scenario.
         src: "/projects/loot-check-architecture.svg",
-        max: 752.4,
+        max: 925,
+        grow: 1.214,
+        above: 24,
         alt: "Architecture diagram. The iOS app uploads a photo to a single analyze endpoint on Vercel, which calls Claude Sonnet 5.5 to identify and price the item and Upstash Redis for daily caps and search allowances. A JSON response returns to the app as an item valuation with payouts from marketplaces.",
       },
 
@@ -215,28 +213,20 @@ export const caseStudies: Record<string, CaseStudy> = {
         text: "A key product decision was determining how items were valued. Using a web search for every scan increased accuracy, but because it raised API costs by 3-4x and the total latency from 6 to up to 27 seconds, I chose to rely on Sonnet's pre-trained data for non-unique items.",
       },
 
-      {
-        type: "heading",
-        text: "Price Discovery",
-      },
-
-      {
-        type: "text",
-        text: "The project started with resale pricing, but the most interesting use case was showing the app something original like a painting that wasn't listed before. That grew the idea into a price discovery tool for both used and original items.",
-      },
-
-      {
-        type: "text",
-        text: "This required two separate pricing strategies. Since handmade and original items lack past transaction data, the search workflow finds the asking prices of visually comparable items to estimate the value.",
-      },
-
       // why not add a button that a user can press if its original
         // temporary solution
 
       {
         type: "image",
+        besideHeading: "Price Discovery",
+        beside: [
+          "The project started with resale pricing, but the most interesting use case was showing the app something original like a painting that wasn't listed before. That grew the idea into a price discovery tool for both used and original items.",
+          "This required two separate pricing strategies. Since handmade and original items lack past transaction data, the search workflow finds the asking prices of visually comparable items to estimate the value.",
+        ],
         src: "/projects/loot-check-pricing-fork.svg",
-        max: 752.4,
+        max: 925.1,
+        grow: 1.214,
+        above: 24,
         alt: "The pricing fork. After the iOS app uploads a photo, the scan asks whether the item is a handmade or original piece. If no, it is resale and priced from training data. If yes, there is no fixed secondhand catalog, so one web search finds the asking price of comparable work. Both paths end in an item valuation.",
       },
 
