@@ -695,6 +695,22 @@ html[data-dragging] * {
   }
 }
 
+/* A recording drawn as wide as the open study's cover, rather than a phone's
+   width — the video block's cover. The cover is grown to 80% of the
+   window's height, at its own shape, but no wider than 58% of the page:
+   growTo in project-study.tsx, which this follows. 0.4628 is the strip
+   cover's shape with its 1px border, 498 by 1080 inside it. Set as --film, so
+   the grid's middle column and the film's max-width both take it; the
+   film's height follows from its own shape. */
+@media (width >= 40rem) {
+  .film-cover {
+    --film: min(
+      calc(80vh * 0.4628),
+      calc(0.58 * min(100vw - var(--scrollbar), 1287px))
+    );
+  }
+}
+
 /* ---------------------------------------------------------------------------
    Touch behaviour
    pan-y leaves vertical scrolling to the browser and takes horizontal panning

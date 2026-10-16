@@ -68,6 +68,9 @@ export type CaseStudyBlock =
       captionAlign?: "higher" | "highest";
       captionHiddenOnPhone?: boolean;
       captionLeftHiddenOnPhone?: boolean;
+      // As wide as the study's cover at the top of the page, from sm up,
+      // rather than a phone's width — see .film-cover in globals.css.
+      cover?: boolean;
     }
   | { type: "divider" };
 
@@ -694,6 +697,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         type: "video",
         src: "/projects/screen-translator-learn-vocab.mp4",
         controls: true,
+        cover: true,
       },
 
        // had claude do a benchmark test with claude and deepl

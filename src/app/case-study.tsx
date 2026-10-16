@@ -586,7 +586,11 @@ function Block({
         // off its right edge, so the pair read as sitting right of a shot
         // centred on its own. Shifted as a whole so the captions keep their
         // place against the video's edges.
-        <figure className="sm:grid sm:grid-cols-[1fr_var(--film)_1fr] sm:items-center sm:-translate-x-1.5">
+        <figure
+          className={`sm:grid sm:grid-cols-[1fr_var(--film)_1fr] sm:items-center sm:-translate-x-1.5 ${
+            block.cover ? "film-cover" : ""
+          }`}
+        >
           <video
             src={block.src}
             // Its shape, before a byte of it has arrived. Without it a film
