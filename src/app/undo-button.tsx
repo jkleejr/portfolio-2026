@@ -44,7 +44,7 @@ export function UndoButton({ on, undo }: { on: boolean; undo: () => void }) {
     // left, where "Home > About" is on a phone.
     <div
       data-gravity-undo
-      className="absolute right-[calc(var(--edge)+1.5px-13*var(--u-full)-(100vw-var(--scrollbar)-var(--page))/2-var(--scrollbar))] sm:right-auto sm:left-[calc(var(--edge)+var(--scrollbar)-13*var(--u-full))] top-6 z-[60] flex min-h-11 items-center sm:top-[var(--frame-top)] sm:min-h-[calc(44*var(--u))]"
+      className="absolute right-[calc(var(--edge)+1.5px-13*var(--u-full)-(100vw-var(--scrollbar)-var(--page))/2-var(--scrollbar))] sm:right-auto sm:left-[calc(var(--edge)+var(--scrollbar)-13*var(--u-full))] top-6 z-[60] flex min-h-11 items-center sm:top-[calc(24*var(--u-full))]"
     >
       <button
         type="button"

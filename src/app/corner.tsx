@@ -47,10 +47,12 @@ export function SiteCorner() {
     <>
       <div
         data-gravity="atom"
-        // From sm up the row keeps to the band's --edge and the homepage's
-        // --frame-top on every page, so the Projects / About toggle at its end
-        // is in exactly the same place on all of them.
-        className={`corner-stack absolute right-[var(--edge)] top-6 z-20 flex min-h-11 flex-row items-center gap-4 sm:top-[var(--frame-top)] sm:min-h-[calc(44*var(--u))] sm:gap-[calc(16*var(--u))]`}
+        // From sm up the row keeps to the band's --edge on every page. Down the
+        // page it sits on the homepage's --frame-top, level with the name,
+        // except on the About page, which holds it at one height from the
+        // window's top at every window size — where --frame-top puts it on a
+        // laptop — so resizing the window moves it only from side to side.
+        className={`corner-stack absolute right-[var(--edge)] top-6 z-20 flex min-h-11 flex-row items-center gap-4 ${onAbout ? "sm:top-[calc(24*var(--u-full))]" : "sm:top-[var(--frame-top)] sm:min-h-[calc(44*var(--u))]"} sm:gap-[calc(16*var(--u))]`}
       >
         {/* A phone keeps the plain link, beside the name; the toggle is
             from sm up. */}
@@ -80,7 +82,7 @@ export function SiteCorner() {
       {onAbout && (
         <div
           data-gravity="atom"
-          className="absolute right-[calc(var(--edge)+1.5px-13*var(--u-full)-(100vw-var(--scrollbar)-var(--page))/2-var(--scrollbar))] top-6 z-20 flex min-h-11 items-center sm:right-auto sm:left-[calc(var(--edge)+var(--scrollbar)-13*var(--u-full))] sm:top-[var(--frame-top)] sm:min-h-[calc(44*var(--u))]"
+          className="absolute right-[calc(var(--edge)+1.5px-13*var(--u-full)-(100vw-var(--scrollbar)-var(--page))/2-var(--scrollbar))] top-6 z-20 flex min-h-11 items-center sm:right-auto sm:left-[calc(var(--edge)+var(--scrollbar)-13*var(--u-full))] sm:top-[calc(24*var(--u-full))]"
         >
           <AppleButton fixed button={apple} on={on} toggle={toggle} />
         </div>
