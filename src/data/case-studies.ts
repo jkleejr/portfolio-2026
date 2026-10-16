@@ -31,10 +31,16 @@ export type CaseStudyBlock =
         src: string;
         alt: string;
         fullOnPhone?: boolean;
+        caption?: string;
+        captionCenter?: boolean;
+        crop?: string;
       }[];
       columns?: 2 | 4;
       stackOnPhone?: boolean;
       max?: number;
+      // Every shot in the row cut to one shape, as "455 / 204"; crop says
+      // which part of each is kept.
+      ratio?: string;
     }
   // Autoplays muted and looping. Set controls to let a viewer pause, go back or forward
   | {

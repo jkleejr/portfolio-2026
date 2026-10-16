@@ -423,7 +423,17 @@ function Block({
                   {...mediaSize(item.src)}
                   {...LATER}
                   className="w-full rounded-xl border border-foreground/10"
+                  style={
+                    block.ratio
+                      ? {
+                          aspectRatio: block.ratio,
+                          objectFit: "cover",
+                          objectPosition: item.crop,
+                        }
+                      : undefined
+                  }
                 />
+                <Caption text={item.caption} center={item.captionCenter} />
               </figure>
             ))}
           </div>
