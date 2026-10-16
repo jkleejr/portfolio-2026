@@ -212,7 +212,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "A key product decision was determining how items were valued. Using a web search for every scan increased accuracy, but because it raised API costs by 3-4x and the total latency from 6 to 24 seconds, I chose to rely on Sonnet's pre-trained data for non-unique items.",
+        text: "A key product decision was determining how items were valued. Using a web search for every scan increased accuracy, but because it raised API costs by 3-4x and the total latency from 6 to up to 27 seconds, I chose to rely on Sonnet's pre-trained data for non-unique items.",
       },
 
       {
@@ -618,7 +618,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "image",
-        beside: "I designed minimal, compact, and expanded states because iOS decides which view is shown. The app appears in the minimal state by default because the iOS recording indicator always shares the island. Considering the lack of space and front-facing camera, I kept the UI simple and used emojis to represent the language.",
+        beside: "I designed minimal, compact, and expanded states because iOS decides which view is shown. The app appears in the minimal state by default because the iOS recording indicator always shares the island. Considering the lack of space and front-facing camera, I kept the UI simple and used emojis to represent the language being translated.",
         besideRight: true,
         above: 4,
         src: "/projects/screen-translator-island-minimal.png",
