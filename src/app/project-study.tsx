@@ -426,7 +426,8 @@ export function ProjectList({
   }, [openSlug, closing, studies, setOpen]);
 
   // W and S scroll the open study up and down, the way A and D move between
-  // studies. Held, the page glides for as long as the key is down, starting
+  // studies, and the up and down arrows do the same in place of the browser's
+  // own. Held, the page glides for as long as the key is down, starting
   // at an easy reading pace and picking up to a quicker one over half a
   // second, and stops the moment it is let go; a tap is a short nudge. One
   // frame at a time rather than the browser's own key scrolling, which steps
@@ -453,7 +454,7 @@ export function ProjectList({
     const down = (e: KeyboardEvent) => {
       if (e.defaultPrevented || e.metaKey || e.ctrlKey || e.altKey) return;
       const k = e.key.toLowerCase();
-      const d = k === "s" ? 1 : k === "w" ? -1 : 0;
+      const d = k === "s" || k === "arrowdown" ? 1 : k === "w" || k === "arrowup" ? -1 : 0;
       if (!d || document.fullscreenElement) return;
       if ((e.target as Element).closest?.("input, textarea, select, video, [contenteditable]"))
         return;
@@ -465,7 +466,8 @@ export function ProjectList({
     };
     const up = (e: KeyboardEvent) => {
       const k = e.key.toLowerCase();
-      if (!((k === "s" && dir === 1) || (k === "w" && dir === -1))) return;
+      const d = k === "s" || k === "arrowdown" ? 1 : k === "w" || k === "arrowup" ? -1 : 0;
+      if (!d || d !== dir) return;
       // A tap is over before the glide has gone anywhere: it is a nudge of
       // about two lines instead.
       const tap = performance.now() - since < 150 ? dir : 0;
