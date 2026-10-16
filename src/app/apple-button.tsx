@@ -56,7 +56,9 @@ export function AppleButton({
       // Falls as the fruit, not the button round it — see inkInset.
       data-gravity-body="ink"
       className={`apple-button flex shrink-0 items-center justify-center text-foreground ${
-        fixed ? "size-[calc(44*var(--u-full))]" : "h-11 w-11 sm:size-[calc(44*var(--u))]"
+        fixed
+          ? "size-[calc(44*var(--u-full))] sm:size-[calc(44*var(--u-soft))]"
+          : "h-11 w-11 sm:size-[calc(44*var(--u))]"
       }`}
     >
       <svg
@@ -64,7 +66,11 @@ export function AppleButton({
         height="26"
         // Scales with the page from sm up, unless fixed — see --u and
         // --u-full in globals.css.
-        className={fixed ? "size-[calc(26*var(--u-full))]" : "sm:size-[calc(26*var(--u))]"}
+        className={
+          fixed
+            ? "size-[calc(26*var(--u-full))] sm:size-[calc(26*var(--u-soft))]"
+            : "sm:size-[calc(26*var(--u))]"
+        }
         viewBox="0 0 24 24"
         fill="currentColor"
         aria-hidden

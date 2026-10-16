@@ -86,7 +86,7 @@ export function SiteCorner() {
       {onAbout && (
         <div
           data-gravity="atom"
-          className="absolute right-[calc(var(--edge)+1.5px-13*var(--u-full)-(100vw-var(--scrollbar)-var(--page))/2-var(--scrollbar))] top-6 z-20 flex min-h-11 items-center sm:right-auto sm:left-[calc(var(--edge)+var(--scrollbar)-13*var(--u-full))] sm:top-[var(--frame-top)] sm:min-h-[calc(44*var(--u))]"
+          className="absolute right-[calc(var(--edge)+1.5px-13*var(--u-full)-(100vw-var(--scrollbar)-var(--page))/2-var(--scrollbar))] top-6 z-20 flex min-h-11 items-center sm:right-auto sm:left-[calc(var(--edge)+var(--scrollbar)-13*var(--u-soft))] sm:top-[var(--frame-top)] sm:min-h-[calc(44*var(--u))]"
         >
           <AppleButton fixed button={apple} on={on} toggle={toggle} />
         </div>
@@ -105,8 +105,8 @@ export function SiteCorner() {
  * The corner is in the layout, so it stays on the screen while the page
  * under it changes: the pill moves the moment it is pressed and the new page
  * comes in under it, rather than the switch being drawn again in its new
- * state. Sized in --u-full, as the link it stands in for was, so it holds one
- * size at every window width.
+ * state. Sized in --u-soft, so it gives a little as the window narrows — see
+ * .page-toggle in globals.css.
  */
 function PageToggle({
   about,

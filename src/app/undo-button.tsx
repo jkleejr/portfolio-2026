@@ -44,13 +44,13 @@ export function UndoButton({ on, undo }: { on: boolean; undo: () => void }) {
     // left, where "Home > About" is on a phone.
     <div
       data-gravity-undo
-      className="absolute right-[calc(var(--edge)+1.5px-13*var(--u-full)-(100vw-var(--scrollbar)-var(--page))/2-var(--scrollbar))] sm:right-auto sm:left-[calc(var(--edge)+var(--scrollbar)-13*var(--u-full))] top-6 z-[60] flex min-h-11 items-center sm:top-[var(--frame-top)] sm:min-h-[calc(44*var(--u))]"
+      className="absolute right-[calc(var(--edge)+1.5px-13*var(--u-full)-(100vw-var(--scrollbar)-var(--page))/2-var(--scrollbar))] sm:right-auto sm:left-[calc(var(--edge)+var(--scrollbar)-13*var(--u-soft))] top-6 z-[60] flex min-h-11 items-center sm:top-[var(--frame-top)] sm:min-h-[calc(44*var(--u))]"
     >
       <button
         type="button"
         onClick={undo}
         aria-label="Undo gravity and put the page back"
-        className="flex size-[calc(44*var(--u-full))] items-center justify-center text-foreground transition-colors duration-200 ease-out hover:text-accent"
+        className="flex size-[calc(44*var(--u-full))] sm:size-[calc(44*var(--u-soft))] items-center justify-center text-foreground transition-colors duration-200 ease-out hover:text-accent"
       >
         {/* Solid, like the apple it stands in for: a band sweeping over from
             a tapered tail into a broad head. The head is stroked in its own
@@ -58,7 +58,7 @@ export function UndoButton({ on, undo }: { on: boolean; undo: () => void }) {
         <svg
           viewBox="0 0 24 24"
           fill="currentColor"
-          className="size-[calc(26*var(--u-full))]"
+          className="size-[calc(26*var(--u-full))] sm:size-[calc(26*var(--u-soft))]"
           aria-hidden
         >
           <path

@@ -80,6 +80,10 @@
      every window width rather than scaling: the apple and the contact links
      on the About page. */
   --u-full: calc(1287px / 1390);
+  /* Halfway between the two: for the corner's toggle and the apple, which
+     give a little as the window narrows rather than holding their size or
+     shrinking with the whole page. */
+  --u-soft: calc((var(--u) + var(--u-full)) / 2);
 
   /* The air between the band's side edges and what is set against them: the
      name and the intro at the top, the notes in the margin, the links at the
@@ -350,23 +354,25 @@ body {
 /* The Projects / About switch in the corner — see PageToggle in corner.tsx.
    A rounded track a shade off the page, two equal halves, and a pill in the
    page's own colour under the one being shown, sliding to the other on a
-   press. One width at every window size, in --u-full, which the undo on the
+   press. Sized in --u-soft, so it gives a little as the window narrows,
+   which the undo on the
    About page reads to stand clear of it. */
 :root {
-  --toggle-w: calc(224 * var(--u-full));
+  --toggle-w: calc(224 * var(--u-soft));
 }
 .page-toggle {
   position: relative;
   display: grid;
   grid-template-columns: 1fr 1fr;
   width: var(--toggle-w);
-  height: calc(42 * var(--u-full));
+  height: calc(46 * var(--u-soft));
   padding: 3px;
   border-radius: 9999px;
   background: color-mix(in srgb, var(--foreground) 6%, transparent);
   box-shadow: inset 0 1px 2px color-mix(in srgb, black 7%, transparent);
-  /* The size of "Home > Loot Check" in an open study. */
-  font-size: 1.125rem;
+  /* The size of "Home > Loot Check" in an open study at full width — 18px
+     — giving a little with the rest. */
+  font-size: calc(19.44 * var(--u-soft));
   font-weight: 500;
   line-height: 1;
 }
