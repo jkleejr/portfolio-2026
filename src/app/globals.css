@@ -630,20 +630,10 @@ html[data-dragging] * {
    --------------------------------------------------------------------------- */
 
 @media (width >= 40rem) {
-  /* And the corner row comes down with the window the way the homepage's
-     does, but stops 32px over the centred block rather than running into it
-     and pushing it down: the homepage's --frame-top, or the block's top less
-     the row and that gap, whichever is higher. The way back, the apple and
-     the undo all read it, so they move as one. */
-  :root:has(.about-page) {
-    --frame-top: max(
-      24 * var(--u),
-      min(
-        (100svh - var(--frame-h)) / 2 - 14 * var(--u),
-        (100svh - 400px) / 2 - 76px
-      )
-    );
-  }
+  /* The corner row is where it is on the homepage, at the homepage's
+     --frame-top, so the Projects / About toggle does not move when the page
+     changes under it. The block is centred in the window, but never starts
+     less than 76px under that row. */
   .about-page {
     padding-top: max(
       calc(var(--frame-top) + 76px),
