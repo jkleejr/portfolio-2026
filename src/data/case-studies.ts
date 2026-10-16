@@ -11,9 +11,13 @@ export type CaseStudyBlock =
       // A paragraph set to the left of the card from sm up, centred on it
       // down the page; above it on a phone — as an image's beside is.
       beside?: string;
+      // A heading over the beside paragraph, centred on the card with it.
+      besideHeading?: string;
       max?: number;
       radius?: number;
       shift?: number;
+      // Nudged down by drop from sm up, leaving everything around it in place.
+      drop?: number;
     }
 
   | {
@@ -666,16 +670,13 @@ export const caseStudies: Record<string, CaseStudy> = {
     //  Opus 5 against DeepL on sentence translations. Opus 5 had a median latency of 2.07 seconds vs. 0.73 seconds for DeepL, and was about 5x more expensive ($0.0031 vs. $0.0006 per sentence)
 
       {
-        type: "heading",
-        text: "Selecting a Translation Region",
-      },
-
-      {
         type: "region-demo",
+        besideHeading: "Selecting a Translation Region",
         beside: "Translating the entire screen was impractical because of the limited space to display the text. I added an interactive crop box to select a specific area of the screen, aligning the app with the user's intent and reducing clutter.",
         max: 400,
         radius: 34,
         shift: 6,
+        drop: 6,
         alt: "The Translation region card: a crop icon and title with a Custom dropdown at the right, a note that only text inside the box is translated, a phone outline with a blue box dragged over the top of its screen and a resize handle at the corner, and Subtitle band and Full screen presets along the bottom",
       },
 

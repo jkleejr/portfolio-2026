@@ -431,15 +431,18 @@ function Block({
 
     case "region-demo": {
       // The column's width up to max, rounded by radius, and nudged by shift
-      // from sm up. The card draws itself at whatever width that comes to.
+      // and drop from sm up. The card draws itself at whatever width that comes to.
       const demo = (
         <figure
           className={`mx-auto w-full overflow-hidden rounded-xl border border-foreground/10 ${
             block.shift ? "sm:translate-x-(--shift)" : ""
-          }`}
+          } ${block.drop ? "sm:translate-y-(--drop)" : ""}`}
           style={{
             ...(block.shift
               ? ({ "--shift": shot(block.shift) } as React.CSSProperties)
+              : null),
+            ...(block.drop
+              ? ({ "--drop": shot(block.drop) } as React.CSSProperties)
               : null),
             ...(block.max ? { maxWidth: shot(block.max) } : null),
             ...(block.radius ? { borderRadius: shot(block.radius) } : null),
@@ -451,11 +454,20 @@ function Block({
       if (!block.beside) return demo;
       // The paragraph on the left and the card on the right, half the column
       // each, the paragraph centred on the card — as an image's beside is.
+      // A heading over the paragraph is centred on the card with it, the
+      // space under it what a heading has under it anywhere else.
       return (
         <div className="sm:grid sm:grid-cols-2 sm:items-center sm:gap-x-10">
-          <p className="mb-5 text-lg leading-relaxed text-body sm:mb-0">
-            <Inline text={block.beside} />
-          </p>
+          <div className="mb-5 sm:mb-0">
+            {block.besideHeading && (
+              <h2 className="mb-2 pt-2 text-xl font-bold leading-snug tracking-[-0.02em] sm:pt-0">
+                {block.besideHeading}
+              </h2>
+            )}
+            <p className="text-lg leading-relaxed text-body">
+              <Inline text={block.beside} />
+            </p>
+          </div>
           {demo}
         </div>
       );
