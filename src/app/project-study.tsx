@@ -932,14 +932,14 @@ export function ProjectList({
         )}
 
         {study && (
-          // In the column the rest of the page is set in, running wider on
-          // the right from 1000px — see --study-width.
-          <div className="mx-auto w-[var(--column)] max-w-[calc(100%-3rem)]">
+          // Across the band from sm up, with nothing in the margins beside
+          // it — see --study-width.
+          <div className="mx-auto w-[var(--column)] max-w-[calc(100%-3rem)] sm:w-[var(--study-width)] sm:max-w-none">
             <div
               data-study
               // Room at the foot once the study is read: it is the last
               // thing on the page.
-              className="mt-10 w-full pb-24 sm:mt-0 sm:pb-40 min-[1000px]:w-[var(--study-width)]"
+              className="mt-10 w-full pb-24 sm:mt-0 sm:pb-40"
             >
               {/* On a phone the name and facts lead the study, since there is
                   no room for them beside the cover. */}

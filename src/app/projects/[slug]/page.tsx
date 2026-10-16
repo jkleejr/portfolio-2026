@@ -44,9 +44,9 @@ export default async function ProjectPage({ params }: Params) {
     // 66px there, and the breadcrumb is level with the corner buttons at that
     // width, which is where the homepage puts its name too.
     <main className="pb-8 pt-6 sm:pb-28 sm:pt-[102px]">
-      {/* The same column the homepage is set in, so a study reads as another
-          page of the same site rather than a document dropped into it. */}
-      <div className="mx-auto w-[var(--column)] max-w-[calc(100%-3rem)]">
+      {/* As wide as a study opened on the homepage runs, so the two read as
+          the same page — see --study-width. */}
+      <div className="mx-auto w-[var(--column)] max-w-[calc(100%-3rem)] sm:w-[var(--study-width)] sm:max-w-none">
         {/* Where this page sits, and the way back. It sits above the line the
             name holds on the homepage, leaving that line to the title of the
             study — so the first heading of either page is at the same height,

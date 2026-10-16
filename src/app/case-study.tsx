@@ -300,29 +300,9 @@ function Block({
             // The results and reflection close every study. Marked so the
             // open study can bring its way back home into the corner once
             // the reader reaches them — see ProjectList.
-            data-study-end={block.note === "Reflection" ? "" : undefined}
-            className={`${lead} relative mb-2 text-xl font-bold leading-snug tracking-[-0.02em]`}
+            data-study-end={block.end ? "" : undefined}
+            className={`${lead} mb-2 text-xl font-bold leading-snug tracking-[-0.02em]`}
           >
-            {/* A line about the section, out in the margin at the left of the
-                band rather than in the column — the same margin the project
-                above it puts its dates in, so the whole left edge of the page
-                is one voice talking about what is beside it.
-
-                Level with the heading, which means level with the words and
-                not with the box around them: the padding that opens the
-                section sits above the text, so the note starts where the
-                heading's own line does. Hence the same number twice.
-
-                Only from 1000px, the width at which there is a margin at all
-                — see the note on --margin-note in globals.css. Under that the
-                heading stands on its own. */}
-            {block.note && (
-              <span
-                className={`absolute ${lead.replace("pt-", "top-")} left-[var(--margin-note-x)] hidden w-[var(--margin-note)] text-lg font-bold leading-relaxed min-[1000px]:block`}
-              >
-                {block.note}
-              </span>
-            )}
             {block.text}
           </h2>
         );

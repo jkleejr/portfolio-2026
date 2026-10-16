@@ -88,38 +88,11 @@
      give; see "The page on a phone" below. */
   --edge: calc(48 * var(--u));
 
-  /* The strip of band left over beside the column, less the air held at
-     each end of it — the room a note set out in the margin has to live in.
-     Read by the facts about a project, which move out there while its study
-     is open; see StudyFacts in project-study.tsx.
-
-     --page and not 100%, because it is measured against the band rather than
-     against whatever box the note is written in. The column is centred in
-     the band, so half of what the column leaves is the strip on each side.
-     The rest is only air: --edge at the band's edge, and the 1.5rem the note
-     is held off the cover by. */
-  --margin-note: calc((var(--page) - var(--column)) / 2 - var(--edge) - 1.5rem);
-
-  /* And where it starts, measured from the left edge of the column it is set
-     beside — a negative number, since it is out to the left of it. --edge
-     from the band's own edge, which is where the intro at the top of the
-     page starts, so a note in the margin lines up under it rather than
-     floating somewhere between it and the column. */
-  --margin-note-x: calc(var(--edge) - (var(--page) - var(--column)) / 2);
-
-  /* How wide a study runs when it is opened under its project. Wider than the
-     column the list is set in, and wider on the right only: it starts at the
-     column's left edge, where the covers are, and runs on into the room on
-     that side. The left edge of the page is spoken for — the facts are set
-     out there — and the right is empty.
-
-     All of it: the column plus the whole margin at its right, less --edge of
-     air at the band's edge and the 1.5rem the note on the other side is
-     held off by. The band caps it: at 1333px it comes to about 900px, a
-     hundred and ten characters or so, which is the length the page was
-     drawn at. Wider than that a line was hard to come back from at the end
-     of it, and the band is what now holds it. */
-  --study-width: calc((var(--page) + var(--column)) / 2 - var(--edge) - 1.5rem);
+  /* How wide a study runs from sm up, on the homepage and on its own page:
+     the whole band, less --edge of air at either side. Nothing is set out
+     in the margins beside a study, so the writing takes both of them, and
+     its left edge is the one the intro at the top of the page starts at. */
+  --study-width: calc(var(--page) - 2 * var(--edge));
 
   /* The name across the top of the homepage. It sets solid, so its type size
      is also its height — which is what the line beneath it has to clear, and

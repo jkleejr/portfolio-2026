@@ -1,5 +1,5 @@
 export type CaseStudyBlock =
-  | { type: "heading"; text: string; note?: string }
+  | { type: "heading"; text: string; end?: boolean }
   | { type: "text"; text: string }
   | { type: "list"; items: string[]; ordered?: boolean }
   | { type: "quote"; text: string; attribution?: string }
@@ -82,7 +82,6 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "heading",
         text: "Problem",
-        note: "Overview",
       },
       {
         type: "text",
@@ -91,7 +90,6 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "heading",
         text: "Solution",
-        note: "",
       },
       {
         type: "text",
@@ -108,7 +106,6 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "heading",
         text: "System Architecture",
-        note: "System Design",
       },
 
       {
@@ -161,7 +158,6 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "heading",
         text: "Balancing Accuracy and API Costs",
-        note: "",
       },
 
       {
@@ -180,7 +176,6 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "heading",
         text: "Price Discovery",
-        note: "Product Scope",
       },
 
       {
@@ -206,7 +201,6 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "heading",
         text: "Managing Inference Latency",
-        note: "",
       },
 
       // managing inference latency - time budgeted fallback, trying to reduce errors
@@ -218,7 +212,6 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "heading",
         text: "Designing for Model Uncertainty",
-        note: "User Testing",
       },
 
       {
@@ -278,7 +271,6 @@ export const caseStudies: Record<string, CaseStudy> = {
        {
         type: "heading",
         text: "Current UI Design",
-        note: "Screen Flow",
       },
 
       {
@@ -314,7 +306,6 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "heading",
         text: "Privacy",
-        note: "",
       },
 
       {
@@ -325,7 +316,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "heading",
         text: "Results",
-        note: "Reflection",
+        end: true,
       },
 
       {
@@ -366,7 +357,6 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "heading",
         text: "Problem",
-        note: "Overview",
       },
 
       {
@@ -377,7 +367,6 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "heading",
         text: "Solution",
-        note: "",
       },
 
       {
@@ -400,7 +389,6 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "heading",
         text: "Generating Audio in Groups",
-        note: "Managing Delays",
       }, // Latency UX
 
       // network lag - more API requests can cause delays, or hit Gemini's rate limit
@@ -423,7 +411,6 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "heading",
         text: "Highlighting",
-        note: "Visual Feedback",
       },
 
       // Apple PDFKit extracts the text from the paper
@@ -541,7 +528,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "heading",
         text: "Results",
-        note: "Reflection",
+        end: true,
       },
 
       {
@@ -565,7 +552,6 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "heading",
         text: "Problem",
-        note: "Overview",
       },
       {
         type: "text",
@@ -574,7 +560,6 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "heading",
         text: "Solution",
-        note: "",
       },
       {
         type: "text",
@@ -596,7 +581,6 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "heading",
         text: "System Constraints",
-        note: "Limitations",
       },
 
       {
@@ -678,7 +662,6 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "heading",
         text: "Translation Region",
-        note: "Features",
       },
 
       {
@@ -697,7 +680,6 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "heading",
         text: "Saving Translations for Learning",
-        note: "",
       },
 
       {
@@ -715,7 +697,6 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "heading",
         text: "First UI Design",
-        note: "UI Iteration",
       },
 
       {
@@ -746,7 +727,6 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "heading",
         text: "Current UI Design",
-        note: "",
       },
 
       {
@@ -777,7 +757,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "heading",
         text: "Results",
-        note: "Reflection",
+        end: true,
       },
 
       {
@@ -797,7 +777,6 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "heading",
         text: "Problem",
-        note: "Overview", // title text on the left side
       },
 
       {
@@ -809,7 +788,6 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "heading",
         text: "Solution",
-        note: "",
       },
 
       {
@@ -827,7 +805,6 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "heading",
         text: "Curating Market Context with AI",
-        note: "Information Architecture",
       }, // how content is organized
 
       {
@@ -850,7 +827,6 @@ export const caseStudies: Record<string, CaseStudy> = {
       { 
         type: "heading",
         text: "Designing a Pre-Market vs. After-Hours Workflow",
-        note: "User Context",
       }, // different design depending on situation
 
       {
@@ -866,7 +842,6 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "heading",
         text: "Data Visualization",
-        note: "User Interface",
       },
 
       {
@@ -903,7 +878,6 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "heading",
         text: "Mobile UI Design",
-        note: "",
       },
       {
         type: "text",
@@ -938,7 +912,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "heading",
         text: "Results",
-        note: "Reflection",
+        end: true,
       },
       {
         type: "text",
