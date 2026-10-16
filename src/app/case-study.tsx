@@ -33,48 +33,72 @@ export function studyFacts(study: CaseStudy): Fact[] {
   ].filter(Boolean) as Fact[];
 }
 
-export function StudyFact({ text, href, appStore }: Fact) {
-  if (!href) return <>{text}</>;
+/** "Scope:" and the like at the head of a fact, in the regular weight of the
+ *  writing rather than the bold the facts are set in — the label, and not
+ *  what it labels. Everything up to the first colon. */
+function Labelled({ text }: { text: string }) {
+  const at = text.indexOf(": ");
+  if (at < 0) return <>{text}</>;
   return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noreferrer"
-      className="transition-colors duration-200 ease-out hover:text-accent"
-    >
-      {text}
-      {/* A no-break space, so the mark is never alone on a line of its own. */}
-      {"\u00a0"}
-      {/* Both marks are cut to the arrow that follows a project's name on the
-          homepage, so the three read as one size of mark: that arrow inks
-          14.5px square, at the name's 20px. The measure is the ink and not
-          the box, since each mark fills its box differently.
+    <>
+      <span className="font-normal">{text.slice(0, at + 1)}</span>
+      {text.slice(at + 1)}
+    </>
+  );
+}
 
-          And both are centred on the capitals beside them. Stood on the
-          baseline first — said outright, because Tailwind's reset sets every
-          img and svg to vertical-align: middle, which is the middle of the
-          lowercase and hangs a mark this size under the line — and then
-          lowered by half of what the mark stands taller than Satoshi's
-          0.716em capitals by, plus the clear sliver under its ink. */}
-      {appStore ? (
-        // The exception to the 14.5px, at 17px. Cut to the arrow its tile
-        // measured the same and read as smaller: on a dark page the blue tile
-        // falls back and what the eye sizes is the white A inside it, which is
-        // two thirds of the tile. At 17px — 1.0625em of this line's 16 — the A
-        // is 13px across, and it is the A that sits with the arrow and the
-        // chain. Important, since the mark sets a height of its own and the
-        // two would otherwise be settled by the order the stylesheet happens
-        // to come out in.
-        <AppStoreMark className="h-[1.0625em]! translate-y-[0.18em] align-baseline" />
-      ) : (
-        // The arrow the About page's LinkedIn link carries, at the same three
-        // quarters of the line it sits in, saying the line opens in a new tab.
-        // Hidden from a screen reader, which would read it out as a direction.
-        <span aria-hidden className="text-[0.75em]">
-          ↗
-        </span>
-      )}
-    </a>
+export function StudyFact({ text, href, appStore }: Fact) {
+  if (!href) return <Labelled text={text} />;
+  // Only the place the line names is the link — "App Store" in "Scope: 0-1,
+  // App Store", "Web App" in "Scope: Web App" — so only that lights up under
+  // the pointer: whatever follows the line's last colon or comma. The words
+  // before it are the label and the rest of the scope, and stay as they are.
+  const cut = Math.max(text.lastIndexOf(": "), text.lastIndexOf(", "));
+  const lead = cut < 0 ? "" : text.slice(0, cut + 2);
+  const place = cut < 0 ? text : text.slice(cut + 2);
+  return (
+    <>
+      <Labelled text={lead} />
+      <a
+        href={href}
+        target="_blank"
+        rel="noreferrer"
+        className="transition-colors duration-200 ease-out hover:text-accent"
+      >
+        {place}
+        {/* A no-break space, so the mark is never alone on a line of its own. */}
+        {"\u00a0"}
+        {/* Both marks are cut to the arrow that follows a project's name on the
+            homepage, so the three read as one size of mark: that arrow inks
+            14.5px square, at the name's 20px. The measure is the ink and not
+            the box, since each mark fills its box differently.
+
+            And both are centred on the capitals beside them. Stood on the
+            baseline first — said outright, because Tailwind's reset sets every
+            img and svg to vertical-align: middle, which is the middle of the
+            lowercase and hangs a mark this size under the line — and then
+            lowered by half of what the mark stands taller than Satoshi's
+            0.716em capitals by, plus the clear sliver under its ink. */}
+        {appStore ? (
+          // The exception to the 14.5px, at 17px. Cut to the arrow its tile
+          // measured the same and read as smaller: on a dark page the blue tile
+          // falls back and what the eye sizes is the white A inside it, which is
+          // two thirds of the tile. At 17px — 1.0625em of this line's 16 — the A
+          // is 13px across, and it is the A that sits with the arrow and the
+          // chain. Important, since the mark sets a height of its own and the
+          // two would otherwise be settled by the order the stylesheet happens
+          // to come out in.
+          <AppStoreMark className="h-[1.0625em]! translate-y-[0.18em] align-baseline" />
+        ) : (
+          // The arrow the About page's LinkedIn link carries, at the same three
+          // quarters of the line it sits in, saying the line opens in a new tab.
+          // Hidden from a screen reader, which would read it out as a direction.
+          <span aria-hidden className="text-[0.75em]">
+            ↗
+          </span>
+        )}
+      </a>
+    </>
   );
 }
 export function StudyBody({
