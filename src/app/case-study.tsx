@@ -213,6 +213,10 @@ function Caption({ text, center }: { text?: string; center?: boolean }) {
   );
 }
 
+/** A shot in a row cut to the row's shape, when it has one — see `ratio`. */
+const rowShape = (ratio?: string, crop?: string): React.CSSProperties | undefined =>
+  ratio ? { aspectRatio: ratio, objectFit: "cover", objectPosition: crop } : undefined;
+
 /** Blocks a heading needs less room after — see the heading case below. */
 const PICTURES = new Set(["image", "images", "video", "region-demo"]);
 
@@ -416,23 +420,34 @@ function Block({
                       : "sm:w-[calc((100%_-_3rem)/3)]"
                 } ${item.fullOnPhone ? "max-sm:w-full" : ""}`}
               >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={item.src}
-                  alt={item.alt}
-                  {...mediaSize(item.src)}
-                  {...LATER}
-                  className="w-full rounded-xl border border-foreground/10"
-                  style={
-                    block.ratio
-                      ? {
-                          aspectRatio: block.ratio,
-                          objectFit: "cover",
-                          objectPosition: item.crop,
-                        }
-                      : undefined
-                  }
-                />
+                {/* A film in a shot's place plays as the covers do — muted,
+                    looping, with no controls — and is cut to the row's shape
+                    the same way. */}
+                {/\.mp4$/i.test(item.src) ? (
+                  <video
+                    src={item.src}
+                    aria-label={item.alt}
+                    {...mediaSize(item.src)}
+                    poster={poster(item.src)}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    disablePictureInPicture
+                    className="w-full rounded-xl border border-foreground/10"
+                    style={rowShape(block.ratio, item.crop)}
+                  />
+                ) : (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={item.src}
+                    alt={item.alt}
+                    {...mediaSize(item.src)}
+                    {...LATER}
+                    className="w-full rounded-xl border border-foreground/10"
+                    style={rowShape(block.ratio, item.crop)}
+                  />
+                )}
                 <Caption text={item.caption} center={item.captionCenter} />
               </figure>
             ))}
