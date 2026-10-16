@@ -39,9 +39,11 @@ export function UndoButton({ on, undo }: { on: boolean; undo: () => void }) {
   if (!on || !ready) return null;
 
   return (
+    // In the apple's place, which on the About page is held in from the
+    // window's right edge — see the corner row in corner.tsx.
     <div
       data-gravity-undo
-      className="absolute right-[var(--edge)] top-6 z-[60] flex min-h-11 items-center sm:top-[var(--frame-top)] sm:min-h-[calc(44*var(--u))]"
+      className="absolute right-[calc(var(--edge)+1.5px-13*var(--u-full)-(100vw-var(--scrollbar)-var(--page))/2-var(--scrollbar))] top-6 z-[60] flex min-h-11 items-center sm:top-[var(--frame-top)] sm:min-h-[calc(44*var(--u))]"
     >
       <button
         type="button"
