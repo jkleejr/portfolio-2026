@@ -1,4 +1,5 @@
 import { type CaseStudy, type CaseStudyBlock } from "@/data/case-studies";
+import { BesideWrap } from "./beside-wrap";
 import { RegionDemo } from "./region-demo";
 import { ShotStack } from "./shot-stack";
 import { SiteLink } from "./site-link";
@@ -331,7 +332,7 @@ function Block({
               }
             : { alt: block.alt, ...LATER })}
           className={`mx-auto w-full max-w-full rounded-xl border border-foreground/10 ${
-            block.beside
+            block.beside && !block.wrap
               ? block.besideRight
                 ? "sm:col-start-1 sm:row-start-1"
                 : "sm:col-start-2 sm:row-start-1"
@@ -363,6 +364,20 @@ function Block({
             {media}
             <Caption text={block.caption} center={block.captionCenter} />
           </figure>
+        );
+      if (block.wrap)
+        return (
+          <BesideWrap
+            text={<Inline text={block.beside} />}
+            figure={
+              <>
+                {media}
+                <Caption text={block.caption} center={block.captionCenter} />
+              </>
+            }
+            width={block.width ? shot(block.width) : block.max ? shot(block.max) : "50%"}
+            right={!block.besideRight}
+          />
         );
       // The paragraph and the picture side by side, half the column each,
       // and the paragraph centred on the picture alone: the caption has a row

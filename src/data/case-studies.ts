@@ -22,6 +22,9 @@ export type CaseStudyBlock =
       // besideRight to put it on the picture's right instead.
       beside?: string;
       besideRight?: boolean;
+      // Wrap the paragraph round the picture once it runs taller than it,
+      // rather than keeping the two in columns — see beside-wrap.tsx.
+      wrap?: boolean;
       caption?: string;
       captionCenter?: boolean;
       crop?: string;
