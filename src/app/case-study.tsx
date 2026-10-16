@@ -454,7 +454,7 @@ function Block({
               short ones to the height of the tallest and squash what is in
               them. */}
           <div
-            className="mx-auto flex flex-wrap items-start justify-center gap-4"
+            className="mx-auto flex flex-wrap items-start justify-center gap-6"
             style={block.max ? { maxWidth: shot(block.max) } : undefined}
           >
             {block.items.map((item, i) => (
@@ -464,8 +464,8 @@ function Block({
                 // back from sm up, for a crop that half a column leaves too
                 // small to read. It is written after the base width so it wins
                 // inside its own media query.
-                className={`w-[calc((100%_-_1rem)/2)] ${
-                  block.columns === 2 ? "" : "sm:w-[calc((100%_-_2rem)/3)]"
+                className={`w-[calc((100%_-_1.5rem)/2)] ${
+                  block.columns === 2 ? "" : "sm:w-[calc((100%_-_3rem)/3)]"
                 } ${item.fullOnPhone ? "max-sm:w-full" : ""}`}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}

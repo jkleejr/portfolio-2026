@@ -126,7 +126,7 @@ export function ShotStack({
         // pan-y leaves the page's own scroll to the browser and hands a
         // sideways pull here. If the browser decides a pull was a scroll after
         // all it cancels the pointer, and the shot goes back where it was.
-        className="mx-auto flex flex-wrap items-start justify-center gap-4 max-sm:grid max-sm:cursor-grab max-sm:touch-pan-y max-sm:select-none max-sm:place-items-center max-sm:gap-0"
+        className="mx-auto flex flex-wrap items-start justify-center gap-6 max-sm:grid max-sm:cursor-grab max-sm:touch-pan-y max-sm:select-none max-sm:place-items-center max-sm:gap-0"
         style={max ? { maxWidth: max } : undefined}
         onPointerDown={(e) => {
           if (away || !window.matchMedia(PHONE).matches) return;
@@ -168,8 +168,8 @@ export function ShotStack({
               // frames a tap drops. On layers a move is the layers moved.
               className={`w-[78%] [grid-area:1/1] [filter:brightness(var(--shot-dim))] [transform:var(--shot-place)] [z-index:var(--shot-z)] max-sm:[will-change:transform,filter] ${
                 columns === 2
-                  ? "sm:w-[calc((100%_-_1rem)/2)]"
-                  : "sm:w-[calc((100%_-_2rem)/3)]"
+                  ? "sm:w-[calc((100%_-_1.5rem)/2)]"
+                  : "sm:w-[calc((100%_-_3rem)/3)]"
               } sm:[filter:none] sm:[grid-area:auto] sm:[transform:none] sm:[z-index:auto]`}
               style={
                 {
