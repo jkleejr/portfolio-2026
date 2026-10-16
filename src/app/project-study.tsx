@@ -567,26 +567,55 @@ export function ProjectList({
   // studies, and the up and down arrows do the same in place of the browser's
   // own. Held, the page glides for as long as the key is down, starting
   // at an easy reading pace and picking up to a quicker one over half a
-  // second, and stops the moment it is let go; a tap is a short nudge. One
-  // frame at a time rather than the browser's own key scrolling, which steps
-  // in jumps. At the very top, a press up goes home. Not while the press
-  // belongs to something else, as for A and D.
+  // second, and settles soon after it is let go; a tap is a short nudge.
+  // Both are one motion: the key moves a target — a nudge ahead at the
+  // press, further the longer it is held — and the page follows it on a
+  // spring, from rest and back to rest, so a tap never stops and starts
+  // again as a glide handed over to a separate nudge did. One frame at a time rather than the
+  // browser's own key scrolling, which steps in jumps. At the very top, a
+  // press up goes home. Not while the press belongs to something else, as
+  // for A and D.
   useEffect(() => {
     if (!openSlug || closing) return;
     let dir: 1 | -1 | 0 = 0;
+    // The direction the page is still moving in, held or settling.
+    let moving: 1 | -1 | 0 = 0;
     let since = 0;
     let last = 0;
     let frame = 0;
+    let origin = 0;
+    let glide = 0;
+    let target = 0;
+    let pos = 0;
+    let v = 0;
     const step = (now: number) => {
-      const dt = Math.min(now - last, 50);
+      const dt = Math.min(now - last, 32);
       last = now;
-      // px per ms: 0.6 at the press, rising to 1.6 over 500ms.
-      const speed = 0.6 + Math.min((now - since) / 500, 1);
-      window.scrollBy({ top: dir * speed * dt, behavior: "instant" });
+      // Scrolled some other way meanwhile, by a wheel or a drag: give way.
+      if (Math.abs(window.scrollY - pos) > 2) return stop();
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      if (dir) {
+        // px per ms: 0.6 at the press, rising to 1.6 over 500ms.
+        glide += (0.6 + Math.min((now - since) / 500, 1)) * dt;
+        target = origin + moving * (100 + glide);
+      }
+      target = Math.min(Math.max(target, 0), max);
+      // A critically damped spring toward the target: no overshoot, and
+      // settled about a quarter of a second after the key is let go.
+      const w = 1 / 50;
+      v += (w * w * (target - pos) - 2 * w * v) * dt;
+      pos += v * dt;
+      if (!dir && Math.abs(target - pos) < 0.5 && Math.abs(v) < 0.02) {
+        pos = target;
+        window.scrollTo({ top: pos, behavior: "instant" });
+        return stop();
+      }
+      window.scrollTo({ top: pos, behavior: "instant" });
       frame = requestAnimationFrame(step);
     };
     const stop = () => {
-      dir = 0;
+      dir = moving = 0;
+      v = 0;
       cancelAnimationFrame(frame);
       frame = 0;
     };
@@ -603,19 +632,21 @@ export function ProjectList({
       // up into the top stops there.
       if (d === -1 && !e.repeat && dir !== d && window.scrollY <= 0) return close();
       if (dir === d) return;
-      dir = d;
+      // Taps in a row run on from where the last was headed; a press the
+      // other way starts from where the page is.
+      if (!frame) pos = window.scrollY;
+      origin = moving === d ? target : pos;
+      dir = moving = d;
+      glide = 0;
+      target = origin + d * 100;
       since = last = performance.now();
       if (!frame) frame = requestAnimationFrame(step);
     };
     const up = (e: KeyboardEvent) => {
       const k = e.key.toLowerCase();
       const d = k === "s" || k === "arrowdown" ? 1 : k === "w" || k === "arrowup" ? -1 : 0;
-      if (!d || d !== dir) return;
-      // A tap is over before the glide has gone anywhere: it is a nudge of
-      // about two lines instead.
-      const tap = performance.now() - since < 150 ? dir : 0;
-      stop();
-      if (tap) window.scrollBy({ top: tap * 120, behavior: "smooth" });
+      // Let go, the target stays where it got to and the page settles on it.
+      if (d && d === dir) dir = 0;
     };
     window.addEventListener("keydown", down);
     window.addEventListener("keyup", up);
