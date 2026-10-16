@@ -620,7 +620,6 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "image",
         beside: "iOS keeps Live Activities in the minimal view so users have to long press the island to expand it and see a translation. Although this was a major limitation, combining the long press with the region selector allowed the user to decide when and what text they want to translate.",
-        besideRight: true,
         src: "/projects/screen-translator-island-expanded.mp4",
         max: 480,
         height: 215,
@@ -632,6 +631,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "image",
         beside: "The compact state appears briefly after recording and shows the last translated text. Pressing it returns to the app and shows all the translations from that recording session.",
+        besideRight: true,
         src: "/projects/screen-translator-island-compact.jpg",
         max: 455,
         height: 204,
