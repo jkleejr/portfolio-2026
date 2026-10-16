@@ -23,7 +23,7 @@ export const entries: Entry[] = [
   {
     title: "Loot Check",
     blurb:
-      "Photograph any item to find its value and where to sell it",
+      "Take a photo of any item to find its value and where to sell it.",
     slug: "loot-check",
     media: "/projects/loot-check-shark.mp4",
     images: [

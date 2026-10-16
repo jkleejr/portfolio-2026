@@ -1,21 +1,3 @@
-// ---------------------------------------------------------------------------
-// The written half of a case study: the title, the facts about the project,
-// and its blocks in order.
-//
-// Set the way the homepage is set. The title is the size and weight the name
-// at the top of the homepage is, a paragraph is the size and colour an intro
-// line is, and nothing here carries a measure of its own — the column the page
-// puts it in is the same one every line on the homepage breaks at, so a study
-// reads as another page of the site and not a document dropped into it.
-//
-// Rendered in two places, and the same markup in both: the page at
-// /projects/[slug], and the homepage, where pressing a cover opens the study
-// under the project it belongs to. `inline` is the difference between the two
-// — see the prop. It is plain markup with no state of its own, so it stays on
-// the server even on the homepage, where a client component decides whether it
-// is shown; the client bundle carries none of the writing.
-// ---------------------------------------------------------------------------
-
 import { type CaseStudy, type CaseStudyBlock } from "@/data/case-studies";
 import { RegionDemo } from "./region-demo";
 import { ShotStack } from "./shot-stack";
@@ -24,40 +6,6 @@ import { AppStoreMark } from "./title-badge";
 import { LinkGlyph } from "./link-glyph";
 import { mediaSize } from "./media-size";
 
-// ---------------------------------------------------------------------------
-// The facts about a project: where it stands, who did what, and when.
-//
-//   Live on the App Store ↗
-//   Design, iOS dev, Solo
-//   Jun–Sep 2026
-//
-// Where it stands comes first because it is the one a reader acts on — and
-// when the project is up somewhere that line is the way there, with a mark
-// after it to say it leaves the page. The listing on the App Store if there is
-// one, under the App Store's own mark; the project's own site if not, under
-// the chain. Either says where the line goes better than an arrow can, and on
-// the homepage the arrow is spoken for — it follows the project's name and
-// opens the study. The date is last: it is the one that matters least to
-// someone deciding whether to read on.
-//
-// One list for both places the facts are set — the margin beside a project on
-// the homepage, and under the title of its study — so the two cannot come to
-// say different things.
-// ---------------------------------------------------------------------------
-
-/**
- * On every picture in a study: fetched when it is near the window rather than
- * when the study is put on the page, and decoded off the thread that draws.
- *
- * A study is ten or so full-size phone screens, 12MB apiece once decoded, and
- * all of them used to start at the press that opened it — so the decoding and
- * the drawing of them landed in the same third of a second as the study
- * coming up into place, and the frames that dropped were that motion's. Now
- * the press costs the first screen of pictures and the rest arrive ahead of
- * the reader as they scroll. Safe only because each has its size in the
- * markup (media-size.ts): a picture that loads late without one pushes the
- * page down as it lands.
- */
 const LATER = { loading: "lazy", decoding: "async" } as const;
 
 /** A size in case-studies.ts, in pixels at full size, as a length that
