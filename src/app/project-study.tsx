@@ -56,10 +56,6 @@ export function useCoverToggle() {
 
 // --- the list -------------------------------------------------------------
 
-// How long after a sideways swipe a scroll down is still taken to be part of
-// it, rather than a scroll down to open a study.
-const SIDEWAYS_QUIET = 500;
-
 // How long the cover takes to grow into place, or shrink back — the length of
 // the transition on the strip's sections in globals.css.
 const GROW = 650;
@@ -896,43 +892,6 @@ export function ProjectList({
     window.addEventListener("resize", resize);
     return () => window.removeEventListener("resize", resize);
   }, [openSlug]);
-
-  // Scrolling down a homepage with nothing open, with the pointer over a
-  // cover, opens that cover's study. The page is the name and the
-  // strip and not much else, so a scroll down is read as going on into the
-  // work. Only once the page has nothing further down to show — on a window
-  // too short for the whole strip, the first scroll still brings the rest of
-  // it into view. With a study open, scrolling is just the page scrolling,
-  // down into the study.
-  //
-  // A wheel or a trackpad only: on a phone a swipe down is how the page is
-  // read, and opens nothing.
-  useEffect(() => {
-    if (shown) return;
-    // A sideways swipe on a trackpad drifts up and down a little as it goes,
-    // and that drift is not a scroll down. So a scroll down has to be clearly
-    // more down than sideways, and none counts for SIDEWAYS_QUIET ms after
-    // any sideways movement.
-    let sidewaysAt = -Infinity;
-    const wheel = (e: WheelEvent) => {
-      const across = Math.abs(e.deltaX);
-      if (across > 0 && across * 1.5 >= Math.abs(e.deltaY)) {
-        sidewaysAt = e.timeStamp;
-        return;
-      }
-      if (e.deltaY <= 0) return;
-      if (e.timeStamp - sidewaysAt < SIDEWAYS_QUIET) return;
-      if (document.documentElement.classList.contains("gravity-on")) return;
-      const doc = document.documentElement;
-      if (window.scrollY + window.innerHeight < doc.scrollHeight - 2) return;
-      // Only over a cover: a scroll down anywhere else opens nothing.
-      const over = (e.target as Element).closest?.("[data-slug]");
-      const slug = over?.getAttribute("data-slug");
-      if (slug && studies[slug]) press(slug);
-    };
-    window.addEventListener("wheel", wheel, { passive: true });
-    return () => window.removeEventListener("wheel", wheel);
-  }, [shown, press, studies]);
 
   // Whether the open study has been scrolled at all — the way back in the
   // corner then stands over the study's writing, and takes a glass backing
