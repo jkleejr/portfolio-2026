@@ -429,10 +429,10 @@ function Block({
       );
     }
 
-    case "region-demo":
+    case "region-demo": {
       // The column's width up to max, rounded by radius, and nudged by shift
       // from sm up. The card draws itself at whatever width that comes to.
-      return (
+      const demo = (
         <figure
           className={`mx-auto w-full overflow-hidden rounded-xl border border-foreground/10 ${
             block.shift ? "sm:translate-x-(--shift)" : ""
@@ -448,6 +448,18 @@ function Block({
           <RegionDemo label={block.alt} />
         </figure>
       );
+      if (!block.beside) return demo;
+      // The paragraph on the left and the card on the right, half the column
+      // each, the paragraph centred on the card — as an image's beside is.
+      return (
+        <div className="sm:grid sm:grid-cols-2 sm:items-center sm:gap-x-10">
+          <p className="mb-5 text-lg leading-relaxed text-body sm:mb-0">
+            <Inline text={block.beside} />
+          </p>
+          {demo}
+        </div>
+      );
+    }
 
     case "images":
       // A row that is a pile on a phone — see shot-stack.tsx, which sets the

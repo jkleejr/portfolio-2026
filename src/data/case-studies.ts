@@ -8,6 +8,9 @@ export type CaseStudyBlock =
   | {
       type: "region-demo";
       alt: string;
+      // A paragraph set to the left of the card from sm up, centred on it
+      // down the page; above it on a phone — as an image's beside is.
+      beside?: string;
       max?: number;
       radius?: number;
       shift?: number;
@@ -668,12 +671,8 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
 
       {
-        type: "text",
-        text: "Translating the entire screen was impractical because of the limited space to display the text. I added an interactive crop box to select a specific area of the screen, aligning the app with the user's intent and reducing clutter."
-      },
-
-      {
         type: "region-demo",
+        beside: "Translating the entire screen was impractical because of the limited space to display the text. I added an interactive crop box to select a specific area of the screen, aligning the app with the user's intent and reducing clutter.",
         max: 400,
         radius: 34,
         shift: 6,
