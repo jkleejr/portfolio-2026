@@ -10,7 +10,7 @@
 // The card is the reason this is more than a title. Next merges the metadata
 // of a layout and a page shallowly: a page that says nothing about openGraph
 // inherits the layout's whole, which is the homepage's card — so a link to a
-// project unfurled as "John Lee — Design Engineer" and pointed back at the
+// project unfurled as "John Lee — Product Designer" and pointed back at the
 // homepage. And a page that sets openGraph replaces the layout's whole rather
 // than adding to it, which is why the site's name and the image are said again
 // here, from the one definition the layout uses.

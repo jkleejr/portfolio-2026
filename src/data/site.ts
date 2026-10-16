@@ -1,7 +1,7 @@
 export const site = {
   name: "JOHN LEE",
   titleName: "John Lee",
-  role: "Design Engineer",
+  role: "Product Designer",
   email: "johnkleejr@gmail.com",
 
   links: [
