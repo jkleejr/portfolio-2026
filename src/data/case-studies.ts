@@ -804,8 +804,8 @@ export const caseStudies: Record<string, CaseStudy> = {
   "buy-side-briefings": {
     title: "Buy Side",
     date: "Time: May - Sep 2026",
-    role: "Role: Web Designer & Developer",
-    scope: "Scope: Web App",
+    role: "Role: Designer, Engineer",
+    scope: "Scope: Website & AI pipeline",
     href: "https://buy-side-briefings.vercel.app/",
     coverShift: 92,
     coverGrow: 1.07,
