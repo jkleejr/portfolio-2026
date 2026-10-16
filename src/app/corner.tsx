@@ -57,9 +57,7 @@ export function SiteCorner() {
         {!onAbout && (
           <Link
             href="/about"
-            // Not on a phone's homepage, which puts it at the foot of the
-            // list instead — see design-one.tsx.
-            className={`${onHome ? "max-sm:hidden " : ""}text-lg font-medium text-muted transition-colors duration-200 ease-out hover:text-accent sm:text-[calc(20*var(--u-full))]`}
+            className={`text-lg font-medium text-muted transition-colors duration-200 ease-out hover:text-accent sm:text-[calc(20*var(--u-full))]`}
           >
             About
           </Link>

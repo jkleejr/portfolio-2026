@@ -4,7 +4,6 @@
 // /[slug] — see [slug]/page.tsx.
 // ---------------------------------------------------------------------------
 
-import Link from "next/link";
 import { site } from "@/data/site";
 import { entries } from "@/data/projects";
 import { caseStudies, type CaseStudy } from "@/data/case-studies";
@@ -55,11 +54,12 @@ export function DesignOne() {
           link and the apple in the opposite corner. Everything up there is
           measured in --u, a fraction of the band, so the room between the
           name and the corner is the same share of the page at every width
-          and never closes. On a phone the corner keeps its fixed size and
-          there is not that room, so the name takes --top-row plus a gap as a
-          top margin and sits under the apple instead. Reading the row's
-          height from the variable rather than writing 44px here means the
-          two cannot fall out of step.
+          and never closes. On a phone it shares the corner row with the
+          About link too, set from the left with the link at the other end:
+          its top margin puts the top of its ink level with the top of the
+          link's capitals — the row's 24px, plus 1rem, less the 0.12em the
+          face leaves above its capitals — and --name-size there is held
+          small enough to clear the link; see globals.css.
 
           The left padding is the page's --edge and 0.0375em more, because
           that is how far the J's swash hangs out to the left of where the
@@ -113,10 +113,8 @@ export function DesignOne() {
           whole of it. Measured from the ink again: the capitals stop ~16px
           short of the box's bottom at full size and the intro's ink starts
           ~8px into its line, so 3.5rem is ~80px of black. On a phone it is
-          37px — the name sits 2px higher than --top-row puts it, and the 2px
-          are given back here so the rows below stay put — which with the ~14px the face leaves under its capitals puts
-          the first row about 49px below the name's ink on a 390px phone — a
-          touch more than the 41px between the About link and the name above.
+          37px, which with the ~14px the face leaves under its capitals puts
+          the first row about 49px below the name's ink.
 
           data-gravity="letters" is for when the apple is pressed: the name
           comes apart a character at a time rather than as "JOHN" and "LEE",
@@ -127,7 +125,7 @@ export function DesignOne() {
           the finer-grained answer, not the coarser one. */}
       <h1
         data-gravity="letters"
-        className="fraktur mb-12 mt-[calc(var(--top-row)+1.5rem)] whitespace-nowrap pl-[calc(var(--edge)+0.0375em)] max-sm:mb-[37px] max-sm:mt-[calc(var(--top-row)+1.5rem-2px)] max-sm:pl-0 max-sm:text-center text-[length:var(--name-size)] leading-none sm:mb-[calc(56*var(--u))] sm:mt-0"
+        className="fraktur mb-12 mt-[calc(var(--top-row)+1.5rem)] whitespace-nowrap pl-[calc(var(--edge)+0.0375em)] max-sm:mb-[37px] max-sm:mt-[calc(1rem-0.12em)] text-[length:var(--name-size)] leading-none sm:mb-[calc(56*var(--u))] sm:mt-0"
       >
         {site.name}
       </h1>
@@ -264,17 +262,6 @@ export function DesignOne() {
             }),
           )}
         />
-        {/* The way to the About page, at the foot of the list on the right
-            rather than up in the corner — see corner.tsx, which leaves it out
-            on a phone's homepage. Set as the corner sets it. */}
-        <div className="mx-auto flex w-[var(--column)] max-w-[calc(100%-3rem)] justify-end pb-8 pt-4">
-          <Link
-            href="/about"
-            className="text-lg font-medium text-muted transition-colors duration-200 ease-out hover:text-accent"
-          >
-            About
-          </Link>
-        </div>
       </div>
 
     </main>

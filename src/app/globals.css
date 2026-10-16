@@ -500,10 +500,13 @@ html[data-dragging] * {
 
 @media (width < 40rem) {
   :root {
-    /* The name a size up on a phone, where it is centred on its own line
-       rather than sharing the top with the corner. 15% still leaves it room
-       either side on the narrowest phones. */
-    --name-size: max(2rem, calc(var(--page) * 0.15));
+    /* The name a size up on a phone, set from the left on the corner row
+       with the About link at the other end of it. 15% of the page, but never
+       so wide that it runs into the link: measured off the ink, the last E
+       ends 4.92em from where the swash starts, and the room it has is the
+       page less 7rem — --edge either side, the link's 3rem and a 1rem gap
+       before it. */
+    --name-size: max(2rem, min(calc(var(--page) * 0.15), calc((var(--page) - 7rem) / 4.92)));
     --edge: 1.5rem;
     --cover-film: calc(var(--film) * 0.85);
     --cover: 104px;
