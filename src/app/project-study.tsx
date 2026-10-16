@@ -64,11 +64,9 @@ const SIDEWAYS_QUIET = 500;
 // the transition on the strip's sections in globals.css.
 const GROW = 650;
 
-// How far a swipe or a drag has to go, in px, to move from one open study to
-// the next, and how long after one move before another is taken — long
-// enough that one swipe does not count twice, short of the whole animation
-// so a quick run of swipes is not held up by it.
-const SWIPE_STEP = 60;
+// How long after the arrow keys move from one open study to the next before
+// another move is taken — short of the whole animation, so a quick run of
+// presses is not held up by it.
 const SWIPE_REST = 300;
 
 // How far a pull down from the top of a study's first screen has to go, in
@@ -375,210 +373,10 @@ export function ProjectList({
     }
   }, [openSlug]);
 
-  // From one open study to the next or the one before, in the order the strip
-  // has them: a sideways swipe on a trackpad, or a drag with a mouse. Only
-  // on the first screen of a study — scrolled down into the writing, the
-  // page is being read, and sideways means nothing. Nothing past either end.
-  //
-  // The direction is the strip's: swiping or dragging the way that would
-  // bring the covers on the right into view brings the next study. The
-  // address is replaced rather than added to, so the back button still goes
-  // home rather than back through every study swiped past.
-  // Held across studies: the listeners are set up again for each one, and a
-  // swipe that has just moved on must not move on again in the next.
-  const swipe = useRef({
-    busyUntil: 0,
-    travelled: 0,
-    lastAt: -Infinity,
-    lastSize: 0,
-    lastSign: 0,
-    shrinking: 0,
-    coasting: false,
-    floor: Infinity,
-    fired: false,
-  });
-  useEffect(() => {
-    if (!openSlug || closing) return;
-    const order = Object.keys(studies);
-    const root = document.documentElement;
-    const atTop = () => window.scrollY <= 8;
-    const g = swipe.current;
-    const go = (step: 1 | -1) => {
-      if (performance.now() < g.busyUntil) return;
-      const next = order[order.indexOf(openSlug) + step];
-      if (!next) return;
-      g.busyUntil = performance.now() + SWIPE_REST;
-      setOpen(next);
-      window.history.replaceState(null, "", `/${next}`);
-    };
-
-    // A swipe is one push however long its coasting runs on: it moves on once
-    // it has gone SWIPE_STEP px, and not again for the rest of that swipe.
-    // The coasting after the fingers lift runs on for up to a second, and the
-    // next swipe often starts inside it, so a new swipe is not waited for as a
-    // gap: it is a push that grows where coasting only ever shrinks, or one the
-    // other way — or, failing both, a moment of quiet.
-    const wheel = (e: WheelEvent) => {
-      if (!atTop() || Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;
-      e.preventDefault();
-      const size = Math.abs(e.deltaX);
-      const sign = Math.sign(e.deltaX);
-      // Coasting is two shrinking pushes in a row or more, and from then on
-      // its lowest push is kept: a new swipe climbs well back above it. A
-      // swipe getting up to speed grows too, before it has coasted at all,
-      // and is not mistaken for a new one.
-      const fresh =
-        e.timeStamp - g.lastAt > 250 ||
-        sign !== g.lastSign ||
-        (g.coasting && size > 6 && size > g.floor * 2);
-      if (fresh) {
-        g.travelled = 0;
-        g.fired = false;
-        g.shrinking = 0;
-        g.coasting = false;
-        g.floor = Infinity;
-      } else {
-        g.shrinking = size < g.lastSize ? g.shrinking + 1 : 0;
-        if (g.shrinking >= 2) g.coasting = true;
-        if (g.coasting) g.floor = Math.min(g.floor, size);
-      }
-      g.lastAt = e.timeStamp;
-      g.lastSize = size;
-      g.lastSign = sign;
-      if (g.fired) return;
-      g.travelled += e.deltaX;
-      if (Math.abs(g.travelled) < SWIPE_STEP) return;
-      g.fired = true;
-      go(g.travelled > 0 ? 1 : -1);
-    };
-
-    // A drag with a mouse on the first screen — the white, the grown cover,
-    // the name and facts — goes one of two ways, settled by which way it
-    // first moves. Sideways, on the first screen with the page at its top,
-    // it moves between studies as above. Up or down it scrolls the page, the
-    // page following the pointer as if held, and carries on gliding after a
-    // flick as the strip does — FRICTION and the rest, below. The study's
-    // writing is left alone, so its text can still be selected.
-    let drag: {
-      x: number;
-      y: number;
-      top: number;
-      sideways: boolean;
-      axis: "x" | "y" | null;
-    } | null = null;
-    let samples: { y: number; t: number }[] = [];
-    let glide = 0;
-    let suppress = false;
-    const stopGlide = () => {
-      cancelAnimationFrame(glide);
-      glide = 0;
-    };
-    const scrollToY = (y: number) =>
-      window.scrollTo({ top: y, behavior: "instant" });
-    const startGlide = (speed: number) => {
-      if (reducedMotion()) return;
-      let v = Math.max(-MAX_SPEED, Math.min(MAX_SPEED, speed));
-      let last = performance.now();
-      const step = (now: number) => {
-        const dt = now - last;
-        last = now;
-        const before = window.scrollY;
-        scrollToY(before - v * dt);
-        v *= Math.pow(FRICTION, dt / (1000 / 60));
-        // Stopped, or run into the top or the foot of the page.
-        if (Math.abs(v) < MIN_SPEED || window.scrollY === before) {
-          glide = 0;
-          return;
-        }
-        glide = requestAnimationFrame(step);
-      };
-      glide = requestAnimationFrame(step);
-    };
-    const down = (e: PointerEvent) => {
-      if (e.pointerType !== "mouse" || e.button !== 0) return;
-      if (root.classList.contains("gravity-on")) return;
-      // The grown cover is a link, but a press on it does nothing while it is
-      // open, so it is as good a handle as the white. Any other link is left
-      // to be a link.
-      const target = e.target as Element;
-      if (
-        !frameRef.current?.contains(target) ||
-        target.closest("button, input, textarea, select, video[controls]") ||
-        (target.closest("a") && !target.closest("[data-hero]"))
-      )
-        return;
-      e.preventDefault();
-      // A press catches a page that is still gliding.
-      stopGlide();
-      drag = {
-        x: e.clientX,
-        y: e.clientY,
-        top: window.scrollY,
-        sideways: atTop(),
-        axis: null,
-      };
-      samples = [{ y: e.clientY, t: e.timeStamp }];
-    };
-    const move = (e: PointerEvent) => {
-      if (!drag) return;
-      const dx = e.clientX - drag.x;
-      const dy = e.clientY - drag.y;
-      if (!drag.axis) {
-        if (Math.max(Math.abs(dx), Math.abs(dy)) < DRAG) return;
-        drag.axis = Math.abs(dx) > Math.abs(dy) ? "x" : "y";
-        root.dataset.dragging = "";
-      }
-      if (drag.axis !== "y") return;
-      scrollToY(drag.top - dy);
-      samples.push({ y: e.clientY, t: e.timeStamp });
-      while (samples.length > 2 && e.timeStamp - samples[0].t > VELOCITY_WINDOW)
-        samples.shift();
-    };
-    const up = (e: PointerEvent) => {
-      const d = drag;
-      drag = null;
-      if (!d?.axis) return;
-      delete root.dataset.dragging;
-      suppress = true;
-      setTimeout(() => (suppress = false), 0);
-      if (d.axis === "x") {
-        // Scrolled down into the writing, sideways means nothing.
-        const dx = e.clientX - d.x;
-        if (d.sideways && Math.abs(dx) >= SWIPE_STEP) go(dx < 0 ? 1 : -1);
-        return;
-      }
-      // The speed over the last moments of the drag, in px/ms as the page
-      // moves under the pointer; a pointer held still before letting go has
-      // none.
-      const first = samples[0];
-      const dt = e.timeStamp - first.t;
-      if (e.type === "pointerup" && dt > 0 && dt <= VELOCITY_WINDOW * 2)
-        startGlide((e.clientY - first.y) / dt);
-    };
-    const click = (e: MouseEvent) => {
-      if (!suppress) return;
-      suppress = false;
-      e.preventDefault();
-      e.stopPropagation();
-    };
-
-    window.addEventListener("wheel", wheel, { passive: false });
-    window.addEventListener("pointerdown", down);
-    window.addEventListener("pointermove", move);
-    window.addEventListener("pointerup", up);
-    window.addEventListener("pointercancel", up);
-    window.addEventListener("click", click, true);
-    return () => {
-      window.removeEventListener("wheel", wheel);
-      window.removeEventListener("pointerdown", down);
-      window.removeEventListener("pointermove", move);
-      window.removeEventListener("pointerup", up);
-      window.removeEventListener("pointercancel", up);
-      window.removeEventListener("click", click, true);
-      delete root.dataset.dragging;
-      stopGlide();
-    };
-  }, [openSlug, closing, studies, setOpen]);
+  // Held across studies, so a study the arrow keys have just moved to is not
+  // moved on from again before it has come up into place — see the keys
+  // below.
+  const swipe = useRef({ busyUntil: 0 });
 
   // Escape puts the open study away and goes back to the homepage, the way
   // the "Home" in the corner does. Not while the press belongs to something
@@ -598,9 +396,7 @@ export function ProjectList({
   }, [openSlug, closing, close]);
 
   // The left and right arrows, or A and D, go to the study before or after
-  // the open one, in the strip's order — the swipe between studies above, on
-  // the keyboard, and from anywhere in the study rather than only its first
-  // screen. The next study starts at its top: the page is put back there at
+  // the open one, in the strip's order, from anywhere in the study. The next study starts at its top: the page is put back there at
   // once, before the covers move, so it is not seen scrolling up through
   // the study being left. Nothing past either end, and a key held down moves
   // once. Not while the press belongs to something else: a field being typed
