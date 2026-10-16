@@ -331,7 +331,11 @@ function Block({
               }
             : { alt: block.alt, ...LATER })}
           className={`mx-auto w-full max-w-full rounded-xl border border-foreground/10 ${
-            block.beside ? "sm:col-start-2 sm:row-start-1" : ""
+            block.beside
+              ? block.besideRight
+                ? "sm:col-start-1 sm:row-start-1"
+                : "sm:col-start-2 sm:row-start-1"
+              : ""
           }`}
           // Every size in pixels goes through shot(), so the picture
           // shrinks with the film on a short window rather than holding
@@ -367,7 +371,11 @@ function Block({
       // being a box in it, so the three can be placed against one another.
       return (
         <div className="sm:grid sm:grid-cols-2 sm:items-center sm:gap-x-10">
-          <p className="mb-5 text-lg leading-relaxed text-body sm:col-start-1 sm:row-start-1 sm:mb-0">
+          <p
+            className={`mb-5 text-lg leading-relaxed text-body sm:row-start-1 sm:mb-0 ${
+              block.besideRight ? "sm:col-start-2" : "sm:col-start-1"
+            }`}
+          >
             <Inline text={block.beside} />
           </p>
           <figure className="sm:contents">
@@ -375,7 +383,7 @@ function Block({
             <Caption
               text={block.caption}
               center={block.captionCenter}
-              className="sm:col-start-2 sm:row-start-2"
+              className={`sm:row-start-2 ${block.besideRight ? "sm:col-start-1" : "sm:col-start-2"}`}
             />
           </figure>
         </div>
