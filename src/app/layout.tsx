@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import { site } from "@/data/site";
 import { SiteCorner } from "./corner";
 import { FilmsInView } from "./films-in-view";
+import { PlainShiftClick } from "./plain-shift-click";
 import { card } from "./study-metadata";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
@@ -173,6 +174,7 @@ export default function RootLayout({
           }}
         />
         <FilmsInView />
+        <PlainShiftClick />
         <Analytics />
       </body>
     </html>
