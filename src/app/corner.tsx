@@ -110,7 +110,6 @@ function PageToggle({ about, home }: { about: boolean; home: boolean }) {
   };
   return (
     <nav aria-label="Pages" data-on={on} className="page-toggle">
-      <span aria-hidden className="page-toggle-pill" />
       <Link
         href="/"
         aria-current={!about ? "page" : undefined}

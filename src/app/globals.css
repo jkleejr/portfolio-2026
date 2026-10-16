@@ -352,24 +352,16 @@ body {
   -webkit-user-select: none;
 }
 /* The Projects / About switch in the corner — see PageToggle in corner.tsx.
-   A rounded track a shade off the page, two equal halves, and a pill in the
-   page's own colour under the one being shown, sliding to the other on a
-   press. Sized in --u-soft, so it gives a little as the window narrows,
-   which the undo on the
-   About page reads to stand clear of it. */
-:root {
-  --toggle-w: calc(224 * var(--u-soft));
-}
+   Two words, the muted grey of what only points the way, and the page being
+   shown in lapis with a short lapis line under it, which hands across to the
+   other word on a press. Sized in --u-soft, so it gives a little as the
+   window narrows. */
 .page-toggle {
   position: relative;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  width: var(--toggle-w);
+  display: flex;
+  align-items: center;
+  gap: calc(40 * var(--u-soft));
   height: calc(46 * var(--u-soft));
-  padding: 3px;
-  border-radius: 9999px;
-  background: color-mix(in srgb, var(--foreground) 6%, transparent);
-  box-shadow: inset 0 1px 2px color-mix(in srgb, black 7%, transparent);
   /* The size of "Home > Loot Check" in an open study at full width — 18px
      — giving a little with the rest. */
   font-size: calc(19.44 * var(--u-soft));
@@ -378,50 +370,40 @@ body {
 }
 .page-toggle a {
   position: relative;
-  z-index: 1;
   display: flex;
   align-items: center;
-  justify-content: center;
-  border-radius: 9999px;
+  height: 100%;
   color: var(--muted);
   transition: color 250ms cubic-bezier(0.22, 1, 0.36, 1);
 }
-/* The page being shown, and the half under the pointer, in the lapis every
-   link turns under the pointer. */
-.page-toggle a:hover,
-.page-toggle a[aria-current="page"] {
-  color: var(--accent);
-}
-.page-toggle-pill {
+.page-toggle a::after {
+  content: "";
   position: absolute;
-  top: 3px;
-  bottom: 3px;
-  left: 3px;
-  width: calc(50% - 3px);
-  border-radius: 9999px;
-  background: var(--background);
-  border: 1px solid color-mix(in srgb, var(--foreground) 8%, transparent);
-  box-shadow: 0 1px 4px color-mix(in srgb, black 12%, transparent);
+  left: 50%;
+  bottom: calc(2 * var(--u-soft));
+  width: 60%;
+  height: 2px;
+  border-radius: 1px;
+  background: var(--accent);
+  transform: translateX(-50%) scaleX(0);
   transition: transform 300ms cubic-bezier(0.22, 1, 0.36, 1);
 }
-.page-toggle[data-on="about"] .page-toggle-pill {
-  transform: translateX(100%);
+/* The page being shown — or the one just pressed, ahead of the address —
+   and the word under the pointer, in the lapis every link turns under the
+   pointer. */
+.page-toggle a:hover,
+.page-toggle[data-on="projects"] a:first-of-type,
+.page-toggle[data-on="about"] a:last-of-type {
+  color: var(--accent);
 }
-/* On the dark page the pill is lifted a shade above the track rather than
-   cut out of it in the page's black. */
-[data-theme="dark"] .page-toggle {
-  background: color-mix(in srgb, var(--foreground) 8%, transparent);
-  box-shadow: inset 0 1px 2px color-mix(in srgb, black 40%, transparent);
-}
-[data-theme="dark"] .page-toggle-pill {
-  background: color-mix(in srgb, var(--foreground) 18%, var(--background));
-  border-color: color-mix(in srgb, white 10%, transparent);
-  box-shadow: 0 1px 4px color-mix(in srgb, black 50%, transparent);
+.page-toggle[data-on="projects"] a:first-of-type::after,
+.page-toggle[data-on="about"] a:last-of-type::after {
+  transform: translateX(-50%) scaleX(1);
 }
 /* On a phone the switch is held over the foot of the screen, centred, on
-   every page — clear of the safe area under a home bar. A fixed size there,
-   where --u would make it tiny, and a solid track rather than a tint, since
-   the page scrolls under it. */
+   every page — clear of the safe area under a home bar — on a solid rounded
+   backing, since the page scrolls under it. A fixed size there, where --u
+   would make it tiny. */
 @media (width < 40rem) {
   .page-toggle {
     position: fixed;
@@ -429,13 +411,16 @@ body {
     bottom: calc(1.25rem + env(safe-area-inset-bottom, 0px));
     z-index: 40;
     transform: translateX(-50%);
-    width: 13.5rem;
+    gap: 2rem;
     height: 2.75rem;
+    padding: 0 1.5rem;
+    border-radius: 9999px;
     font-size: 1.0625rem;
     background: color-mix(in srgb, var(--foreground) 6%, var(--background));
-    box-shadow:
-      inset 0 1px 2px color-mix(in srgb, black 7%, transparent),
-      0 6px 20px color-mix(in srgb, black 12%, transparent);
+    box-shadow: 0 6px 20px color-mix(in srgb, black 12%, transparent);
+  }
+  .page-toggle a::after {
+    bottom: 0.3rem;
   }
   [data-theme="dark"] .page-toggle {
     background: color-mix(in srgb, var(--foreground) 8%, var(--background));
@@ -443,8 +428,8 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .page-toggle-pill,
-  .page-toggle a {
+  .page-toggle a,
+  .page-toggle a::after {
     transition: none;
   }
 }
