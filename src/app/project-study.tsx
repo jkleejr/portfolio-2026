@@ -175,9 +175,10 @@ function growTo(el: HTMLElement, frame: HTMLElement) {
   );
   const w = r.width * scale;
   const h = r.height * scale;
+  const shift = (caseStudies[el.dataset.slug ?? ""]?.coverShift ?? 0) * (page / 1287);
   const cx = phone
     ? vw / 2
-    : Math.min(bandLeft + page * 0.62, bandLeft + page - edge - w / 2);
+    : Math.min(bandLeft + page * 0.62 + shift, bandLeft + page - edge - w / 2);
   const frameTop = frame.getBoundingClientRect().top + window.scrollY;
   const left = cx - w / 2;
   const top = frameTop + vh / 2 - h / 2;

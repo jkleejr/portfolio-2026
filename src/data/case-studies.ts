@@ -95,6 +95,10 @@ export type CaseStudy = {
   role?: string;
   date?: string;
   appStore?: string;
+  // How many px further right the cover sits once grown into the open study,
+  // on the 1287px band and in step with it below that — room for a name
+  // that would otherwise wrap beside it. Never past the band's edge.
+  coverShift?: number;
   blocks: CaseStudyBlock[];
 };
 
@@ -805,6 +809,7 @@ export const caseStudies: Record<string, CaseStudy> = {
     role: "Role: Web Designer & Developer",
     scope: "Scope: Web App",
     href: "https://buy-side-briefings.vercel.app/",
+    coverShift: 64,
     blocks: [
       {
         type: "heading",
