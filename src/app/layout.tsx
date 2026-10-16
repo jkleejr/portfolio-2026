@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import { site } from "@/data/site";
 import { SiteCorner } from "./corner";
+import { FilmsInView } from "./films-in-view";
 import { card } from "./study-metadata";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
@@ -171,6 +172,7 @@ export default function RootLayout({
               "(function(){var m=function(){var d=document.createElement('div');d.style.cssText='position:absolute;top:-999px;width:100px;height:100px;overflow:scroll';document.body.appendChild(d);var w=d.offsetWidth-d.clientWidth;d.remove();document.documentElement.style.setProperty('--scrollbar',(w>0?w:0)+'px')};m();addEventListener('resize',m)})();",
           }}
         />
+        <FilmsInView />
         <Analytics />
       </body>
     </html>
