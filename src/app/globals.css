@@ -380,9 +380,11 @@ body {
   color: var(--muted);
   transition: color 250ms cubic-bezier(0.22, 1, 0.36, 1);
 }
+/* The page being shown, and the half under the pointer, in the lapis every
+   link turns under the pointer. */
 .page-toggle a:hover,
 .page-toggle a[aria-current="page"] {
-  color: var(--foreground);
+  color: var(--accent);
 }
 .page-toggle-pill {
   position: absolute;
@@ -501,6 +503,21 @@ html[data-study-open] .corner-stack {
 [data-study-back],
 [data-study-keys] {
   animation: study-in 450ms cubic-bezier(0.2, 0.8, 0.2, 1) 250ms backwards;
+}
+/* A study back on the page only because the window widened past a phone's:
+   it is there at once, as it was, rather than coming in — see ProjectList. */
+html[data-study-instant] [data-study-intro],
+html[data-study-instant] [data-study-back],
+html[data-study-instant] [data-study-keys] {
+  animation: none;
+}
+/* And nothing fades across into its open state: the name and the corner
+   going, the word on the keys coming. Only for the frame it lands in —
+   unlike an animation, a transition taken off later does not run then. */
+html[data-study-snap] [data-home-header],
+html[data-study-snap] .corner-stack,
+html[data-study-snap] [data-study-keys] {
+  transition: none;
 }
 html:not([data-study-open]) [data-study-intro],
 html:not([data-study-open]) [data-study-back],

@@ -244,6 +244,7 @@ export function ProjectList({
   // Counts closings, so one still under way can tell it has been overtaken —
   // see the opening below.
   const closeRun = useRef(0);
+  const prevWide = useRef(wide);
   useEffect(() => () => timers.current.forEach(clearTimeout), []);
 
   useLayoutEffect(() => {
@@ -256,9 +257,26 @@ export function ProjectList({
     const was = prev.current;
     const now = openSlug;
     prev.current = now;
-    const animate = !firstRun.current && !reducedMotion();
+    // A study opened or put away only because the window has crossed the
+    // phone width — the strip hands the address to the phone's list under
+    // sm, and takes it back above — is not a press, and is not played as
+    // one: the study is simply there again, as it was before the window
+    // narrowed, with nothing growing or fading in.
+    const widthOnly = prevWide.current !== wide;
+    prevWide.current = wide;
+    const animate = !firstRun.current && !reducedMotion() && !widthOnly;
     firstRun.current = false;
     if (was === now) return;
+    // Marked on the page, so the study's name, its way back and the word on
+    // the keys skip the fade they come in with — see globals.css. Held for
+    // as long as the study stays open: taken off, the fade would start then.
+    if (now && widthOnly) {
+      root.dataset.studyInstant = "";
+      root.dataset.studySnap = "";
+      requestAnimationFrame(() =>
+        requestAnimationFrame(() => delete root.dataset.studySnap),
+      );
+    } else delete root.dataset.studyInstant;
 
     const sections = [...strip.querySelectorAll<HTMLElement>("section[data-slug]")];
     const sectionOf = (slug: string) =>
@@ -387,7 +405,7 @@ export function ProjectList({
       window.scrollTo({ top: 0 });
       shrink();
     }
-  }, [openSlug]);
+  }, [openSlug, wide]);
 
   // Held across studies, so a study the arrow keys have just moved to is not
   // moved on from again before it has come up into place — see the keys
