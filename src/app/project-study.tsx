@@ -819,7 +819,7 @@ export function ProjectList({
       <span aria-hidden className="px-2 text-muted">
         &gt;
       </span>
-      <span aria-current="page" className="underline underline-offset-4">{caseStudies[shown]?.title}</span>
+      <span aria-current="page">{caseStudies[shown]?.title}</span>
     </>
   );
 
