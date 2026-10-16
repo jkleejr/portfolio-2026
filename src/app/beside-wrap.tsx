@@ -11,7 +11,8 @@
 // the picture at the column's full width, the way a float lets text do.
 //
 // Which of the two it is depends on how the lines break, so it is measured:
-// the paragraph's height without the drop, against the picture's, whenever
+// the paragraph's height without the drop — with its heading, if it has
+// one — against the picture's, whenever
 // the column changes width. The writing and the picture are rendered on the
 // server and handed in; this only places them.
 //
@@ -22,11 +23,14 @@
 import { useLayoutEffect, useRef, useState } from "react";
 
 export function BesideWrap({
+  heading,
   text,
   figure,
   width,
   right,
 }: {
+  /** A heading over the paragraph, centred on the picture with it. */
+  heading?: React.ReactNode;
   text: React.ReactNode;
   figure: React.ReactNode;
   /** How wide the picture is drawn, as a CSS length. */
@@ -36,7 +40,7 @@ export function BesideWrap({
 }) {
   const box = useRef<HTMLDivElement>(null);
   const fig = useRef<HTMLElement>(null);
-  const para = useRef<HTMLParagraphElement>(null);
+  const para = useRef<HTMLDivElement>(null);
   const [drop, setDrop] = useState(0);
 
   useLayoutEffect(() => {
@@ -69,9 +73,10 @@ export function BesideWrap({
       >
         {figure}
       </figure>
-      <p ref={para} className="text-lg leading-relaxed text-body" style={{ paddingTop: drop }}>
-        {text}
-      </p>
+      <div ref={para} style={{ paddingTop: drop }}>
+        {heading}
+        <p className="text-lg leading-relaxed text-body">{text}</p>
+      </div>
     </div>
   );
 }

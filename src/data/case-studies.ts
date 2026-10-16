@@ -447,15 +447,11 @@ export const caseStudies: Record<string, CaseStudy> = {
         text: "Generating audio for the entire paper was unnecessary if someone only wanted to listen briefly. I organized text from a paper into groups of about 750 characters, which made 50 seconds of audio. Making groups shorter would require more API requests and could reach Gemini's free-tier rate limit, while making groups longer would increase the initial wait time. At 50 seconds, the first group takes 20 seconds to generate and the next group loads in the background.",
       },
 
-      {
-        type: "heading",
-        text: "Highlighting",
-      },
-
       // Apple PDFKit extracts the text from the paper
       // Apple NLTokenizer splits text
       {
         type: "image",
+        besideHeading: "Highlighting",
         beside: "Because Gemini only returns audio and no timestamps, the app has to estimate which sentence is being spoken to highlight it. Each group is sent to Gemini TTS and returns an audio clip. The app divides the audio proportionally by character count, so a sentence with 5% of a group's characters is assumed to take 5% of the audio. As audio plays, the app tracks the time passed and highlights a sentence based on its estimate. Sentences are re-synced at the start of every group to minimize errors.",
         wrap: true,
         src: "/projects/paper-reader-highlight.mp4",

@@ -415,6 +415,7 @@ function Block({
       if (block.wrap)
         return (
           <BesideWrap
+            heading={block.besideHeading && <BesideHeading text={block.besideHeading} />}
             text={<Inline text={[block.beside].flat().join(" ")} />}
             figure={
               <>
