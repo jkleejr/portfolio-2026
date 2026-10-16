@@ -441,13 +441,7 @@ body {
     background: color-mix(in srgb, var(--foreground) 8%, var(--background));
   }
 }
-/* On the homepage from 45rem only, where the name leaves room for it beside
-   it; between a phone's width and that, the homepage goes without. */
-@media (40rem <= width < 45rem) {
-  .page-toggle-wide {
-    display: none;
-  }
-}
+
 @media (prefers-reduced-motion: reduce) {
   .page-toggle-pill,
   .page-toggle a {

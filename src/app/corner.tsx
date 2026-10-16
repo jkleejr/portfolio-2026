@@ -54,23 +54,12 @@ export function SiteCorner() {
         // with the name as the window is resized.
         className={`corner-stack absolute right-[var(--edge)] top-6 z-20 flex min-h-11 flex-row items-center gap-4 sm:top-[var(--frame-top)] sm:min-h-[calc(44*var(--u))] sm:gap-[calc(16*var(--u))]`}
       >
-        {/* The plain link, on the homepage between a phone's width and 45rem
-            — the one stretch where the name leaves no room for the switch
-            beside it, and the switch is not yet at the foot of the screen. */}
-        {onHome && (
-          <Link
-            href="/about"
-            className="hidden text-lg font-medium text-muted transition-colors duration-200 ease-out hover:text-accent sm:inline sm:text-[calc(20*var(--u-soft))] min-[45rem]:hidden"
-          >
-            About
-          </Link>
-        )}
         {!onHome && !onAbout && (
           <AppleButton fixed={false} button={apple} on={on} toggle={toggle} />
         )}
         {/* From sm up at the end of the corner row; on a phone held over the
             foot of the screen instead — see .page-toggle in globals.css. */}
-        <PageToggle about={onAbout} home={path === ""} narrowHidden={onHome} />
+        <PageToggle about={onAbout} home={path === ""} />
       </div>
       {/* The About page's apple, on its own, at the top left. On a phone
           its ink starts at the page's --edge, where the text below starts;
@@ -106,16 +95,7 @@ export function SiteCorner() {
  * state. Sized in --u-soft, so it gives a little as the window narrows — see
  * .page-toggle in globals.css.
  */
-function PageToggle({
-  about,
-  home,
-  narrowHidden,
-}: {
-  about: boolean;
-  home: boolean;
-  /** Left out under 45rem, where the homepage's name leaves it no room. */
-  narrowHidden?: boolean;
-}) {
+function PageToggle({ about, home }: { about: boolean; home: boolean }) {
   // Where the pill is headed, ahead of the address catching up with it —
   // good only while the page it was pressed on is still the one showing.
   const [going, setGoing] = useState<{ to: "projects" | "about"; from: boolean } | null>(
@@ -128,11 +108,7 @@ function PageToggle({
     setGoing({ to, from: about });
   };
   return (
-    <nav
-      aria-label="Pages"
-      data-on={on}
-      className={`page-toggle ${narrowHidden ? "page-toggle-wide" : ""}`}
-    >
+    <nav aria-label="Pages" data-on={on} className="page-toggle">
       <span aria-hidden className="page-toggle-pill" />
       <Link
         href="/"
