@@ -465,7 +465,11 @@ function Block({
                 // small to read. It is written after the base width so it wins
                 // inside its own media query.
                 className={`w-[calc((100%_-_1.5rem)/2)] ${
-                  block.columns === 2 ? "" : "sm:w-[calc((100%_-_3rem)/3)]"
+                  block.columns === 2
+                    ? ""
+                    : block.columns === 4
+                      ? "sm:w-[calc((100%_-_4.5rem)/4)]"
+                      : "sm:w-[calc((100%_-_3rem)/3)]"
                 } ${item.fullOnPhone ? "max-sm:w-full" : ""}`}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}

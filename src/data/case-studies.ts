@@ -32,7 +32,7 @@ export type CaseStudyBlock =
         alt: string;
         fullOnPhone?: boolean;
       }[];
-      columns?: 2;
+      columns?: 2 | 4;
       stackOnPhone?: boolean;
       max?: number;
     }
@@ -280,8 +280,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "images",
-        columns: 2,
-        max: 650,
+        columns: 4,
         stackOnPhone: true,
         items: [
           {

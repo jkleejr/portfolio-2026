@@ -67,7 +67,7 @@ export function ShotStack({
    *  short window — see shot() there. */
   max?: string;
   /** Two across from sm up, where the row is otherwise three. */
-  columns?: 2;
+  columns?: 2 | 4;
 }) {
   const n = items.length;
   // Which shot is on top.
@@ -169,7 +169,9 @@ export function ShotStack({
               className={`w-[78%] [grid-area:1/1] [filter:brightness(var(--shot-dim))] [transform:var(--shot-place)] [z-index:var(--shot-z)] max-sm:[will-change:transform,filter] ${
                 columns === 2
                   ? "sm:w-[calc((100%_-_1.5rem)/2)]"
-                  : "sm:w-[calc((100%_-_3rem)/3)]"
+                  : columns === 4
+                    ? "sm:w-[calc((100%_-_4.5rem)/4)]"
+                    : "sm:w-[calc((100%_-_3rem)/3)]"
               } sm:[filter:none] sm:[grid-area:auto] sm:[transform:none] sm:[z-index:auto]`}
               style={
                 {
