@@ -131,13 +131,20 @@ export function ProjectThumbnail({
     const v = filmRef.current;
     if (!v || !grown) return;
     let chosen = false;
+    const wait = () => {
+      window.addEventListener("pointerdown", later, { once: true });
+      window.addEventListener("keydown", later, { once: true });
+    };
     const unmute = () => {
+      // Not tried before the page has been pressed: the browser would refuse,
+      // and pause the film in the doing of it.
+      if (navigator.userActivation && !navigator.userActivation.hasBeenActive)
+        return wait();
       v.muted = false;
       v.play().catch(() => {
         v.muted = true;
         v.play().catch(() => {});
-        window.addEventListener("pointerdown", later, { once: true });
-        window.addEventListener("keydown", later, { once: true });
+        wait();
       });
     };
     function later(e: Event) {
