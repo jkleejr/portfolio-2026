@@ -32,6 +32,7 @@ function StudyIntro({ study, blurb }: { study: CaseStudy; blurb?: string }) {
           : study.title}
       </h2>
       {blurb && <p className="mt-2 text-lg leading-relaxed text-foreground">{blurb}</p>}
+      {study.intro && <p className="mt-2 text-lg leading-relaxed text-foreground">{study.intro}</p>}
       {/* From sm up, set down by one fact's line and the gap after it, so the
           first stands where the second would. Moved rather than spaced: the
           intro is centred on the cover by its height, and more room here would

@@ -102,6 +102,8 @@ export type CaseStudy = {
   role?: string;
   date?: string;
   appStore?: string;
+  // A line under the blurb in the open study's intro, never on the homepage.
+  intro?: string;
   // How many px further right the cover sits once grown into the open study,
   // on the 1287px band and in step with it below that — room for a name
   // that would otherwise wrap beside it. Never past the band's edge.
@@ -130,9 +132,10 @@ export const caseStudies: Record<string, CaseStudy> = {
   "loot-check": {
     title: "Loot Check",
     appStore: "https://apps.apple.com/us/app/loot-check/id6785767104",
+    intro: "When early testers got confidently wrong prices, I designed keyword hints and confidence ratings so people know when to trust an estimate. Live on the App Store with 300+ organic downloads and 2,000+ items scanned in two months.",
     date: "Time: Jun 2026 - Present",
     role: "Role: Founder, Product Designer, Engineer",
-    scope: "Scope: 0-1, iOS, App Store",
+    scope: "Scope: iOS, App Store",
     coverShift: 24,
     blocks: [
       {
@@ -212,7 +215,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "I chose Claude Sonnet 5.5 due to its low costs and high accuracy at $0.024 per scan. I considered slightly cheaper options like Sonnet 4.6, but I wanted the results to be as trustworthy as possible.",
+        text: "I chose Claude Sonnet 5.5 due to its low costs and high accuracy at $0.024 per scan. I considered other LLMs but I wanted the results to be as trustworthy as possible.",
       },
       // Sonnet 4.6 ~$0.013 per scan
       // Sonnet 5.5 ~$0.024
@@ -389,6 +392,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
   "paper-reader": {
     title: "Paper Reader",
+    intro: "Audio is generated in short sections as you listen and each sentence is highlighted as it's spoken. I learned that requiring users to bring their own API key created too much onboarding friction, and that major design decisions often involve tradeoffs between user experience and cost.",
     date: "Time: Jul - Aug 2026",
     role: "Role: Sole Product Designer, Engineer",
     scope: "Scope: iOS, Prototype",
@@ -574,6 +578,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
   "screen-translator": {
     title: "Screen Translator",
+    intro: "Because iOS doesn't let apps draw over other apps, I designed the experience around the Dynamic Island. A long press shows the translation and a resizable region lets users choose which part of their screen to translate. Saved sentences break into individual words with accurate definitions based on how each word is used.", 
     date: "Time: Sep - Oct 2026",
     role: "Role: Sole Product Designer, Engineer",
     scope: "Scope: iOS, Prototype",
@@ -803,6 +808,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
   "buy-side-briefings": {
     title: "Buy Side",
+    intro: "A morning report prepares you for market open and the night report reviews the day. Buy Side started as a crypto trading bot on Discord and turned into a website that curates information to help retail investors understand the current stock market.",
     date: "Time: May - Sep 2026",
     role: "Role: Sole Designer, Engineer",
     scope: "Scope: Website",
