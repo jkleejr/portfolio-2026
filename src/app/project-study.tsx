@@ -715,7 +715,9 @@ export function ProjectList({
             data-scrolled={scrolled ? "" : undefined}
             className="pointer-events-none fixed bottom-6 right-[calc(var(--edge)-var(--scrollbar))] z-30 flex h-11 items-center text-lg font-medium italic leading-relaxed text-muted sm:bottom-[var(--frame-top)]"
           >
-            Press A/D for the next project
+            <span>
+              Press <Key>A</Key>/<Key>D</Key> for the next project
+            </span>
           </p>
         )}
 
@@ -740,6 +742,21 @@ export function ProjectList({
         )}
       </div>
     </OpenContext.Provider>
+  );
+}
+
+/**
+ * A letter on a key, for the word on the keys in an open study's corner: a
+ * small rounded square drawn the way a keycap is, a hairline round it and a
+ * deeper edge along the bottom for the key's side. Upright and a size down
+ * from the italic line it sits in, and in the line's grey, so it reads as
+ * part of the hint rather than a button.
+ */
+function Key({ children }: { children: React.ReactNode }) {
+  return (
+    <kbd className="mx-[0.2em] inline-flex h-[1.45em] min-w-[1.45em] -translate-y-[0.06em] items-center justify-center rounded-[0.3em] border border-b-2 border-foreground/20 bg-foreground/[0.04] px-[0.3em] font-sans text-[0.8em] font-semibold not-italic leading-none">
+      {children}
+    </kbd>
   );
 }
 
