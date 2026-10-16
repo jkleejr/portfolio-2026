@@ -554,7 +554,8 @@ export function ProjectList({
   // at an easy reading pace and picking up to a quicker one over half a
   // second, and stops the moment it is let go; a tap is a short nudge. One
   // frame at a time rather than the browser's own key scrolling, which steps
-  // in jumps. Not while the press belongs to something else, as for A and D.
+  // in jumps. At the very top, a press up goes home. Not while the press
+  // belongs to something else, as for A and D.
   useEffect(() => {
     if (!openSlug || closing) return;
     let dir: 1 | -1 | 0 = 0;
@@ -582,6 +583,10 @@ export function ProjectList({
       if ((e.target as Element).closest?.("input, textarea, select, video, [contenteditable]"))
         return;
       e.preventDefault();
+      // Already at the top, a fresh press up goes back to the homepage, as
+      // a pull down from there does. Only a new press: a key held to glide
+      // up into the top stops there.
+      if (d === -1 && !e.repeat && dir !== d && window.scrollY <= 0) return close();
       if (dir === d) return;
       dir = d;
       since = last = performance.now();
@@ -606,7 +611,7 @@ export function ProjectList({
       window.removeEventListener("blur", stop);
       stop();
     };
-  }, [openSlug, closing]);
+  }, [openSlug, closing, close]);
 
   // On the homepage with nothing open, the left and right arrows, or A and
   // D, glide the strip of covers the way W and S glide an open study:
@@ -628,9 +633,9 @@ export function ProjectList({
     const step = (now: number) => {
       const dt = Math.min(now - last, 50);
       last = now;
-      // px per ms: 1 at the press, rising to 1.8 over 500ms — against the
+      // px per ms: 0.9 at the press, rising to 1.6 over 500ms — against the
       // 1.3 or so a held arrow key scrolls by itself on a Mac.
-      const speed = 1 + 0.8 * Math.min((now - since) / 500, 1);
+      const speed = 0.9 + 0.7 * Math.min((now - since) / 500, 1);
       scrollerRef.current?.scrollBy({ left: dir * speed * dt, behavior: "instant" });
       frame = requestAnimationFrame(step);
     };
