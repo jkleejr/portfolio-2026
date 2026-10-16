@@ -13,6 +13,9 @@ export type CaseStudyBlock =
       beside?: string;
       // A heading over the beside paragraph, centred on the card with it.
       besideHeading?: string;
+      // The card and its paragraph nudged up by lift from sm up, leaving
+      // everything around them in place.
+      lift?: number;
       max?: number;
       radius?: number;
       shift?: number;
@@ -31,6 +34,13 @@ export type CaseStudyBlock =
       besideRight?: boolean;
       // A heading over the beside paragraph, centred on the picture with it.
       besideHeading?: string;
+      // That many px more room above it, or below it, than the blocks around
+      // it have, from sm up, where it sits beside a paragraph.
+      above?: number;
+      below?: number;
+      // The picture and its paragraph nudged up by lift from sm up, or down
+      // when it is negative, leaving everything around them in place.
+      lift?: number;
       // Wrap the paragraph round the picture once it runs taller than it,
       // rather than keeping the two in columns — see beside-wrap.tsx.
       wrap?: boolean;
@@ -41,8 +51,9 @@ export type CaseStudyBlock =
       max?: number;
       height?: number;
       // As wide as the study's cover at the top of the page, from sm up —
-      // see .film-cover in globals.css.
+      // see .film-cover in globals.css — and wider by that many px.
       cover?: boolean;
+      wider?: number;
     }
 
   | {
@@ -596,7 +607,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "heading",
-        text: "System Constraints",
+        text: "Designing around System Constraints",
       },
 
       {
@@ -608,6 +619,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         type: "image",
         beside: "I designed minimal, compact, and expanded states because iOS decides which view is shown. The app appears in the minimal state by default because the iOS recording indicator always shares the island. Considering the lack of space and front-facing camera, I kept the UI simple and used emojis to represent the language.",
         besideRight: true,
+        above: 4,
         src: "/projects/screen-translator-island-minimal.png",
         max: 455,
         height: 204,
@@ -621,8 +633,8 @@ export const caseStudies: Record<string, CaseStudy> = {
         type: "image",
         beside: "iOS keeps Live Activities in the minimal view so users have to long press the island to expand it and see a translation. Although this was a major limitation, combining the long press with the region selector allowed the user to decide when and what text they want to translate.",
         src: "/projects/screen-translator-island-expanded.mp4",
-        max: 480,
-        height: 215,
+        max: 489,
+        height: 219,
         alt: "The Dynamic Island over the top of a Korean news article, growing from the compact island beside the clock into the expanded state: a Korean-to-US flag pair and a pin, Waiting for captions, then three lines of Korean from the article with their English translation under them in gray",
         caption: "Expanded (long press for translations)",
         captionCenter: true,
@@ -678,9 +690,9 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "region-demo",
         besideHeading: "Selecting a Translation Region",
+        lift: 12,
         beside: "Translating the entire screen was impractical because of the limited space to display the text. I added an interactive crop box to select a specific area of the screen, aligning the app with the user's intent and reducing clutter.",
-        max: 400,
-        radius: 34,
+        max: 384,
         shift: 6,
         drop: 16,
         alt: "The Translation region card: a crop icon and title with a Custom dropdown at the right, a note that only text inside the box is translated, a phone outline with a blue box dragged over the top of its screen and a resize handle at the corner, and Subtitle band and Full screen presets along the bottom",
@@ -690,10 +702,13 @@ export const caseStudies: Record<string, CaseStudy> = {
         type: "image",
         src: "/projects/screen-translator-learn-vocab.mp4",
         besideHeading: "Saving Sentences for Learning",
+        lift: -2,
+        below: 10,
         alt: "The Learn page with two pinned Korean sentences broken into word chips; tapping 첫째주 highlights it and shows its meaning, first week, in a bubble above it",
         beside: "Pinning a sentence saves it to the \"Learn\" page and breaks it into individual words. Tapping a word shows its definition as used in that sentence.",
         besideRight: true,
         cover: true,
+        wider: 6,
       },
 
        // had claude do a benchmark test with claude and deepl

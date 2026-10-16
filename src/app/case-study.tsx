@@ -384,7 +384,13 @@ function Block({
           style={{
             ...(block.width ? { width: shot(block.width) } : null),
             ...(block.max ? { maxWidth: shot(block.max) } : null),
-            ...(block.cover ? { maxWidth: "var(--film)" } : null),
+            ...(block.cover
+              ? {
+                  maxWidth: block.wider
+                    ? `calc(var(--film) + ${shot(block.wider)})`
+                    : "var(--film)",
+                }
+              : null),
             ...(block.crop ? { objectPosition: block.crop } : null),
             // With a max, the height is the height at that width and the
             // shot keeps the proportion below it: a phone's column is
@@ -426,7 +432,20 @@ function Block({
       // The figure lends its picture and caption to the grid, rather than
       // being a box in it, so the three can be placed against one another.
       return (
-        <div className="sm:grid sm:grid-cols-2 sm:items-center sm:gap-x-10">
+        <div
+          className={`sm:grid sm:grid-cols-2 sm:items-center sm:gap-x-10 ${
+            block.above ? "sm:pt-(--above)" : ""
+          } ${block.below ? "sm:pb-(--below)" : ""} ${
+            block.lift ? "sm:-translate-y-(--lift)" : ""
+          }`}
+          style={
+            {
+              ...(block.above ? { "--above": shot(block.above) } : null),
+              ...(block.below ? { "--below": shot(block.below) } : null),
+              ...(block.lift ? { "--lift": shot(block.lift) } : null),
+            } as React.CSSProperties
+          }
+        >
           <div
             className={`mb-5 sm:row-start-1 sm:mb-0 ${
               block.besideRight ? "sm:col-start-2" : "sm:col-start-1"
@@ -477,7 +496,16 @@ function Block({
       // A heading over the paragraph is centred on the card with it, the
       // space under it what a heading has under it anywhere else.
       return (
-        <div className="sm:grid sm:grid-cols-2 sm:items-center sm:gap-x-10">
+        <div
+          className={`sm:grid sm:grid-cols-2 sm:items-center sm:gap-x-10 ${
+            block.lift ? "sm:-translate-y-(--lift)" : ""
+          }`}
+          style={
+            block.lift
+              ? ({ "--lift": shot(block.lift) } as React.CSSProperties)
+              : undefined
+          }
+        >
           <div className="mb-5 sm:mb-0">
             {block.besideHeading && <BesideHeading text={block.besideHeading} />}
             <p className="text-lg leading-relaxed text-body">
