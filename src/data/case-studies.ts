@@ -703,7 +703,9 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "images",
-        max: 983,
+        // Three to a row, each a quarter of it — the size the phone shots
+        // are drawn at in Buy Side Briefings' four-across row.
+        columns: 4,
         stackOnPhone: true,
         items: [
           {
@@ -733,7 +735,9 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "images",
-        max: 983,
+        // Three to a row, each a quarter of it — the size the phone shots
+        // are drawn at in Buy Side Briefings' four-across row.
+        columns: 4,
         stackOnPhone: true,
         items: [
           {
