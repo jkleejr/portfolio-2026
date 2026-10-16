@@ -23,9 +23,9 @@ function StudyIntro({ study, blurb }: { study: CaseStudy; blurb?: string }) {
     <header>
       <h2 className="text-[48px] font-bold leading-[1.1] tracking-[-0.02em]">{study.title}</h2>
       {blurb && <p className="mt-2 text-lg leading-relaxed text-foreground">{blurb}</p>}
-      <div className="mt-6 text-lg font-bold">
+      <div className="mt-8 text-lg font-bold">
         {studyFacts(study).map((line, i) => (
-          <p key={i} className={`leading-relaxed ${i ? "mt-1" : ""}`}>
+          <p key={i} className={`leading-relaxed ${i ? "mt-2" : ""}`}>
             <StudyFact {...line} />
           </p>
         ))}
