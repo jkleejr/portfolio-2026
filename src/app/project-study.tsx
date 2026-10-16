@@ -862,12 +862,15 @@ export function ProjectList({
             link to the homepage for anything that wants one — a new tab, a
             screen reader — and a plain press puts the cover back into the
             strip rather than loading the page again. Part of the first screen,
-            it scrolls away with it rather than sitting over the study below. */}
+            it scrolls away with it rather than sitting over the study below.
+            Measured from the window's left edge rather than the band's, so it
+            is where the copy held at the study's end is, on a window wider
+            than the band too. */}
         {shown && (
           <nav
             aria-label="Breadcrumb"
             data-study-back
-            className="absolute left-[var(--edge)] top-6 z-30 flex h-11 items-center text-lg font-medium leading-relaxed sm:top-[var(--frame-top)]"
+            className="absolute left-[calc(var(--edge)-(100vw-var(--scrollbar)-var(--page))/2)] top-6 z-30 flex h-11 items-center text-lg font-medium leading-relaxed sm:top-[var(--frame-top)]"
           >
             {crumbs}
           </nav>
