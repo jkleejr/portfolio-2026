@@ -61,7 +61,9 @@ export default async function ProjectPage({ params }: Params) {
           <span aria-hidden className="px-2 text-muted">
             &gt;
           </span>
-          {study.title}
+          <span aria-current="page" className="underline underline-offset-4">
+            {study.title}
+          </span>
         </nav>
         {/* The 8px the date sits under the title, so the three lines — the way
             back, the title, the date — are evenly spaced and read as one block

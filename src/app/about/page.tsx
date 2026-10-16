@@ -42,7 +42,7 @@ export default function AboutPage() {
         <span aria-hidden className="px-2 text-muted">
           &gt;
         </span>
-        <span aria-current="page">About</span>
+        <span aria-current="page" className="underline underline-offset-4">About</span>
       </nav>
       {/* 120px wider than the column a study is set in, 60px out each side,
           and centred, so the white either side of it matches. */}
