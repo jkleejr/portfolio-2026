@@ -708,7 +708,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         alt: "The Learn page with two pinned Korean sentences broken into word chips; tapping 첫째주 highlights it and shows its meaning, first week, in a bubble above it",
         beside: [
           "Pinning a sentence saves it to the \"Learn\" page and breaks it into individual words. Tapping a word shows its definition as used in that sentence.",
-          "I used DeepL for sentence translations and Claude Opus 5 for word definitions. DeepL was best for full sentences, but unreliable for individual words. Opus 5 was more accurate for words because it could define each word as it's used in the context of the sentence.",
+          "I used DeepL to translate full sentences and Claude Opus 5 for individual words. DeepL was great for sentences, but unreliable for words. Opus 5 was more accurate because it could define each word as it's used in the sentence.",
         ],
         besideRight: true,
         cover: true,
