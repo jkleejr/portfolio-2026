@@ -89,9 +89,9 @@ export const caseStudies: Record<string, CaseStudy> = {
   "loot-check": {
     title: "Loot Check",
     appStore: "https://apps.apple.com/us/app/loot-check/id6785767104",
-    date: "2026",
-    role: "0-1 Product Development",
-    scope: "App Store",
+    date: "Time: Jun 2026 - Present",
+    role: "Role: Founder, Product designer",
+    scope: "Scope: 0-1, App Store",
     blocks: [
       {
         type: "heading",
@@ -361,9 +361,9 @@ export const caseStudies: Record<string, CaseStudy> = {
 
   "paper-reader": {
     title: "Paper Reader",
-    date: "2026",
-    role: "UI/UX Design",
-    scope: "iOS Prototype",
+    date: "Time: Jul - Aug 2026",
+    role: "Role: Sole Product designer",
+    scope: "Scope: iOS Prototype",
     blocks: [
       {
         type: "heading",
@@ -549,9 +549,9 @@ export const caseStudies: Record<string, CaseStudy> = {
 
   "screen-translator": {
     title: "Screen Translator",
-    date: "2026",
-    role: "UI/UX Design",
-    scope: "iOS Prototype",
+    date: "Time: Sep - Oct 2026",
+    role: "Role: Sole Product designer",
+    scope: "Scope: iOS Prototype",
     blocks: [
       {
         type: "heading",
@@ -776,9 +776,9 @@ export const caseStudies: Record<string, CaseStudy> = {
 
   "buy-side-briefings": {
     title: "Buy Side Briefings",
-    date: "2026",
-    role: "Web Design & Development",
-    scope: "Web App",
+    date: "Time: May - Sep 2026",
+    role: "Role: Web Designer & Developer",
+    scope: "Scope: Web App",
     href: "https://buy-side-briefings.vercel.app/",
     blocks: [
       {
