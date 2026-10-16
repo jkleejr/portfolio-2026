@@ -114,6 +114,9 @@ export type CaseStudy = {
   // The grown cover's width from sm up as a multiple of its usual share of
   // the band: 1.06 makes it 6% wider. The cover in the strip is untouched.
   coverGrow?: number;
+  // How many px further down the name and everything under it sit beside
+  // the grown cover, from sm up.
+  introShift?: number;
   blocks: CaseStudyBlock[];
 };
 
@@ -578,7 +581,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
   "screen-translator": {
     title: "Screen Translator",
-    intro: "Because iOS doesn't let apps draw over other apps, I designed the experience around the Dynamic Island. A long press shows the translation and a resizable region lets users choose which part of their screen to translate. Saved sentences break into individual words with accurate definitions based on how each word is used.", 
+    intro: "iOS doesn't let apps show translations directly over the text on screen, so I designed around the Dynamic Island. A long press shows the translation and a resizable region lets users choose which part of the screen to translate. Saved sentences break into individual words with definitions based on how each word is used.", 
     date: "Time: Sep - Oct 2026",
     role: "Role: Sole Product Designer, Engineer",
     scope: "Scope: iOS, Prototype",
@@ -620,7 +623,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "My first idea was to generate text over the current display, but iOS does not allow an app to draw over another app. To get around this, I used ReplayKit to broadcast video frames, Apple Vision OCR to extract Korean text, the DeepL API for translations, and ActivityKit to update the island. I chose the Dynamic Island to display translations since it stays visible in every app."
+        text: "I used ReplayKit to record the screen and Apple Vision to find Korean text in the video frames. The DeepL API translates that text and ActivityKit sends an update to the island."
       },
 
       {
@@ -816,6 +819,7 @@ export const caseStudies: Record<string, CaseStudy> = {
     coverShift: 92,
     coverGrow: 1.07,
     coverPastEdge: 28,
+    introShift: 10,
     blocks: [
       {
         type: "heading",
