@@ -105,7 +105,7 @@ export default function AboutPage() {
                 direction. */}
             <nav
               aria-label="Contact"
-              className="mt-8 flex flex-wrap justify-end gap-x-6 gap-y-2 font-medium text-foreground text-[calc(20*var(--u-full))] sm:row-start-3 sm:-mb-[0.16em] sm:mt-0 sm:justify-start sm:self-end sm:pt-6 sm:leading-none"
+              className="mt-8 flex flex-wrap justify-end gap-x-6 gap-y-2 font-medium text-muted text-[calc(20*var(--u-full))] sm:row-start-3 sm:-mb-[0.16em] sm:mt-0 sm:justify-start sm:self-end sm:pt-6 sm:leading-none"
             >
               {site.links.map(
                 (l) =>
