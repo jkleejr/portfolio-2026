@@ -29,8 +29,9 @@ export type CaseStudyBlock =
       alt: string;
       // A paragraph set to the left of the picture from sm up, centred on it
       // down the page; above it on a phone, as a paragraph would be. Set
-      // besideRight to put it on the picture's right instead.
-      beside?: string;
+      // besideRight to put it on the picture's right instead. A list is
+      // several paragraphs, centred on the picture together.
+      beside?: string | string[];
       besideRight?: boolean;
       // A heading over the beside paragraph, centred on the picture with it.
       besideHeading?: string;
@@ -705,7 +706,10 @@ export const caseStudies: Record<string, CaseStudy> = {
         lift: -2,
         below: 10,
         alt: "The Learn page with two pinned Korean sentences broken into word chips; tapping 첫째주 highlights it and shows its meaning, first week, in a bubble above it",
-        beside: "Pinning a sentence saves it to the \"Learn\" page and breaks it into individual words. Tapping a word shows its definition as used in that sentence.",
+        beside: [
+          "Pinning a sentence saves it to the \"Learn\" page and breaks it into individual words. Tapping a word shows its definition as used in that sentence.",
+          "I used DeepL for sentence translations and Claude Opus 5 for word definitions. DeepL was best for full sentences, but unreliable for individual words. Opus 5 was more accurate for words because it could define each word as it's used in the context of the sentence.",
+        ],
         besideRight: true,
         cover: true,
         wider: 6,

@@ -415,7 +415,7 @@ function Block({
       if (block.wrap)
         return (
           <BesideWrap
-            text={<Inline text={block.beside} />}
+            text={<Inline text={[block.beside].flat().join(" ")} />}
             figure={
               <>
                 {media}
@@ -452,9 +452,15 @@ function Block({
             }`}
           >
             {block.besideHeading && <BesideHeading text={block.besideHeading} />}
-            <p className="text-lg leading-relaxed text-body">
-              <Inline text={block.beside} />
-            </p>
+            {/* The 16px between paragraphs that the block list puts between
+                any two blocks. */}
+            <div className="space-y-4">
+              {[block.beside].flat().map((text, i) => (
+                <p key={i} className="text-lg leading-relaxed text-body">
+                  <Inline text={text} />
+                </p>
+              ))}
+            </div>
           </div>
           <figure className="sm:contents">
             {media}
