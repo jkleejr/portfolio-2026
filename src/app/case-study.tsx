@@ -3,7 +3,6 @@ import { RegionDemo } from "./region-demo";
 import { ShotStack } from "./shot-stack";
 import { SiteLink } from "./site-link";
 import { AppStoreMark } from "./title-badge";
-import { LinkGlyph } from "./link-glyph";
 import { mediaSize } from "./media-size";
 
 const LATER = { loading: "lazy", decoding: "async" } as const;
@@ -67,15 +66,12 @@ export function StudyFact({ text, href, appStore }: Fact) {
         // to come out in.
         <AppStoreMark className="h-[1.0625em]! translate-y-[0.18em] align-baseline" />
       ) : (
-        // Drawn from 2 to 22 of its 24 units under a stroke of 2, so a 1em
-        // box is 14.6px of chain.
-        //
-        // A pixel lower than the capitals' middle, which is 0.14em. The line
-        // it follows is lowercase but for its first letter — "Live on the
-        // web" — and what the eye takes for the middle of that is nearer the
-        // middle of the lowercase, 2px further down. Measured dead centre on
-        // the capitals it read as riding high; this splits the two.
-        <LinkGlyph className="inline-block h-[0.95em] w-[0.95em] translate-y-[0.175em] align-baseline" />
+        // The arrow the About page's LinkedIn link carries, at the same three
+        // quarters of the line it sits in, saying the line opens in a new tab.
+        // Hidden from a screen reader, which would read it out as a direction.
+        <span aria-hidden className="text-[0.75em]">
+          ↗
+        </span>
       )}
     </a>
   );
