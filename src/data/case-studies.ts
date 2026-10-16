@@ -94,6 +94,9 @@ export type CaseStudyBlock =
 
 export type CaseStudy = {
   title: string;
+  // The name beside the grown cover, broken where these lines say rather
+  // than wherever the room runs out.
+  titleLines?: string[];
   href?: string;
   scope?: string;
   role?: string;
@@ -130,6 +133,7 @@ export const caseStudies: Record<string, CaseStudy> = {
     date: "Time: Jun 2026 - Present",
     role: "Role: Founder, Product Designer",
     scope: "Scope: 0-1, App Store",
+    coverShift: 24,
     blocks: [
       {
         type: "heading",
@@ -167,7 +171,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         src: "/projects/loot-check-architecture.svg",
         max: 925,
         grow: 1.214,
-        above: 24,
+        above: 43,
         alt: "Architecture diagram. The iOS app uploads a photo to a single analyze endpoint on Vercel, which calls Claude Sonnet 5.5 to identify and price the item and Upstash Redis for daily caps and search allowances. A JSON response returns to the app as an item valuation with payouts from marketplaces.",
       },
 
@@ -232,7 +236,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         src: "/projects/loot-check-pricing-fork.svg",
         max: 925.1,
         grow: 1.214,
-        above: 24,
+        above: 43,
         alt: "The pricing fork. After the iOS app uploads a photo, the scan asks whether the item is a handmade or original piece. If no, it is resale and priced from training data. If yes, there is no fixed secondhand catalog, so one web search finds the asking price of comparable work. Both paths end in an item valuation.",
       },
 
@@ -388,6 +392,7 @@ export const caseStudies: Record<string, CaseStudy> = {
     date: "Time: Jul - Aug 2026",
     role: "Role: Sole Product Designer",
     scope: "Scope: iOS Prototype",
+    coverShift: 24,
     blocks: [
       {
         type: "heading",
@@ -572,6 +577,7 @@ export const caseStudies: Record<string, CaseStudy> = {
     date: "Time: Sep - Oct 2026",
     role: "Role: Sole Product Designer",
     scope: "Scope: iOS Prototype",
+    coverShift: 24,
     blocks: [
       {
         type: "heading",
@@ -796,7 +802,7 @@ export const caseStudies: Record<string, CaseStudy> = {
   },
 
   "buy-side-briefings": {
-    title: "Buy Side Briefings",
+    title: "Buy Side",
     date: "Time: May - Sep 2026",
     role: "Role: Web Designer & Developer",
     scope: "Scope: Web App",

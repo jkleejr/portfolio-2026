@@ -21,7 +21,16 @@ import { ProjectThumbnail } from "./project-thumbnail";
 function StudyIntro({ study, blurb }: { study: CaseStudy; blurb?: string }) {
   return (
     <header>
-      <h2 className="text-[48px] font-bold leading-[1.1] tracking-[-0.02em]">{study.title}</h2>
+      <h2 className="text-[48px] font-bold leading-[1.1] tracking-[-0.02em]">
+        {study.titleLines
+          ? study.titleLines.map((line, i) => (
+              <span key={i}>
+                {i > 0 && <br />}
+                {line}
+              </span>
+            ))
+          : study.title}
+      </h2>
       {blurb && <p className="mt-2 text-lg leading-relaxed text-foreground">{blurb}</p>}
       {/* From sm up, set down by one fact's line and the gap after it, so the
           first stands where the second would. Moved rather than spaced: the
