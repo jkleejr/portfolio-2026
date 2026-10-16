@@ -347,6 +347,10 @@ body {
   user-select: none;
   -webkit-user-select: none;
 }
+/* With a study open the strip is only the grown cover, and is not dragged. */
+html[data-study-open] .cover-strip {
+  cursor: auto;
+}
 .cover-strip::-webkit-scrollbar,
 .cover-slack::-webkit-scrollbar {
   display: none;

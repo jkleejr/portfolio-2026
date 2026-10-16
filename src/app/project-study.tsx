@@ -698,10 +698,11 @@ export function ProjectList({
           ref={frameRef}
           data-frame
           data-open={openSlug ? "" : undefined}
-          // The white is a handle — for the strip while nothing is open (see
-          // useStripDrag), and from one study to the next while one is.
-          className={`relative cursor-grab sm:pb-[calc(24*var(--u))] sm:pt-[var(--frame-top)] ${
-            shown ? "min-h-svh" : "sm:min-h-svh"
+          // The white is a handle for the strip while nothing is open (see
+          // useStripDrag). With a study open nothing is dragged, and the
+          // pointer is the plain one.
+          className={`relative sm:pb-[calc(24*var(--u))] sm:pt-[var(--frame-top)] ${
+            shown ? "min-h-svh" : "cursor-grab sm:min-h-svh"
           }`}
         >
           <div className="relative">
