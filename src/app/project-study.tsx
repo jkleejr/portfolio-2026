@@ -75,6 +75,16 @@ const SWIPE_REST = 300;
 // px of swipe, to put the study away and go back to the homepage.
 const PULL_CLOSE = 120;
 
+// The strip's glide on the arrow keys or A and D: the speed it runs at, in
+// px per ms, how long it takes to pick that up, and how long it takes to
+// ease to a stop once let go, in ms.
+const KEY_SPEED = 1.4;
+const KEY_RAMP = 150;
+const KEY_STOP = 250;
+// The speed a tap is let go at, so it moves the strip a little way: 0.7 px
+// per ms eases out over about 90px.
+const KEY_TAP = 0.7;
+
 const OpenContext = createContext<{
   openSlug: string | null;
   /** A press on a project's cover: opens it, if it is not already open. */
@@ -614,35 +624,103 @@ export function ProjectList({
   }, [openSlug, closing, close]);
 
   // On the homepage with nothing open, the left and right arrows, or A and
-  // D, glide the strip of covers the way W and S glide an open study:
-  // for as long as the key is down, starting at an easy pace and picking up
-  // to a quicker one over half a second — a little quicker throughout than
-  // the browser's own key scrolling, which also steps in jumps — and a tap
-  // is a short nudge. Not while the press belongs to something else, as for
-  // the keys in a study, nor with gravity on.
+  // D, glide the strip of covers: held, it picks up to KEY_SPEED over
+  // KEY_RAMP ms and keeps on at that until let go, then eases to a stop
+  // over KEY_STOP ms; a tap is a short nudge the same way. Not while the
+  // press belongs to something else, as for the keys in a study, nor with
+  // gravity on.
+  //
+  // The glide is an animation of the track's transform rather than the strip
+  // scrolled a frame at a time from script. A transform animation runs off
+  // the page's main thread, so it keeps an even pace while the covers' films
+  // start and stop as they come into view — scrolled from script, every one
+  // of those cost a frame or two. Each time the glide stops, or changes, the
+  // distance it covered is handed to the strip's scroll in the same moment
+  // and the transform dropped, so the strip ends up scrolled to where the
+  // row was seen to be.
   useEffect(() => {
     if (shown) return;
+    let anim: Animation | null = null;
+    // Which way the glide is going, while the key is down; 0 once let go.
     let dir: 1 | -1 | 0 = 0;
     let since = 0;
-    let last = 0;
-    let frame = 0;
     const which = (e: KeyboardEvent) => {
       const k = e.key.toLowerCase();
       return k === "d" || k === "arrowright" ? 1 : k === "a" || k === "arrowleft" ? -1 : 0;
     };
-    const step = (now: number) => {
-      const dt = Math.min(now - last, 50);
-      last = now;
-      // px per ms: 0.9 at the press, rising to 1.6 over 500ms — against the
-      // 1.3 or so a held arrow key scrolls by itself on a Mac.
-      const speed = 0.9 + 0.7 * Math.min((now - since) / 500, 1);
-      scrollerRef.current?.scrollBy({ left: dir * speed * dt, behavior: "instant" });
-      frame = requestAnimationFrame(step);
+    // How far the track has been moved, in px of scroll, signed as the
+    // scroll moves.
+    const moved = () => {
+      const el = trackRef.current;
+      if (!el) return 0;
+      return -new DOMMatrixReadOnly(getComputedStyle(el).transform).m41;
+    };
+    // The glide so far, handed to the scroll, and the animation dropped.
+    const settle = () => {
+      const strip = scrollerRef.current;
+      if (!anim || !strip) return;
+      const by = moved();
+      anim.cancel();
+      anim = null;
+      strip.scrollLeft += by;
+    };
+    const glide = (frames: Keyframe[], duration: number) => {
+      const el = trackRef.current;
+      if (!el) return;
+      anim = el.animate(frames, { duration, fill: "forwards" });
+      // Started from this frame rather than the next, so a glide that takes
+      // over from another does not stand still for a frame in between.
+      anim.startTime = document.timeline.currentTime;
+      anim.onfinish = settle;
+    };
+    const at = (x: number) => ({ transform: `translate3d(${-x}px, 0, 0)` });
+    const room = (d: number) => {
+      const strip = scrollerRef.current;
+      if (!strip) return 0;
+      return d > 0 ? strip.scrollWidth - strip.clientWidth - strip.scrollLeft : strip.scrollLeft;
+    };
+    const go = (d: 1 | -1) => {
+      settle();
+      const left = room(d);
+      if (left < 1) return;
+      // Picking up speed evenly over the ramp covers half the distance a
+      // full-speed ramp would, and runs on at KEY_SPEED to the end.
+      const ramp = (KEY_SPEED * KEY_RAMP) / 2;
+      if (left <= ramp) {
+        glide([at(0), at(d * left)], Math.sqrt((2 * left * KEY_RAMP) / KEY_SPEED));
+        return;
+      }
+      const total = KEY_RAMP + (left - ramp) / KEY_SPEED;
+      glide(
+        [
+          // t² — speeding up from nothing to KEY_SPEED.
+          { ...at(0), easing: "cubic-bezier(0.333, 0, 0.667, 0.333)" },
+          { ...at(d * ramp), offset: KEY_RAMP / total, easing: "linear" },
+          at(d * left),
+        ],
+        total,
+      );
     };
     const stop = () => {
+      const d = dir;
       dir = 0;
-      cancelAnimationFrame(frame);
-      frame = 0;
+      if (!anim || !d) return;
+      // The speed at the let-go, eased out to nothing: an even slowing
+      // covers half of what that speed would in the time. A tap is let go
+      // before it has any speed to speak of, and is given KEY_TAP of it.
+      const t = performance.now() - since;
+      const speed = Math.max(KEY_SPEED * Math.min(t / KEY_RAMP, 1), KEY_TAP);
+      settle();
+      const coast = Math.min((speed * KEY_STOP) / 2, room(d));
+      if (coast < 1) return;
+      glide(
+        [
+          // 1 - (1 - t)² — slowing from the let-go speed to nothing.
+          { ...at(0), easing: "cubic-bezier(0.333, 0.667, 0.667, 1)" },
+          at(d * coast),
+        ],
+        (2 * coast) / speed,
+      );
     };
     const down = (e: KeyboardEvent) => {
       if (e.defaultPrevented || e.metaKey || e.ctrlKey || e.altKey) return;
@@ -654,24 +732,31 @@ export function ProjectList({
       e.preventDefault();
       if (dir === d) return;
       dir = d;
-      since = last = performance.now();
-      if (!frame) frame = requestAnimationFrame(step);
+      since = performance.now();
+      go(d);
     };
     const up = (e: KeyboardEvent) => {
-      const d = which(e);
-      if (!d || d !== dir) return;
-      const tap = performance.now() - since < 150 ? dir : 0;
-      stop();
-      if (tap) scrollerRef.current?.scrollBy({ left: tap * 160, behavior: "smooth" });
+      if (which(e) && which(e) === dir) stop();
+    };
+    // A press on the strip, to drag it, takes over from a glide.
+    const press = () => {
+      dir = 0;
+      settle();
+    };
+    const lost = () => {
+      if (dir) stop();
     };
     window.addEventListener("keydown", down);
     window.addEventListener("keyup", up);
-    window.addEventListener("blur", stop);
+    window.addEventListener("blur", lost);
+    window.addEventListener("pointerdown", press, true);
     return () => {
       window.removeEventListener("keydown", down);
       window.removeEventListener("keyup", up);
-      window.removeEventListener("blur", stop);
-      stop();
+      window.removeEventListener("blur", lost);
+      window.removeEventListener("pointerdown", press, true);
+      dir = 0;
+      settle();
     };
   }, [shown]);
 
