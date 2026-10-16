@@ -703,6 +703,22 @@ export function ProjectList({
           </nav>
         )}
 
+        {/* A word on the keys, in the window's bottom right while the study's
+            first screen is up: the same size and weight as the way back in
+            the opposite corner, and as far in from the window's edges, the
+            scrollbar counted in the right one. It goes once the page moves —
+            the reader has found the study, and it would only sit over the
+            writing. */}
+        {shown && (
+          <p
+            data-study-keys
+            data-scrolled={scrolled ? "" : undefined}
+            className="pointer-events-none fixed bottom-6 right-[calc(var(--edge)-var(--scrollbar))] z-30 flex h-11 items-center text-lg font-medium italic leading-relaxed text-muted sm:bottom-[var(--frame-top)]"
+          >
+            Press A/D for the next project
+          </p>
+        )}
+
         {study && (
           // Across the band from sm up, with nothing in the margins beside
           // it — see --study-width. Widened on the right by the scrollbar, so
