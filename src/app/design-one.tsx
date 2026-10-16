@@ -23,7 +23,11 @@ function StudyIntro({ study, blurb }: { study: CaseStudy; blurb?: string }) {
     <header>
       <h2 className="text-[48px] font-bold leading-[1.1] tracking-[-0.02em]">{study.title}</h2>
       {blurb && <p className="mt-2 text-lg leading-relaxed text-foreground">{blurb}</p>}
-      <div className="mt-8 text-lg font-bold">
+      {/* From sm up, set down by one fact's line and the gap after it, so the
+          first stands where the second would. Moved rather than spaced: the
+          intro is centred on the cover by its height, and more room here would
+          lift the name and the line above it. */}
+      <div className="mt-8 text-lg font-bold sm:relative sm:top-[calc(1.125rem*1.625+0.5rem)]">
         {studyFacts(study).map((line, i) => (
           <p key={i} className={`leading-relaxed ${i ? "mt-2" : ""}`}>
             <StudyFact {...line} />
