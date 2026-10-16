@@ -184,7 +184,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "A key product decision was determining how items were valued. Using a web search for every scan increased accuracy, but because it raised API costs by 3-4x and quadrupled the total latency from 6 to 24 seconds, I chose to rely on Sonnet's pre-trained data for most items.",
+        text: "A key product decision was determining how items were valued. Using a web search for every scan increased accuracy, but because it raised API costs by 3-4x and the total latency from 6 to 24 seconds, I chose to rely on Sonnet's pre-trained data for non-unique items.",
       },
 
       {
@@ -225,7 +225,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "heading",
-        text: "Designing for Inaccuracy",
+        text: "Designing for Inaccurate Results",
       },
       // Designing for LLM Uncertainty
 
@@ -427,33 +427,26 @@ export const caseStudies: Record<string, CaseStudy> = {
       // Apple PDFKit extracts the text from the paper
       // Apple NLTokenizer splits text
       {
-        type: "text",
-        text: "Because Gemini only returns audio and no timestamps, the app has to estimate which sentence is being spoken to highlight it. I used Apple's NLTokenizer to find the end of each sentence instead of splitting text on periods, so abbreviations like \"et al.\" or \"Fig. 1\" don't break sentences. The app groups the sentences, sends them to Gemini TTS, and receives an audio clip. Since the app knows the duration of the clip, it divides a group's audio proportionally by character count, so a sentence with 5% of a group's characters is assumed to take 5% of the audio. As audio plays, the app tracks the time passed and highlights a sentence based on its estimate. This is not always accurate, so sentences are re-synced at the start of every group to minimize errors.",
-      },
-
-      {
         type: "image",
+        beside: "Because Gemini only returns audio and no timestamps, the app has to estimate which sentence is being spoken to highlight it. I used Apple's NLTokenizer to find the end of each sentence instead of splitting text on periods, so abbreviations like \"et al.\" or \"Fig. 1\" don't break sentences. The app groups the sentences, sends them to Gemini TTS, and receives an audio clip. Since the app knows the duration of the clip, it divides a group's audio proportionally by character count, so a sentence with 5% of a group's characters is assumed to take 5% of the audio. As audio plays, the app tracks the time passed and highlights a sentence based on its estimate. This is not always accurate, so sentences are re-synced at the start of every group to minimize errors.",
+        wrap: true,
         src: "/projects/paper-reader-highlight.mp4",
         width: 420,
         alt: "A close read of the narration: the sentence being spoken sits in a pale blue block, the lines on either side of it in gray, and the block moves on to the next sentence as the page scrolls",
       },
 
       {
-        type: "text",
-        text: "When processing fails, the paper enters an error state and shows the exact error message.",
-      },
-      {
         type: "image",
+        beside: "When processing fails, the paper enters an error state and shows the exact error message.",
+        besideRight: true,
         src: "/projects/paper-reader-library-error-detail.png",
         width: 420,
         alt: "A close read of the failed row: the paper's name over the Gemini error in red, with a retry button on its right",
       },
       {
-        type: "text",
-        text: "I added a sample paper so users can try the app before setting up a key.",
-      },
-      {
         type: "image",
+        beside: "I added a sample paper so users can try the app before setting up a key.",
+        besideRight: true,
         src: "/projects/paper-reader-sample-paper-detail.png",
         width: 420,
         alt: "A close read of the sample row: a SAMPLE tag over the paper's title, 77% listened beneath it with a progress bar, and a play button on its right",
@@ -596,13 +589,43 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "My first idea was to generate text over the current display, but iOS does not allow an app to draw over another app. To get around this, I used ReplayKit to broadcast video frames, Apple Vision OCR to extract Korean text, the DeepL API for translations, and ActivityKit to update the island.  I chose the Dynamic Island to display translations since it stays visible in every app."
+        text: "My first idea was to generate text over the current display, but iOS does not allow an app to draw over another app. To get around this, I used ReplayKit to broadcast video frames, Apple Vision OCR to extract Korean text, the DeepL API for translations, and ActivityKit to update the island. I chose the Dynamic Island to display translations since it stays visible in every app."
       },
 
       {
-        type: "text",
-        text: "I designed for three states: minimal, compact, and expanded. iOS treats Live Activities as occasional status updates rather than a live display, so I could not keep the expanded state on screen, and the user has to long press the island to see the translation. I designed UI elements around the phone's front-facing camera."
+        type: "image",
+        beside: "I designed minimal, compact, and expanded states because iOS decides which view is shown. The app appears in the minimal state by default because the iOS recording indicator always shares the island. Considering the lack of space and front-facing camera, I kept the UI simple and used emojis to represent the language.",
+        src: "/projects/screen-translator-island-minimal.png",
+        max: 455,
+        height: 204,
+        crop: "top",
+        alt: "The minimal Dynamic Island over the top of the Naver News site: the island shrunk to a Korean flag, a red recording dot in its own circle beside it, and the blue news header with its section tabs under the status bar",
+        caption: "Minimal (during screen recording)",
+        captionCenter: true,
       },
+
+      {
+        type: "image",
+        beside: "iOS keeps Live Activities in the minimal view so users have to long press the island to expand it and see a translation. Although this was a major limitation, combining the long press with the region selector allowed the user to decide when and what text they want to translate.",
+        besideRight: true,
+        src: "/projects/screen-translator-island-expanded.mp4",
+        max: 480,
+        height: 215,
+        alt: "The Dynamic Island over the top of a Korean news article, growing from the compact island beside the clock into the expanded state: a Korean-to-US flag pair and a pin, Waiting for captions, then three lines of Korean from the article with their English translation under them in gray",
+        caption: "Expanded (long press for translations)",
+        captionCenter: true,
+      },
+
+      {
+        type: "image",
+        beside: "The compact state appears briefly after recording and shows the last translated text. Pressing it returns to the app and shows all the translations from that recording session.",
+        src: "/projects/screen-translator-island-compact.jpg",
+        max: 455,
+        height: 204,
+        alt: "The compact Dynamic Island on the home screen above the FaceTime, Calendar, Photos, and Camera icons: a Korean flag, an arrow, and a US flag at the left, and the start of the Korean line being read at the right",
+        caption: "Compact (after screen recording)",
+        captionCenter: true,
+       },
 
       // dynamic island has no published refresh rate, and iOS silently limits background updates
       // designed the island so it only shows text from the translation region (selected by the user)
@@ -636,48 +659,17 @@ export const caseStudies: Record<string, CaseStudy> = {
       // call activity.update
       // need to keep the app running in the background - Apple keeps screen broadcast extensions / screen recording running
 
-      {
-        type: "image",
-        src: "/projects/screen-translator-island-minimal.png",
-        max: 455,
-        height: 204,
-        crop: "top",
-        alt: "The minimal Dynamic Island over the top of the Naver News site: the island shrunk to a Korean flag, a red recording dot in its own circle beside it, and the blue news header with its section tabs under the status bar",
-        caption: "Minimal state (active while recording)",
-        captionCenter: true,
-      },
-
-      {
-        type: "image",
-        src: "/projects/screen-translator-island-compact.jpg",
-        max: 455,
-        height: 204,
-        alt: "The compact Dynamic Island on the home screen above the FaceTime, Calendar, Photos, and Camera icons: a Korean flag, an arrow, and a US flag at the left, and the start of the Korean line being read at the right",
-        caption: "Compact state (after recording stops)",
-        captionCenter: true,
-      },
-
-      {
-        type: "image",
-        src: "/projects/screen-translator-island-expanded.mp4",
-        max: 480,
-        height: 215,
-        alt: "The Dynamic Island over the top of a Korean news article, growing from the compact island beside the clock into the expanded state: a Korean-to-US flag pair and a pin, Waiting for captions, then three lines of Korean from the article with their English translation under them in gray",
-        caption: "Expanded state (long press for full translation)",
-        captionCenter: true,
-      },
-
    //I used DeepL for sentence translations and Claude Opus 5 for word definitions. DeepL was best for full sentences, but unreliable for individual words. Opus 5 was more accurate for words because it could define each word as it's used in the context of the sentence."
     //  Opus 5 against DeepL on sentence translations. Opus 5 had a median latency of 2.07 seconds vs. 0.73 seconds for DeepL, and was about 5x more expensive ($0.0031 vs. $0.0006 per sentence)
 
       {
         type: "heading",
-        text: "Translation Region",
+        text: "Selecting a Translation Region",
       },
 
       {
         type: "text",
-        text: "Translating the entire screen was impractical because of the limited space to display the text. To improve accuracy and prevent clutter, I added an interactive crop box for selecting a specific area of the screen to align the app with the user's intent."
+        text: "Translating the entire screen was impractical because of the limited space to display the text. I added an interactive crop box to select a specific area of the screen, aligning the app with the user's intent and reducing clutter."
       },
 
       {
@@ -690,7 +682,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "heading",
-        text: "Saving Translations for Learning",
+        text: "Saving Sentences for Learning",
       },
 
       {
@@ -892,7 +884,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "heading",
-        text: "Mobile UI Design",
+        text: "Mobile UI",
       },
       {
         type: "text",
