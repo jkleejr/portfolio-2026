@@ -776,7 +776,14 @@ export function ProjectList({
             className="pointer-events-none fixed bottom-6 right-[calc(var(--edge)-var(--scrollbar))] z-30 flex h-11 items-center text-lg font-medium italic leading-relaxed text-muted sm:bottom-[var(--frame-top)]"
           >
             <span>
-              Press <Key>A</Key>/<Key>D</Key> for the next project
+              <Key label="Left arrow">
+                <Arrow left />
+              </Key>
+              /
+              <Key label="Right arrow">
+                <Arrow />
+              </Key>{" "}
+              next project
             </span>
           </p>
         )}
@@ -812,11 +819,31 @@ export function ProjectList({
  * from the italic line it sits in, and in the line's grey, so it reads as
  * part of the hint rather than a button.
  */
-function Key({ children }: { children: React.ReactNode }) {
+function Key({ children, label }: { children: React.ReactNode; label?: string }) {
   return (
-    <kbd className="mx-[0.2em] inline-flex h-[1.45em] min-w-[1.45em] -translate-y-[0.06em] items-center justify-center rounded-[0.3em] border border-b-2 border-foreground/20 bg-foreground/[0.04] px-[0.3em] font-sans text-[0.8em] font-semibold not-italic leading-none">
+    <kbd aria-label={label} className="mx-[0.2em] inline-flex h-[1.45em] min-w-[1.45em] -translate-y-[0.06em] items-center justify-center rounded-[0.3em] border border-b-2 border-foreground/20 bg-foreground/[0.04] px-[0.3em] font-sans text-[0.8em] font-semibold not-italic leading-none">
       {children}
     </kbd>
+  );
+}
+
+/** An arrow for a key, pointing right unless told otherwise — drawn rather
+ *  than set as a character, so it is the same weight as the letters were. */
+function Arrow({ left }: { left?: boolean }) {
+  return (
+    <svg
+      aria-hidden
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={`size-[1em] ${left ? "-scale-x-100" : ""}`}
+    >
+      <path d="M4 12h16" />
+      <path d="m13 5 7 7-7 7" />
+    </svg>
   );
 }
 
