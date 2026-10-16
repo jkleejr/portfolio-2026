@@ -10,7 +10,7 @@
 // project with nothing written about it yet is just the picture.
 // ---------------------------------------------------------------------------
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, useMotionValue, useSpring } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -117,6 +117,53 @@ export function ProjectThumbnail({
   // at 0:00 with the bar up; once it has run a little the controls come on
   // out of sight, and show only under the pointer.
   const [started, setStarted] = useState(false);
+
+  // Its sound. In the strip a cover is muted, as a cover has to be to play by
+  // itself. Grown into its open study it plays with its sound on, and M turns
+  // the sound off and on again. A browser plays a film with sound only once
+  // the page has been pressed or typed in — opening the study from the
+  // homepage is such a press, arriving at its address is not — so where it
+  // refuses, the film plays on muted and its sound comes on at the first
+  // press or key — M among them, which turns it on as it always does. Muted
+  // again once it goes back into the strip.
+  const filmRef = useRef<HTMLVideoElement>(null);
+  useEffect(() => {
+    const v = filmRef.current;
+    if (!v || !grown) return;
+    let chosen = false;
+    const unmute = () => {
+      v.muted = false;
+      v.play().catch(() => {
+        v.muted = true;
+        v.play().catch(() => {});
+        window.addEventListener("pointerdown", later, { once: true });
+        window.addEventListener("keydown", later, { once: true });
+      });
+    };
+    function later(e: Event) {
+      window.removeEventListener("pointerdown", later);
+      window.removeEventListener("keydown", later);
+      const m = e instanceof KeyboardEvent && e.key.toLowerCase() === "m";
+      if (!chosen && !m) unmute();
+    }
+    const key = (e: KeyboardEvent) => {
+      if (e.key.toLowerCase() !== "m" || e.repeat) return;
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+      if ((e.target as Element).closest?.("input, textarea, select, [contenteditable]"))
+        return;
+      chosen = true;
+      v.muted = !v.muted;
+      if (!v.muted) v.play().catch(() => (v.muted = true));
+    };
+    unmute();
+    window.addEventListener("keydown", key);
+    return () => {
+      window.removeEventListener("keydown", key);
+      window.removeEventListener("pointerdown", later);
+      window.removeEventListener("keydown", later);
+      v.muted = true;
+    };
+  }, [grown]);
   const inner = media ? (
     // The recording, playing, a little under the width a study draws its
     // films at — --cover-film in globals.css, which follows --film and so
@@ -132,6 +179,7 @@ export function ProjectThumbnail({
     >
       {film ? (
         <video
+          ref={filmRef}
           src={media.src}
           poster={media.poster}
           width={media.width}
