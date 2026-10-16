@@ -70,14 +70,17 @@ export function SiteCorner() {
       {/* The About page's apple, on its own. On a phone in the top right,
           as far in from the window's right edge as "Home > About" is from
           its left; from sm up, where the About page has no "Home > About",
-          in its place at the top left, level with the toggle across from it.
-          Measured to the ink both ways: the
+          in its place at the top left, level with the toggle across from it
+          and as far in from the window's left edge as the toggle is from its
+          right — the band's --edge, plus the half of the window the band
+          leaves on each side, plus the scrollbar on the right. Measured to the
+          ink both ways: the
           apple's starts 13 --u-full inside its button, and the H's 1.5px
           inside its box. A piece of its own for gravity, as the row is. */}
       {onAbout && (
         <div
           data-gravity="atom"
-          className="absolute right-[calc(var(--edge)+1.5px-13*var(--u-full)-(100vw-var(--scrollbar)-var(--page))/2-var(--scrollbar))] top-6 z-20 flex min-h-11 items-center sm:right-auto sm:left-[calc(var(--edge)+1.5px-13*var(--u-full)-(100vw-var(--scrollbar)-var(--page))/2)] sm:top-[var(--frame-top)] sm:min-h-[calc(44*var(--u))]"
+          className="absolute right-[calc(var(--edge)+1.5px-13*var(--u-full)-(100vw-var(--scrollbar)-var(--page))/2-var(--scrollbar))] top-6 z-20 flex min-h-11 items-center sm:right-auto sm:left-[calc(var(--edge)+var(--scrollbar)-13*var(--u-full))] sm:top-[var(--frame-top)] sm:min-h-[calc(44*var(--u))]"
         >
           <AppleButton fixed button={apple} on={on} toggle={toggle} />
         </div>
