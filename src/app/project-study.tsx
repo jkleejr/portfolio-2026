@@ -241,6 +241,9 @@ export function ProjectList({
   const savedLeft = useRef(0);
   const firstRun = useRef(true);
   const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
+  // Counts closings, so one still under way can tell it has been overtaken —
+  // see the opening below.
+  const closeRun = useRef(0);
   useEffect(() => () => timers.current.forEach(clearTimeout), []);
 
   useLayoutEffect(() => {
@@ -323,6 +326,16 @@ export function ProjectList({
     };
 
     if (now) {
+      // A closing still under way is called off. It finishes on a timer,
+      // GROW after the cover starts back into the strip, by letting the strip
+      // clip again and taking the grown cover's mark away; a study opened
+      // inside that time — from the address, or the back and forward buttons
+      // — would otherwise have both done to it once it was open, and its
+      // cover would be cut off at the strip's top edge.
+      closeRun.current++;
+      timers.current.forEach(clearTimeout);
+      timers.current = [];
+      queueMicrotask(() => setClosing(null));
       // Opening — or one study in place of another, swiped to or from the
       // back and forward buttons: the one going shrinks away to its side as
       // the next grows in from the other.
@@ -345,12 +358,15 @@ export function ProjectList({
     // Closing: back to the top of the page first, then the cover shrinks back
     // into the strip and everything else comes back round it.
     setClosing(was);
+    const run = ++closeRun.current;
     const shrink = () => {
+      if (run !== closeRun.current) return;
       delete root.dataset.studyOpen;
       unplace(was!, animate);
       timers.current.push(
         setTimeout(
           () => {
+            if (run !== closeRun.current) return;
             delete sectionOf(was!)?.dataset.hero;
             leaveClip();
             setClosing(null);
@@ -750,7 +766,9 @@ export function ProjectList({
             screen reader — and a plain press puts the cover back into the
             strip rather than loading the page again. Held in the window's top
             left the whole way down the study, so the way home is never a
-            scroll back up; once the page moves it sits on a glass backing,
+            scroll back up. One height from the window's top at every window
+            size — where --frame-top puts it on a laptop — so resizing the
+            window moves it only from side to side; once the page moves it sits on a glass backing,
             to be read over the writing passing under it — see
             [data-study-back] in globals.css. */}
         {shown && (
@@ -758,7 +776,7 @@ export function ProjectList({
             aria-label="Breadcrumb"
             data-study-back
             data-scrolled={scrolled ? "" : undefined}
-            className="fixed left-[var(--edge)] top-6 z-30 flex h-11 items-center text-lg font-medium leading-relaxed sm:top-[var(--frame-top)]"
+            className="fixed left-[var(--edge)] top-6 z-30 flex h-11 items-center text-lg font-medium leading-relaxed sm:top-[calc(24*var(--u-full))]"
           >
             {crumbs}
           </nav>
@@ -767,14 +785,15 @@ export function ProjectList({
         {/* A word on the keys, in the window's bottom right while the study's
             first screen is up: the same size and weight as the way back in
             the opposite corner, and as far in from the window's edges, the
-            scrollbar counted in the right one. It goes once the page moves —
+            scrollbar counted in the right one — held there as the window is
+            resized, as the way back is. It goes once the page moves —
             the reader has found the study, and it would only sit over the
             writing. */}
         {shown && (
           <p
             data-study-keys
             data-scrolled={scrolled ? "" : undefined}
-            className="pointer-events-none fixed bottom-6 right-[calc(var(--edge)-var(--scrollbar))] z-30 flex h-11 items-center text-lg font-medium italic leading-relaxed text-muted sm:bottom-[var(--frame-top)]"
+            className="pointer-events-none fixed bottom-6 right-[calc(var(--edge)-var(--scrollbar))] z-30 flex h-11 items-center text-lg font-medium italic leading-relaxed text-muted sm:bottom-[calc(24*var(--u-full))]"
           >
             <span>
               <Key label="Left arrow">
