@@ -20,9 +20,16 @@ import { ProjectThumbnail } from "./project-thumbnail";
  */
 function StudyIntro({ study, blurb }: { study: CaseStudy; blurb?: string }) {
   return (
+    // Centred on the cover rather than set above its middle: down by the
+    // 92 --u ProjectList lifts the intro by, less half of the 52px and the
+    // fact's line that the lines under the name are moved down by, which its
+    // height leaves out.
     <header
-      className="sm:relative sm:top-[var(--intro-shift)]"
-      style={{ "--intro-shift": `${study.introShift ?? 0}px` } as React.CSSProperties}
+      className={
+        study.introCentered
+          ? "sm:relative sm:top-[calc(92*var(--u)-(3.25rem+1.125rem*1.625+0.5rem)/2)]"
+          : undefined
+      }
     >
       <h2 className="text-[48px] font-bold leading-[1.1] tracking-[-0.02em]">
         {study.titleLines

@@ -114,9 +114,9 @@ export type CaseStudy = {
   // The grown cover's width from sm up as a multiple of its usual share of
   // the band: 1.06 makes it 6% wider. The cover in the strip is untouched.
   coverGrow?: number;
-  // How many px further down the name and everything under it sit beside
-  // the grown cover, from sm up.
-  introShift?: number;
+  // Whether the name and everything under it sit level with the middle of
+  // the grown cover, from sm up, rather than a little above it.
+  introCentered?: boolean;
   blocks: CaseStudyBlock[];
 };
 
@@ -819,7 +819,7 @@ export const caseStudies: Record<string, CaseStudy> = {
     coverShift: 92,
     coverGrow: 1.07,
     coverPastEdge: 28,
-    introShift: 10,
+    introCentered: true,
     blocks: [
       {
         type: "heading",
