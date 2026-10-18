@@ -289,7 +289,8 @@ function Block({
       // homepage settles the same argument the same way — see the gap above
       // its first project row.
       {
-        const lead = after && PICTURES.has(after) ? "pt-2" : "pt-4";
+        const afterPicture = after && PICTURES.has(after);
+        const lead = afterPicture ? "pt-2" : "pt-4";
         return (
           <h2
             // The results and reflection close every study. Marked so the
@@ -297,6 +298,12 @@ function Block({
             // the reader reaches them — see ProjectList.
             data-study-end={block.end ? "" : undefined}
             className={`${lead} mb-2 text-xl font-bold leading-snug tracking-[-0.02em]`}
+            // Extra room over it, when the study asks, on top of the lead.
+            style={
+              block.above
+                ? { paddingTop: `calc(${afterPicture ? "0.5rem" : "1rem"} + ${block.above}px)` }
+                : undefined
+            }
           >
             {block.text}
           </h2>

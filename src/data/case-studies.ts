@@ -1,5 +1,6 @@
 export type CaseStudyBlock =
-  | { type: "heading"; text: string; end?: boolean }
+  // above: that many px more room over the heading than it would have.
+  | { type: "heading"; text: string; end?: boolean; above?: number }
   | { type: "text"; text: string }
   | { type: "list"; items: string[]; ordered?: boolean }
   | { type: "quote"; text: string; attribution?: string }
@@ -167,6 +168,104 @@ export const caseStudies: Record<string, CaseStudy> = {
         caption: "Finding the potential value of a painting",
       },
 
+      {
+        type: "heading",
+        text: "User Interface",
+      },
+
+      {
+        type: "text",
+        text: "I designed Loot Check to get from photo to price in three steps. Taking a photo is the main action on the home screen. The results show the photo above the title so the user can check it's the right item, followed by an estimated price range. The 'Where to sell' section compares what the user would pocket after fees on each marketplace and highlights the best option."
+      },
+
+      {
+        type: "images",
+        columns: 4,
+        stackOnPhone: true,
+        items: [
+          {
+            src: "/projects/loot-check-ui-home.png",
+            alt: "The Loot Check home screen: the title, a line saying to snap something you want to sell, a green 1,715 items scanned globally badge, a History list of Calbee Jagapokkuru potato snacks at $4, an Akai MPK Mini at $55, a '47 Brand LA Dodgers cap at $20, and a Louis Vuitton chain bracelet at $300, and Take a photo and Choose from library buttons below it",
+          },
+          {
+            src: "/projects/loot-check-ui-photo-added.png",
+            alt: "The home screen after a photo is added: a thumbnail of an Akai MIDI keyboard beside an empty slot for a second photo, an optional detail field with a tip to include the brand logo or label, and Identify, Add from library, and Start over buttons",
+          },
+          {
+            src: "/projects/loot-check-ui-result.png",
+            alt: "The result for the photo: the Akai keyboard at the top, then Akai Professional MPK Mini 25-Key USB MIDI Keyboard Controller, Black, tagged Electronics, Good, and Certain, its brand and search keywords, and an estimated resale value of $55 that resells for $40 to $70, marked as an exact product match",
+          },
+          {
+            src: "/projects/loot-check-ui-where-to-sell.png",
+            alt: "Further down the result: the $55 estimate, then Where to Sell recommending eBay because buyers search it by exact model, with a list of what you'd pocket after fees on eBay at $48 marked Best, Reverb at $50, Facebook Marketplace at $55, Mercari at $50, and OfferUp at $55",
+          },
+        ],
+      },
+
+      {
+        type: "heading",
+        text: "Designing for Inaccurate Results",
+        above: 12,
+      },
+      // Designing for LLM Uncertainty
+
+      {
+        type: "text",
+        text: "Early testing with friends and family quickly showed the limits of using Sonnet 4.6 in the first prototype. When testing items like jewelry and bracelets, the vision model struggled to identify some brands and gave very inaccurate prices. Watching them experience this problem led to two key design decisions:",
+      },
+
+      {
+        type: "text",
+        text: "1. Optional Keyword Hints: Letting users enter a brand or description before scanning to guide the vision model.",
+      },
+
+      {
+        type: "images",
+        columns: 2,
+        max: 912,
+        gap: 168,
+        items: [
+          {
+            src: "/projects/loot-check-detail-input.png",
+            fullOnPhone: true,
+            caption: "User input",
+            captionCenter: true,
+            alt: "The optional detail field under a photo of an OP-1 in its case, with \"keyboard and synth\" typed in and a tip to include a close-up of the brand logo",
+          },
+          {
+            src: "/projects/loot-check-detail-result.png",
+            fullOnPhone: true,
+            caption: "Result",
+            captionCenter: true,
+            alt: "The result for that photo: Teenage Engineering OP-1 Portable Synthesizer & Sampler with Case, tagged Electronics and Good, with the brand and a line of search keywords under it",
+          },
+        ],
+      },
+
+      {
+        type: "text",
+        text: "2. Confidence Ratings (Best guess, Certain): Being open when Sonnet's confidence is low so users don't trust a wrong estimate, and allowing them to take another photo or retry.",
+      },
+
+      {
+        type: "images",
+        columns: 2,
+        max: 912,
+        gap: 168,
+        items: [
+          {
+            src: "/projects/loot-check-best-guess.png",
+            fullOnPhone: true,
+            alt: "A result card for a Ceramic Table Lamp, tagged Home Decor, Good, and a yellow \"Best guess\" label, with the brand shown as unknown and search keywords under it",
+          },
+          {
+            src: "/projects/loot-check-generic-match.png",
+            fullOnPhone: true,
+            alt: "A warning card on a result titled \"Not sure of the exact product.\" It suggests adding a close-up of the brand logo or label, or adding a hint and identifying again for more accurate results, and offers an \"Add a photo & retry\" button.",
+          },
+        ],
+      },
+
       // system architecture and data flow diagrams
       // photo captured to the result and estimated price range
 
@@ -257,99 +356,6 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "text",
         text: "While most scans took 6 seconds, a scan with web searches took 14 to 27 seconds in testing, so I capped searches at 45 seconds and the loading state displays an estimated wait time. If the first API call times out, it automatically tries again with the remaining time. If both attempts fail, no price estimate is shown and the user can retry or start over.",
-      },
-
-      {
-        type: "heading",
-        text: "Designing for Inaccurate Results",
-      },
-      // Designing for LLM Uncertainty
-
-      {
-        type: "text",
-        text: "Early testing with friends and family quickly showed the limits of using Sonnet 4.6 in the first prototype. When testing items like jewelry and bracelets, the vision model struggled to identify some brands and gave very inaccurate prices. Watching them experience this problem led to two key design decisions:",
-      },
-
-      {
-        type: "text",
-        text: "1. Optional Keyword Hints: Letting users enter a brand or description before scanning to guide the vision model.",
-      },
-
-      {
-        type: "images",
-        columns: 2,
-        max: 912,
-        gap: 168,
-        items: [
-          {
-            src: "/projects/loot-check-detail-input.png",
-            fullOnPhone: true,
-            alt: "The optional detail field under a photo of an OP-1 in its case, with \"keyboard and synth\" typed in and a tip to include a close-up of the brand logo",
-          },
-          {
-            src: "/projects/loot-check-detail-result.png",
-            fullOnPhone: true,
-            alt: "The result for that photo: Teenage Engineering OP-1 Portable Synthesizer & Sampler with Case, tagged Electronics and Good, with the brand and a line of search keywords under it",
-          },
-        ],
-      },
-
-      {
-        type: "text",
-        text: "2. Confidence Ratings (Best guess, Certain): Being open when Sonnet's confidence is low so users don't trust a wrong estimate, and allowing them to take another photo or retry.",
-      },
-
-      {
-        type: "images",
-        columns: 2,
-        max: 912,
-        gap: 168,
-        items: [
-          {
-            src: "/projects/loot-check-best-guess.png",
-            fullOnPhone: true,
-            alt: "A result card for a Ceramic Table Lamp, tagged Home Decor, Good, and a yellow \"Best guess\" label, with the brand shown as unknown and search keywords under it",
-          },
-          {
-            src: "/projects/loot-check-generic-match.png",
-            fullOnPhone: true,
-            alt: "A warning card on a result titled \"Not sure of the exact product.\" It suggests adding a close-up of the brand logo or label, or adding a hint and identifying again for more accurate results, and offers an \"Add a photo & retry\" button.",
-          },
-        ],
-      },
-
-       {
-        type: "heading",
-        text: "User Interface",
-      },
-
-      {
-        type: "text",
-        text: "I designed Loot Check to get from photo to price in three steps. Taking a photo is the main action on the home screen. The results show the photo above the title so the user can check it's the right item, followed by an estimated price range. The 'Where to sell' section compares what the user would pocket after fees on each marketplace and highlights the best option."
-      },
-
-      {
-        type: "images",
-        columns: 4,
-        stackOnPhone: true,
-        items: [
-          {
-            src: "/projects/loot-check-ui-home.png",
-            alt: "The Loot Check home screen: the title, a line saying to snap something you want to sell, a green 1,715 items scanned globally badge, a History list of Calbee Jagapokkuru potato snacks at $4, an Akai MPK Mini at $55, a '47 Brand LA Dodgers cap at $20, and a Louis Vuitton chain bracelet at $300, and Take a photo and Choose from library buttons below it",
-          },
-          {
-            src: "/projects/loot-check-ui-photo-added.png",
-            alt: "The home screen after a photo is added: a thumbnail of an Akai MIDI keyboard beside an empty slot for a second photo, an optional detail field with a tip to include the brand logo or label, and Identify, Add from library, and Start over buttons",
-          },
-          {
-            src: "/projects/loot-check-ui-result.png",
-            alt: "The result for the photo: the Akai keyboard at the top, then Akai Professional MPK Mini 25-Key USB MIDI Keyboard Controller, Black, tagged Electronics, Good, and Certain, its brand and search keywords, and an estimated resale value of $55 that resells for $40 to $70, marked as an exact product match",
-          },
-          {
-            src: "/projects/loot-check-ui-where-to-sell.png",
-            alt: "Further down the result: the $55 estimate, then Where to Sell recommending eBay because buyers search it by exact model, with a list of what you'd pocket after fees on eBay at $48 marked Best, Reverb at $50, Facebook Marketplace at $55, Mercari at $50, and OfferUp at $55",
-          },
-        ],
       },
 
       {
