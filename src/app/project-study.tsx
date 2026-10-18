@@ -182,8 +182,10 @@ function growTo(el: HTMLElement, frame: HTMLElement) {
   const frameTop = frame.getBoundingClientRect().top + window.scrollY;
   const left = cx - w / 2;
   const top = frameTop + vh / 2 - h / 2;
+  // The cover alone, nudged after the room beside it is settled.
+  const nudge = phone ? 0 : (study?.coverNudge ?? 0) * (page / 1287);
   return {
-    transform: `translate(${left - r.left}px, ${top - (r.top + window.scrollY)}px) scale(${scale})`,
+    transform: `translate(${left + nudge - r.left}px, ${top - (r.top + window.scrollY)}px) scale(${scale})`,
     // Where the cover's left edge lands, from the band's — the room the
     // study's name has to its left.
     heroLeft: left - bandLeft,

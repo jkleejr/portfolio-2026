@@ -114,6 +114,10 @@ export type CaseStudy = {
   // How many px past the band's right edge, less --edge, the grown cover may
   // go — on the 1287px band and in step with it below that.
   coverPastEdge?: number;
+  // How many px further right the grown cover alone sits, from sm up, on the
+  // 1287px band and in step with it below that. Unlike coverShift it leaves
+  // the room beside it, and so the name and intro, where they are.
+  coverNudge?: number;
   // The grown cover's width from sm up as a multiple of its usual share of
   // the band: 1.06 makes it 6% wider. The cover in the strip is untouched.
   coverGrow?: number;
@@ -143,6 +147,7 @@ export const caseStudies: Record<string, CaseStudy> = {
     role: "Role: Founder, Product Designer, Engineer",
     scope: "Scope: iOS, App Store",
     coverShift: 24,
+    coverNudge: 63,
     blocks: [
       {
         type: "heading",
@@ -410,6 +415,7 @@ export const caseStudies: Record<string, CaseStudy> = {
     role: "Role: Sole Product Designer, Engineer",
     scope: "Scope: iOS, Prototype",
     coverShift: 24,
+    coverNudge: 63,
     blocks: [
       {
         type: "heading",
@@ -596,6 +602,7 @@ export const caseStudies: Record<string, CaseStudy> = {
     role: "Role: Sole Product Designer, Engineer",
     scope: "Scope: iOS, Prototype",
     coverShift: 24,
+    coverNudge: 63,
     blocks: [
       {
         type: "heading",
