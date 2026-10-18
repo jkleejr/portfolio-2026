@@ -875,7 +875,7 @@ export const caseStudies: Record<string, CaseStudy> = {
 
       {
         type: "text",
-        text: "I added an AM/PM toggle to visually accommodate different mental states. Switching to another report restructures the page with the right information."
+        text: "I added an AM/PM toggle to visually accommodate different mental states. Switching from AM to PM restructures the page with the right information."
       },
 
       {
