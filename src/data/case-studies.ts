@@ -855,7 +855,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         besideHeading: "Curating Market Context with AI",
         beside: [
           "A research pipeline runs parallel web queries across market data, sentiment indicators, economic calendars, and a list of stocks. The instructions file structures the report and defines the JSON schema for the website.",
-          "Because LLMs don't have long-term memory, the agent calibrates itself by reading reports from the last few days before writing. The historical data simulates continuity and allows the agent to distinguish between ongoing and new market trends.",
+          "Because LLMs don't have long-term memory, an agent calibrates itself by reading reports from the last few days before writing. The historical data simulates continuity and allows the agent to distinguish between ongoing and new market trends.",
         ],
         src: "/projects/buy-side-briefings-authoring-loop.svg",
         max: 781,
