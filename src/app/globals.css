@@ -572,6 +572,17 @@ html:not([data-study-open]) [data-study-keys] {
 [data-study-keys][data-scrolled]::before {
   opacity: 1;
 }
+/* The word on the keys goes while the study is read, and comes back once
+   its "Results" is in the window. */
+[data-study-keys] {
+  transition: opacity 400ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+[data-study-keys][data-away] {
+  opacity: 0;
+}
+[data-study-keys][data-away] button {
+  pointer-events: none;
+}
 /* On the dark page the shadow has to be deeper to be seen at all. */
 [data-theme="dark"] [data-study-back]::before,
 [data-theme="dark"] [data-study-keys]::before {

@@ -910,12 +910,17 @@ export function ProjectList({
   // corner then stands over the study's writing, and takes a glass backing
   // to be read against it. Read on every scroll, a frame at a time.
   const [scrolled, setScrolled] = useState(false);
+  // And whether its "Results" has come up into the window — the word on the
+  // keys, gone while the study is read, comes back for the end of it.
+  const [atEnd, setAtEnd] = useState(false);
   useEffect(() => {
     if (!openSlug) return;
     let frame = 0;
     const check = () => {
       frame = 0;
       setScrolled(window.scrollY > 4);
+      const end = document.querySelector("[data-study-end]");
+      setAtEnd(!!end && end.getBoundingClientRect().top < window.innerHeight);
     };
     const onScroll = () => {
       if (!frame) frame = requestAnimationFrame(check);
@@ -929,6 +934,7 @@ export function ProjectList({
       window.removeEventListener("resize", onScroll);
       // The next study opens at its top.
       setScrolled(false);
+      setAtEnd(false);
     };
   }, [openSlug]);
 
@@ -1053,12 +1059,15 @@ export function ProjectList({
             first screen is up: the same size and weight as the way back in
             the opposite corner, and as far in from the window's edges, the
             scrollbar counted in the right one — held there as the window is
-            resized, as the way back is. Held there the whole way down the
-            study, on the same pill as the way back once the page moves. */}
+            resized, as the way back is. It goes once the page moves — the
+            reader has found the study, and it would only sit over the
+            writing — and comes back, on the same pill as the way back, once
+            the study's "Results" is in the window. */}
         {shown && (
           <p
             data-study-keys
             data-scrolled={scrolled ? "" : undefined}
+            data-away={scrolled && !atEnd ? "" : undefined}
             className="pointer-events-none fixed bottom-6 right-[calc(var(--edge)-var(--scrollbar))] z-30 flex h-11 items-center text-lg font-medium italic leading-relaxed text-muted sm:bottom-[calc(24*var(--u-full))]"
           >
             <span>
@@ -1070,10 +1079,10 @@ export function ProjectList({
                 label="Next project"
                 disabled={at < 0 || at >= order.length - 1}
                 onClick={() => stepTo(1)}
+                after=" next project"
               >
                 <Arrow />
-              </KeyButton>{" "}
-              next project
+              </KeyButton>
             </span>
           </p>
         )}
@@ -1118,18 +1127,20 @@ function Key({ children, label }: { children: React.ReactNode; label?: string })
 }
 
 /** A key in the word on the keys that can also be pressed with the pointer:
- *  the arrow on it turns lapis under the pointer, the cap and the words
- *  beside it staying grey. Nothing past either end of the strip. */
+ *  the arrow on it, and any words after it, turn lapis under the pointer,
+ *  the cap staying grey. Nothing past either end of the strip. */
 function KeyButton({
   children,
   label,
   disabled,
   onClick,
+  after,
 }: {
   children: React.ReactNode;
   label: string;
   disabled?: boolean;
   onClick: () => void;
+  after?: string;
 }) {
   return (
     <button
@@ -1140,6 +1151,7 @@ function KeyButton({
       className="pointer-events-auto cursor-pointer text-muted transition-colors duration-200 ease-out hover:text-accent disabled:cursor-default disabled:hover:text-muted"
     >
       <Key>{children}</Key>
+      {after}
     </button>
   );
 }
