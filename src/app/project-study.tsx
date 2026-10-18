@@ -1120,7 +1120,7 @@ export function ProjectList({
  */
 function Key({ children, label }: { children: React.ReactNode; label?: string }) {
   return (
-    <kbd aria-label={label} className="mx-[0.2em] inline-flex size-[1.45em] -translate-y-[0.06em] items-center justify-center rounded-[0.3em] border border-b-2 border-foreground/20 bg-foreground/[0.04] font-sans text-[0.8em] font-semibold not-italic leading-none">
+    <kbd aria-label={label} className="mx-[0.2em] inline-flex size-[1.45em] -translate-y-[0.06em] items-center justify-center rounded-[0.3em] border border-b-2 border-foreground/20 bg-foreground/[0.04] font-sans text-[0.9em] font-semibold not-italic leading-none">
       {children}
     </kbd>
   );
