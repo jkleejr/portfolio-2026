@@ -74,6 +74,8 @@ export type CaseStudyBlock =
       columns?: 2 | 4;
       stackOnPhone?: boolean;
       max?: number;
+      // The space between the shots from sm up, in px of the 1440px page.
+      gap?: number;
       // Every shot in the row cut to one shape, as "455 / 204"; crop says
       // which part of each is kept.
       ratio?: string;
@@ -276,7 +278,8 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "images",
         columns: 2,
-        max: 792,
+        max: 912,
+        gap: 168,
         items: [
           {
             src: "/projects/loot-check-detail-input.png",
@@ -299,7 +302,8 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "images",
         columns: 2,
-        max: 792,
+        max: 912,
+        gap: 168,
         items: [
           {
             src: "/projects/loot-check-best-guess.png",

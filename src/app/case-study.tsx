@@ -565,8 +565,12 @@ function Block({
               short ones to the height of the tallest and squash what is in
               them. */}
           <div
-            className="mx-auto flex flex-wrap items-start justify-center gap-6"
-            style={block.max ? { maxWidth: shot(block.max) } : undefined}
+            // A wider gap between the shots from sm up, when the row asks.
+            className="mx-auto flex flex-wrap items-start justify-center gap-6 sm:gap-[var(--row-gap,1.5rem)]"
+            style={{
+              ...(block.max ? { maxWidth: shot(block.max) } : {}),
+              ...(block.gap ? { "--row-gap": shot(block.gap) } : {}),
+            } as React.CSSProperties}
           >
             {block.items.map((item, i) => (
               <figure
@@ -577,10 +581,10 @@ function Block({
                 // inside its own media query.
                 className={`w-[calc((100%_-_1.5rem)/2)] ${
                   block.columns === 2
-                    ? ""
+                    ? "sm:w-[calc((100%_-_var(--row-gap,1.5rem))/2)]"
                     : block.columns === 4
-                      ? "sm:w-[calc((100%_-_4.5rem)/4)]"
-                      : "sm:w-[calc((100%_-_3rem)/3)]"
+                      ? "sm:w-[calc((100%_-_3*var(--row-gap,1.5rem))/4)]"
+                      : "sm:w-[calc((100%_-_2*var(--row-gap,1.5rem))/3)]"
                 } ${item.fullOnPhone ? "max-sm:w-full" : ""}`}
               >
                 {/* A film in a shot's place plays as the covers do — muted,
