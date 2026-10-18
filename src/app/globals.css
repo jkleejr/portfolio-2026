@@ -548,13 +548,15 @@ html:not([data-study-open]) [data-study-keys] {
   animation: fade-in 450ms cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
 }
 
-/* An open study's way back, held in the window's top left — see ProjectList.
-   Bare over the first screen, and on a solid pill once the page is scrolled,
-   so it reads over the writing passing under it: the page's own colour, with
-   nothing showing through, a hairline round it and a soft shadow lifting it
-   off the page. Drawn behind the words rather than as padding on them, so the
-   words do not move when it comes in. */
-[data-study-back]::before {
+/* An open study's way back, held in the window's top left, and the word on
+   the keys in the bottom right — see ProjectList. Bare over the first screen,
+   and on a solid pill once the page is scrolled, so they read over the
+   writing passing under them: the page's own colour, with nothing showing
+   through, a hairline round it and a soft shadow lifting it off the page.
+   Drawn behind the words rather than as padding on them, so the words do not
+   move when it comes in. */
+[data-study-back]::before,
+[data-study-keys]::before {
   content: "";
   position: absolute;
   inset: 4px -14px;
@@ -566,18 +568,13 @@ html:not([data-study-open]) [data-study-keys] {
   opacity: 0;
   transition: opacity 400ms cubic-bezier(0.4, 0, 0.2, 1);
 }
-[data-study-back][data-scrolled]::before {
+[data-study-back][data-scrolled]::before,
+[data-study-keys][data-scrolled]::before {
   opacity: 1;
 }
-/* The word on the keys in the opposite corner goes as the backing comes. */
-[data-study-keys] {
-  transition: opacity 400ms cubic-bezier(0.4, 0, 0.2, 1);
-}
-[data-study-keys][data-scrolled] {
-  opacity: 0;
-}
 /* On the dark page the shadow has to be deeper to be seen at all. */
-[data-theme="dark"] [data-study-back]::before {
+[data-theme="dark"] [data-study-back]::before,
+[data-theme="dark"] [data-study-keys]::before {
   box-shadow: 0 4px 16px color-mix(in srgb, black 45%, transparent);
 }
 

@@ -559,6 +559,19 @@ export function ProjectList({
     return () => window.removeEventListener("keydown", key);
   }, [openSlug, closing, studies, setOpen]);
 
+  // The same move by a press on one of the arrows in the word on the keys.
+  const order = Object.keys(studies);
+  const at = openSlug ? order.indexOf(openSlug) : -1;
+  const stepTo = (step: 1 | -1) => {
+    const next = order[at + step];
+    const g = swipe.current;
+    if (!openSlug || closing || !next || performance.now() < g.busyUntil) return;
+    g.busyUntil = performance.now() + SWIPE_REST;
+    window.scrollTo({ top: 0 });
+    setOpen(next);
+    window.history.replaceState(null, "", `/${next}`);
+  };
+
   // W and S scroll the open study up and down, the way A and D move between
   // studies, and the up and down arrows do the same in place of the browser's
   // own. Held, the page glides for as long as the key is down, starting
@@ -1040,9 +1053,8 @@ export function ProjectList({
             first screen is up: the same size and weight as the way back in
             the opposite corner, and as far in from the window's edges, the
             scrollbar counted in the right one — held there as the window is
-            resized, as the way back is. It goes once the page moves —
-            the reader has found the study, and it would only sit over the
-            writing. */}
+            resized, as the way back is. Held there the whole way down the
+            study, on the same pill as the way back once the page moves. */}
         {shown && (
           <p
             data-study-keys
@@ -1050,13 +1062,17 @@ export function ProjectList({
             className="pointer-events-none fixed bottom-6 right-[calc(var(--edge)-var(--scrollbar))] z-30 flex h-11 items-center text-lg font-medium italic leading-relaxed text-muted sm:bottom-[calc(24*var(--u-full))]"
           >
             <span>
-              <Key label="Left arrow">
+              <KeyButton label="Previous project" disabled={at <= 0} onClick={() => stepTo(-1)}>
                 <Arrow left />
-              </Key>
+              </KeyButton>
               /
-              <Key label="Right arrow">
+              <KeyButton
+                label="Next project"
+                disabled={at < 0 || at >= order.length - 1}
+                onClick={() => stepTo(1)}
+              >
                 <Arrow />
-              </Key>{" "}
+              </KeyButton>{" "}
               next project
             </span>
           </p>
@@ -1098,6 +1114,33 @@ function Key({ children, label }: { children: React.ReactNode; label?: string })
     <kbd aria-label={label} className="mx-[0.2em] inline-flex size-[1.45em] -translate-y-[0.06em] items-center justify-center rounded-[0.3em] border border-b-2 border-foreground/20 bg-foreground/[0.04] font-sans text-[0.8em] font-semibold not-italic leading-none">
       {children}
     </kbd>
+  );
+}
+
+/** A key in the word on the keys that can also be pressed with the pointer:
+ *  the arrow on it turns lapis under the pointer, the cap and the words
+ *  beside it staying grey. Nothing past either end of the strip. */
+function KeyButton({
+  children,
+  label,
+  disabled,
+  onClick,
+}: {
+  children: React.ReactNode;
+  label: string;
+  disabled?: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      aria-label={label}
+      disabled={disabled}
+      onClick={onClick}
+      className="pointer-events-auto cursor-pointer text-muted transition-colors duration-200 ease-out hover:text-accent disabled:cursor-default disabled:hover:text-muted"
+    >
+      <Key>{children}</Key>
+    </button>
   );
 }
 
