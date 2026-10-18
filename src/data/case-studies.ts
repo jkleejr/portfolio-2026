@@ -920,7 +920,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         type: "text",
-        text: "The mobile design keeps the same style as the desktop interface with a few small changes. The headline description is more concise, and all other pages live in a menu button."
+        text: "The mobile design keeps the same style as the desktop interface with a few small changes. The headline description is more concise, and all other pages were moved into a menu button."
       },
 
       {
