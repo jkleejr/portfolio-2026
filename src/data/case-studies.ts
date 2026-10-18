@@ -176,6 +176,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "heading",
         text: "User Interface",
+        above: 40,
       },
 
       {
@@ -452,6 +453,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "heading",
         text: "Generating Audio in Groups",
+        above: 40,
       }, // Latency UX
 
       // network lag - more API requests can cause delays, or hit Gemini's rate limit
@@ -970,6 +972,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         type: "heading",
         text: "Results",
         end: true,
+        above: 12,
       },
       {
         type: "text",
