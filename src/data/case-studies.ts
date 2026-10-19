@@ -734,6 +734,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         src: "/projects/screen-translator-learn-vocab.mp4",
         besideHeading: "Saving Sentences for Learning",
         lift: -2,
+        above: 12,
         below: 10,
         alt: "The Learn page with two pinned Korean sentences broken into word chips; tapping 첫째주 highlights it and shows its meaning, first week, in a bubble above it",
         beside: [
@@ -755,7 +756,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "heading",
         text: "First UI Design",
-        above: 12,
+        above: 16,
       },
 
       {
