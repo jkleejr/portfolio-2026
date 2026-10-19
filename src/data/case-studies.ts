@@ -874,6 +874,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       {
         type: "image",
         besideHeading: "Curating Market Context with AI",
+        above: 6,
         beside: [
           "A research pipeline runs parallel web queries across market data, sentiment indicators, economic calendars, and a list of stocks. The instructions file structures the report and defines the JSON schema for the website.",
           "Because LLMs don't have long-term memory, an agent calibrates itself by reading reports from the last few days before writing. The historical data simulates continuity and allows the agent to distinguish between ongoing and new market trends.",
@@ -887,6 +888,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       { 
         type: "heading",
         text: "Designing a Pre-Market vs. After-Hours Workflow",
+        above: 4,
       }, // different design depending on situation
 
       {
@@ -899,45 +901,39 @@ export const caseStudies: Record<string, CaseStudy> = {
         text: "I added an AM/PM toggle to visually accommodate different mental states. Switching from AM to PM restructures the page with the right information."
       },
 
-      {
-        type: "heading",
-        text: "Data Visualization",
-      },
 
-      {
-        type: "text",
-        text: "I used market data from Yahoo Finance and FRED to visualize price action.",
-      },
       // delay only applies during the trading session, since outside market hours the last price is the close for most stocks. us stocks and etfs are delayed by ~15 minutes, crypto is closer to current
       // data for chart comes from Yahoo Finance API
 
       {
-        type: "text",
-        text: "The interactive chart allows a quick inspection of tickers with candlestick ranges and some technical tools like volume, RSI, EMA, support/resistance, and Fibonacci levels."
-      },
-
-      {
         type: "image",
+        besideHeading: "Data Visualization",
+        above: 27,
+        beside: [
+          "I used market data from Yahoo Finance and FRED to visualize price action.",
+          "The interactive chart allows a quick inspection of tickers with candlestick ranges and some technical tools like volume, RSI, EMA, support/resistance, and Fibonacci levels.",
+        ],
         src: "/projects/buy-side-chart-2.png",
         max: 800,
+        grow: 1.283,
         alt: "The charts panel: Nvidia selected, range and bar controls under it, and a daily candlestick chart zoomed to ninety bars with a hover card on the March 27 bar showing its open, high, low, and volume, over a footer crediting Yahoo Finance and noting quotes are delayed about fifteen minutes",
       },
 
       {
-        type: "text",
-        text: "I designed a timeline for upcoming earnings calls up to 90 days out. Solid dots represent confirmed dates, and hollow dots represent unconfirmed ones.",
-      },
-
-      {
         type: "image",
+        beside: "I designed a timeline for upcoming earnings calls up to 90 days out. Solid dots represent confirmed dates, and hollow dots represent unconfirmed ones.",
         src: "/projects/buy-side-earnings-timeline.png",
         max: 800,
+        above: 12,
+        grow: 1.283,
+        besideRight: true,
         alt: "The earnings timeline: nineteen tickers from MU down to WMT, each with a dot placed along a line running from today past sixty days out and a count of days until it reports, filled dots for confirmed dates and hollow ones for estimates",
       },
 
       {
         type: "heading",
         text: "Mobile UI",
+        above: 16,
       },
       {
         type: "text",
