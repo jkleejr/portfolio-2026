@@ -477,6 +477,15 @@ html[data-study-open] .cover-strip {
   scale: none !important;
   cursor: default;
 }
+/* The name under a cover goes as the cover grows: the study's own name is
+   set beside it then. */
+.cover-strip [data-cover-title] {
+  transition: opacity 300ms ease;
+}
+.cover-strip section[data-hero] [data-cover-title] {
+  opacity: 0;
+  pointer-events: none;
+}
 .cover-strip section[data-away] {
   opacity: 0;
   pointer-events: none;

@@ -144,9 +144,12 @@ export function DesignOne() {
           is a slab, and two of them falling barely reads as the page coming
           apart. Everywhere else the text is small enough that whole words are
           the finer-grained answer, not the coarser one. */}
+      {/* Drawn at 95% of --name-size. The variable itself is left whole, as
+          --frame-h is worked out from it and sets where the corner sits on
+          every page — so only the name here is smaller. */}
       <h1
         data-gravity="letters"
-        className="fraktur mb-12 mt-[calc(var(--top-row)+1.5rem)] whitespace-nowrap pl-[calc(var(--edge)+0.0375em)] max-sm:mb-[37px] max-sm:mt-[calc(1rem-0.12em)] max-sm:pl-0 max-sm:text-center text-[length:var(--name-size)] leading-none sm:mb-[calc(56*var(--u))] sm:mt-0"
+        className="fraktur mb-12 mt-[calc(var(--top-row)+1.5rem)] whitespace-nowrap pl-[calc(var(--edge)+0.0375em)] max-sm:mb-[37px] max-sm:mt-[calc(1rem-0.12em)] max-sm:pl-0 max-sm:text-center text-[length:calc(var(--name-size)*0.95)] leading-none sm:mb-[calc(56*var(--u))] sm:mt-0"
       >
         {site.name}
       </h1>
@@ -232,6 +235,7 @@ export function DesignOne() {
             // A picture is drawn shorter than the films, and sits on their
             // bottom line — see --cover-picture-film in globals.css.
             bottom={!!entry.media && !/\.mp4$/i.test(entry.media)}
+            title={<ProjectTitle slug={entry.slug}>{entry.title}</ProjectTitle>}
           >
             {entry.media ? (
               <ProjectThumbnail

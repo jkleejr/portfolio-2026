@@ -65,7 +65,7 @@ export const entries: Entry[] = [
     ],
   },
   {
-    title: "Buy Side Briefings",
+    title: "Buy Side",
     blurb:
       "Automated, daily stock market reports.",
     slug: "buy-side-briefings",

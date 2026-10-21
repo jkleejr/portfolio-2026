@@ -1007,8 +1007,12 @@ export function ProjectList({
               // amount, so the first cover still starts on the name's line.
               // A scrollbar further on the right, since the body stops that
               // short of the window — see body in globals.css.
+              // From sm up the gap above the covers is 64 --u less 30px. It
+              // is written as a margin under the name's own 56 --u, since
+              // with no intro the two collapse into one and only the larger
+              // positive margin counts — a negative one subtracts from it.
               data-strip
-              className="-ml-[var(--gutter)] -mr-[calc(var(--gutter)+var(--scrollbar))] mt-16 sm:mt-[calc(64*var(--u))]"
+              className="-ml-[var(--gutter)] -mr-[calc(var(--gutter)+var(--scrollbar))] mt-16 sm:mt-[calc(8*var(--u)-30px)]"
             >
               <CoverStrip scroller={scrollerRef} track={trackRef} slack={slackRef}>
                 {children}
@@ -1576,7 +1580,7 @@ function CoverStrip({
           aria-label="Projects"
           tabIndex={0}
           style={{ width: `calc(100% - ${2 * SLACK}px)` }}
-          className="cover-strip sticky left-0 flex overflow-x-auto py-4 pl-[calc(var(--edge)+var(--gutter))] pr-[var(--edge)] outline-none sm:py-[calc(16*var(--u))]"
+          className="cover-strip sticky left-0 flex overflow-x-auto py-4 pl-[calc(var(--edge)+var(--gutter))] pr-[var(--edge)] outline-none sm:pb-[calc(58*var(--u))] sm:pt-[calc(16*var(--u))]"
         >
           <div
             ref={track}
@@ -1596,6 +1600,7 @@ export function ProjectSection({
   slug,
   hasStudy,
   bottom,
+  title,
   children,
 }: {
   slug: string;
@@ -1606,6 +1611,10 @@ export function ProjectSection({
    *  it, since the section is what grows when its study opens, and is sized
    *  off its own box. */
   bottom?: boolean;
+  /** The project's name, centred under the cover. Hung below the section
+   *  rather than in it, so the section stays the cover's own box — the grow
+   *  into an open study is measured off it. */
+  title?: React.ReactNode;
   /** The project's cover. */
   children: React.ReactNode;
 }) {
@@ -1621,9 +1630,20 @@ export function ProjectSection({
   return (
     // data-slug for a scroll over the cover to know which project it is over —
     // see the scroll-to-open in ProjectList.
-    <section data-slug={slug} className={`shrink-0 ${bottom ? "self-end" : ""}`}>
+    <section data-slug={slug} className={`relative shrink-0 ${bottom ? "self-end" : ""}`}>
       <ToggleContext.Provider value={hasStudy ? { open, toggle } : null}>
         {children}
+        {title && (
+          // Centred on the cover and free to run wider than it, for a name
+          // longer than a picture is wide. Room for it is the strip's bottom
+          // padding — see CoverStrip.
+          <h2
+            data-cover-title
+            className="absolute left-1/2 top-full mt-[calc(14*var(--u))] -translate-x-1/2 whitespace-nowrap text-center text-[calc(20*var(--u))] font-semibold leading-[1.4] tracking-[-0.02em]"
+          >
+            {title}
+          </h2>
+        )}
       </ToggleContext.Provider>
     </section>
   );
